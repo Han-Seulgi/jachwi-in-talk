@@ -21,10 +21,8 @@ public class MainActivity extends TabActivity {
         tabSpecTab1.setContent(R.id.tab1);
         tabHost.addTab(tabSpecTab1);
 
-        ImageView tab2 = new ImageView(this);
-        tab2.setImageResource(R.drawable.btn_star_big_on);
 
-        TabSpec tabSpecTab2 = tabHost.newTabSpec("TAB2").setIndicator(tab2);
+        TabSpec tabSpecTab2 = tabHost.newTabSpec("TAB2").setIndicator("방구하기");
         tabSpecTab2.setContent(R.id.tab2);
         tabHost.addTab(tabSpecTab2);
 
