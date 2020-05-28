@@ -29,7 +29,7 @@ public class MainActivity extends TabActivity {
         tabSpecTab3.setContent(R.id.tab3);
         tabHost.addTab(tabSpecTab3);
 
-        TabSpec tabSpecTab4 = tabHost.newTabSpec("TAB4").setIndicator("안전알림");
+        TabSpec tabSpecTab4 = tabHost.newTabSpec("TAB4").setIndicator("안전알리미************");
         tabSpecTab4.setContent(R.id.tab4);
         tabHost.addTab(tabSpecTab4);
 
