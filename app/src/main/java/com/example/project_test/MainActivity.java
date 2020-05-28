@@ -1,6 +1,7 @@
 package com.example.project_test;
 import android.app.TabActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
@@ -13,9 +14,13 @@ public class MainActivity extends TabActivity {
 
         TabHost tabHost = getTabHost();
 
-        TabSpec tabSpecTab1 = tabHost.newTabSpec("TAB1").setIndicator("게시판2");
+        ImageView tab1 = new ImageView(this);
+        tab1.setImageResource(R.drawable.btn_star_big_on);
+
+        TabSpec tabSpecTab1 = tabHost.newTabSpec("TAB1").setIndicator(tab1);
         tabSpecTab1.setContent(R.id.tab1);
         tabHost.addTab(tabSpecTab1);
+
 
         TabSpec tabSpecTab2 = tabHost.newTabSpec("TAB2").setIndicator("방구하기");
         tabSpecTab2.setContent(R.id.tab2);
