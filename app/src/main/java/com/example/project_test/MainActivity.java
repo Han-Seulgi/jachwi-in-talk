@@ -17,7 +17,7 @@ public class MainActivity extends TabActivity {
         ImageView tab1 = new ImageView(this);
         tab1.setImageResource(R.drawable.btn_star_big_on);
 
-        TabSpec tabSpecTab1 = tabHost.newTabSpec("TAB1").setIndicator(tab1);
+        TabSpec tabSpecTab1 = tabHost.newTabSpec("TAB1").setIndicator("게시판****");
         tabSpecTab1.setContent(R.id.tab1);
         tabHost.addTab(tabSpecTab1);
 
