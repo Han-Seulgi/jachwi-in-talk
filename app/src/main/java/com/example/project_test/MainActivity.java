@@ -28,7 +28,7 @@ public class MainActivity extends TabActivity {
         tabSpecTab2.setContent(R.id.tab2);
         tabHost.addTab(tabSpecTab2);
 
-        TabSpec tabSpecTab3 = tabHost.newTabSpec("TAB3").setIndicator("행사알림하기~~~");
+        TabSpec tabSpecTab3 = tabHost.newTabSpec("TAB3").setIndicator("행사행사행사^^");
         tabSpecTab3.setContent(R.id.tab3);
         tabHost.addTab(tabSpecTab3);
 
