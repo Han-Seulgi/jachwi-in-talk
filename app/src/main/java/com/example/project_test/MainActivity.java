@@ -20,11 +20,11 @@ public class MainActivity extends TabActivity {
         ImageView tab2 = new ImageView(this);
         tab2.setImageResource(R.drawable.fish);
 
-        TabSpec tabSpecTab1 = tabHost.newTabSpec("TAB1").setIndicator("게시판****");
+        TabSpec tabSpecTab1 = tabHost.newTabSpec("TAB1").setIndicator(tab1);
         tabSpecTab1.setContent(R.id.tab1);
         tabHost.addTab(tabSpecTab1);
 
-        TabSpec tabSpecTab2 = tabHost.newTabSpec("TAB2").setIndicator("방구하기");
+        TabSpec tabSpecTab2 = tabHost.newTabSpec("TAB2").setIndicator(tab2);
         tabSpecTab2.setContent(R.id.tab2);
         tabHost.addTab(tabSpecTab2);
 
