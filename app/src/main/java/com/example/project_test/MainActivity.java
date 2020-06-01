@@ -39,24 +39,30 @@ public class MainActivity extends TabActivity{
         TabHost tabHost = getTabHost();
 
         ImageView tab1 = new ImageView(this);
-        tab1.setImageResource(R.drawable.btn_star_big_on);
+        tab1.setImageResource(R.drawable.board);
 
         ImageView tab2 = new ImageView(this);
-        tab2.setImageResource(R.drawable.fish);
+        tab2.setImageResource(R.drawable.find_room);
 
-        TabSpec tabSpecTab1 = tabHost.newTabSpec("TAB1").setIndicator(tab1);
+        ImageView tab3 = new ImageView(this);
+        tab3.setImageResource(R.drawable.event);
+
+        ImageView tab4 = new ImageView(this);
+        tab4.setImageResource(R.drawable.emergency);
+
+        TabSpec tabSpecTab1 = tabHost.newTabSpec("board").setIndicator(tab1);
         tabSpecTab1.setContent(R.id.tab1);
         tabHost.addTab(tabSpecTab1);
 
-        TabSpec tabSpecTab2 = tabHost.newTabSpec("TAB2").setIndicator(tab2);
+        TabSpec tabSpecTab2 = tabHost.newTabSpec("room").setIndicator(tab2);
         tabSpecTab2.setContent(R.id.tab2);
         tabHost.addTab(tabSpecTab2);
 
-        TabSpec tabSpecTab3 = tabHost.newTabSpec("TAB3").setIndicator("행사");
+        TabSpec tabSpecTab3 = tabHost.newTabSpec("event").setIndicator(tab3);
         tabSpecTab3.setContent(R.id.tab3);
         tabHost.addTab(tabSpecTab3);
 
-        TabSpec tabSpecTab4 = tabHost.newTabSpec("TAB4").setIndicator("안전알리미************");
+        TabSpec tabSpecTab4 = tabHost.newTabSpec("emergency").setIndicator(tab4);
         tabSpecTab4.setContent(R.id.tab4);
         tabHost.addTab(tabSpecTab4);
 
@@ -140,7 +146,7 @@ public class MainActivity extends TabActivity{
                 //i는 0으로 초기화되어있음
                 if ( i == 0 ){
                     img1.setImageResource(R.drawable.meet);
-                    img2.setImageResource(R.drawable.fish);
+                    img2.setImageResource(R.drawable.board);
                     i--;
                 }
                 else if ( i == -1 ){
