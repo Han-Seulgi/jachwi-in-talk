@@ -5,8 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+
     <TabHost
-        android:id="@android:id/tabhost"
+        android:id="@+id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,6 +30,23 @@
                     android:layout_height="match_parent"
                     android:background="#FFFFFF"
                     android:orientation="vertical">
+
+                    <androidx.appcompat.widget.Toolbar
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="툴바"
+                            android:layout_gravity="center"
+                            android:id="@+id/title"
+                            android:textSize="20sp"
+                            >
+                        </TextView>
+                    </androidx.appcompat.widget.Toolbar>
 
                     <SearchView
                         android:id="@+id/search"
@@ -217,6 +236,23 @@
                     android:background="#E64A19"
                     android:orientation="vertical">
 
+                    <androidx.appcompat.widget.Toolbar
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/toolbar2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="보금자리"
+                            android:layout_gravity="center"
+                            android:id="@+id/room"
+                            android:textSize="20sp"
+                            >
+                        </TextView>
+                    </androidx.appcompat.widget.Toolbar>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -230,6 +266,23 @@
                     android:background="#ff0000"
                     android:orientation="vertical">
 
+                    <androidx.appcompat.widget.Toolbar
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/toolbar3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="행사알리미"
+                            android:layout_gravity="center"
+                            android:id="@+id/event"
+                            android:textSize="20sp"
+                            >
+                        </TextView>
+                    </androidx.appcompat.widget.Toolbar>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -242,6 +295,23 @@
                     android:layout_height="match_parent"
                     android:background="#0097A7"
                     android:orientation="vertical">
+
+                    <androidx.appcompat.widget.Toolbar
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/toolbar4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="안전지키미"
+                            android:layout_gravity="center"
+                            android:id="@+id/emergency"
+                            android:textSize="20sp"
+                            >
+                        </TextView>
+                    </androidx.appcompat.widget.Toolbar>
 
                     <TextView
                         android:layout_width="wrap_content"
