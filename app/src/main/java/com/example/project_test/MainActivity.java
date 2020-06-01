@@ -78,22 +78,22 @@ public class MainActivity extends TabActivity {
             imageButtons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(i == 0) {
+                    if(v.getId() == R.id.btn1) {
                         //자취앤집밥 게시판으로 넘어가기
                     }
-                    else if (i == 1) {
+                    else if (v.getId() == R.id.btn2) {
                         //자취인디자인 게시판으로 넘어가기
                     }
-                    else if (i == 2) {
+                    else if (v.getId() == R.id.btn3) {
                         //자취인만남 게시판으로 넘어가기
                     }
-                    else if (i == 3) {
+                    else if (v.getId() == R.id.btn4) {
                         //자취Q&A 게시판으로 넘어가기
                     }
-                    else if (i == 4) {
+                    else if (v.getId() == R.id.btn5) {
                         //자취인정보 게시판으로 넘어가기
                     }
-                    else if (i == 5) {
+                    else if (v.getId() == R.id.btn6) {
                         //자취인혼밥 게시판으로 넘어가기
                     }
                     else {

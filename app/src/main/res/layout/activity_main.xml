@@ -1,52 +1,55 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <TabHost
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical">
+
             <FrameLayout
                 android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" >
+                android:layout_weight="1">
                 <!-- 첫 번째 탭 -->
                 <LinearLayout
                     android:id="@+id/tab1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#FFFFFF"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <EditText
                         android:id="@+id/edit1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="전체 게시판 검색"/>
+                        android:text="전체 게시판 검색" />
 
 
-                    <ScrollView
+                    <!--<ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"/>
+                    -->
+
                     <ViewFlipper
                         android:id="@+id/vflip"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"/>
+                        android:layout_height="100dp" />
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="글쓰기"/>
+                        android:text="글쓰기" />
 
                     <!-- 6개의 게시판-->
                     <LinearLayout
@@ -57,44 +60,53 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
+
                             <ImageButton
                                 android:id="@+id/btn1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/food"/>
+                                android:src="@drawable/food" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="\n\n자취앤집밥" />
+
                             <ImageButton
                                 android:id="@+id/btn2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/food"/>
+                                android:src="@drawable/food" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="\n\n자취인디자인" />
-                            </LinearLayout>
+
+                        </LinearLayout>
 
                         <!--자취인만남, 자취Q&A 게시판-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
+
                             <ImageButton
                                 android:id="@+id/btn3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/food"/>
+                                android:src="@drawable/food" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="\n\n자취인만남" />
+
                             <ImageButton
                                 android:id="@+id/btn4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/food"/>
+                                android:src="@drawable/food" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -105,26 +117,32 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
+
                             <ImageButton
                                 android:id="@+id/btn5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/food"/>
+                                android:src="@drawable/food" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="\n\n자취인정보" />
+
                             <ImageButton
                                 android:id="@+id/btn6"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/food"/>
+                                android:src="@drawable/food" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="\n\n자취앤혼밥" />
                         </LinearLayout>
+
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <!-- 두 번째 탭 -->
@@ -133,7 +151,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#E64A19"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -146,7 +164,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#ff0000"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -159,7 +177,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#0097A7"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -171,8 +189,8 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            </TabWidget>
+                android:layout_height="wrap_content"></TabWidget>
+
         </LinearLayout>
     </TabHost>
 
