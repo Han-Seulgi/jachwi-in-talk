@@ -1,5 +1,7 @@
 package com.example.project_test;
+import android.app.LocalActivityManager;
 import android.app.TabActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,18 +17,19 @@ import android.widget.ViewFlipper;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends TabActivity {
     ViewFlipper vflip1,vflip2;
     ImageButton btn1, btn2, btn3, btn4, btn5, btn6, img1, img2;
     ImageButton imageButtons[] = {btn1, btn2, btn3, btn4, btn5, btn6};
     Button changebtn;
-    Toolbar toolbar;
+    /*Toolbar toolbar;*/
     int i=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
         //상단탭
         toolbar = findViewById(R.id.toolbar);
 
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.fish);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        */
 
         //메인화면
         vflip1 = findViewById(R.id.vflip1);
@@ -51,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         imageButtons[5] = findViewById(R.id.btn6);
 
         //탭 만들기
-        TabHost tabHost = (TabHost) findViewById (R.id.tabhost);
-        tabHost.setup();
+        TabHost tabHost = getTabHost();
+
 
         //탭 아이콘
         ImageView tab1 = new ImageView(this);
@@ -65,21 +69,22 @@ public class MainActivity extends AppCompatActivity {
         tab4.setImageResource(R.drawable.emergency);
 
 
-        TabHost.TabSpec tabSpecTab1 = tabHost.newTabSpec("board").setIndicator(tab1);
+        TabSpec tabSpecTab1 = tabHost.newTabSpec("board").setIndicator(tab1);
         tabSpecTab1.setContent(R.id.tab1);
         tabHost.addTab(tabSpecTab1);
 
-        TabHost.TabSpec tabSpecTab2 = tabHost.newTabSpec("room").setIndicator(tab2);
+        TabSpec tabSpecTab2 = tabHost.newTabSpec("room").setIndicator(tab2);
         tabSpecTab2.setContent(R.id.tab2);
         tabHost.addTab(tabSpecTab2);
 
-        TabHost.TabSpec tabSpecTab3 = tabHost.newTabSpec("event").setIndicator(tab3);
+        TabSpec tabSpecTab3 = tabHost.newTabSpec("event").setIndicator(tab3);
         tabSpecTab3.setContent(R.id.tab3);
         tabHost.addTab(tabSpecTab3);
 
-        TabHost.TabSpec tabSpecTab4 = tabHost.newTabSpec("emergency").setIndicator(tab4);
+        TabSpec tabSpecTab4 = tabHost.newTabSpec("emergency").setIndicator(tab4);
         tabSpecTab4.setContent(R.id.tab4);
         tabHost.addTab(tabSpecTab4);
+
 
         tabHost.setCurrentTab(0);
 
@@ -179,14 +184,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*
+    //상단탭 메뉴
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.top_menu, menu);
         return true;
-    }
+    }*/
 
 
+    /*
     //메뉴액션 --home:마이페이지 --message:쪽지함
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -201,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return true;
-    }
+    }*/
 
 
 
