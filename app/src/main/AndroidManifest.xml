@@ -20,6 +20,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".JoinActivity" android:label="회원가입 화면"/>
+        <activity android:name=".RoomActivity" android:label="보금자리 화면"/>
+        <activity android:name=".BoardActivity" android:label="게시판메인 화면"/>
+        <activity android:name=".EventActivity" android:label="행사알리미 화면"/>
+        <activity android:name=".EmergencyActivity" android:label="안전지키미 화면"/>
     </application>
 
 </manifest>
