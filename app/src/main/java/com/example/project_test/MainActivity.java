@@ -1,6 +1,10 @@
 package com.example.project_test;
+import android.app.LocalActivityManager;
 import android.app.TabActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -8,20 +12,35 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
-import android.widget.Toolbar;
 import android.widget.ViewFlipper;
 
-public class MainActivity extends TabActivity{
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+public class MainActivity extends TabActivity {
     ViewFlipper vflip1,vflip2;
     ImageButton btn1, btn2, btn3, btn4, btn5, btn6, img1, img2;
     ImageButton imageButtons[] = {btn1, btn2, btn3, btn4, btn5, btn6};
     Button changebtn;
+    /*Toolbar toolbar;*/
     int i=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
+        //상단탭
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.fish);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        */
+
+        //메인화면
         vflip1 = findViewById(R.id.vflip1);
         vflip2 = findViewById(R.id.vflip2);
         img1 = findViewById(R.id.img1);
@@ -38,17 +57,17 @@ public class MainActivity extends TabActivity{
         //탭 만들기
         TabHost tabHost = getTabHost();
 
+
+        //탭 아이콘
         ImageView tab1 = new ImageView(this);
         tab1.setImageResource(R.drawable.board);
-
         ImageView tab2 = new ImageView(this);
         tab2.setImageResource(R.drawable.find_room);
-
         ImageView tab3 = new ImageView(this);
         tab3.setImageResource(R.drawable.event);
-
         ImageView tab4 = new ImageView(this);
         tab4.setImageResource(R.drawable.emergency);
+
 
         TabSpec tabSpecTab1 = tabHost.newTabSpec("board").setIndicator(tab1);
         tabSpecTab1.setContent(R.id.tab1);
@@ -65,6 +84,7 @@ public class MainActivity extends TabActivity{
         TabSpec tabSpecTab4 = tabHost.newTabSpec("emergency").setIndicator(tab4);
         tabSpecTab4.setContent(R.id.tab4);
         tabHost.addTab(tabSpecTab4);
+
 
         tabHost.setCurrentTab(0);
 
@@ -163,6 +183,34 @@ public class MainActivity extends TabActivity{
             }
         });
     }
+
+    /*
+    //상단탭 메뉴
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.top_menu, menu);
+        return true;
+    }*/
+
+
+    /*
+    //메뉴액션 --home:마이페이지 --message:쪽지함
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                //마이페이지 화면
+                return true;
+            case android.R.id.message:
+                //쪽지함 화면
+                return true;
+        }
+        return true;
+    }*/
+
 
 
 
