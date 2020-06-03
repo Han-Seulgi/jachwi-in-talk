@@ -21,7 +21,7 @@ public class MainActivity extends ActivityGroup {
         TabHost tabHost = (TabHost) findViewById(R.id.tabhost);
         tabHost.setup(getLocalActivityManager());
 
-        //탭 아이콘
+        //탭 아이콘~
         ImageView tab1 = new ImageView(this);
         tab1.setImageResource(R.drawable.board);
         ImageView tab2 = new ImageView(this);
