@@ -25,7 +25,7 @@ public class MainActivity extends ActivityGroup {
         ImageView tab1 = new ImageView(this);
         tab1.setImageResource(R.drawable.board);
         ImageView tab2 = new ImageView(this);
-        tab2.setImageResource(R.drawable.find_room);
+        tab2.setImageResource(R.drawable.room);
         ImageView tab3 = new ImageView(this);
         tab3.setImageResource(R.drawable.event);
         ImageView tab4 = new ImageView(this);
