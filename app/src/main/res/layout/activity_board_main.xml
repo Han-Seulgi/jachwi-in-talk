@@ -80,21 +80,25 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
                     <!--자취앤집밥, 자취인디자인 게시판-->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        >
 
                         <ImageButton
                             android:id="@+id/btn1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/food" />
+                            android:src="@drawable/food"
+                            />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
                             android:text="\n\n자취앤집밥" />
 
                         <ImageButton
@@ -123,6 +127,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
                             android:text="\n\n자취인만남" />
 
                         <ImageButton
@@ -151,6 +156,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
                             android:text="\n\n자취인정보" />
 
                         <ImageButton

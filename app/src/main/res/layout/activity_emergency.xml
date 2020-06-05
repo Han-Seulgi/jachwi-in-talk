@@ -26,6 +26,18 @@
                 android:text="안전지키미"
                 android:textSize="20sp"></TextView>
         </androidx.appcompat.widget.Toolbar>
+
+        <GridView
+            android:id="@+id/gv1"
+            android:layout_marginVertical="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:numColumns="2"
+            android:verticalSpacing="40dp"
+
+            ></GridView>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
