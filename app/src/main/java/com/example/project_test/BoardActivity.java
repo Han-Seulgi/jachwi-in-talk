@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.Nullable;
@@ -18,7 +19,6 @@ public class BoardActivity extends AppCompatActivity {
     ImageButton btn1, btn2, btn3, btn4, btn5, btn6, img1, img2;
     ImageButton imageButtons[] = {btn1, btn2, btn3, btn4, btn5, btn6};
     Button changebtn;
-
     Toolbar toolbar;
 
     int i = 0;
@@ -52,9 +52,8 @@ public class BoardActivity extends AppCompatActivity {
         imageButtons[4] = findViewById(R.id.btn5);
         imageButtons[5] = findViewById(R.id.btn6);
 
-
         //첫 번째 탭의 게시 인기글 뷰 플리퍼
-        int f1_images[] = {R.drawable.food, R.drawable.meet}; //뷰 플리퍼에 들어갈 이미지
+        int f1_images[] = {R.drawable.food, R.drawable.meet}; //뷰 플리퍼에 들어갈 게시판 이미지
 
         for(int image :f1_images) {
             ImageView imageView = new ImageView(this);

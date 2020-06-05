@@ -54,11 +54,21 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:text="더보기" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ViewFlipper
+                        android:id="@+id/vflip1"
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="left" />
+                    <TextView
+                        android:id="@+id/tex1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="초간단 냉라면 레시피!!\n 요즘 너무 더워서 냉라면을\n 만들어먹어봤어요~"/>
+                </LinearLayout>
 
-                <ViewFlipper
-                    android:id="@+id/vflip1"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp" />
 
                 <Button
                     android:layout_width="wrap_content"
@@ -168,10 +178,20 @@
                     android:layout_gravity="right"
                     android:text="더보기" />
 
-                <ViewFlipper
-                    android:id="@+id/vflip2"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ViewFlipper
+                        android:id="@+id/vflip2"
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="left" />
+                    <TextView
+                        android:id="@+id/tex2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="에어컨 청소 팁좀 알려주세요~~" />
+                </LinearLayout>
 
                 <!-- 나눔 HOT -->
                 <LinearLayout
