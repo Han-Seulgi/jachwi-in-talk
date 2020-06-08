@@ -65,6 +65,7 @@ public class BoardActivity extends AppCompatActivity {
             vflip1.setOutAnimation(this,android.R.anim.slide_out_right); //animation
         }
 
+
         vflip1.setOnClickListener(new View.OnClickListener() { //뷰 플리퍼 클릭했을 때
             @Override
             public void onClick(View v) {

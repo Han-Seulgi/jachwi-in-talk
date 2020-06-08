@@ -20,10 +20,12 @@
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:text="자취인톡"
+                android:background="#FF9263"
+                android:textColor="#FFFFFF"
                 android:textSize="20sp"></TextView>
         </androidx.appcompat.widget.Toolbar>
 
@@ -91,26 +93,21 @@
                         <ImageButton
                             android:id="@+id/btn1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/food"
+                            android:layout_height="100dp"
+                            android:layout_marginRight="3dp"
+                            android:src="@drawable/food2"
+                            android:background="#00ff0000"
                             />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:text="\n\n자취앤집밥" />
 
                         <ImageButton
                             android:id="@+id/btn2"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/food" />
+                            android:layout_height="100dp"
+                            android:src="@drawable/food2"
+                            android:background="#00ff0000"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="\n\n자취인디자인" />
+
                     </LinearLayout>
 
                     <!--자취인만남, 자취Q&A 게시판-->
@@ -121,14 +118,12 @@
                         <ImageButton
                             android:id="@+id/btn3"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/food" />
+                            android:layout_height="100dp"
+                            android:src="@drawable/meeting"
+                            android:layout_marginTop="3dp"
+                            android:background="#00ff0000"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:text="\n\n자취인만남" />
+
 
                         <ImageButton
                             android:id="@+id/btn4"
