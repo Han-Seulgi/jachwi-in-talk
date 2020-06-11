@@ -39,7 +39,7 @@
             <ViewFlipper
                 android:id="@+id/vflip1"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="150dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -54,7 +54,7 @@
             <ViewFlipper
                 android:id="@+id/vflip2"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="150dp" />
         </LinearLayout>
     </LinearLayout>
 
