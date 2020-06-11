@@ -30,12 +30,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
+
+            <ImageView
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="5월 행사"
-                android:textSize="20dp" />
+                android:src="@drawable/jun1"/>
+
             <ViewFlipper
                 android:id="@+id/vflip1"
                 android:layout_width="match_parent"
@@ -46,12 +46,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="6월 행사"
-                android:textSize="20dp" />
+                android:layout_marginLeft="7dp"
+                android:src="@drawable/july1"/>
             <ViewFlipper
                 android:id="@+id/vflip2"
                 android:layout_width="match_parent"
