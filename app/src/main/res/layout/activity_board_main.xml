@@ -84,12 +84,6 @@
                         android:text="초간단 냉라면 레시피!!\n 요즘 너무 더워서 냉라면을\n 만들어먹어봤어요~"/>
                 </LinearLayout>
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="글쓰기" />
-
                 <!-- 6개의 게시판-->
                 <LinearLayout
                     android:layout_width="wrap_content"

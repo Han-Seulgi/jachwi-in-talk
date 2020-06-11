@@ -9,7 +9,7 @@
         android:id="@+id/tab4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
+        android:background="#FF5242"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
