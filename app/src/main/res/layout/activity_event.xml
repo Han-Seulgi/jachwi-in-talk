@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:id="@+id/tab3"
         android:layout_width="match_parent"
@@ -26,6 +27,8 @@
                 android:textSize="20sp"></TextView>
         </androidx.appcompat.widget.Toolbar>
 
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,13 +37,20 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-25dp"
                 android:src="@drawable/jun1"/>
 
-            <ViewFlipper
-                android:id="@+id/vflip1"
-                android:layout_width="match_parent"
-                android:layout_height="150dp" />
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/event1"
+                android:layout_marginTop="-30dp"
+               />
+
+
         </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,11 +60,15 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
+                android:layout_marginTop="-15dp"
                 android:src="@drawable/july1"/>
-            <ViewFlipper
-                android:id="@+id/vflip2"
-                android:layout_width="match_parent"
-                android:layout_height="150dp" />
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="-20dp"
+                android:src="@drawable/event2"
+                />
+
         </LinearLayout>
     </LinearLayout>
 
@@ -65,15 +79,21 @@
         app:layout_constraintBottom_toBottomOf="@id/tab3">
         <TextView
             android:id="@+id/tv1"
+            android:layout_marginLeft="-10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="더 많은 행사를 보고싶으면"
+            android:text="  더 많은 행사를 보고싶으면 ? "
+            android:background="#F8EEA0"
             android:textSize="20sp"
             app:layout_constraintRight_toLeftOf="@id/eventsite" />
         <Button
             android:id="@+id/eventsite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="더보기" />
+            android:layout_marginLeft="20dp"
+            android:onClick="onButton"
+            android:textColor="#000000"
+            android:background="#00FF0000"
+            android:text="바로가기 >" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
