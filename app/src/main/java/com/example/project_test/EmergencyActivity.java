@@ -10,6 +10,8 @@ import android.graphics.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,6 +52,8 @@ public class EmergencyActivity extends AppCompatActivity {
     private boolean mFlashOn;//손전등 켬/끔
     private CameraManager cm;
     private String mCameraId;
+    private SoundPool sound_pool;
+    private int sound_beep;
 
     TelephonyManager tm;
     String phoneNumber;
@@ -62,6 +66,10 @@ public class EmergencyActivity extends AppCompatActivity {
         //상단탭
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //경고음
+        sound_pool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+        sound_beep = sound_pool.load(EmergencyActivity.this, R.raw.sirensound, 1);
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
@@ -128,9 +136,21 @@ public class EmergencyActivity extends AppCompatActivity {
                         }return;
 
                     case 2: return;
-                    case 3: return;
+                    case 3:
+                        try {
+                            sound_pool.play(sound_beep, 3f, 3f, 0, -1, 1f);
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(),"경고음 실패", Toast.LENGTH_SHORT).show();
+                        }
+                        return;
                     case 4: return;
-                    case 5: return;
+                    case 5:
+                        try {
+
+                        } catch(Exception e) {
+                            Toast.makeText(getApplicationContext(),"긴급전화 실패", Toast.LENGTH_SHORT).show();
+                        }
+                        return;
 
                 }//switch end
             }
