@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -27,6 +28,19 @@
         <activity android:name=".BoardActivity" android:label="게시판메인 화면"/>
         <activity android:name=".EventActivity" android:label="행사알리미 화면"/>
         <activity android:name=".EmergencyActivity" android:label="안전지키미 화면"/>
+
+        <receiver android:name=".BootReceiver"
+            android:enabled="true"
+            android:label="부팅시 작동하는 브로드캐스트 리시버">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".ShakeService"
+            android:label="백그라운드 흔들림 감지 서비스">
+        </service>
+
     </application>
 
 </manifest>

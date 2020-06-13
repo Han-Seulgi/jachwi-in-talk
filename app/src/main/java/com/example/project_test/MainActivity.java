@@ -23,13 +23,13 @@ public class MainActivity extends ActivityGroup {
 
         //탭 아이콘~
         ImageView tab1 = new ImageView(this);
-        tab1.setImageResource(R.drawable.board);
+        tab1.setImageResource(R.drawable.board3);
         ImageView tab2 = new ImageView(this);
-        tab2.setImageResource(R.drawable.board);
+        tab2.setImageResource(R.drawable.board3);
         ImageView tab3 = new ImageView(this);
-        tab3.setImageResource(R.drawable.event);
+        tab3.setImageResource(R.drawable.board3);
         ImageView tab4 = new ImageView(this);
-        tab4.setImageResource(R.drawable.emergency);
+        tab4.setImageResource(R.drawable.board3);
 
         tabHost.addTab(tabHost.newTabSpec("TAB1").setIndicator(tab1)
                 .setContent(new Intent(this,BoardActivity.class)));
