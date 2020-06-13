@@ -85,9 +85,11 @@ public class ShakeService extends Service implements SensorEventListener {
                     //흔들리면 이벤트 발생
 
                     //앱 실행(반응 속도가 엄청 느림, 앱 연 상태에서 계속 열림)
-                    Intent intent = new Intent(getApplicationContext(), EmergencyActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("page", 1);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(intent);
+
                     Toast.makeText(getApplicationContext(), "앱열림", Toast.LENGTH_SHORT).show();
                     /*Intent intent = getPackageManager().getLaunchIntentForPackage("package com.example.a2222222");
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

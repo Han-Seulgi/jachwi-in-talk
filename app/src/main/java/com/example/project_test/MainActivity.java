@@ -7,6 +7,9 @@ import android.widget.TabHost;
 
 
 public class MainActivity extends ActivityGroup {
+
+    int page;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,16 @@ public class MainActivity extends ActivityGroup {
         tabHost.addTab(tabHost.newTabSpec("TAB4").setIndicator(tab4)
                 .setContent(new Intent(this, EmergencyActivity.class)));
 
+
+        //흔들어서 열면 안전지키미 선택되도록 설정
+        Intent it = new Intent(getIntent());
+        page = it.getIntExtra("page", -1);
+
+        if(page == 1) {
+            tabHost.setCurrentTab(3);
+        } else {
+            tabHost.setCurrentTab(0);
+        }
     }
 
 

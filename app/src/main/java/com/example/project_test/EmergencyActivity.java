@@ -3,6 +3,7 @@ package com.example.project_test;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -135,7 +136,11 @@ public class EmergencyActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }return;
 
-                    case 2: return;
+                    case 2:
+                        //흔들림횟수 화면이동
+                        //Intent count_itnt = new Intent(getApplicationContext(), );
+                        //startActivity(count_itnt);
+                        return;
                     case 3:
                         try {
                             sound_pool.play(sound_beep, 3f, 3f, 0, -1, 1f);
