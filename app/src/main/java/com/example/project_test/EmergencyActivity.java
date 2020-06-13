@@ -148,7 +148,10 @@ public class EmergencyActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"경고음 실패", Toast.LENGTH_SHORT).show();
                         }
                         return;
-                    case 4: return;
+                    case 4:
+                        Intent intent = new Intent(EmergencyActivity.this, EmergencySet.class);
+                        startActivity(intent);
+                        return;
                     case 5:
                         try {
 

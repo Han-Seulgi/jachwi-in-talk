@@ -28,6 +28,7 @@
         <activity android:name=".BoardActivity" android:label="게시판메인 화면"/>
         <activity android:name=".EventActivity" android:label="행사알리미 화면"/>
         <activity android:name=".EmergencyActivity" android:label="안전지키미 화면"/>
+        <activity android:name=".EmergencySet" android:label="안전지키미 설정화면"/>
 
         <receiver android:name=".BootReceiver"
             android:enabled="true"
