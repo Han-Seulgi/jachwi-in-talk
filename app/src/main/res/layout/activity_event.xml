@@ -40,12 +40,25 @@
                 android:layout_marginTop="-25dp"
                 android:src="@drawable/jun1"/>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="-20dp">
             <ImageView
-                android:layout_width="200dp"
+                android:layout_width="140dp"
                 android:layout_height="200dp"
+                android:layout_marginRight="25dp"
                 android:src="@drawable/event1"
                 android:layout_marginTop="-30dp"
                />
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_height="230dp"
+                android:src="@drawable/event3"
+                android:layout_marginTop="-30dp"
+                />
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -60,14 +73,29 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
-                android:layout_marginTop="-15dp"
+                android:layout_marginTop="-28dp"
                 android:src="@drawable/july1"/>
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginTop="-20dp"
-                android:src="@drawable/event2"
-                />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="-20dp">
+                <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="200dp"
+                    android:layout_marginRight="25dp"
+                    android:src="@drawable/event2"
+                    android:layout_marginTop="-30dp"
+                    />
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="230dp"
+                    android:src="@drawable/event4"
+                    android:layout_marginTop="-30dp"
+                    />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
@@ -83,7 +111,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="  더 많은 행사를 보고싶으면 ? "
-            android:background="#F8EEA0"
             android:textSize="20sp"
             app:layout_constraintRight_toLeftOf="@id/eventsite" />
         <Button

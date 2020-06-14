@@ -30,7 +30,7 @@ public class EventActivity extends AppCompatActivity {
     }
 
         public void onButton(View v)
-        { Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+        { Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/onehomelife/"));
             startActivity(intent);
         }
 
