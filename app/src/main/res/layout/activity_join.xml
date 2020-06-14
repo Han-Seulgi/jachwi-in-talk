@@ -42,192 +42,180 @@
         app:layout_constraintGuide_begin="40dp" />
 
     <!--아이디-->
-    <LinearLayout
-        android:id="@+id/id"
+    <TextView
+        android:id="@+id/idTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:text="아이디"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/title">
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
-        <TextView
-            android:id="@+id/idTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아이디"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+    <EditText
+        android:id="@+id/idET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="23dp"
+        android:hint="아이디를 입력해주세요"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@+id/idTxt"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
-        <EditText
-            android:id="@+id/idET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:hint="아이디를 입력해주세요"
-            android:textSize="15sp" />
-
-        <ImageView
-            android:id="@+id/idck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/check" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/idck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="70dp"
+        android:src="@drawable/check"
+        app:layout_constraintLeft_toRightOf="@+id/idET"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <!--비밀번호-->
-    <LinearLayout
-        android:id="@+id/pw"
+    <TextView
+        android:id="@+id/pwTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
+        android:text="비밀번호"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/id">
+        app:layout_constraintTop_toBottomOf="@+id/idTxt" />
 
-        <TextView
-            android:id="@+id/pwTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="비밀번호"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+    <EditText
+        android:id="@+id/pwET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:hint="비밀번호를 입력해주세요"
+        android:inputType="textPassword"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@+id/pwTxt"
+        app:layout_constraintTop_toBottomOf="@+id/idET" />
 
-        <EditText
-            android:id="@+id/pwET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:hint="비밀번호를 입력해주세요"
-            android:textSize="15sp" />
-
-    </LinearLayout>
 
     <!--비밀번호확인-->
-    <LinearLayout
-        android:id="@+id/pwck"
+    <TextView
+        android:id="@+id/pwckTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
+        android:text="비밀번호확인"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/pw">
+        app:layout_constraintTop_toBottomOf="@+id/pwTxt" />
 
-        <TextView
-            android:id="@+id/pwckTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="비밀번호확인"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+    <EditText
+        android:id="@+id/pwckET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:hint="비밀번호를 입력해주세요"
+        android:inputType="textPassword"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@+id/pwckTxt"
+        app:layout_constraintTop_toBottomOf="@+id/pwET" />
 
-        <EditText
-            android:id="@+id/pwckET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:hint="비밀번호를 입력해주세요"
-            android:textSize="15sp" />
+    <ImageView
+        android:id="@+id/pwckck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/check"
+        app:layout_constraintLeft_toRightOf="@+id/pwckET"
+        app:layout_constraintTop_toBottomOf="@id/pwET" />
 
-        <ImageView
-            android:id="@+id/pwckck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/check" />
-
-    </LinearLayout>
 
     <!--닉네임-->
-    <LinearLayout
-        android:id="@+id/name"
+    <TextView
+        android:id="@+id/nameTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
+        android:text="닉네임"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/pwck">
+        app:layout_constraintTop_toBottomOf="@+id/pwckTxt" />
 
-        <TextView
-            android:id="@+id/nameTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="닉네임"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+    <EditText
+        android:id="@+id/nameET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:hint="닉네임을 입력해주세요"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@+id/nameTxt"
+        app:layout_constraintTop_toBottomOf="@+id/pwckET" />
 
-        <EditText
-            android:id="@+id/nameET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:hint="닉네임을 입력해주세요"
-            android:textSize="15sp" />
+    <ImageView
+        android:id="@+id/nameck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/check"
+        app:layout_constraintLeft_toRightOf="@+id/nameET"
+        app:layout_constraintTop_toBottomOf="@id/pwckET" />
 
-        <ImageView
-            android:id="@+id/nameck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/check" />
-
-    </LinearLayout>
 
     <!--이메일-->
-    <LinearLayout
-        android:id="@+id/email"
+    <TextView
+        android:id="@+id/emailTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
+        android:text="이메일"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/name">
+        app:layout_constraintTop_toBottomOf="@+id/nameTxt" />
 
-        <TextView
-            android:id="@+id/emailTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="이메일"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/emailET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:hint="이메일을 입력해주세요"
-            android:textSize="15sp" />
-
-    </LinearLayout>
+    <EditText
+        android:id="@+id/emailET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:hint="이메일을 입력해주세요"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@+id/emailTxt"
+        app:layout_constraintTop_toBottomOf="@+id/nameET" />
 
     <!--거주지-->
-    <LinearLayout
-        android:id="@+id/adrs"
+    <TextView
+        android:id="@+id/adrsTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
+        android:text="거주지"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/email">
+        app:layout_constraintTop_toBottomOf="@+id/emailTxt" />
 
-        <TextView
-            android:id="@+id/adrsTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="거주지"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+    <EditText
+        android:id="@+id/adrsET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:hint="거주지를 입력해주세요"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@+id/adrsTxt"
+        app:layout_constraintTop_toBottomOf="@+id/emailET" />
 
-        <EditText
-            android:id="@+id/adrsET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:hint="거주지를 입력해주세요"
-            android:textSize="15sp" />
-
-    </LinearLayout>
 
     <!--완료 버튼-->
     <Button
@@ -238,6 +226,6 @@
         android:layout_marginRight="20dp"
         android:text="완료"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adrs" />
+        app:layout_constraintTop_toBottomOf="@+id/adrsET" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

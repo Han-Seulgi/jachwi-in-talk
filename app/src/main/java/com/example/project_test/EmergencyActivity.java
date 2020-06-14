@@ -143,8 +143,8 @@ public class EmergencyActivity extends AppCompatActivity {
 
                     case 2:
                         //흔들림횟수 화면이동
-                        //Intent count_itnt = new Intent(getApplicationContext(), );
-                        //startActivity(count_itnt);
+                        Intent count_itnt = new Intent(EmergencyActivity.this, ShakeNumberActivity.class);
+                        startActivity(count_itnt);
                         return;
                     case 3: //경고음 버튼 눌렀을 때
                         try {

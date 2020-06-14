@@ -10,26 +10,53 @@
         android:id="@+id/title"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="80dp"
         android:src="@drawable/title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint=" 아이디"
+        android:layout_marginTop="70dp"
+        android:ems="9"
+        android:background="#ffffff"
+        android:drawableLeft="@drawable/idicon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:id="@+id/idEt"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint=" 비밀번호"
+        android:layout_marginTop="5dp"
+        android:ems="9"
+        android:drawableLeft="@drawable/pwicon"
+        android:inputType="textPassword"
+        android:background="#ffffff"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/idEt"
+        android:id="@+id/pwEt"/>
 
     <!--로그인버튼-->
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="95dp"
-        android:paddingHorizontal="70dp"
+        android:layout_marginTop="5dp"
+        android:paddingHorizontal="75dp"
         android:paddingVertical="15dp"
         android:text="로그인"
         android:textSize="20dp"
         android:onClick="btnClick"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/pwEt" />
 
 
     <!--네이버아이디로그인버튼-->
@@ -40,7 +67,7 @@
         android:layout_marginTop="20dp"
         android:background="#00C755"
         android:drawableStart="@drawable/naverlogo2"
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="27dp"
         android:text="네이버아이디로그인"
         android:onClick="btnClick"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -54,7 +81,7 @@
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
         android:drawableStart="@drawable/googlelogo"
-        android:paddingHorizontal="27dp"
+        android:paddingHorizontal="32dp"
         android:background="#FFFFFF"
         android:text="구글아이디로그인"
         android:onClick="btnClick"
