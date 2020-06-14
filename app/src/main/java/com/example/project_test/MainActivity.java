@@ -1,9 +1,16 @@
 package com.example.project_test;
+import android.Manifest;
 import android.app.ActivityGroup;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 
 public class MainActivity extends ActivityGroup {
@@ -14,11 +21,45 @@ public class MainActivity extends ActivityGroup {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //탭 만들기
         createTab();
+
+        //안전관리에서 긴급전화 버튼 눌렀을 때 전화 하기 위해 권한 요청
+        if(Build.VERSION.SDK_INT >= 23) {
+            if(checkPermission()) {}
+            else { requestPermission(); }
+        }
     }
 
+    private boolean checkPermission() {
+        int result = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE);
+        if(result == PackageManager.PERMISSION_GRANTED) { // 이전에 요청 허락 했으면
+            return true;
+        }
+        else { // 이전에 요청 허락 하지 않았으면
+            return false;
+        }
+    }
+
+    private void requestPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,android.Manifest.permission.CALL_PHONE)) {
+            Toast.makeText(MainActivity.this, "CALL_PHONE",Toast.LENGTH_SHORT).show();
+        }
+        else {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.CALL_PHONE},1000);
+        }
+    }
+
+    public void onRequestPermissionResult(int requestCode, String permissions[], int[] grantResults) {
+        switch(requestCode) {
+            case 1000 :
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(MainActivity.this, "허락했습니다.", Toast.LENGTH_SHORT).show();
+                }
+                else { Toast.makeText(MainActivity.this,"거부했습니다.", Toast.LENGTH_SHORT).show(); }
+                break;
+        }
+    }
 
     private void createTab() {
         TabHost tabHost = (TabHost) findViewById(R.id.tabhost);

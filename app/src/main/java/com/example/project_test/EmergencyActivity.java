@@ -2,7 +2,9 @@ package com.example.project_test;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -13,6 +15,7 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,11 +29,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -103,9 +108,8 @@ public class EmergencyActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.SEND_SMS}, MODE_PRIVATE);
         } else {
-            phoneNumber = tm.getLine1Number();}
-
-
+            phoneNumber = tm.getLine1Number();
+        }
 
 
         //이벤트
@@ -126,42 +130,50 @@ public class EmergencyActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_SHORT).show();
                         try {
 
-                                String sms = "테스트입니당";
-                                SmsManager smsManager = SmsManager.getDefault();
-                                smsManager.sendTextMessage(phoneNumber, null, sms, null, null);
-                                Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_SHORT).show();
+                            String sms = "테스트입니당";
+                            SmsManager smsManager = SmsManager.getDefault();
+                            smsManager.sendTextMessage(phoneNumber, null, sms, null, null);
+                            Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_SHORT).show();
 
                         } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), "전송실패", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
-                        }return;
+                        }
+                        return;
 
                     case 2:
                         //흔들림횟수 화면이동
                         //Intent count_itnt = new Intent(getApplicationContext(), );
                         //startActivity(count_itnt);
                         return;
-                    case 3:
+                    case 3: //경고음 버튼 눌렀을 때
                         try {
                             sound_pool.play(sound_beep, 3f, 3f, 0, -1, 1f);
                         } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(),"경고음 실패", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "경고음 실패", Toast.LENGTH_SHORT).show();
                         }
                         return;
                     case 4:
                         Intent intent = new Intent(EmergencyActivity.this, EmergencySet.class);
                         startActivity(intent);
                         return;
-                    case 5:
+                    case 5: //긴급전화 버튼 눌렀을 때
+                       Intent intent2 = new Intent(Intent.ACTION_CALL);
+                       intent2.setData(Uri.parse("tel:01022222222")); //마이페이지에서 설정한 전화번호
                         try {
-
-                        } catch(Exception e) {
-                            Toast.makeText(getApplicationContext(),"긴급전화 실패", Toast.LENGTH_SHORT).show();
+                            startActivity(intent2);
+                            Toast.makeText(EmergencyActivity.this, "전화걸기 성공", Toast.LENGTH_SHORT).show();
                         }
+                        catch(Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(EmergencyActivity.this, "전화걸기 실패", Toast.LENGTH_SHORT).show();
+                        }
+
                         return;
 
                 }//switch end
             }
+
         });
     }
 
@@ -188,6 +200,7 @@ public class EmergencyActivity extends AppCompatActivity {
         }
         return true;
     }
+
 
     //어댑터
     public class MyGridAdapter extends BaseAdapter {
@@ -258,5 +271,6 @@ public class EmergencyActivity extends AppCompatActivity {
         }
     }
 }
+
 
 
