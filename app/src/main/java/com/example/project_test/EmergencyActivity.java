@@ -61,8 +61,6 @@ public class EmergencyActivity extends AppCompatActivity {
     private SoundPool sound_pool;
     private int sound_beep;
 
-    TelephonyManager tm;
-    String phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +70,6 @@ public class EmergencyActivity extends AppCompatActivity {
         //상단탭
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //경고음
-        sound_pool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
-        sound_beep = sound_pool.load(EmergencyActivity.this, R.raw.sirensound, 1);
-
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.fish);
@@ -101,16 +94,12 @@ public class EmergencyActivity extends AppCompatActivity {
         MyGridAdapter gAdapter = new MyGridAdapter();
         gv.setAdapter(gAdapter);
 
-        //카메라
-        cm = (CameraManager) getSystemService(CAMERA_SERVICE);
-        //핸드폰 정보
-        tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.SEND_SMS}, MODE_PRIVATE);
-        } else {
-            phoneNumber = tm.getLine1Number();
-        }
+        //경고음
+        sound_pool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+        sound_beep = sound_pool.load(EmergencyActivity.this, R.raw.sirensound, 1);
 
+        //카메라(손전등사용)
+        cm = (CameraManager) getSystemService(CAMERA_SERVICE);
 
         //이벤트
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -127,12 +116,20 @@ public class EmergencyActivity extends AppCompatActivity {
                         return;
 
                     case 1:
-                        Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_SHORT).show();
                         try {
+                            String to = "01066376484";
+                            String message = "tesetstsetstestset";
 
-                            String sms = "테스트입니당";
+                            Uri smsUri = Uri.parse("tel:"+to);
+                            Intent it = new Intent(Intent.ACTION_VIEW, smsUri);
+                            it.putExtra("address", to);
+                            it.putExtra("sms_body", message);
+                            it.setType("vnd.android-dir/mms-sms");
+                            startActivity(it);
+
+                            /*String sms = "테스트";
                             SmsManager smsManager = SmsManager.getDefault();
-                            smsManager.sendTextMessage(phoneNumber, null, sms, null, null);
+                            smsManager.sendTextMessage(phoneNumber, null, sms, null, null);*/
                             Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_SHORT).show();
 
                         } catch (Exception e) {

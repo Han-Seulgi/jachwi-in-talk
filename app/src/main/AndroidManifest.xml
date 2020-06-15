@@ -4,7 +4,6 @@
     package="com.example.project_test">
 
     <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
 
@@ -19,7 +18,7 @@
         <activity android:name=".MainActivity" android:label="메인 화면">
 
         </activity>
-        <activity android:name=".LoginActivity" android:label="로그인 화면">
+        <activity android:name=".LoginActivity" android:label="자취인톡">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
