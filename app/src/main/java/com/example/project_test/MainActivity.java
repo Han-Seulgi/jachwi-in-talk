@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 
@@ -24,7 +25,7 @@ public class MainActivity extends ActivityGroup {
         //탭 만들기
         createTab();
 
-        //안전관리에서 긴급전화 버튼 눌렀을 때 전화 하기 위해 권한 요청
+        //안전관리에서 긴급전화 버튼 눌렀을 때 전화 하기 위해 권한 요청+위치
         if(Build.VERSION.SDK_INT >= 23) {
             if(checkPermission()) {}
             else { requestPermission(); }
@@ -33,7 +34,8 @@ public class MainActivity extends ActivityGroup {
 
     private boolean checkPermission() {
         int result = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE);
-        if(result == PackageManager.PERMISSION_GRANTED) { // 이전에 요청 허락 했으면
+        int result2 = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        if(result == PackageManager.PERMISSION_GRANTED && result2==PackageManager.PERMISSION_GRANTED) { // 이전에 요청 허락 했으면
             return true;
         }
         else { // 이전에 요청 허락 하지 않았으면
@@ -43,14 +45,30 @@ public class MainActivity extends ActivityGroup {
 
     private void requestPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,android.Manifest.permission.CALL_PHONE)) {
-            Toast.makeText(MainActivity.this, "CALL_PHONE",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "일부 서비스를 이용하지 못 할 수 있습니다",Toast.LENGTH_SHORT).show();
+        }
+        else if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)){
+            Toast.makeText(MainActivity.this, "앱의 주요기능을 이용하실 수 없습니다",Toast.LENGTH_SHORT).show();
         }
         else {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.CALL_PHONE},1000);
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.CALL_PHONE, Manifest.permission.ACCESS_FINE_LOCATION},1000);
         }
     }
 
-    public void onRequestPermissionResult(int requestCode, String permissions[], int[] grantResults) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode) {
+            case 1000 :
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(MainActivity.this, "권한동의 완료", Toast.LENGTH_SHORT).show();
+                }
+                else { Toast.makeText(MainActivity.this,"권한거부", Toast.LENGTH_SHORT).show(); }
+                break;
+        }
+        return;
+    }
+
+    /*public void onRequestPermissionResult(int requestCode, String permissions[], int[] grantResults) {
         switch(requestCode) {
             case 1000 :
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -59,7 +77,7 @@ public class MainActivity extends ActivityGroup {
                 else { Toast.makeText(MainActivity.this,"거부했습니다.", Toast.LENGTH_SHORT).show(); }
                 break;
         }
-    }
+    }*/
 
     private void createTab() {
         TabHost tabHost = (TabHost) findViewById(R.id.tabhost);

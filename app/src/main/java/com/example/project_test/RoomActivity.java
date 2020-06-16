@@ -1,16 +1,38 @@
 package com.example.project_test;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
-public class RoomActivity extends AppCompatActivity {
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.GroundOverlay;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class RoomActivity extends AppCompatActivity implements OnMapReadyCallback {
+
+    MapFragment mf;
+    GoogleMap gMap;
+    GroundOverlayOptions roomMark1, roomMark2, roomMark3;
+
     ImageButton back;
     Button write;
 
@@ -21,15 +43,19 @@ public class RoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
 
+        //권한설정
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MODE_PRIVATE);
+
         //상단탭
         toolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.fish);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        mf = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        mf.getMapAsync(this);
     }
 
     //상단탭 메뉴
@@ -56,4 +82,44 @@ public class RoomActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        gMap = googleMap;
+        gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        LatLng location = new LatLng(37.568256, 126.897240);//--현재위치로 바꿔보기--
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
+
+        gMap.getUiSettings().setZoomControlsEnabled(true);
+
+        gMap.setMyLocationEnabled(true); //현재위치를 GPS 모듈에서 받아올 수 있도록 설정
+        gMap.getUiSettings().setMyLocationButtonEnabled(true); //현재위치 버튼 추가
+
+        LatLng house1 = new LatLng(37.5830, 126.9223);
+        LatLng house2 = new LatLng(37.5828, 126.9236);
+        LatLng house3 = new LatLng(37.5833, 126.9236);
+
+        LatLng latLng[] = new LatLng[] {house1,house2,house3};
+
+        //방위치 마커
+        for (int idx = 0; idx<3; idx++){
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng[idx]);
+        markerOptions.title("집주소"+idx);
+        markerOptions.snippet("글쓴이");
+        markerOptions.alpha(0.5f);
+
+        gMap.addMarker(markerOptions);
+        }
+
+        gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Toast.makeText(RoomActivity.this, "게시글 보기", Toast.LENGTH_SHORT).show();
+                /*Intent intent = new Intent(RoomActivity.this, 게시판.class);
+                startActivity(intent);*/
+                return false;
+            }
+        });
+    }
 }

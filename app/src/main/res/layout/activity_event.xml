@@ -24,6 +24,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:text="행사알리미"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
                 android:textSize="20sp"></TextView>
         </androidx.appcompat.widget.Toolbar>
 
