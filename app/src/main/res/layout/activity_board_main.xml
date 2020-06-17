@@ -200,7 +200,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentBottom="true"
-                    android:text="나눔 &amp; 대여"
+                    android:text="나눔 HOT"
                     android:textSize="20sp" />
 
                 <LinearLayout
@@ -209,48 +209,66 @@
 
                     <ViewFlipper
                         android:id="@+id/vflip3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
-                            <ImageButton
-                                android:id="@+id/img1"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
                                 android:layout_weight="1"
-                                android:src="@drawable/meet" />
+                                android:gravity="center_horizontal">
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="아이스티 : 1000원" />
+                                <ImageButton
+                                    android:id="@+id/vimg1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/meet" />
 
-                            <ImageButton
-                                android:id="@+id/img2"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:src="@drawable/fish" />
+                                <TextView
+                                    android:id="@+id/vtxt1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="아이스티 : 1000원" />
+                            </LinearLayout>
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
                                 android:layout_weight="1"
-                                android:text="사과 10000원" />
+                                android:gravity="center_horizontal">
+
+                                <ImageButton
+                                    android:id="@+id/vimg2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/fish" />
+
+                                <TextView
+                                    android:id="@+id/vtxt2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="사과 10000원" />
+                            </LinearLayout>
                         </LinearLayout>
                     </ViewFlipper>
 
                     <Button
                         android:id="@+id/changebtn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="버튼" />
+                        android:background="#ff9263"
+                        android:text="버튼"
+                        android:textColor="#ffffff" />
+
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

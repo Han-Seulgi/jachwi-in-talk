@@ -1,6 +1,7 @@
 package com.example.project_test;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,12 +18,13 @@ import androidx.appcompat.widget.Toolbar;
 public class BoardActivity extends AppCompatActivity {
     ViewFlipper vflip1, vflip2, vflip3;
     View vflipview1[] = new View[2], vflipview2[] = new View[2];
-    ImageButton btn1, btn2, btn3, btn4, btn5, btn6, img1, img2;
+    ImageButton btn1, btn2, btn3, btn4, btn5, btn6, vimg1, vimg2;
     ImageButton imageButtons[] = {btn1, btn2, btn3, btn4, btn5, btn6};
+    TextView vtxt1, vtxt2;
     Button changebtn;
     Toolbar toolbar;
 
-    int i = 0;
+    int i = 0, t=0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,8 +45,11 @@ public class BoardActivity extends AppCompatActivity {
         vflip1 = findViewById(R.id.vflip1);
         vflip2 = findViewById(R.id.vflip2);
         vflip3 = findViewById(R.id.vflip3);
-        img1 = findViewById(R.id.img1);
-        img2 = findViewById(R.id.img2);
+        vimg1 = findViewById(R.id.vimg1);
+        vimg2 = findViewById(R.id.vimg2);
+        vtxt1 = findViewById(R.id.vtxt1);
+        vtxt2 = findViewById(R.id.vtxt2);
+
         changebtn = findViewById(R.id.changebtn);
 
         imageButtons[0] = findViewById(R.id.btn1);
@@ -146,27 +151,28 @@ public class BoardActivity extends AppCompatActivity {
             }
         });
 
-        //첫 번째 탭 나눔 HOT에서 다음 버튼을 눌렀을 때
-        changebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //i는 0으로 초기화되어있음
-                if (i == 0) {
-                    img1.setImageResource(R.drawable.meet);
-                    img2.setImageResource(R.drawable.board);
-                    i--;
-                } else if (i == -1) {
-                    img1.setImageResource(R.drawable.naverlogo2);
-                    img2.setImageResource(R.drawable.backbtn);
-                    i--;
-                } else {
-                    img1.setImageResource(R.drawable.check);
-                    img2.setImageResource(R.drawable.backbtn);
-                    i = 0;
-                }
+        //첫 번째 탭의 나눔 HOT 뷰 플리퍼
+        final int f3_images[] = {R.drawable.meet, R.drawable.board, R.drawable.naverlogo2, R.drawable.backbtn, R.drawable.check, R.drawable.board2}; //뷰 플리퍼에 들어갈 이미지
+        final String f3_text[] = {"아이스티 : 1000원", "오렌지 : 2000원", "물 : 100원", "초콜릿 : 20000원", "콜라 : 3000원", "커피 : 20원"};  //뷰 플리퍼에 들어갈 텍스트
 
-            }
-        });
+        //첫 번째 탭 나눔 HOT에서 다음 버튼을 눌렀을 때
+            changebtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //i, t는 0으로 초기화되어있음
+                    //배열에 있는 값 차례로 가져와서 넣음
+                    vimg1.setImageResource(f3_images[i++]);
+                    vtxt1.setText(f3_text[t++]);
+                    vimg2.setImageResource(f3_images[i++]);
+                    vtxt2.setText(f3_text[t++]);
+                    if (i >= f3_images.length) {   //배열의 끝까지 왔으면 0으로 초기화해서 무한반복
+                        i = 0;
+                        t = 0;
+                    }
+                    //Log.d("iiii", String.valueOf(i));
+                }
+            });
+
     }
 
     //상단탭 메뉴
