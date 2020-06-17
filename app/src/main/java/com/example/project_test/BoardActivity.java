@@ -15,7 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class BoardActivity extends AppCompatActivity {
-    ViewFlipper vflip1,vflip2;
+    ViewFlipper vflip1, vflip2, vflip3;
+    View vflipview1[] = new View[2], vflipview2[] = new View[2];
     ImageButton btn1, btn2, btn3, btn4, btn5, btn6, img1, img2;
     ImageButton imageButtons[] = {btn1, btn2, btn3, btn4, btn5, btn6};
     Button changebtn;
@@ -41,6 +42,7 @@ public class BoardActivity extends AppCompatActivity {
         //메인화면
         vflip1 = findViewById(R.id.vflip1);
         vflip2 = findViewById(R.id.vflip2);
+        vflip3 = findViewById(R.id.vflip3);
         img1 = findViewById(R.id.img1);
         img2 = findViewById(R.id.img2);
         changebtn = findViewById(R.id.changebtn);
@@ -54,16 +56,28 @@ public class BoardActivity extends AppCompatActivity {
 
         //첫 번째 탭의 게시 인기글 뷰 플리퍼
         int f1_images[] = {R.drawable.food, R.drawable.meet}; //뷰 플리퍼에 들어갈 게시판 이미지
+        String f1_text[] = {"초간단 냉라면 레시피!!\n 요즘 너무 더워서 냉라면을\n 만들어먹어봤어요~", "냉라면레시피"};  //뷰 플리퍼에 들어갈 텍스트
 
-        for(int image :f1_images) {
-            ImageView imageView = new ImageView(this);
-            imageView.setBackgroundResource(image);
-            vflip1.addView(imageView);      // 이미지 추가
-            vflip1.setFlipInterval(4000);   // 몇 초 후에 이미지가 넘어갈것인가(1000 당 1초니까 4초후에 넘어가는거야)
-            vflip1.setAutoStart(true);      //자동시작유무(true:자동)
-            vflip1.setInAnimation(this,android.R.anim.slide_in_left); //animation
-            vflip1.setOutAnimation(this,android.R.anim.slide_out_right); //animation
+        for (int i = 0; i < f1_images.length; i++) {
+            vflipview1[i] = (View)View.inflate(this, R.layout.view_item, null);
+                                                        //뷰플리퍼 안에 들어갈 뷰 레이아웃
+
+            //이미지 추가
+            ImageView imageView = vflipview1[i].findViewById(R.id.view_img);
+            imageView.setBackgroundResource(f1_images[i]);
+
+            //텍스트 추가
+            TextView textView = vflipview1[i].findViewById(R.id.view_txt);
+            textView.setText(f1_text[i]);
+
+            //뷰플리퍼에 뷰 추가
+            vflip1.addView(vflipview1[i]);
         }
+        //뷰플리퍼 시간, 애니메이션 설정
+        vflip1.setFlipInterval(4000);   // 몇 초 후에 이미지가 넘어갈것인가(1000 당 1초니까 4초후에 넘어가는거야)
+        vflip1.setAutoStart(true);      //자동시작유무(true:자동)
+        vflip1.setInAnimation(this, android.R.anim.slide_in_left); //animation
+        vflip1.setOutAnimation(this, android.R.anim.slide_out_right); //animation
 
 
         vflip1.setOnClickListener(new View.OnClickListener() { //뷰 플리퍼 클릭했을 때
@@ -74,29 +88,23 @@ public class BoardActivity extends AppCompatActivity {
         });
 
         //첫 번째 탭 6개의 게시판
-        for(int i=0; i<imageButtons.length; i++) {
+        for (int i = 0; i < imageButtons.length; i++) {
             imageButtons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(v.getId() == R.id.btn1) {
+                    if (v.getId() == R.id.btn1) {
                         //자취앤집밥 게시판으로 넘어가기
-                    }
-                    else if (v.getId() == R.id.btn2) {
+                    } else if (v.getId() == R.id.btn2) {
                         //자취인디자인 게시판으로 넘어가기
-                    }
-                    else if (v.getId() == R.id.btn3) {
+                    } else if (v.getId() == R.id.btn3) {
                         //자취인만남 게시판으로 넘어가기
-                    }
-                    else if (v.getId() == R.id.btn4) {
+                    } else if (v.getId() == R.id.btn4) {
                         //자취Q&A 게시판으로 넘어가기
-                    }
-                    else if (v.getId() == R.id.btn5) {
+                    } else if (v.getId() == R.id.btn5) {
                         //자취인정보 게시판으로 넘어가기
-                    }
-                    else if (v.getId() == R.id.btn6) {
+                    } else if (v.getId() == R.id.btn6) {
                         //자취인혼밥 게시판으로 넘어가기
-                    }
-                    else {
+                    } else {
                         //예외처리
                     }
                 }
@@ -106,16 +114,29 @@ public class BoardActivity extends AppCompatActivity {
 
         //첫 번째 탭의 방 구하기 게시물 뷰 플리퍼
         int f2_images[] = {R.drawable.food, R.drawable.meet}; //뷰 플리퍼에 들어갈 이미지
+        String f2_text[] = {"명지대 근처 자취방 내놓습니다!!", "명전 10분 거리 원룸"};  //뷰 플리퍼에 들어갈 텍스트
 
-        for(int image :f2_images) {
-            ImageView imageView = new ImageView(this);
-            imageView.setBackgroundResource(image);
-            vflip2.addView(imageView);      // 이미지 추가
-            vflip2.setFlipInterval(4000);   // 몇 초 후에 이미지가 넘어갈것인가(1000 당 1초)
-            vflip2.setAutoStart(true);      //자동시작유무(true:자동)
-            vflip2.setInAnimation(this,android.R.anim.slide_in_left); //animation
-            vflip2.setOutAnimation(this,android.R.anim.slide_out_right); //animation
+        for (int i = 0; i < f2_images.length; i++) {
+            vflipview2[i] = (View)View.inflate(this, R.layout.view_item, null);
+                                                            //뷰플리퍼 안에 들어갈 뷰 레이아웃
+
+            //이미지 추가
+            ImageView imageView = vflipview2[i].findViewById(R.id.view_img);
+            imageView.setBackgroundResource(f2_images[i]);
+
+            //텍스트 추가
+            TextView textView = vflipview2[i].findViewById(R.id.view_txt);
+            textView.setText(f2_text[i]);
+
+            //뷰플리퍼에 뷰 추가
+            vflip2.addView(vflipview2[i]);
         }
+        //뷰플리퍼 시간, 애니메이션 설정
+        vflip2.setFlipInterval(4000);   // 몇 초 후에 이미지가 넘어갈것인가(1000 당 1초)
+        vflip2.setAutoStart(true);      //자동시작유무(true:자동)
+        vflip2.setInAnimation(this, android.R.anim.slide_in_left); //animation
+        vflip2.setOutAnimation(this, android.R.anim.slide_out_right); //animation
+
 
         //첫 번째 탭의 방 구하기 게시물 뷰 플리퍼 클릭했을 때
         vflip2.setOnClickListener(new View.OnClickListener() {
@@ -130,20 +151,18 @@ public class BoardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //i는 0으로 초기화되어있음
-                if ( i == 0 ){
+                if (i == 0) {
                     img1.setImageResource(R.drawable.meet);
                     img2.setImageResource(R.drawable.board);
                     i--;
-                }
-                else if ( i == -1 ){
+                } else if (i == -1) {
                     img1.setImageResource(R.drawable.naverlogo2);
                     img2.setImageResource(R.drawable.backbtn);
                     i--;
-                }
-                else {
+                } else {
                     img1.setImageResource(R.drawable.check);
                     img2.setImageResource(R.drawable.backbtn);
-                    i=0;
+                    i = 0;
                 }
 
             }

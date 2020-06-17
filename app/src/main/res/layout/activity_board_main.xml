@@ -25,9 +25,9 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:text="자취인톡"
-                android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp"></TextView>
+                android:textSize="20sp"
+                android:textStyle="bold"></TextView>
         </androidx.appcompat.widget.Toolbar>
 
         <SearchView
@@ -48,183 +48,208 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentBottom="true"
-                    android:text="인기글"
-                    android:textSize="20sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginRight="5dp"
-                    android:text="더보기"
-                    android:clickable="true"
-                    android:textSize="15sp"
-                    android:textColor="#6E6E6E"
-                    />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <ViewFlipper
-                        android:id="@+id/vflip1"
-                        android:layout_width="150dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="left" />
-                    <TextView
-                        android:id="@+id/tex1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="초간단 냉라면 레시피!!\n 요즘 너무 더워서 냉라면을\n 만들어먹어봤어요~"/>
-                </LinearLayout>
 
-                <!-- 6개의 게시판-->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center">
-                    <!--자취앤집밥, 자취앤혼밥 게시판-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <ImageButton
-                            android:id="@+id/btn1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="5dp"
-                            android:src="@drawable/food2"
-                            android:background="#00ff0000"
-                            />
-                        <ImageButton
-                            android:id="@+id/btn2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/restaurant"
-                            android:background="#00ff0000"/>
-                    </LinearLayout>
-
-                    <!--자취인만남, 자취인정보 게시판-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <ImageButton
-                            android:id="@+id/btn3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/meeting"
-                            android:layout_marginTop="3dp"
-                            android:layout_marginRight="5dp"
-                            android:background="#00ff0000"/>
-                        <ImageButton
-                            android:id="@+id/btn4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/living"
-                            android:layout_marginTop="3dp"
-                            android:background="#00ff0000"/>
-                    </LinearLayout>
-
-                    <!--자취인디자인, 자취Q&A 게시판-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <ImageButton
-                            android:id="@+id/btn5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:layout_marginRight="5dp"
-                            android:src="@drawable/interior"
-                            android:background="#00ff0000"/>
-                        <ImageButton
-                            android:id="@+id/btn6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:src="@drawable/qna"
-                            android:background="#00ff0000"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- 내 주변 방 -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentBottom="true"
-                        android:text="내 주변 방"
-                        android:textSize="20sp"/>
+                        android:text="인기글"
+                        android:textSize="20sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginRight="5dp"
-                        android:text="더보기"
                         android:clickable="true"
-                        android:textSize="15sp"
+                        android:text="더보기"
                         android:textColor="#6E6E6E"
-                        />
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <ViewFlipper
-                        android:id="@+id/vflip2"
-                        android:layout_width="150dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="left" />
-                    <TextView
-                        android:id="@+id/tex2"
+                        android:id="@+id/vflip1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="에어컨 청소 팁좀 알려주세요~~" />
+                        android:layout_gravity="left"
+                        android:paddingBottom="10dp" />
+
                 </LinearLayout>
 
-                <!-- 나눔 HOT -->
+                <!-- 6개의 게시판-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+                    <!--자취앤집밥, 자취앤혼밥 게시판-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/btn1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:background="#00ff0000"
+                            android:src="@drawable/food2" />
+
+                        <ImageButton
+                            android:id="@+id/btn2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#00ff0000"
+                            android:src="@drawable/restaurant" />
+                    </LinearLayout>
+
+                    <!--자취인만남, 자취인정보 게시판-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/btn3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginRight="5dp"
+                            android:background="#00ff0000"
+                            android:src="@drawable/meeting" />
+
+                        <ImageButton
+                            android:id="@+id/btn4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="#00ff0000"
+                            android:src="@drawable/living" />
+                    </LinearLayout>
+
+                    <!--자취인디자인, 자취Q&A 게시판-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/btn5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginRight="5dp"
+                            android:background="#00ff0000"
+                            android:src="@drawable/interior" />
+
+                        <ImageButton
+                            android:id="@+id/btn6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="#00ff0000"
+                            android:src="@drawable/qna" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 내 주변 방 -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:text="내 주변 방"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="5dp"
+                        android:clickable="true"
+                        android:text="더보기"
+                        android:textColor="#6E6E6E"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <ImageButton
-                        android:id="@+id/img1"
+                    <ViewFlipper
+                        android:id="@+id/vflip2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/meet" />
+                        android:layout_gravity="left"
+                        android:paddingBottom="10dp" />
+                </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="아이스티 : 1000원" />
+                <!-- 나눔 HOT -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="나눔 &amp; 대여"
+                    android:textSize="20sp" />
 
-                    <ImageButton
-                        android:id="@+id/img2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/fish" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <TextView
+                    <ViewFlipper
+                        android:id="@+id/vflip3"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="사과 10000원" />
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/img1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:src="@drawable/meet" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="아이스티 : 1000원" />
+
+                            <ImageButton
+                                android:id="@+id/img2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:src="@drawable/fish" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="사과 10000원" />
+                        </LinearLayout>
+                    </ViewFlipper>
 
                     <Button
                         android:id="@+id/changebtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="버튼" />
                 </LinearLayout>
             </LinearLayout>
