@@ -55,6 +55,7 @@
         <activity android:name=".EmergencyActivity" android:label="안전지키미 화면"/>
         <activity android:name=".EmergencySet" android:label="안전지키미 설정화면"/>
         <activity android:name=".ShakeNumberActivity" android:label="흔들림횟수 화면"/>
+        <activity android:name=".qaActivity" android:label="qa게시판 화면"/>
 
         <receiver android:name=".BootReceiver"
             android:enabled="true"

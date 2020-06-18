@@ -114,7 +114,8 @@ public class BoardActivity extends AppCompatActivity {
                     } else if (v.getId() == R.id.btn5) {
                         //자취인정보 게시판으로 넘어가기
                     } else if (v.getId() == R.id.btn6) {
-                        //자취인혼밥 게시판으로 넘어가기
+                        Intent intent = new Intent(BoardActivity.this, qaActivity.class);
+                                startActivity(intent);
                     } else {
                         //예외처리
                     }
