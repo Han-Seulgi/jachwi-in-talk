@@ -87,11 +87,11 @@ public class MainActivity extends ActivityGroup {
         ImageView tab1 = new ImageView(this);
         tab1.setImageResource(R.drawable.board3);
         ImageView tab2 = new ImageView(this);
-        tab2.setImageResource(R.drawable.board3);
+        tab2.setImageResource(R.drawable.roomic);
         ImageView tab3 = new ImageView(this);
-        tab3.setImageResource(R.drawable.board3);
+        tab3.setImageResource(R.drawable.eventic);
         ImageView tab4 = new ImageView(this);
-        tab4.setImageResource(R.drawable.board3);
+        tab4.setImageResource(R.drawable. safetyic);
 
         tabHost.addTab(tabHost.newTabSpec("TAB1").setIndicator(tab1)
                 .setContent(new Intent(this,BoardActivity.class)));
