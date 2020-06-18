@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/tab3"
+        android:id="@+id/board_recipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:text="자취QA"
+                android:text="자취앤집밥"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"></TextView>
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:tooltipText="전체 게시판 검색하기" />
+                android:tooltipText="게시판 검색하기" />
 
 
         </LinearLayout>
@@ -70,8 +70,13 @@
             android:text="글쓰기"
             android:textColor="#ffffff" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            />
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

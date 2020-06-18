@@ -91,7 +91,7 @@ public class MainActivity extends ActivityGroup {
         ImageView tab3 = new ImageView(this);
         tab3.setImageResource(R.drawable.eventic);
         ImageView tab4 = new ImageView(this);
-        tab4.setImageResource(R.drawable. safetyic);
+        //tab4.setImageResource(R.drawable.safetyic);
 
         tabHost.addTab(tabHost.newTabSpec("TAB1").setIndicator(tab1)
                 .setContent(new Intent(this,BoardActivity.class)));

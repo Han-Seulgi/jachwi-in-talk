@@ -1,5 +1,6 @@
 package com.example.project_test;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -14,6 +15,8 @@ import android.widget.ViewFlipper;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.project_test.recipe.RecipeBoardActivity;
 
 public class BoardActivity extends AppCompatActivity {
     ViewFlipper vflip1, vflip2, vflip3;
@@ -99,6 +102,9 @@ public class BoardActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (v.getId() == R.id.btn1) {
                         //자취앤집밥 게시판으로 넘어가기
+                        Log.d("yyyyyy","넘어왔냐");
+                        Intent intent = new Intent(BoardActivity.this, RecipeBoardActivity.class);
+                        startActivity(intent);
                     } else if (v.getId() == R.id.btn2) {
                         //자취인디자인 게시판으로 넘어가기
                     } else if (v.getId() == R.id.btn3) {
