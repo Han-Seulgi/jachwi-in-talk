@@ -100,14 +100,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
                             android:background="#00ff0000"
-                            android:src="@drawable/food2" />
+                            android:src="@drawable/recipe" />
 
                         <ImageButton
                             android:id="@+id/btn2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="#00ff0000"
-                            android:src="@drawable/restaurant" />
+                            android:src="@drawable/rice" />
                     </LinearLayout>
 
                     <!--자취인만남, 자취인정보 게시판-->
@@ -122,7 +122,7 @@
                             android:layout_marginTop="3dp"
                             android:layout_marginRight="5dp"
                             android:background="#00ff0000"
-                            android:src="@drawable/meeting" />
+                            android:src="@drawable/meet2" />
 
                         <ImageButton
                             android:id="@+id/btn4"
@@ -130,7 +130,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
                             android:background="#00ff0000"
-                            android:src="@drawable/living" />
+                            android:src="@drawable/info" />
                     </LinearLayout>
 
                     <!--자취인디자인, 자취Q&A 게시판-->
@@ -145,7 +145,7 @@
                             android:layout_marginTop="3dp"
                             android:layout_marginRight="5dp"
                             android:background="#00ff0000"
-                            android:src="@drawable/interior" />
+                            android:src="@drawable/nanum" />
 
                         <ImageButton
                             android:id="@+id/btn6"
@@ -153,7 +153,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
                             android:background="#00ff0000"
-                            android:src="@drawable/qna" />
+                            android:src="@drawable/qa2" />
                     </LinearLayout>
                 </LinearLayout>
 

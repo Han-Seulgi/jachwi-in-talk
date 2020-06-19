@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.project_test.Food.FoodActivity;
+import com.example.project_test.Meet.MeetActivity;
 import com.example.project_test.qa.qaActivity;
 import com.example.project_test.Recipe.RecipeBoardActivity;
 
@@ -111,6 +112,8 @@ public class BoardActivity extends AppCompatActivity {
 
                     }
                     else if (v.getId() == R.id.btn3) { //자취인만남 게시판
+                        Intent intent = new Intent(BoardActivity.this, MeetActivity.class);
+                        startActivity(intent);
 
                     }
                     else if (v.getId() == R.id.btn4) { //자취인정보 게시판
@@ -119,6 +122,8 @@ public class BoardActivity extends AppCompatActivity {
 
                     }
                     else if (v.getId() == R.id.btn5) {  //나눔대여 게시판
+
+
 
                     }
                     else if (v.getId() == R.id.btn6) { //자취Q&A 게시판
