@@ -1,27 +1,18 @@
 package com.example.project_test;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.Telephony;
-import android.telephony.SmsManager;
-import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,19 +20,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -117,7 +102,7 @@ public class EmergencyActivity extends AppCompatActivity {
 
                     case 1:
                         try {
-                            String to = "01066376484";
+                            String to = "01000000000";
                             String message = "tesetstsetstestset";
 
                             Uri smsUri = Uri.parse("tel:"+to);
@@ -228,7 +213,7 @@ public class EmergencyActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.emergency_list, parent, false);
+                convertView = inflater.inflate(R.layout.emergency_item, parent, false);
             }
             final ImageView imageView = (ImageView) convertView.findViewById(R.id.imgView1);
             TextView textView = (TextView) convertView.findViewById(R.id.tv1);

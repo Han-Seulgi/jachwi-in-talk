@@ -103,7 +103,6 @@ public class BoardActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (v.getId() == R.id.btn1) {
                         //자취앤집밥 게시판으로 넘어가기
-                        Log.d("yyyyyy","넘어왔냐");
                         Intent intent = new Intent(BoardActivity.this, RecipeBoardActivity.class);
                         startActivity(intent);
                     } else if (v.getId() == R.id.btn2) {Intent intent = new Intent(BoardActivity.this,

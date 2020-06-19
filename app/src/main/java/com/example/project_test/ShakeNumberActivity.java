@@ -8,8 +8,11 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class ShakeNumberActivity extends AppCompatActivity {
+
+    Toolbar toolbar;
 
     Button monthup, monthdown;   //월 변경 버튼
     TextView month;    //월 출력 텍스트뷰
@@ -18,6 +21,10 @@ public class ShakeNumberActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shakenum);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         monthup = findViewById(R.id.monthup);
         monthdown = findViewById(R.id.monthdown);

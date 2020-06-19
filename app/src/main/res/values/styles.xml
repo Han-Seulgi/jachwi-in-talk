@@ -8,4 +8,23 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MyMaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Add attributes here -->
+        <item name="colorPrimary">#7BABCA</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="extendedFloatingActionButtonStyle">@style/EFAB</item>
+    </style>
+
+    <style name="EFAB" parent = "Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.FAB</item>
+        <item name="shapeAppearanceOverlay">@style/Widget.MaterialComponents.ExtendedFloatingActionButton</item>
+    </style>
+
+    <style name="ThemeOverlay.FAB" parent="">
+        <item name="colorSecondary">#BDC9B1</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorOnSurface">#FFFFFF</item>
+    </style>
+
 </resources>

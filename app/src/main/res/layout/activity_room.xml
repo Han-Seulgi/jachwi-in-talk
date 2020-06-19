@@ -30,42 +30,43 @@
                 android:textStyle="bold"></TextView>
         </androidx.appcompat.widget.Toolbar>
 
-        <SearchView
-            android:id="@+id/search"
+
+        <Button
+            android:id="@+id/write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="글쓰기"
+            android:layout_marginLeft="20dp"/>
+
+        <!-- 지도 -->
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:tooltipText="지역 검색하기" />
+            android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10" />
 
-                <ImageButton
-                    android:id="@+id/back"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/backbtn" />
+            <SearchView
+                android:id="@+id/search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:tooltipText="지역 검색하기" />
 
-                <Button
-                    android:id="@+id/write"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="글쓰기" />
-            </RelativeLayout>
-
-            <!-- 지도 -->
-            <fragment
-                android:id="@+id/map"
-                class="com.google.android.gms.maps.MapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                map:cameraTargetLat="37.584"
-                map:cameraTargetLng="126.925"
-                map:cameraZoom="5" />
+        </LinearLayout>
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            map:cameraTargetLat="37.584"
+            map:cameraTargetLng="126.925"
+            map:cameraZoom="5" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
