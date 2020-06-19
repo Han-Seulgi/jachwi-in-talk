@@ -56,6 +56,8 @@
         <activity android:name=".EmergencySet" android:label="안전지키미 설정화면"/>
         <activity android:name=".ShakeNumberActivity" android:label="흔들림횟수 화면"/>
         <activity android:name=".qaActivity" android:label="qa게시판 화면"/>
+        <activity android:name=".WritingActivity" android:label="자취앤집밥 글쓰기 화면"/>
+        <activity android:name=".QAWritingActivity" android:label="자취앤집밥 글쓰기 화면"/>
 
         <receiver android:name=".BootReceiver"
             android:enabled="true"

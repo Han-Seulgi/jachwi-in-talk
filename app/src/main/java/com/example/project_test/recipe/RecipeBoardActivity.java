@@ -1,15 +1,17 @@
 package com.example.project_test.recipe;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.R;
+import com.example.project_test.WritingActivity;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,7 @@ public class RecipeBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_board_recipe);
 
         RecyclerView rv = findViewById(R.id.rv);
+        Button writing = findViewById(R.id.writing);
 
         ArrayList<RecipeListData> data = new ArrayList<>();
 
@@ -39,6 +42,17 @@ public class RecipeBoardActivity extends AppCompatActivity {
         adapter = new RecipeRecyclerAdapter();
         adapter.setData(data);
         rv.setAdapter(adapter);
+
+        writing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RecipeBoardActivity.this, WritingActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
 
     }
 }

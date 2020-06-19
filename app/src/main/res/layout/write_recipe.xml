@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/tab3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="167dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FF9263">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="자취앤집밥"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"></TextView>
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:background="#00FF0000"
+                android:text="x"
+                android:textSize="23dp" />
+
+            <TextView
+                android:layout_width="270dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="글쓰기"
+                android:textSize="22dp" />
+
+
+            <Button
+                android:id="@+id/writing"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_gravity="right|center"
+                android:background="#47A1DC"
+                android:text="올리기"
+                android:textColor="#ffffff" />
+
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/search2"
+            android:layout_width="390dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint=" 제목" />
+
+        <EditText
+            android:id="@+id/search3"
+            android:layout_width="390dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint=" 재료            필요한 재료를 입력해주세요." />
+
+        <EditText
+            android:id="@+id/editTextName1"
+            android:layout_width="390dp"
+            android:layout_height="280dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/border"
+            android:hint="  레시피를 입력해 주세요."
+            android:textAlignment="center"
+            android:textColor="@android:color/black" />
+
+
+
+        <EditText
+            android:id="@+id/editTextName2"
+            android:layout_width="180dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/border"
+            android:hint=" 사진을 등록해주세요."
+            android:textAlignment="center"
+            android:textColor="@android:color/black" />
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
