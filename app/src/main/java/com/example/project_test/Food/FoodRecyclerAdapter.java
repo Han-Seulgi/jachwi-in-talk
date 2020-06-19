@@ -1,4 +1,4 @@
-package com.example.project_test.qa;
+package com.example.project_test.Food;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,15 +9,15 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project_test.Food.FoodContent.FoodActivityContent;
 import com.example.project_test.R;
-import com.example.project_test.qa.qaContent.qaActivityContent;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapter.ViewHolder> {
     ImageView img;
 
-    private String[] title = {"오렌지 껍질은 음식물 쓰레기인가요?", "전입신고는 어떻게하나요?", "세탁기 사용법", "제목4", "제목5", "제목6", "제목7", "제목8", "제목9", "제목10"}; // 게시물 제목 가져오기
+    private String[] title = {"점심으로 베가보쌈 어때요?", "퐁닭떡볶이 신메뉴 추천!!!", "오늘 곱창집 세일하던데 맛 좋아요~", "학교 앞에 피자집 새로 생겨서 한번 가봤어요", "청년다방 떡볶이", "여기 혼밥 하기 딱이에요!", "오늘 여기서 혼자 밥 먹고 왔는데 분위기 좋아요"}; // 게시물 제목 가져오기
 
-    private String[] content = {"내용1", "내용2", "내용3", "내용4", "내용5", "내용6", "내용7", "내용8", "내용9", "내용10",}; //게시물 내용
+    private String[] content = {"2020.6.20", "2020.6.20", "2020.6.19", "2020.6.18", "2020.6.18", "2020.6.18", "2020.6.17"}; //게시물 내용
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
@@ -33,22 +33,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public RecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FoodRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-        RecyclerAdapter.ViewHolder viewHolder = new ViewHolder(view);
+        FoodRecyclerAdapter.ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
 
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final FoodRecyclerAdapter.ViewHolder holder, final int position) {
         holder.textView.setText(title[position]);
         holder.textView2.setText(content[position]);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() { //글 목록 클릭했을 때
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), qaActivityContent.class);
+                Intent intent = new Intent(v.getContext(), FoodActivityContent.class);
                 intent.putExtra("제목", title[position]); //게시물의 제목
                 v.getContext().startActivity(intent);
             }

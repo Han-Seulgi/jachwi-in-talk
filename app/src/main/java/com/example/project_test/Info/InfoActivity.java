@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Info;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project_test.Info.InfoRecyclerAdapter;
-import com.example.project_test.Writing.FoodWritingActivity;
+import com.example.project_test.R;
 import com.example.project_test.Writing.InfoWritingActivity;
 
 public class InfoActivity extends AppCompatActivity {

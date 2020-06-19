@@ -66,6 +66,8 @@
         <activity android:name=".Writing.InfoWritingActivity" android:label="자취인정보 글쓰기 화면"/>
         <activity android:name=".Content.ContentWithPicture" android:label="사진이 있는 게시물내용"/>
         <activity android:name=".Meet.MeetActivity" android:label="자취인만남 게시판 화면"/>
+        <activity android:name=".Info.InfoContent.infoActivityContent" android:label="자취인정보 게시물내용"/>
+        <activity android:name=".Food.FoodContent.FoodActivityContent" android:label="자취앤집밥 게시물 내용"/>
 
 
 

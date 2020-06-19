@@ -1,4 +1,4 @@
-package com.example.project_test.qa;
+package com.example.project_test.Info;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,15 +9,16 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project_test.Info.InfoContent.infoActivityContent;
 import com.example.project_test.R;
 import com.example.project_test.qa.qaContent.qaActivityContent;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapter.ViewHolder> {
     ImageView img;
 
-    private String[] title = {"오렌지 껍질은 음식물 쓰레기인가요?", "전입신고는 어떻게하나요?", "세탁기 사용법", "제목4", "제목5", "제목6", "제목7", "제목8", "제목9", "제목10"}; // 게시물 제목 가져오기
+    private String[] title = {"에어컨 청소 팁좀 알려주세요~", "안녕하세요", "드디어 입주^^!!", "오늘은 운동삼아 걸어서 퇴근했어요", "우리 초코 산책", "드디어 금요일!!!", "안녕하세요", "드디어 입주^^!!"}; // 게시물 제목 가져오기
 
-    private String[] content = {"내용1", "내용2", "내용3", "내용4", "내용5", "내용6", "내용7", "내용8", "내용9", "내용10",}; //게시물 내용
+    private String[] content = {"2020.6.20", "2020.6.20", "2020.6.19", "2020.6.19", "2020.6.18", "2020.6.17", "2020.6.18", "2020.6.17"}; //게시물 내용
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
@@ -33,22 +34,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public RecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public InfoRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-        RecyclerAdapter.ViewHolder viewHolder = new ViewHolder(view);
+        InfoRecyclerAdapter.ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
 
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final InfoRecyclerAdapter.ViewHolder holder, final int position) {
         holder.textView.setText(title[position]);
         holder.textView2.setText(content[position]);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() { //글 목록 클릭했을 때
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), qaActivityContent.class);
+                Intent intent = new Intent(v.getContext(), infoActivityContent.class);
                 intent.putExtra("제목", title[position]); //게시물의 제목
                 v.getContext().startActivity(intent);
             }
