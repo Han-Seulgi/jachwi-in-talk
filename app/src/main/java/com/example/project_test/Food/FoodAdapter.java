@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Food;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

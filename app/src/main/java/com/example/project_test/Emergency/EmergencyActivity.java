@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Emergency;
 
 import android.app.Activity;
 import android.content.Context;
@@ -27,6 +27,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.project_test.R;
+import com.example.project_test.ShakeNumberActivity;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,4 @@
-package com.example.project_test.recipe;
-
-import android.graphics.drawable.Drawable;
-
-import org.w3c.dom.Text;
+package com.example.project_test.Recipe;
 
 public class RecipeListData {
     private int img;

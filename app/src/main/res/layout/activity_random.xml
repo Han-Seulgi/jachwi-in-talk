@@ -3,60 +3,94 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="#eeeeee"
+    android:gravity="center"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="500dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp">
-        <ImageView
-            android:id="@+id/img"
+        android:layout_width="400dp"
+        android:layout_height="500dp"
+        android:layout_marginHorizontal="30dp">
+
+        <ImageButton
+            android:id="@+id/btnClose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="#00000000"
+            android:src="@drawable/close"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:text="오늘 뭐먹지?"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="#ff7a00"
+            android:textSize="35sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="200dp"
+            android:layout_height="115dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/dish"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/line"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/food2"
-            />
+            app:layout_constraintTop_toBottomOf="@id/text" />
+
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginTop="20dp"
             android:background="#55111111"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="게시글 제목"
             android:textColor="#ffffff"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/img"
             app:layout_constraintLeft_toLeftOf="@+id/img"
             app:layout_constraintRight_toRightOf="@+id/img" />
 
-        <View
-            android:id="@+id/line"
+        <TextView
+            android:id="@+id/showContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="mOnShow"
+            android:text="레시피 보러가기"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            app:layout_constraintBottom_toTopOf="@+id/c"
-            android:background="#66bdbdbd"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="20dp"/>
-            <Button
-                android:id="@+id/c"
-                android:text="확인"
-                android:textColor="#ff7a00"
-                android:background="#00000000"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:onClick="mOnClose"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img" />
+
+        <TextView
+            android:id="@+id/click"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:bufferType="spannable"
+            android:onClick="mOnRec"
+            android:text="추천받기!"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/showContent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

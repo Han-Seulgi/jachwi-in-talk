@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Emergency;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.project_test.R;
 
 public class EventActivity extends AppCompatActivity {
 

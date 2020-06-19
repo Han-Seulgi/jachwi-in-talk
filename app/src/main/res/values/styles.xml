@@ -22,7 +22,7 @@
     </style>
 
     <style name="ThemeOverlay.FAB" parent="">
-        <item name="colorSecondary">#BDC9B1</item>
+        <item name="colorSecondary">#7BABCA</item>
         <item name="colorOnSecondary">#FFFFFF</item>
         <item name="colorOnSurface">#FFFFFF</item>
     </style>

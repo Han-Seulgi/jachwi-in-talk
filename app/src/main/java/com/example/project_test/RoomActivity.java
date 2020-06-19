@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
+import com.example.project_test.qa.qaContent.qaActivityContent;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -100,12 +101,13 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng house3 = new LatLng(37.5833, 126.9236);
 
         LatLng latLng[] = new LatLng[] {house1,house2,house3};
+        String titles[] = new String[] {"명전앞원룸","방있음","고시원"};
 
         //방위치 마커
         for (int idx = 0; idx<3; idx++){
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng[idx]);
-        markerOptions.title("집주소"+idx);
+        markerOptions.title(titles[idx]);
         markerOptions.snippet("글쓴이");
         markerOptions.alpha(0.5f);
 
@@ -116,8 +118,9 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Toast.makeText(RoomActivity.this, "게시글 보기", Toast.LENGTH_SHORT).show();
-                /*Intent intent = new Intent(RoomActivity.this, 게시판.class);
-                startActivity(intent);*/
+                Intent intent = new Intent(RoomActivity.this, qaActivityContent.class);
+                intent.putExtra("제목",marker.getTitle());
+                startActivity(intent);
                 return false;
             }
         });

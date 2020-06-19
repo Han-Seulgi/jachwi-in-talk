@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Food;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.project_test.R;
+import com.example.project_test.RecyclerAdapter;
 import com.example.project_test.Writing.FoodWritingActivity;
 
 public class FoodActivityTab1 extends Fragment {

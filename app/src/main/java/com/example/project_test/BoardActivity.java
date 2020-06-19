@@ -2,7 +2,6 @@ package com.example.project_test;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.project_test.Food.FoodActivity;
 import com.example.project_test.qa.qaActivity;
-import com.example.project_test.recipe.RecipeBoardActivity;
+import com.example.project_test.Recipe.RecipeBoardActivity;
 
 public class BoardActivity extends AppCompatActivity {
     ViewFlipper vflip1, vflip2, vflip3;

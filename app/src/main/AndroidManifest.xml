@@ -49,21 +49,22 @@
         </activity>
         <activity android:name=".JoinActivity" android:label="회원가입 화면"/>
         <activity android:name=".BoardActivity" android:label="게시판메인 화면"/>
-        <activity android:name=".recipe.RecipeBoardActivity" android:label="자취앤집밥 화면" android:theme="@style/MyMaterialTheme"/>
-        <activity android:name=".recipe.RecipeRandom" android:label="랜덤추천 팝업" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".Recipe.RecipeBoardActivity" android:label="자취앤집밥 화면" android:theme="@style/MyMaterialTheme"/>
+        <activity android:name=".Recipe.RecipeRandom" android:label="랜덤추천 팝업" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".RoomActivity" android:label="보금자리 화면"/>
-        <activity android:name=".EventActivity" android:label="행사알리미 화면"/>
-        <activity android:name=".EmergencyActivity" android:label="안전지키미 화면"/>
-        <activity android:name=".EmergencySet" android:label="안전지키미 설정화면"/>
+        <activity android:name=".Emergency.EventActivity" android:label="행사알리미 화면"/>
+        <activity android:name=".Emergency.EmergencyActivity" android:label="안전지키미 화면"/>
+        <activity android:name=".Emergency.EmergencySet" android:label="안전지키미 설정화면"/>
         <activity android:name=".ShakeNumberActivity" android:label="흔들림횟수 화면"/>
         <activity android:name=".qa.qaActivity" android:label="QA 게시물목록"/>
         <activity android:name=".qa.qaContent.qaActivityContent" android:label="QA 게시물내용"/>
         <activity android:name=".Writing.WritingActivity" android:label="자취앤집밥 글쓰기 화면"/>
         <activity android:name=".qa.qaContent.QAWritingActivity" android:label="자취큐앤에이 글쓰기 화면"/>
-        <activity android:name=".FoodActivity" android:label="자취앤혼밥 게시판 화면"/>
+        <activity android:name=".Food.FoodActivity" android:label="자취앤혼밥 게시판 화면"/>
         <activity android:name=".Writing.FoodWritingActivity" android:label="자취앤혼밥 글쓰기 화면"/>
         <activity android:name=".InfoActivity" android:label="자취인정보 게시판 화면"/>
         <activity android:name=".Writing.InfoWritingActivity" android:label="자취인정보 글쓰기 화면"/>
+        <activity android:name=".Content.ContentWithPicture" android:label="사진이 있는 게시물내용"/>
 
 
 
