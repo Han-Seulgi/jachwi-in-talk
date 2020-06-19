@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/tab3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FF9263"
+            >
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="자취앤혼밥"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"></TextView>
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp">
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/range"/>
+
+            <EditText
+                android:id="@+id/e_search"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
+
+            <SearchView
+                android:id="@+id/search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:tooltipText="전체 게시판 검색하기" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/writing"
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:layout_gravity="right"
+            android:background="#7BABCA"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#ffffff"
+            android:text="글쓰기"
+            android:layout_marginLeft="20dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerView"
+            android:background="#F0F0F0"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

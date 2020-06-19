@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.R;
-import com.example.project_test.WritingActivity;
+import com.example.project_test.Writing.WritingActivity;
 
 import java.util.ArrayList;
 

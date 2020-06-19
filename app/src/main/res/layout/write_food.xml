@@ -21,11 +21,11 @@
             android:background="#FF9263">
 
             <TextView
-                android:id="@+id/title2"
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:text="자취QA"
+                android:text="자취앤혼밥"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"></TextView>
@@ -67,13 +67,28 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/search3"
+            android:id="@+id/search2"
             android:layout_width="390dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:hint=" 제목" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/search3"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint=" 위치       돋보기를눌러 위치를 검색하세요." />
 
+        <SearchView
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tooltipText="전체 게시판 검색하기" />
+        </LinearLayout>
 
         <EditText
             android:id="@+id/editTextName1"
@@ -82,11 +97,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/border"
-            android:hint="  이곳에 내용을 입력해주세요."
+            android:hint="  내용을 작성해주세요."
             android:textAlignment="center"
             android:textColor="@android:color/black" />
-
-
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -94,21 +107,21 @@
             android:layout_marginTop="30dp"
             android:layout_marginLeft="-20dp"
             >
-            <ImageView
-                android:layout_width="120dp"
-                android:layout_height="50dp"
-                android:src="@drawable/gal"/>
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:src="@drawable/gal"/>
 
 
-            <EditText
-                android:id="@+id/editTextName2"
-                android:layout_width="180dp"
-                android:layout_height="110dp"
-                android:layout_gravity="center"
-                android:background="@drawable/border"
-                android:hint=" 사진을 등록해주세요."
-                android:textAlignment="center"
-                android:textColor="@android:color/black" />
+        <EditText
+            android:id="@+id/editTextName2"
+            android:layout_width="180dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:background="@drawable/border"
+            android:hint=" 사진을 등록해주세요."
+            android:textAlignment="center"
+            android:textColor="@android:color/black" />
         </LinearLayout>
 
 

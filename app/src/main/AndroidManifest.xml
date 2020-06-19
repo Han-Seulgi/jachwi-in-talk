@@ -49,15 +49,21 @@
         </activity>
         <activity android:name=".JoinActivity" android:label="회원가입 화면"/>
         <activity android:name=".BoardActivity" android:label="게시판메인 화면"/>
-        <activity android:name=".recipe.RecipeBoardActivity" android:label="자취앤혼밥 화면"/>
+        <activity android:name=".recipe.RecipeBoardActivity" android:label="자취앤집밥 화면"/>
         <activity android:name=".RoomActivity" android:label="보금자리 화면"/>
         <activity android:name=".EventActivity" android:label="행사알리미 화면"/>
         <activity android:name=".EmergencyActivity" android:label="안전지키미 화면"/>
         <activity android:name=".EmergencySet" android:label="안전지키미 설정화면"/>
         <activity android:name=".ShakeNumberActivity" android:label="흔들림횟수 화면"/>
         <activity android:name=".qaActivity" android:label="qa게시판 화면"/>
-        <activity android:name=".WritingActivity" android:label="자취앤집밥 글쓰기 화면"/>
-        <activity android:name=".QAWritingActivity" android:label="자취앤집밥 글쓰기 화면"/>
+        <activity android:name=".Writing.WritingActivity" android:label="자취앤집밥 글쓰기 화면"/>
+        <activity android:name=".QAWritingActivity" android:label="자취큐앤에이 글쓰기 화면"/>
+        <activity android:name=".FoodActivity" android:label="자취앤혼밥 게시판 화면"/>
+        <activity android:name=".Writing.FoodWritingActivity" android:label="자취앤혼밥 글쓰기 화면"/>
+        <activity android:name=".InfoActivity" android:label="자취인정보 게시판 화면"/>
+        <activity android:name=".Writing.InfoWritingActivity" android:label="자취인정보 글쓰기 화면"/>
+
+
 
         <receiver android:name=".BootReceiver"
             android:enabled="true"
