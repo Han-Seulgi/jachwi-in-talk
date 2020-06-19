@@ -55,9 +55,10 @@
         <activity android:name=".EmergencyActivity" android:label="안전지키미 화면"/>
         <activity android:name=".EmergencySet" android:label="안전지키미 설정화면"/>
         <activity android:name=".ShakeNumberActivity" android:label="흔들림횟수 화면"/>
-        <activity android:name=".qaActivity" android:label="qa게시판 화면"/>
+        <activity android:name=".qa.qaActivity" android:label="QA 게시물목록"/>
+        <activity android:name=".qa.qaContent.qaActivityContent" android:label="QA 게시물내용"/>
         <activity android:name=".Writing.WritingActivity" android:label="자취앤집밥 글쓰기 화면"/>
-        <activity android:name=".QAWritingActivity" android:label="자취큐앤에이 글쓰기 화면"/>
+        <activity android:name=".qa.qaContent.QAWritingActivity" android:label="자취큐앤에이 글쓰기 화면"/>
         <activity android:name=".FoodActivity" android:label="자취앤혼밥 게시판 화면"/>
         <activity android:name=".Writing.FoodWritingActivity" android:label="자취앤혼밥 글쓰기 화면"/>
         <activity android:name=".InfoActivity" android:label="자취인정보 게시판 화면"/>

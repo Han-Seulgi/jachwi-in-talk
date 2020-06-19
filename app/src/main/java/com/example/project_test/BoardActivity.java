@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.project_test.qa.qaActivity;
 import com.example.project_test.recipe.RecipeBoardActivity;
 
 public class BoardActivity extends AppCompatActivity {
