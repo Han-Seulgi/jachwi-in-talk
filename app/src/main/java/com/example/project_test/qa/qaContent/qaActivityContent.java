@@ -27,9 +27,7 @@ public class qaActivityContent extends AppCompatActivity {
             String a = intent.getStringExtra("제목");
 
             text1.setText(a);
-
-
-
+            
             recyclerView = findViewById(R.id.recyclerView);
             recyclerView.setHasFixedSize(true);
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/tab3"
@@ -66,11 +66,22 @@
             android:text="글쓰기"
             android:layout_marginLeft="20dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/recyclerView"
-            android:background="#F0F0F0"/>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="500dp">
+
+            <androidx.viewpager.widget.PagerTitleStrip
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:background="@color/colorAccent"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"/>
+
+
+        </androidx.viewpager.widget.ViewPager>
+
 
     </LinearLayout>
 

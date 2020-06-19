@@ -101,26 +101,29 @@ public class BoardActivity extends AppCompatActivity {
             imageButtons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (v.getId() == R.id.btn1) {
-                        //자취앤집밥 게시판으로 넘어가기
+                    if (v.getId() == R.id.btn1) { //자취앤집밥 게시판
                         Intent intent = new Intent(BoardActivity.this, RecipeBoardActivity.class);
                         startActivity(intent);
-                    } else if (v.getId() == R.id.btn2) {Intent intent = new Intent(BoardActivity.this,
-                            FoodActivity.class);
+                    }
+                    else if (v.getId() == R.id.btn2) { //자취앤혼밥 게시판
+                        Intent intent = new Intent(BoardActivity.this, FoodActivity.class);
                         startActivity(intent);
-                        //자취인혼밥 게시판으로 넘어가기
-                    } else if (v.getId() == R.id.btn3) {
-                        //자취인만남 게시판으로 넘어가기
-                    } else if (v.getId() == R.id.btn4) {Intent intent = new Intent(BoardActivity.this, InfoActivity.class);
+
+                    }
+                    else if (v.getId() == R.id.btn3) { //자취인만남 게시판
+
+                    }
+                    else if (v.getId() == R.id.btn4) { //자취인정보 게시판
+                        Intent intent = new Intent(BoardActivity.this, InfoActivity.class);
                         startActivity(intent);
-                        //자취인정보 게시판으로 넘어가기
-                    } else if (v.getId() == R.id.btn5) {
-                        //자취Q&A 게시판으로 넘어가기
-                    } else if (v.getId() == R.id.btn6) {
+
+                    }
+                    else if (v.getId() == R.id.btn5) {  //나눔대여 게시판
+
+                    }
+                    else if (v.getId() == R.id.btn6) { //자취Q&A 게시판
                         Intent intent = new Intent(BoardActivity.this, qaActivity.class);
-                                startActivity(intent);
-                    } else {
-                        //예외처리
+                        startActivity(intent);
                     }
                 }
             });
