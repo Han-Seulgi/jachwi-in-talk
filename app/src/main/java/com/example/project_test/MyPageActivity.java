@@ -53,8 +53,8 @@ public class MyPageActivity extends AppCompatActivity {
                 //startActivity(intent);
                 break;
             case R.id.go:             //내가 쓴글 목록 화면
-                //intent = new Intent(LoginActivity.this, JoinActivity.class);
-                //startActivity(intent);
+                intent = new Intent(getApplicationContext(), MyContentsActivity.class);
+                startActivity(intent);
                 break;
         }
     }
