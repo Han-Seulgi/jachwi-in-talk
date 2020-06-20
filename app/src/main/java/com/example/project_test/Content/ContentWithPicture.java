@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,17 +20,21 @@ public class ContentWithPicture extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.Adapter adapter2;
 
-    TextView text1;
+    TextView text1,tabTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content_pic);
 
+        tabTitle = findViewById(R.id.title);
+
         text1 = findViewById(R.id.text1);
         Intent intent = getIntent();
         String a = intent.getStringExtra("제목");
+        String t = intent.getStringExtra("탭이름");
         text1.setText(a);
+        tabTitle.setText(t);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -47,6 +52,5 @@ public class ContentWithPicture extends AppCompatActivity {
 
         adapter2 = new RecyclerAdapterImg();
         recyclerViewImg.setAdapter(adapter2);
-
     }
 }

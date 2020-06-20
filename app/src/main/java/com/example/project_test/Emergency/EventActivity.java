@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.project_test.MyPageActivity;
 import com.example.project_test.R;
 
 public class EventActivity extends AppCompatActivity {
@@ -27,7 +28,7 @@ public class EventActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.fish);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
@@ -45,7 +46,6 @@ public class EventActivity extends AppCompatActivity {
         return true;
     }
 
-
     //메뉴액션 --home:마이페이지 --message:쪽지함
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -53,7 +53,8 @@ public class EventActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                //마이페이지 화면
+                Intent mypage_itnt = new Intent(getApplicationContext(), MyPageActivity.class);
+                startActivity(mypage_itnt);
                 return true;
             case android.R.id.message:
                 //쪽지함 화면

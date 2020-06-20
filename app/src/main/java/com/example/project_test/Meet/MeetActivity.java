@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +19,8 @@ import com.example.project_test.Writing.WritingActivity;
 import java.util.ArrayList;
 
 public class MeetActivity extends AppCompatActivity {
+    Toolbar toolbar;
+
     private RecyclerView rv;
     private MeetRecyclerAdapter adapter;
     private GridLayoutManager layoutManager;
@@ -25,11 +29,18 @@ public class MeetActivity extends AppCompatActivity {
     int cnt[] = {1,3,5};
     final String title[] = {"응암동 공부 스터디모임","강아지산책모임","영어 회화 모임 "};
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_meet);
+
+        //상단탭
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         RecyclerView rv = findViewById(R.id.rv);
         Button writing = findViewById(R.id.writing);
@@ -56,8 +67,6 @@ public class MeetActivity extends AppCompatActivity {
 
             }
         });
-
-
 
     }
 }

@@ -39,9 +39,7 @@ public class BoardActivity extends AppCompatActivity {
 
         //상단탭
         toolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);

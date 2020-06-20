@@ -14,13 +14,15 @@ public class infoActivityContent extends AppCompatActivity {
     private RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
-    TextView text1;
+    TextView tabTitle, text1;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_qacontent);
 
+            tabTitle = findViewById(R.id.title);
+            tabTitle.setText("자취인정보");
             text1 = findViewById(R.id.text1);
 
             Intent intent = getIntent();

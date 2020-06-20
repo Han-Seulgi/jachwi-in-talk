@@ -11,9 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Content.ContentWithPicture;
+import com.example.project_test.Meet.MeetContent.MeetActivityContent;
 import com.example.project_test.R;
 
 
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -46,7 +48,7 @@ public class MeetRecyclerAdapter extends RecyclerView.Adapter<MeetRecyclerAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ContentWithPicture.class);
+                Intent intent = new Intent(v.getContext(), MeetActivityContent.class);
                 intent.putExtra("제목", t); //게시물의 제목
                 v.getContext().startActivity(intent);
             }

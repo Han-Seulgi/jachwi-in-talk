@@ -24,7 +24,9 @@ public class ShakeNumberActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         monthup = findViewById(R.id.monthup);
         monthdown = findViewById(R.id.monthdown);

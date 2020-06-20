@@ -37,11 +37,6 @@ public class FoodActivityContent extends AppCompatActivity {
 
             adapter = new FoodRecyclerAdapterContent();
             recyclerView.setAdapter(adapter);
-
-
-
-
-
         }
 }
 

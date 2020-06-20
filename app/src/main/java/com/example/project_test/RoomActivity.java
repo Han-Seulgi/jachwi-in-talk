@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
+import com.example.project_test.Content.ContentWithPicture;
 import com.example.project_test.qa.qaContent.qaActivityContent;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,6 +40,9 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
     Button write;
 
     Toolbar toolbar;
+    TextView tabTitle;
+
+    String tt;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,12 +52,15 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         //권한설정
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MODE_PRIVATE);
 
+        tabTitle =findViewById(R.id.title);
+        tt = tabTitle.getText().toString();
+
         //상단탭
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.fish);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mf = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
@@ -74,7 +82,8 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                //마이페이지 화면
+                Intent mypage_itnt = new Intent(getApplicationContext(), MyPageActivity.class);
+                startActivity(mypage_itnt);
                 return true;
             case android.R.id.message:
                 //쪽지함 화면
@@ -88,7 +97,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         gMap = googleMap;
         gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        LatLng location = new LatLng(37.568256, 126.897240);//--현재위치로 바꿔보기--
+        LatLng location = new LatLng(37.5830, 126.9230);//--현재위치로 바꿔보기--
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
 
         gMap.getUiSettings().setZoomControlsEnabled(true);
@@ -101,7 +110,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng house3 = new LatLng(37.5833, 126.9236);
 
         LatLng latLng[] = new LatLng[] {house1,house2,house3};
-        String titles[] = new String[] {"명전앞원룸","방있음","고시원"};
+        String titles[] = new String[] {"명전앞원룸","고시원","방있어요"};
 
         //방위치 마커
         for (int idx = 0; idx<3; idx++){
@@ -118,8 +127,9 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Toast.makeText(RoomActivity.this, "게시글 보기", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(RoomActivity.this, qaActivityContent.class);
+                Intent intent = new Intent(RoomActivity.this, ContentWithPicture.class);
                 intent.putExtra("제목",marker.getTitle());
+                intent.putExtra("탭이름",tt);
                 startActivity(intent);
                 return false;
             }
