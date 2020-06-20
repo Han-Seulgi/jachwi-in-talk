@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.project_test.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.Writing.FoodWritingActivity;
+import com.google.android.material.tabs.TabLayout;
 
 public class FoodActivity extends AppCompatActivity{
     Toolbar toolbar;
@@ -66,7 +67,6 @@ public class FoodActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(FoodActivity.this, FoodWritingActivity.class);
                 startActivity(intent);
-
             }
         });
     }
