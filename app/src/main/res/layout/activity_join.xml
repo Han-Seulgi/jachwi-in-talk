@@ -56,11 +56,12 @@
 
     <EditText
         android:id="@+id/idET"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="23dp"
         android:hint="아이디를 입력해주세요"
+        android:singleLine="true"
         android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@+id/idTxt"
         app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -91,11 +92,12 @@
 
     <EditText
         android:id="@+id/pwET"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:hint="비밀번호를 입력해주세요"
+        android:singleLine="true"
         android:inputType="textPassword"
         android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@+id/pwTxt"
@@ -116,11 +118,12 @@
 
     <EditText
         android:id="@+id/pwckET"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:hint="비밀번호를 입력해주세요"
+        android:singleLine="true"
         android:inputType="textPassword"
         android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@+id/pwckTxt"
@@ -151,11 +154,12 @@
 
     <EditText
         android:id="@+id/nameET"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:hint="닉네임을 입력해주세요"
+        android:singleLine="true"
         android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@+id/nameTxt"
         app:layout_constraintTop_toBottomOf="@+id/pwckET" />
@@ -185,11 +189,12 @@
 
     <EditText
         android:id="@+id/emailET"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:hint="이메일을 입력해주세요"
+        android:singleLine="true"
         android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@+id/emailTxt"
         app:layout_constraintTop_toBottomOf="@+id/nameET" />
@@ -208,7 +213,7 @@
 
     <EditText
         android:id="@+id/adrsET"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
