@@ -70,6 +70,7 @@
         <activity android:name=".Food.FoodContent.FoodActivityContent" android:label="자취앤집밥 게시물 내용"/>
         <activity android:name=".MyPageActivity" android:label="마이페이지"/>
         <activity android:name=".MyInfoSetActivity" android:label="내 정보 수정 화면"/>
+        <activity android:name=".Writing.MeetWritingActivity" android:label="자취인만남 글쓰기 화면"/>
 
 
 
