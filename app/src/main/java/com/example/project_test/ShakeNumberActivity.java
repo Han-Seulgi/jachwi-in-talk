@@ -2,6 +2,7 @@ package com.example.project_test;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class ShakeNumberActivity extends AppCompatActivity {
-
     Toolbar toolbar;
 
     Button monthup, monthdown;   //월 변경 버튼
@@ -26,6 +26,7 @@ public class ShakeNumberActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         monthup = findViewById(R.id.monthup);
@@ -54,5 +55,17 @@ public class ShakeNumberActivity extends AppCompatActivity {
             if(--i > 0)      //0까지 저장됨
                 month.setText(i + "월");
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return true;
     }
 }

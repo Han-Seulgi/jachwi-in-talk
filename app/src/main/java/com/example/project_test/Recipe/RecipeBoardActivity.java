@@ -28,7 +28,7 @@ public class RecipeBoardActivity extends AppCompatActivity {
     private RecipeRecyclerAdapter adapter;
     private GridLayoutManager layoutManager;
 
-    final int image[] = {R.drawable.meeting, R.drawable.qna, R.drawable.interior, R.drawable.food2, R.drawable.qna, R.drawable.living,R.drawable.food2, R.drawable.qna, R.drawable.living,R.drawable.food2};
+    final int image[] = {R.drawable.recipeimg2, R.drawable.recipeimg3, R.drawable.recipeimg4, R.drawable.recipeimg5, R.drawable.recipeimg6, R.drawable.recipeimg7,R.drawable.recipeimg1, R.drawable.recipeimg8, R.drawable.recipe,R.drawable.food2};
     int cnt[] = {50, 10, 60, 30, 100, 120,116,200,222,10};
     final String title[] = {"맛있는 감자탕", "짬뽕먹고싶다!", "만두만들기", "연근조림만드는법", "볶음밥레시피!", "초간단 김밥","그냥저냥 요리","토마토마토","고치돈","새우깡을 만들어보자"};
 

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.project_test.Food.FoodActivity;
+import com.example.project_test.Info.InfoActivity;
 import com.example.project_test.Meet.MeetActivity;
 import com.example.project_test.qa.qaActivity;
 import com.example.project_test.Recipe.RecipeBoardActivity;

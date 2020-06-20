@@ -2,6 +2,8 @@ package com.example.project_test.Meet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project_test.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.Writing.MeetWritingActivity;
 import com.example.project_test.Writing.WritingActivity;
@@ -68,5 +71,30 @@ public class MeetActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //상단탭 메뉴
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.top_menu, menu);
+        return true;
+    }
+
+    //메뉴액션 --home:마이페이지 --message:쪽지함
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                Intent mypage_itnt = new Intent(getApplicationContext(), MyPageActivity.class);
+                startActivity(mypage_itnt);
+                return true;
+            case android.R.id.message:
+                //쪽지함 화면
+                return true;
+        }
+        return true;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.project_test.Emergency;
+package com.example.project_test;
 
 import android.content.Intent;
 import android.net.Uri;

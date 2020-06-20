@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.example.project_test.Emergency.EmergencyActivity;
-import com.example.project_test.Emergency.EventActivity;
 
 
 public class MainActivity extends ActivityGroup {
