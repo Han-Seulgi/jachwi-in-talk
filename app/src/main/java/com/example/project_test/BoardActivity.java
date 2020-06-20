@@ -19,6 +19,7 @@ import com.example.project_test.Food.FoodActivity;
 import com.example.project_test.Meet.MeetActivity;
 import com.example.project_test.qa.qaActivity;
 import com.example.project_test.Recipe.RecipeBoardActivity;
+import com.example.project_test.qa.qaContent.qaActivityContent;
 
 public class BoardActivity extends AppCompatActivity {
     ViewFlipper vflip1, vflip2, vflip3;
@@ -29,7 +30,7 @@ public class BoardActivity extends AppCompatActivity {
     Button changebtn;
     Toolbar toolbar;
 
-    int i = 0, t=0;
+    int i = 0, t = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,12 +66,12 @@ public class BoardActivity extends AppCompatActivity {
         imageButtons[5] = findViewById(R.id.btn6);
 
         //첫 번째 탭의 게시 인기글 뷰 플리퍼
-        int f1_images[] = {R.drawable.food, R.drawable.meet}; //뷰 플리퍼에 들어갈 게시판 이미지
-        String f1_text[] = {"초간단 냉라면 레시피!!\n 요즘 너무 더워서 냉라면을\n 만들어먹어봤어요~", "냉라면레시피"};  //뷰 플리퍼에 들어갈 텍스트
+        int f1_images[] = {R.drawable.foodimg1, R.drawable.foodimg2}; //뷰 플리퍼에 들어갈 게시판 이미지
+        final String f1_text[] = {"초간단 냉라면 레시피!!\n 요즘 너무 더워서 냉라면을\n 만들어먹어봤어요~", "냉라면레시피"};  //뷰 플리퍼에 들어갈 텍스트
 
         for (int i = 0; i < f1_images.length; i++) {
-            vflipview1[i] = (View)View.inflate(this, R.layout.view_item, null);
-                                                        //뷰플리퍼 안에 들어갈 뷰 레이아웃
+            vflipview1[i] = (View) View.inflate(this, R.layout.view_item, null);
+            //뷰플리퍼 안에 들어갈 뷰 레이아웃
 
             //이미지 추가
             ImageView imageView = vflipview1[i].findViewById(R.id.view_img);
@@ -93,7 +94,12 @@ public class BoardActivity extends AppCompatActivity {
         vflip1.setOnClickListener(new View.OnClickListener() { //뷰 플리퍼 클릭했을 때
             @Override
             public void onClick(View v) {
-                //어떤 이미지 클릭했는지 확인하고 해당 게시물 화면으로 넘어가게
+                int i = vflip1.getDisplayedChild();    //현재 페이지 가져오기
+
+                Intent intent = new Intent(getApplicationContext(), qaActivityContent.class);
+                intent.putExtra("제목", f1_text[i]); //게시물의 제목
+                startActivity(intent);
+
             }
         });
 
@@ -105,28 +111,22 @@ public class BoardActivity extends AppCompatActivity {
                     if (v.getId() == R.id.btn1) { //자취앤집밥 게시판
                         Intent intent = new Intent(BoardActivity.this, RecipeBoardActivity.class);
                         startActivity(intent);
-                    }
-                    else if (v.getId() == R.id.btn2) { //자취앤혼밥 게시판
+                    } else if (v.getId() == R.id.btn2) { //자취앤혼밥 게시판
                         Intent intent = new Intent(BoardActivity.this, FoodActivity.class);
                         startActivity(intent);
 
-                    }
-                    else if (v.getId() == R.id.btn3) { //자취인만남 게시판
+                    } else if (v.getId() == R.id.btn3) { //자취인만남 게시판
                         Intent intent = new Intent(BoardActivity.this, MeetActivity.class);
                         startActivity(intent);
 
-                    }
-                    else if (v.getId() == R.id.btn4) { //자취인정보 게시판
+                    } else if (v.getId() == R.id.btn4) { //자취인정보 게시판
                         Intent intent = new Intent(BoardActivity.this, InfoActivity.class);
                         startActivity(intent);
 
-                    }
-                    else if (v.getId() == R.id.btn5) {  //나눔대여 게시판
+                    } else if (v.getId() == R.id.btn5) {  //나눔대여 게시판
 
 
-
-                    }
-                    else if (v.getId() == R.id.btn6) { //자취Q&A 게시판
+                    } else if (v.getId() == R.id.btn6) { //자취Q&A 게시판
                         Intent intent = new Intent(BoardActivity.this, qaActivity.class);
                         startActivity(intent);
                     }
@@ -136,12 +136,12 @@ public class BoardActivity extends AppCompatActivity {
 
 
         //첫 번째 탭의 방 구하기 게시물 뷰 플리퍼
-        int f2_images[] = {R.drawable.food, R.drawable.meet}; //뷰 플리퍼에 들어갈 이미지
-        String f2_text[] = {"명지대 근처 자취방 내놓습니다!!", "명전 10분 거리 원룸"};  //뷰 플리퍼에 들어갈 텍스트
+        int f2_images[] = {R.drawable.roomimg1, R.drawable.roomimg2}; //뷰 플리퍼에 들어갈 이미지
+        final String f2_text[] = {"명지대 근처 자취방 내놓습니다!!", "명전 10분 거리 원룸"};  //뷰 플리퍼에 들어갈 텍스트
 
         for (int i = 0; i < f2_images.length; i++) {
-            vflipview2[i] = (View)View.inflate(this, R.layout.view_item, null);
-                                                            //뷰플리퍼 안에 들어갈 뷰 레이아웃
+            vflipview2[i] = (View) View.inflate(this, R.layout.view_item, null);
+            //뷰플리퍼 안에 들어갈 뷰 레이아웃
 
             //이미지 추가
             ImageView imageView = vflipview2[i].findViewById(R.id.view_img);
@@ -166,30 +166,35 @@ public class BoardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //어떤 이미지 클릭했는지 확인하고 해당 게시물 화면으로 넘어가게
+                int i = vflip2.getDisplayedChild();    //현재 페이지 가져오기
+
+                Intent intent = new Intent(getApplicationContext(), qaActivityContent.class);
+                intent.putExtra("제목", f2_text[i]); //게시물의 제목
+                startActivity(intent);
             }
         });
 
         //첫 번째 탭의 나눔 HOT 뷰 플리퍼
-        final int f3_images[] = {R.drawable.meet, R.drawable.board, R.drawable.naverlogo2, R.drawable.backbtn, R.drawable.check, R.drawable.board2}; //뷰 플리퍼에 들어갈 이미지
+        final int f3_images[] = {R.drawable.shareimg1, R.drawable.shareimg2, R.drawable.shareimg3, R.drawable.shareimg4, R.drawable.shareimg5, R.drawable.shareimg6}; //뷰 플리퍼에 들어갈 이미지
         final String f3_text[] = {"아이스티 : 1000원", "오렌지 : 2000원", "물 : 100원", "초콜릿 : 20000원", "콜라 : 3000원", "커피 : 20원"};  //뷰 플리퍼에 들어갈 텍스트
 
         //첫 번째 탭 나눔 HOT에서 다음 버튼을 눌렀을 때
-            changebtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //i, t는 0으로 초기화되어있음
-                    //배열에 있는 값 차례로 가져와서 넣음
-                    vimg1.setImageResource(f3_images[i++]);
-                    vtxt1.setText(f3_text[t++]);
-                    vimg2.setImageResource(f3_images[i++]);
-                    vtxt2.setText(f3_text[t++]);
-                    if (i >= f3_images.length) {   //배열의 끝까지 왔으면 0으로 초기화해서 무한반복
-                        i = 0;
-                        t = 0;
-                    }
-                    //Log.d("iiii", String.valueOf(i));
+        changebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //i, t는 0으로 초기화되어있음
+                //배열에 있는 값 차례로 가져와서 넣음
+                vimg1.setImageResource(f3_images[i++]);
+                vtxt1.setText(f3_text[t++]);
+                vimg2.setImageResource(f3_images[i++]);
+                vtxt2.setText(f3_text[t++]);
+                if (i >= f3_images.length) {   //배열의 끝까지 왔으면 0으로 초기화해서 무한반복
+                    i = 0;
+                    t = 0;
                 }
-            });
+                //Log.d("iiii", String.valueOf(i));
+            }
+        });
 
     }
 

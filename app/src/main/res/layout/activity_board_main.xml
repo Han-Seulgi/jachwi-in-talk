@@ -229,7 +229,7 @@
                                     android:id="@+id/vimg1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/meet" />
+                                    android:src="@drawable/shareimg1" />
 
                                 <TextView
                                     android:id="@+id/vtxt1"
@@ -249,13 +249,13 @@
                                     android:id="@+id/vimg2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/fish" />
+                                    android:src="@drawable/shareimg2" />
 
                                 <TextView
                                     android:id="@+id/vtxt2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="사과 10000원" />
+                                    android:text="오렌지 10000원" />
                             </LinearLayout>
                         </LinearLayout>
                     </ViewFlipper>
