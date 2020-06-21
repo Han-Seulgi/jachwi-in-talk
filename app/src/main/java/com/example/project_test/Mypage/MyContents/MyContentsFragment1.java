@@ -1,15 +1,16 @@
-package com.example.project_test;
+package com.example.project_test.Mypage.MyContents;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.project_test.R;
 
 
 public class MyContentsFragment1 extends Fragment {
@@ -26,8 +27,9 @@ public class MyContentsFragment1 extends Fragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
         mRecyclerView.setHasFixedSize(true);
 
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mAdapter = new MyContentsRecyclerViewAdapter();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
         return rootView;

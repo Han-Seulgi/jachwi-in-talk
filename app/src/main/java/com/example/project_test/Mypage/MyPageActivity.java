@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Mypage;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +10,9 @@ import android.widget.ImageButton;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.project_test.Mypage.MyContents.MyContentsActivity;
+import com.example.project_test.R;
 
 public class MyPageActivity extends AppCompatActivity {
     Button userSetBtn, logout, addkwd;

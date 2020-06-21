@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Mypage.MyContents;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,17 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project_test.Food.FoodContent.FoodActivityContent;
-import com.example.project_test.Food.FoodRecyclerAdapter;
+import com.example.project_test.R;
 import com.example.project_test.qa.qaContent.qaActivityContent;
 
 public class MyContentsRecyclerViewAdapter extends RecyclerView.Adapter<MyContentsRecyclerViewAdapter.ViewHolder> {
     ImageView img;
 
     private String[] title = {"자취앤집밥", "자취앤집밥", "자취인만남", "자취인정보", "나눔.대여", "자취Q&A"}; //게시판 이름
-    private String[] content = {"2020.6.20", "2020.6.20", "2020.6.19", "2020.6.18", "2020.6.18", "2020.6.18", "2020.6.17"}; //게시물 내용
+    private String[] content = {"요리레시피", "요리레시피2", "독서모임", "생활정보", "물품나눔", "큐앤에이"}; //게시물 내용
 
-    private String[] day = {"2020.6.20", "2020.6.20", "2020.6.19", "2020.6.18", "2020.6.18", "2020.6.18", "2020.6.17"}; //날짜
+    private String[] day = {"2020.6.20", "2020.6.20", "2020.6.19", "2020.6.18", "2020.6.18", "2020.6.18"}; //날짜
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
@@ -31,7 +30,7 @@ public class MyContentsRecyclerViewAdapter extends RecyclerView.Adapter<MyConten
         public ViewHolder(View view) {
             super(view);
             this.imageView = view.findViewById(R.id.img);
-            this.textView = view.findViewById(R.id.boardtitle);
+            this.textView = view.findViewById(R.id.title);
             this.textView2 = view.findViewById(R.id.content);
             this.textView3 = view.findViewById(R.id.day);
         }
