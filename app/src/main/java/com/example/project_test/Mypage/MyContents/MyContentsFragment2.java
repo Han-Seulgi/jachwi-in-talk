@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Mypage.MyContents;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.project_test.R;
 
 public class MyContentsFragment2 extends Fragment {
     @Nullable

@@ -11,8 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.project_test.MyPageActivity;
-import com.example.project_test.R;
+import com.example.project_test.Mypage.MyPageActivity;
 
 public class EventActivity extends AppCompatActivity {
 

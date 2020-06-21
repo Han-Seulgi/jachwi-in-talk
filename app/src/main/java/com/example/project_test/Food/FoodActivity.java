@@ -13,10 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.project_test.MyPageActivity;
+import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.Writing.FoodWritingActivity;
-import com.google.android.material.tabs.TabLayout;
 
 public class FoodActivity extends AppCompatActivity{
     Toolbar toolbar;

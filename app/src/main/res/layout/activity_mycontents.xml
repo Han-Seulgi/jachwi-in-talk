@@ -48,6 +48,7 @@
         app:tabTextColor="@color/colorPrimary"
         app:tabSelectedTextColor="@color/colorAccent" />
 
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_below="@id/tabs"

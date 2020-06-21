@@ -71,9 +71,9 @@
         <activity android:name=".Emergency.EmergencySet" android:label="안전지키미 설정화면"/>
         <activity android:name=".ShakeNumberActivity" android:label="흔들림횟수 화면"/>
 
-        <activity android:name=".MyPageActivity" android:label="마이페이지"/>
-        <activity android:name=".MyInfoSetActivity" android:label="내 정보 수정 화면"/>
-        <activity android:name=".MyContentsActivity" android:label="내가 쓴 글 목록"/>
+        <activity android:name=".Mypage.MyPageActivity" android:label="마이페이지"/>
+        <activity android:name=".Mypage.MyInfoSetActivity" android:label="내 정보 수정 화면"/>
+        <activity android:name=".Mypage.MyContents.MyContentsActivity" android:label="내가 쓴 글 목록"/>
 
         <receiver android:name=".BootReceiver"
             android:enabled="true"

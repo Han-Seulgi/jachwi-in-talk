@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.project_test.MyPageActivity;
 import com.example.project_test.R;
 
 public class FoodWritingActivity extends AppCompatActivity {

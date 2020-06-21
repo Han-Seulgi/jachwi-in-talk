@@ -218,7 +218,7 @@
                         android:id="@+id/vflip3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="6">
+                        android:layout_weight="10">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -230,19 +230,28 @@
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:layout_weight="1"
-                                android:gravity="center_horizontal">
+                                android:gravity="center_horizontal"
+                                android:padding="5dp">
 
                                 <ImageButton
                                     android:id="@+id/vimg1"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/shareimg1" />
+                                    android:layout_width="match_parent"
+                                    android:layout_height="100dp"
+                                    android:scaleType="fitCenter"
+                                    android:src="@drawable/recipeimg3"
+                                    android:background="#00ffffff"/>
 
                                 <TextView
-                                    android:id="@+id/vtxt1"
+                                    android:id="@+id/v1txt1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="아이스티 : 1000원" />
+                                    android:text="아이스티" />
+
+                                <TextView
+                                    android:id="@+id/v1txt2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="1000원" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -250,19 +259,28 @@
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:layout_weight="1"
-                                android:gravity="center_horizontal">
+                                android:gravity="center_horizontal"
+                                android:padding="5dp">
 
                                 <ImageButton
                                     android:id="@+id/vimg2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/shareimg2" />
+                                    android:layout_width="match_parent"
+                                    android:layout_height="100dp"
+                                    android:scaleType="fitCenter"
+                                    android:src="@drawable/recipeimg1"
+                                    android:background="#00ffffff"/>
 
                                 <TextView
-                                    android:id="@+id/vtxt2"
+                                    android:id="@+id/v2txt1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="오렌지 10000원" />
+                                    android:text="오렌지" />
+
+                                <TextView
+                                    android:id="@+id/v2txt2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="2000원" />
                             </LinearLayout>
                         </LinearLayout>
                     </ViewFlipper>
@@ -271,10 +289,12 @@
                         android:id="@+id/changebtn"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="#ff9263"
-                        android:text="버튼"
-                        android:textColor="#ffffff" />
+                        android:text="&gt;"
+                        android:textColor="#ffffff"
+                        android:layout_margin="5dp"/>
 
                 </LinearLayout>
             </LinearLayout>
