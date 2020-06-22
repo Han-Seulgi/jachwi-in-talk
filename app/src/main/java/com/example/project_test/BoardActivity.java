@@ -68,9 +68,9 @@ public class BoardActivity extends AppCompatActivity {
         imageButtons[5] = findViewById(R.id.btn6);
 
         //첫 번째 탭의 게시 인기글 뷰 플리퍼
-        int f1_images[] = {R.drawable.recipeimg1, R.drawable.recipeimg2}; //뷰 플리퍼에 들어갈 게시판 이미지
-        final String f1_text1[] = {"초간단 냉라면 레시피!!", "냉라면레시피"};  //뷰 플리퍼에 들어갈 텍스트(제목)
-        final String f1_text2[] = {"요즘 너무 더워서 냉라면을\n 만들어먹어봤어요~", "냉라면 만들었어요"};  //뷰 플리퍼에 들어갈 텍스트(내용)
+        int f1_images[] = {R.drawable.vflipimg, R.drawable.recipeimg2}; //뷰 플리퍼에 들어갈 게시판 이미지
+        final String f1_text1[] = {"초간단 냉라면 레시피!!", "감자탕레시피"};  //뷰 플리퍼에 들어갈 텍스트(제목)
+        final String f1_text2[] = {"요즘 너무 더워서 냉라면을\n 만들어먹어봤어요~", "집에서 감자탕 만들어먹어요"};  //뷰 플리퍼에 들어갈 텍스트(내용)
 
 
         for (int i = 0; i < f1_images.length; i++) {
@@ -184,7 +184,7 @@ public class BoardActivity extends AppCompatActivity {
         });
 
         //첫 번째 탭의 나눔 HOT 뷰 플리퍼
-        final int f3_images[] = {R.drawable.recipeimg1, R.drawable.recipeimg4, R.drawable.shareimg3, R.drawable.shareimg4, R.drawable.shareimg5, R.drawable.shareimg6}; //뷰 플리퍼에 들어갈 이미지
+        final int f3_images[] = {R.drawable.icetea1, R.drawable.orange, R.drawable.shareimg3, R.drawable.chocolate, R.drawable.coke, R.drawable.coffee}; //뷰 플리퍼에 들어갈 이미지
         final String f3_text1[] = {"아이스티", "오렌지", "물", "초콜릿", "콜라", "커피"};  //뷰 플리퍼에 들어갈 텍스트(제목)
         final String f3_text2[] = {"1000원", "2000원", "100원", "20000원", "3000원", "20원"};  //뷰 플리퍼에 들어갈 텍스트(가격)
 

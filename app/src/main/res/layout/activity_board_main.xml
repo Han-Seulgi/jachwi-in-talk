@@ -238,7 +238,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="100dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/recipeimg3"
+                                    android:src="@drawable/icetea1"
                                     android:background="#00ffffff"/>
 
                                 <TextView
@@ -267,7 +267,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="100dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/recipeimg1"
+                                    android:src="@drawable/orange"
                                     android:background="#00ffffff"/>
 
                                 <TextView
