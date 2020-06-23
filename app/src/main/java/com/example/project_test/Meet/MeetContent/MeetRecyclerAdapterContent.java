@@ -13,9 +13,9 @@ import com.example.project_test.R;
 
 public class MeetRecyclerAdapterContent extends RecyclerView.Adapter<MeetRecyclerAdapterContent.ViewHolder>{
     ImageView img;
-    private String[] title = {"a", "b", "c", "d", "e", "제목6", "제목7", "제목8", "제목9", "제목10"}; // 게시물 제목 가져오기
+    private String[] title = {"저도 갈래요!", "모임은 한번밖에 없는건가요?", "저도 가고싶은데,, 일이있어서 못가요ㅠㅠㅜ", "저도요!!", "오 저도 가고싶어요", "저도 가고싶네요", "위치는 변경 없는건가요??", "위치는 변경 없는건가요??", "오 저도 가고싶어요", "저도요!!!"}; // 게시물 제목 가져오기
 
-    private String[] content = {"1", "2", "3", "4", "5", "내용6", "내용7", "내용8", "내용9", "내용10", }; //게시물 내용
+    private String[] content = {"2020.6.23", "2020.6.23", "2020.6.20", "2020.6.10", "2020.6.10", "2020.6.8", "2020.6.5", "2020.6.5", "2020.6.1", "2020.6.1", }; //게시물 내용
 
     public class ViewHolder extends  RecyclerView.ViewHolder {
         public TextView textView;

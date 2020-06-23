@@ -29,7 +29,7 @@ public class MeetRecyclerAdapter extends RecyclerView.Adapter<MeetRecyclerAdapte
     @NonNull
     @Override
     public MeetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_item,parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.meet_item,parent, false);
 
         MeetViewHolder holder = new MeetViewHolder(view);
 

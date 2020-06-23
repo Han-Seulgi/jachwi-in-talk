@@ -26,9 +26,9 @@ public class MeetActivity extends AppCompatActivity {
     private MeetRecyclerAdapter adapter;
     private GridLayoutManager layoutManager;
 
-    final int image[] = {R.drawable.meeting1,R.drawable.meetimg1,R.drawable.meetimg1};
-    int cnt[] = {1,3,5};
-    final String title[] = {"응암동 공부 스터디모임","강아지산책모임","영어 회화 모임 "};
+    final int image[] = {R.drawable.meeting1,R.drawable.meeting2,R.drawable.meeting3,R.drawable.meeting4,R.drawable.meeting5};
+    int cnt[] = {1,3,5,8,13};
+    final String title[] = {"응암동 공부 스터디모임","강아지 산책모임","영어 회화 모임 ","바리스타 1급 같이 하실 분!","같이 여행가요~"};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
