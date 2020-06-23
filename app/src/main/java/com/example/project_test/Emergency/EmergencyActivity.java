@@ -47,8 +47,8 @@ public class EmergencyActivity extends AppCompatActivity {
     private boolean mFlashOn;//손전등 켬/끔
     private CameraManager cm;
     private String mCameraId;
-    private SoundPool sound_pool;
-    private int sound_beep;
+    private SoundPool sound_pool; //사이렌
+    private int sound_beep; //사이렌
 
 
     @Override
@@ -71,6 +71,7 @@ public class EmergencyActivity extends AppCompatActivity {
         bm4 = BitmapFactory.decodeResource(getResources(), R.drawable.siren);
         bm5 = BitmapFactory.decodeResource(getResources(), R.drawable.setting);
         bm6 = BitmapFactory.decodeResource(getResources(), R.drawable.call);
+
         Bitmap bms[] = {bm1, bm2, bm3, bm4, bm5, bm6};
         String str[] = {"손전등", "위치전송", "흔들림횟수", "경고음", "설정", "긴급전화"};
         for (int i = 0; i < bms.length; i++) {

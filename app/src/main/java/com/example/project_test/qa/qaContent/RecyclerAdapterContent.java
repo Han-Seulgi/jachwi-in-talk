@@ -12,9 +12,9 @@ import com.example.project_test.R;
 
 public class RecyclerAdapterContent extends RecyclerView.Adapter<RecyclerAdapterContent.ViewHolder>{
     ImageView img;
-    private String[] title = {"a", "b", "c", "d", "e", "제목6", "제목7", "제목8", "제목9", "제목10"}; // 게시물 제목 가져오기
+    private String[] title = {"아마도 그럴거에요", "아닐걸요??", "인터넷 블로그에 자세히 나와있어요!!", "아마도 그럴거에요", "아닐걸요??", "아닐걸요??", "인터넷 블로그에 자세히 나와있어요!!", "경비아저씨한테 한번 물어보세요", "경비아저씨한테 한번 물어보세요", "경비아저씨한테 한번 물어보세요"}; // 게시물 제목 가져오기
 
-    private String[] content = {"1", "2", "3", "4", "5", "내용6", "내용7", "내용8", "내용9", "내용10", }; //게시물 내용
+    private String[] content = {"2020.6.22", "2020.6.22", "2020.6.22", "2020.6.19", "2020.6.19", "2020.6.15", "2020.6.15", "2020.6.10", "2020.6.10", "2020.6.1", }; //게시물 내용
 
     public class ViewHolder extends  RecyclerView.ViewHolder {
         public TextView textView;

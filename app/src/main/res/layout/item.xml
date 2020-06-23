@@ -17,11 +17,10 @@
 
             <ImageButton
                 android:id="@+id/img"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/check"
-                />
+                android:layout_width="80dp"
+                android:layout_height="90dp"
+                android:src="@drawable/userimg"
+                android:background="#00ff0000"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -31,23 +30,39 @@
 
                 <TextView
                     android:id="@+id/tv1"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
 
                 <TextView
                     android:id="@+id/tv2"
-                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:layout_gravity="right"
-                    android:text="댓글몇개 추천 몇 개,,,"
-                    />
+                    android:gravity="right"
+                    android:orientation="horizontal">
+                    <ImageButton
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#00ffffff"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/modify" />
+
+                    <ImageButton
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#00ffffff"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/delete" />
+
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

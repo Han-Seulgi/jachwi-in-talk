@@ -11,14 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Info.InfoContent.infoActivityContent;
 import com.example.project_test.R;
-import com.example.project_test.qa.qaContent.qaActivityContent;
-
 public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapter.ViewHolder> {
-    ImageView img;
 
     private String[] title = {"에어컨 청소 팁좀 알려주세요~", "안녕하세요", "드디어 입주^^!!", "오늘은 운동삼아 걸어서 퇴근했어요", "우리 초코 산책", "드디어 금요일!!!", "안녕하세요", "드디어 입주^^!!"}; // 게시물 제목 가져오기
 
     private String[] content = {"2020.6.20", "2020.6.20", "2020.6.19", "2020.6.19", "2020.6.18", "2020.6.17", "2020.6.18", "2020.6.17"}; //게시물 내용
+
+    private Integer[] img = {R.drawable.information, R.drawable.information, R.drawable.information, R.drawable.information, R.drawable.information, R.drawable.information, R.drawable.information, R.drawable.information};
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
@@ -45,6 +44,7 @@ public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapte
     public void onBindViewHolder(final InfoRecyclerAdapter.ViewHolder holder, final int position) {
         holder.textView.setText(title[position]);
         holder.textView2.setText(content[position]);
+        holder.imageView.setImageResource(img[position]);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() { //글 목록 클릭했을 때
             @Override

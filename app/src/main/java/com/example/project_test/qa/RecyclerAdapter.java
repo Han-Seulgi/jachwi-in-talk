@@ -13,11 +13,12 @@ import com.example.project_test.R;
 import com.example.project_test.qa.qaContent.qaActivityContent;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
-    ImageView img;
 
-    private String[] title = {"오렌지 껍질은 음식물 쓰레기인가요?", "전입신고는 어떻게하나요?", "세탁기 사용법", "제목4", "제목5", "제목6", "제목7", "제목8", "제목9", "제목10"}; // 게시물 제목 가져오기
+    private String[] title = {"오렌지 껍질은 음식물 쓰레기인가요?", "전입신고는 어떻게하나요?", "세탁기 사용법", "바퀴벌레 퇴치법", "층간소음", "월세", "계야긱간"}; // 게시물 제목 가져오기
 
-    private String[] content = {"내용1", "내용2", "내용3", "내용4", "내용5", "내용6", "내용7", "내용8", "내용9", "내용10",}; //게시물 내용
+    private String[] content = {"2020.6.1", "2020.6.1", "2020.5.28", "2020.5.27", "2020.5.20", "2020.5.20", "2020.5.19"}; //게시물 내용
+
+    private Integer[] img = {R.drawable.qaboard, R.drawable.qaboard, R.drawable.qaboard, R.drawable.qaboard, R.drawable.qaboard, R.drawable.qaboard, R.drawable.qaboard};
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
@@ -44,6 +45,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(final RecyclerAdapter.ViewHolder holder, final int position) {
         holder.textView.setText(title[position]);
         holder.textView2.setText(content[position]);
+        holder.imageView.setImageResource(img[position]);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() { //글 목록 클릭했을 때
             @Override

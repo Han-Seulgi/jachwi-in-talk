@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginVertical="15dp"
-            android:text="글 내용~~~~~~~\n~~~~~~~\n~~~~~~~~" />
+            android:text="얼마전에 가봤는데 정말 좋아요~~ \n 정말 맛있을거같지않나요 ㅎㅎ" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
@@ -101,6 +101,21 @@
             android:layout_height="150dp"
             class="com.google.android.gms.maps.MapFragment"/>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="417dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#4682B4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline2" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintTop_toBottomOf="@+id/map"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -109,6 +124,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/recyclerView"
         android:background="#F0F0F0"/>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
