@@ -21,7 +21,7 @@ public class MeetActivity extends AppCompatActivity {
     private MeetRecyclerAdapter adapter;
     private GridLayoutManager layoutManager;
 
-    final int image[] = {R.drawable.meetimg1,R.drawable.meetimg1,R.drawable.meetimg1};
+    final int image[] = {R.drawable.meeting1,R.drawable.meetimg1,R.drawable.meetimg1};
     int cnt[] = {1,3,5};
     final String title[] = {"응암동 공부 스터디모임","강아지산책모임","영어 회화 모임 "};
 
