@@ -40,12 +40,14 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
         holder.count.setText(data.getCount());
         holder.title.setText(data.getTitle());
         final String t = data.getTitle();
+        final String tt = data.getTabTitle();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ContentWithPicture.class);
                 intent.putExtra("제목", t); //게시물의 제목
+                intent.putExtra("탭이름",tt);
                 v.getContext().startActivity(intent);
             }
         });

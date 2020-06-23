@@ -32,7 +32,13 @@ class FoodAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return (position + 1) + "번째탭";
+        if(position == 0) {
+            return "게시물";
+        }
+        else {
+            return "스크랩";
+        }
+
     }
 
 }

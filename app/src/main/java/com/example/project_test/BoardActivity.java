@@ -16,20 +16,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.project_test.Food.FoodActivity;
+import com.example.project_test.Info.InfoActivity;
 import com.example.project_test.Meet.MeetActivity;
+import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.qa.qaActivity;
 import com.example.project_test.Recipe.RecipeBoardActivity;
+import com.example.project_test.qa.qaContent.qaActivityContent;
 
 public class BoardActivity extends AppCompatActivity {
     ViewFlipper vflip1, vflip2, vflip3;
     View vflipview1[] = new View[2], vflipview2[] = new View[2];
     ImageButton btn1, btn2, btn3, btn4, btn5, btn6, vimg1, vimg2;
     ImageButton imageButtons[] = {btn1, btn2, btn3, btn4, btn5, btn6};
-    TextView vtxt1, vtxt2;
+    TextView v1txt1, v1txt2, v2txt1, v2txt2;
     Button changebtn;
     Toolbar toolbar;
 
-    int i = 0, t=0;
+    int i = 0, t = 0, j=0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,9 +41,7 @@ public class BoardActivity extends AppCompatActivity {
 
         //상단탭
         toolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
@@ -52,8 +53,10 @@ public class BoardActivity extends AppCompatActivity {
         vflip3 = findViewById(R.id.vflip3);
         vimg1 = findViewById(R.id.vimg1);
         vimg2 = findViewById(R.id.vimg2);
-        vtxt1 = findViewById(R.id.vtxt1);
-        vtxt2 = findViewById(R.id.vtxt2);
+        v1txt1 = findViewById(R.id.v1txt1);
+        v1txt2 = findViewById(R.id.v1txt2);
+        v2txt1 = findViewById(R.id.v2txt1);
+        v2txt2 = findViewById(R.id.v2txt2);
 
         changebtn = findViewById(R.id.changebtn);
 
@@ -65,20 +68,24 @@ public class BoardActivity extends AppCompatActivity {
         imageButtons[5] = findViewById(R.id.btn6);
 
         //첫 번째 탭의 게시 인기글 뷰 플리퍼
-        int f1_images[] = {R.drawable.food, R.drawable.meet}; //뷰 플리퍼에 들어갈 게시판 이미지
-        String f1_text[] = {"초간단 냉라면 레시피!!\n 요즘 너무 더워서 냉라면을\n 만들어먹어봤어요~", "냉라면레시피"};  //뷰 플리퍼에 들어갈 텍스트
+        int f1_images[] = {R.drawable.vflipimg, R.drawable.recipeimg2}; //뷰 플리퍼에 들어갈 게시판 이미지
+        final String f1_text1[] = {"초간단 냉라면 레시피!!", "감자탕레시피"};  //뷰 플리퍼에 들어갈 텍스트(제목)
+        final String f1_text2[] = {"요즘 너무 더워서 냉라면을\n 만들어먹어봤어요~", "집에서 감자탕 만들어먹어요"};  //뷰 플리퍼에 들어갈 텍스트(내용)
+
 
         for (int i = 0; i < f1_images.length; i++) {
-            vflipview1[i] = (View)View.inflate(this, R.layout.view_item, null);
-                                                        //뷰플리퍼 안에 들어갈 뷰 레이아웃
+            vflipview1[i] = (View) View.inflate(this, R.layout.view_item, null);
+            //뷰플리퍼 안에 들어갈 뷰 레이아웃
 
             //이미지 추가
             ImageView imageView = vflipview1[i].findViewById(R.id.view_img);
             imageView.setBackgroundResource(f1_images[i]);
 
             //텍스트 추가
-            TextView textView = vflipview1[i].findViewById(R.id.view_txt);
-            textView.setText(f1_text[i]);
+            TextView textView1 = vflipview1[i].findViewById(R.id.view_title);
+            textView1.setText(f1_text1[i]);
+            TextView textView2 = vflipview1[i].findViewById(R.id.view_content);
+            textView2.setText(f1_text2[i]);
 
             //뷰플리퍼에 뷰 추가
             vflip1.addView(vflipview1[i]);
@@ -93,7 +100,12 @@ public class BoardActivity extends AppCompatActivity {
         vflip1.setOnClickListener(new View.OnClickListener() { //뷰 플리퍼 클릭했을 때
             @Override
             public void onClick(View v) {
-                //어떤 이미지 클릭했는지 확인하고 해당 게시물 화면으로 넘어가게
+                int i = vflip1.getDisplayedChild();    //현재 페이지 가져오기
+
+                Intent intent = new Intent(getApplicationContext(), qaActivityContent.class);
+                intent.putExtra("제목", f1_text1[i]); //게시물의 제목
+                startActivity(intent);
+
             }
         });
 
@@ -105,28 +117,22 @@ public class BoardActivity extends AppCompatActivity {
                     if (v.getId() == R.id.btn1) { //자취앤집밥 게시판
                         Intent intent = new Intent(BoardActivity.this, RecipeBoardActivity.class);
                         startActivity(intent);
-                    }
-                    else if (v.getId() == R.id.btn2) { //자취앤혼밥 게시판
+                    } else if (v.getId() == R.id.btn2) { //자취앤혼밥 게시판
                         Intent intent = new Intent(BoardActivity.this, FoodActivity.class);
                         startActivity(intent);
 
-                    }
-                    else if (v.getId() == R.id.btn3) { //자취인만남 게시판
+                    } else if (v.getId() == R.id.btn3) { //자취인만남 게시판
                         Intent intent = new Intent(BoardActivity.this, MeetActivity.class);
                         startActivity(intent);
 
-                    }
-                    else if (v.getId() == R.id.btn4) { //자취인정보 게시판
+                    } else if (v.getId() == R.id.btn4) { //자취인정보 게시판
                         Intent intent = new Intent(BoardActivity.this, InfoActivity.class);
                         startActivity(intent);
 
-                    }
-                    else if (v.getId() == R.id.btn5) {  //나눔대여 게시판
+                    } else if (v.getId() == R.id.btn5) {  //나눔대여 게시판
 
 
-
-                    }
-                    else if (v.getId() == R.id.btn6) { //자취Q&A 게시판
+                    } else if (v.getId() == R.id.btn6) { //자취Q&A 게시판
                         Intent intent = new Intent(BoardActivity.this, qaActivity.class);
                         startActivity(intent);
                     }
@@ -136,20 +142,23 @@ public class BoardActivity extends AppCompatActivity {
 
 
         //첫 번째 탭의 방 구하기 게시물 뷰 플리퍼
-        int f2_images[] = {R.drawable.food, R.drawable.meet}; //뷰 플리퍼에 들어갈 이미지
-        String f2_text[] = {"명지대 근처 자취방 내놓습니다!!", "명전 10분 거리 원룸"};  //뷰 플리퍼에 들어갈 텍스트
+        int f2_images[] = {R.drawable.roomimg1, R.drawable.roomimg2}; //뷰 플리퍼에 들어갈 이미지
+        final String f2_text1[] = {"명지대 근처 원룸 내놓습니다!", "명전 10분 거리 원룸"};  //뷰 플리퍼에 들어갈 텍스트(제목)
+        final String f2_text2[] = {"명지대 도보로 15분 정도 걸려요 벌레 없고 수압 좋습니다 ", "7월 20일에 방뺍니다"};  //뷰 플리퍼에 들어갈 텍스트(내용)
 
         for (int i = 0; i < f2_images.length; i++) {
-            vflipview2[i] = (View)View.inflate(this, R.layout.view_item, null);
-                                                            //뷰플리퍼 안에 들어갈 뷰 레이아웃
+            vflipview2[i] = (View) View.inflate(this, R.layout.view_item, null);
+            //뷰플리퍼 안에 들어갈 뷰 레이아웃
 
             //이미지 추가
             ImageView imageView = vflipview2[i].findViewById(R.id.view_img);
             imageView.setBackgroundResource(f2_images[i]);
 
             //텍스트 추가
-            TextView textView = vflipview2[i].findViewById(R.id.view_txt);
-            textView.setText(f2_text[i]);
+            TextView textView1 = vflipview2[i].findViewById(R.id.view_title);
+            textView1.setText(f2_text1[i]);
+            TextView textView2 = vflipview2[i].findViewById(R.id.view_content);
+            textView2.setText(f2_text2[i]);
 
             //뷰플리퍼에 뷰 추가
             vflip2.addView(vflipview2[i]);
@@ -166,30 +175,40 @@ public class BoardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //어떤 이미지 클릭했는지 확인하고 해당 게시물 화면으로 넘어가게
+                int i = vflip2.getDisplayedChild();    //현재 페이지 가져오기
+
+                Intent intent = new Intent(getApplicationContext(), qaActivityContent.class);
+                intent.putExtra("제목", f2_text1[i]); //게시물의 제목
+                startActivity(intent);
             }
         });
 
         //첫 번째 탭의 나눔 HOT 뷰 플리퍼
-        final int f3_images[] = {R.drawable.meet, R.drawable.board, R.drawable.naverlogo2, R.drawable.backbtn, R.drawable.check, R.drawable.board2}; //뷰 플리퍼에 들어갈 이미지
-        final String f3_text[] = {"아이스티 : 1000원", "오렌지 : 2000원", "물 : 100원", "초콜릿 : 20000원", "콜라 : 3000원", "커피 : 20원"};  //뷰 플리퍼에 들어갈 텍스트
+        final int f3_images[] = {R.drawable.icetea1, R.drawable.orange, R.drawable.shareimg3, R.drawable.chocolate, R.drawable.coke, R.drawable.coffee}; //뷰 플리퍼에 들어갈 이미지
+        final String f3_text1[] = {"아이스티", "오렌지", "물", "초콜릿", "콜라", "커피"};  //뷰 플리퍼에 들어갈 텍스트(제목)
+        final String f3_text2[] = {"1000원", "2000원", "100원", "20000원", "3000원", "20원"};  //뷰 플리퍼에 들어갈 텍스트(가격)
 
         //첫 번째 탭 나눔 HOT에서 다음 버튼을 눌렀을 때
-            changebtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //i, t는 0으로 초기화되어있음
-                    //배열에 있는 값 차례로 가져와서 넣음
-                    vimg1.setImageResource(f3_images[i++]);
-                    vtxt1.setText(f3_text[t++]);
-                    vimg2.setImageResource(f3_images[i++]);
-                    vtxt2.setText(f3_text[t++]);
-                    if (i >= f3_images.length) {   //배열의 끝까지 왔으면 0으로 초기화해서 무한반복
-                        i = 0;
-                        t = 0;
-                    }
-                    //Log.d("iiii", String.valueOf(i));
+        changebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //i, t, j는 0으로 초기화되어있음
+                //배열에 있는 값 차례로 가져와서 넣음
+                vimg1.setImageResource(f3_images[i++]);
+                v1txt1.setText(f3_text1[t++]);
+                v1txt2.setText(f3_text2[j++]);
+
+                vimg2.setImageResource(f3_images[i++]);
+                v2txt1.setText(f3_text1[t++]);
+                v2txt2.setText(f3_text2[j++]);
+                if (i >= f3_images.length) {   //배열의 끝까지 왔으면 0으로 초기화해서 무한반복
+                    i = 0;
+                    t = 0;
+                    j=0;
                 }
-            });
+                //Log.d("iiii", String.valueOf(i));
+            }
+        });
 
     }
 

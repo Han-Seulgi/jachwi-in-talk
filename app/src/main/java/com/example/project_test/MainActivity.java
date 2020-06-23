@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.example.project_test.Emergency.EmergencyActivity;
-import com.example.project_test.Emergency.EventActivity;
 
 
 public class MainActivity extends ActivityGroup {
@@ -87,13 +86,13 @@ public class MainActivity extends ActivityGroup {
 
         //탭 아이콘~
         ImageView tab1 = new ImageView(this);
-        tab1.setImageResource(R.drawable.board3);
+        tab1.setImageResource(R.drawable.boardicon1);
         ImageView tab2 = new ImageView(this);
-        tab2.setImageResource(R.drawable.roomic);
+        tab2.setImageResource(R.drawable.roomicon1);
         ImageView tab3 = new ImageView(this);
-        tab3.setImageResource(R.drawable.eventic);
+        tab3.setImageResource(R.drawable.eventicon1);
         ImageView tab4 = new ImageView(this);
-        //tab4.setImageResource(R.drawable.safetyic);
+        tab4.setImageResource(R.drawable.safetyicon1);
 
         tabHost.addTab(tabHost.newTabSpec("TAB1").setIndicator(tab1)
                 .setContent(new Intent(this,BoardActivity.class)));

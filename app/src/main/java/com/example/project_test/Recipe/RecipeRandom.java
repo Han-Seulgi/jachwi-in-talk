@@ -68,6 +68,7 @@ public class RecipeRandom extends Activity {
     public void mOnShow(View v){
         Intent intent = new Intent(v.getContext(), ContentWithPicture.class);
         intent.putExtra("제목", title[index]); //게시물의 제목
+        intent.putExtra("탭이름", "자취앤집밥");
         v.getContext().startActivity(intent);
         finish();
     }

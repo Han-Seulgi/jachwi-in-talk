@@ -28,6 +28,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.ShakeNumberActivity;
 
@@ -60,7 +61,7 @@ public class EmergencyActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.fish);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         //그리드뷰
@@ -177,7 +178,8 @@ public class EmergencyActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                //마이페이지 화면
+                Intent mypage_itnt = new Intent(getApplicationContext(), MyPageActivity.class);
+                startActivity(mypage_itnt);
                 return true;
             case android.R.id.message:
                 //쪽지함 화면

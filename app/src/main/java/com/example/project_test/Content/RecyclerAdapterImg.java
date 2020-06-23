@@ -13,7 +13,7 @@ import com.example.project_test.R;
 
 public class RecyclerAdapterImg extends RecyclerView.Adapter<com.example.project_test.Content.RecyclerAdapterImg.ViewHolder>{
 
-    int imgs [] = {R.drawable.living,R.drawable.qna,R.drawable.food2,R.drawable.living};
+    int imgs [] = {R.drawable.rrimg1,R.drawable.rrimg2,R.drawable.rrimg3,R.drawable.rrimg4};
 
     @NonNull
     @Override

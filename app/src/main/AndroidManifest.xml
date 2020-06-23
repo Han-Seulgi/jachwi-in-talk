@@ -51,29 +51,29 @@
         <activity android:name=".BoardActivity" android:label="게시판메인 화면"/>
         <activity android:name=".Recipe.RecipeBoardActivity" android:label="자취앤집밥 화면" android:theme="@style/MyMaterialTheme"/>
         <activity android:name=".Recipe.RecipeRandom" android:label="랜덤추천 팝업" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".Food.FoodActivity" android:label="자취앤혼밥 게시판 화면"/>
+        <activity android:name=".Food.FoodContent.FoodActivityContent" android:label="자취앤혼밥 게시물 내용"/>
+        <activity android:name=".Meet.MeetActivity" android:label="자취인만남 게시판 화면"/>
+        <activity android:name=".Meet.MeetContent.MeetActivityContent" android:label="자취인만남 게시물내용"/>
+        <activity android:name=".qa.qaActivity" android:label="QA 게시물목록"/>
+        <activity android:name=".qa.qaContent.qaActivityContent" android:label="QA 게시물내용"/>
+        <activity android:name=".qa.qaContent.QAWritingActivity" android:label="자취큐앤에이 글쓰기 화면"/>
+        <activity android:name=".Info.InfoActivity" android:label="자취인정보 게시판 화면"/>
+        <activity android:name=".Info.InfoContent.infoActivityContent" android:label="자취인정보 게시물내용"/>
+        <activity android:name=".Writing.WritingActivity" android:label="자취앤집밥 글쓰기 화면"/>
+        <activity android:name=".Writing.FoodWritingActivity" android:label="자취앤혼밥 글쓰기 화면"/>
+        <activity android:name=".Writing.InfoWritingActivity" android:label="자취인정보 글쓰기 화면"/>
+        <activity android:name=".Writing.MeetWritingActivity" android:label="자취인만남 글쓰기 화면"/>
+        <activity android:name=".Content.ContentWithPicture" android:label="사진이 있는 게시물내용"/>
         <activity android:name=".RoomActivity" android:label="보금자리 화면"/>
-        <activity android:name=".Emergency.EventActivity" android:label="행사알리미 화면"/>
+        <activity android:name=".EventActivity" android:label="행사알리미 화면"/>
         <activity android:name=".Emergency.EmergencyActivity" android:label="안전지키미 화면"/>
         <activity android:name=".Emergency.EmergencySet" android:label="안전지키미 설정화면"/>
         <activity android:name=".ShakeNumberActivity" android:label="흔들림횟수 화면"/>
-        <activity android:name=".qa.qaActivity" android:label="QA 게시물목록"/>
-        <activity android:name=".qa.qaContent.qaActivityContent" android:label="QA 게시물내용"/>
-        <activity android:name=".Writing.WritingActivity" android:label="자취앤집밥 글쓰기 화면"/>
-        <activity android:name=".qa.qaContent.QAWritingActivity" android:label="자취큐앤에이 글쓰기 화면"/>
-        <activity android:name=".Food.FoodActivity" android:label="자취앤혼밥 게시판 화면"/>
-        <activity android:name=".Writing.FoodWritingActivity" android:label="자취앤혼밥 글쓰기 화면"/>
-        <activity android:name=".InfoActivity" android:label="자취인정보 게시판 화면"/>
-        <activity android:name=".Writing.InfoWritingActivity" android:label="자취인정보 글쓰기 화면"/>
-        <activity android:name=".Content.ContentWithPicture" android:label="사진이 있는 게시물내용"/>
-        <activity android:name=".Meet.MeetActivity" android:label="자취인만남 게시판 화면"/>
-        <activity android:name=".Info.InfoContent.infoActivityContent" android:label="자취인정보 게시물내용"/>
-        <activity android:name=".Food.FoodContent.FoodActivityContent" android:label="자취앤집밥 게시물 내용"/>
-        <activity android:name=".MyPageActivity" android:label="마이페이지"/>
-        <activity android:name=".MyInfoSetActivity" android:label="내 정보 수정 화면"/>
-        <activity android:name=".Writing.MeetWritingActivity" android:label="자취인만남 글쓰기 화면"/>
 
-
-
+        <activity android:name=".Mypage.MyPageActivity" android:label="마이페이지"/>
+        <activity android:name=".Mypage.MyInfoSetActivity" android:label="내 정보 수정 화면"/>
+        <activity android:name=".Mypage.MyContents.MyContentsActivity" android:label="내가 쓴 글 목록"/>
 
         <receiver android:name=".BootReceiver"
             android:enabled="true"
@@ -86,7 +86,6 @@
         <service android:name=".ShakeService"
             android:label="백그라운드 흔들림 감지 서비스">
         </service>
-
 
     </application>
 
