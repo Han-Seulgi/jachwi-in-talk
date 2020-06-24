@@ -111,7 +111,7 @@ public class EmergencyActivity extends AppCompatActivity {
                     case 1:
                         try {
                             String to = "01000000000"; //마이페이지에서 설정한 문자 번호
-                            String message = "서울특별시 서대문구 홍은2동 모꼬지 님이 위험에 빠졌습니다."; // 사용자의 위치
+                            String message = "서울특별시 서대문구 홍은2동 모꼬지 님이 위험에 빠졌습니다.!"; // 사용자의 위치
 
                             Uri smsUri = Uri.parse("tel:"+to);
                             Intent it = new Intent(Intent.ACTION_VIEW, smsUri);
