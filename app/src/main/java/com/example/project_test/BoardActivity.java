@@ -72,21 +72,16 @@ public class BoardActivity extends AppCompatActivity {
         final String f1_text1[] = {"초간단 냉라면 레시피!!", "감자탕레시피"};  //뷰 플리퍼에 들어갈 텍스트(제목)
         final String f1_text2[] = {"요즘 너무 더워서 냉라면을\n 만들어먹어봤어요~", "집에서 감자탕 만들어먹어요"};  //뷰 플리퍼에 들어갈 텍스트(내용)
 
-
         for (int i = 0; i < f1_images.length; i++) {
             vflipview1[i] = (View) View.inflate(this, R.layout.view_item, null);
-            //뷰플리퍼 안에 들어갈 뷰 레이아웃
-
             //이미지 추가
             ImageView imageView = vflipview1[i].findViewById(R.id.view_img);
             imageView.setBackgroundResource(f1_images[i]);
-
             //텍스트 추가
             TextView textView1 = vflipview1[i].findViewById(R.id.view_title);
             textView1.setText(f1_text1[i]);
             TextView textView2 = vflipview1[i].findViewById(R.id.view_content);
             textView2.setText(f1_text2[i]);
-
             //뷰플리퍼에 뷰 추가
             vflip1.addView(vflipview1[i]);
         }
