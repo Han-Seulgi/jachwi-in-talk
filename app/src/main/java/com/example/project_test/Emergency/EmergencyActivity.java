@@ -12,6 +12,7 @@ import android.hardware.camera2.CameraManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -84,9 +86,9 @@ public class EmergencyActivity extends AppCompatActivity {
         MyGridAdapter gAdapter = new MyGridAdapter();
         gv.setAdapter(gAdapter);
 
-        //경고음
-        sound_pool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
-        sound_beep = sound_pool.load(EmergencyActivity.this, R.raw.sirensound, 1);
+
+        sound_pool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0); // (동시에 재생 할 수 있는 개수, 미디어의 볼륨, 품질)
+        sound_beep = sound_pool.load(EmergencyActivity.this, R.raw.sirensound, 1); // (Context, 로드하고 싶은 음원, 우선순위)
 
         //카메라(손전등사용)
         cm = (CameraManager) getSystemService(CAMERA_SERVICE);
@@ -94,11 +96,12 @@ public class EmergencyActivity extends AppCompatActivity {
         //이벤트
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             //@RequiresApi(api = Build.VERSION_CODES.M)
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+                        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) { //플래시 존재 여부 체크
                             Toast.makeText(getApplicationContext(), "핸드폰이 손전등기능을 지원하지 않아\n사용하실 수 없습니다", Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -107,8 +110,8 @@ public class EmergencyActivity extends AppCompatActivity {
 
                     case 1:
                         try {
-                            String to = "01000000000";
-                            String message = "tesetstsetstestset";
+                            String to = "01000000000"; //마이페이지에서 설정한 문자 번호
+                            String message = "서울특별시 서대문구 홍은2동 모꼬지 님이 위험에 빠졌습니다."; // 사용자의 위치
 
                             Uri smsUri = Uri.parse("tel:"+to);
                             Intent it = new Intent(Intent.ACTION_VIEW, smsUri);
@@ -117,9 +120,6 @@ public class EmergencyActivity extends AppCompatActivity {
                             it.setType("vnd.android-dir/mms-sms");
                             startActivity(it);
 
-                            /*String sms = "테스트";
-                            SmsManager smsManager = SmsManager.getDefault();
-                            smsManager.sendTextMessage(phoneNumber, null, sms, null, null);*/
                             Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_SHORT).show();
 
                         } catch (Exception e) {
@@ -135,7 +135,7 @@ public class EmergencyActivity extends AppCompatActivity {
                         return;
                     case 3: //경고음 버튼 눌렀을 때
                         try {
-                            sound_pool.play(sound_beep, 3f, 3f, 0, -1, 1f);
+                            sound_pool.play(sound_beep, 3f, 3f, 0, -1, 1f); // (재생시킬 파일, 왼쪽 볼륨 크기, 오른쪽 볼륨 크기, 우선순위, 재생횟수, 재생속도)
                         } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), "경고음 실패", Toast.LENGTH_SHORT).show();
                         }
@@ -147,6 +147,8 @@ public class EmergencyActivity extends AppCompatActivity {
                     case 5: //긴급전화 버튼 눌렀을 때
                        Intent intent2 = new Intent(Intent.ACTION_CALL);
                        intent2.setData(Uri.parse("tel:01022222222")); //마이페이지에서 설정한 전화번호
+
+
                         try {
                             startActivity(intent2);
                             Toast.makeText(EmergencyActivity.this, "전화걸기 성공", Toast.LENGTH_SHORT).show();
@@ -231,12 +233,14 @@ public class EmergencyActivity extends AppCompatActivity {
         }
     }
 
-    //손전등 켜기
-    //@RequiresApi(api = Build.VERSION_CODES.M)
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+
+
     void flashlight() {
         if (mCameraId == null) {
             try {
-                for (String id : cm.getCameraIdList()) {
+                for (String id : cm.getCameraIdList()) { // 스마트폰에 탑재된 카메라의 식별자를 얻음
                     CameraCharacteristics c = cm.getCameraCharacteristics(id);
                     Boolean flashAvailable = c.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
                     Integer lensFacing = c.get(CameraCharacteristics.LENS_FACING);
@@ -253,7 +257,7 @@ public class EmergencyActivity extends AppCompatActivity {
         }
         mFlashOn = !mFlashOn;
         try {
-            cm.setTorchMode(mCameraId, mFlashOn);
+            cm.setTorchMode(mCameraId, mFlashOn); //mFlashOn이 true라면 플래시 켜기. false라면 플래시 끄기
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }

@@ -42,8 +42,8 @@ public class ShakeService extends Service implements SensorEventListener {
 
         Log.d("svc", "서비스실행");
         //시스템 서비스를 가져와서 SensorManager 타입으로 저장
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        accelerormeterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE); // 센서 접근 할 수 있는 서비스
+        accelerormeterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); //가속도 센서
     }
 
     @Override
@@ -86,8 +86,8 @@ public class ShakeService extends Service implements SensorEventListener {
 
                     //앱 실행(반응 속도가 엄청 느림, 앱 연 상태에서 계속 열림)
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("page", 1);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("page", 1); //원하는 탭 (안전알리미) 열기
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //새로운 TASK
                     getApplicationContext().startActivity(intent);
 
                     Toast.makeText(getApplicationContext(), "앱열림", Toast.LENGTH_SHORT).show();

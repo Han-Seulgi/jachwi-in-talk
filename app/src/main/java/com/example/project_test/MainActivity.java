@@ -34,8 +34,8 @@ public class MainActivity extends ActivityGroup {
     }
 
     private boolean checkPermission() {
-        int result = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE);
-        int result2 = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int result = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE); //전화 서비스
+        int result2 = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION); // 위치 서비스
         if(result == PackageManager.PERMISSION_GRANTED && result2==PackageManager.PERMISSION_GRANTED) { // 이전에 요청 허락 했으면
             return true;
         }

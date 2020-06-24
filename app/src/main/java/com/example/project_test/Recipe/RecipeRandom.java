@@ -41,8 +41,8 @@ public class RecipeRandom extends Activity {
         click = findViewById(R.id.click);
 
         Intent intent = getIntent();
-        img = intent.getIntArrayExtra("img");
-        title = intent.getStringArrayExtra("title");
+        img = intent.getIntArrayExtra("img"); // img[] 라는 배열에 게시물 이미지 저장
+        title = intent.getStringArrayExtra("title"); // title[]이라는 배열에 게시물 제목 저장
 
         btnClose = findViewById(R.id.btnClose);
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -53,9 +53,9 @@ public class RecipeRandom extends Activity {
         });
     }
 
-    public void mOnRec(View v) {
+    public void mOnRec(View v) { // 추천받기(다시추천) 버튼
         Random r = new Random();
-        index = r.nextInt(10);
+        index = r.nextInt(10); // 게시물의 갯수 만큼의 범위에서 랜덤값 추출
         iv.setImageResource(img[index]);
         tv.setText(title[index]);
         tv.setVisibility(View.VISIBLE);
@@ -65,10 +65,10 @@ public class RecipeRandom extends Activity {
         click.setTextSize(20);
     }
 
-    public void mOnShow(View v){
+    public void mOnShow(View v){ //레시피 보러가기 버튼
         Intent intent = new Intent(v.getContext(), ContentWithPicture.class);
         intent.putExtra("제목", title[index]); //게시물의 제목
-        intent.putExtra("탭이름", "자취앤집밥");
+        intent.putExtra("탭이름", "자취앤집밥"); //게시판의 제목
         v.getContext().startActivity(intent);
         finish();
     }
