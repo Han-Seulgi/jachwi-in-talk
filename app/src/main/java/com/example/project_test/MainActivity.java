@@ -5,15 +5,24 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.MutableLiveData;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import com.example.project_test.Emergency.EmergencyActivity;
 
+import com.example.project_test.Api.Factory;
 
 public class MainActivity extends ActivityGroup {
 
@@ -31,11 +40,41 @@ public class MainActivity extends ActivityGroup {
             if(checkPermission()) {}
             else { requestPermission(); }
         }
+
+        //Api api = Api.Factory.INSTANCE.create();
+
+        com.example.project_test.Api api = Factory.INSTANCE.create();
+
+//        api.getUser("user1").enqueue(new Callback<User>() {
+//            public void onResponse(Call<User> call, Response<User> response) {
+//                User user = response.body();
+//                Log.i("abcdefg", user.toString());
+//            }
+//
+//            public void onFailure(Call<User> call, Throwable t) {
+//                Log.i("abcdefg", t.getMessage());
+//            }
+//        });
+
+        api.getAllUser().enqueue(new Callback<UserFeed>() {
+            public void onResponse(Call<UserFeed> call, Response<UserFeed> response) {
+                UserFeed userFeed = response.body();
+                List<User> users = userFeed.items;
+
+                for(User user: users){
+                    Log.i("abcdefg", "All : " + user.toString());
+                }
+            }
+
+            public void onFailure(Call<UserFeed> call, Throwable t) {
+                Log.i("abcdefg", t.getMessage());
+            }
+        });
     }
 
     private boolean checkPermission() {
-        int result = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE); //전화 서비스
-        int result2 = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION); // 위치 서비스
+        int result = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE);
+        int result2 = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
         if(result == PackageManager.PERMISSION_GRANTED && result2==PackageManager.PERMISSION_GRANTED) { // 이전에 요청 허락 했으면
             return true;
         }
@@ -68,6 +107,17 @@ public class MainActivity extends ActivityGroup {
         }
         return;
     }
+
+    /*public void onRequestPermissionResult(int requestCode, String permissions[], int[] grantResults) {
+        switch(requestCode) {
+            case 1000 :
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(MainActivity.this, "허락했습니다.", Toast.LENGTH_SHORT).show();
+                }
+                else { Toast.makeText(MainActivity.this,"거부했습니다.", Toast.LENGTH_SHORT).show(); }
+                break;
+        }
+    }*/
 
     private void createTab() {
         TabHost tabHost = (TabHost) findViewById(R.id.tabhost);
@@ -103,9 +153,5 @@ public class MainActivity extends ActivityGroup {
             tabHost.setCurrentTab(0);
         }
     }
-
-
-
-
 }
 
