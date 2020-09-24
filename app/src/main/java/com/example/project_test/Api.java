@@ -23,6 +23,9 @@ public interface Api {
     @GET("login")
     Call<User> getUser(@Query("id")String var1);
 
+    @GET("login/checkID")
+    Call<UserIdCheck> getID(@Query("id")String var1);
+
     @GET("login/getAllUser")
     Call<UserFeed> getAllUser();
 

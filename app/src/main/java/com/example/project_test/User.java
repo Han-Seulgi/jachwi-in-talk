@@ -11,6 +11,12 @@ class UserFeed{
     List<User> items;
 }
 
+class UserIdCheck{
+    @SerializedName("checkid")
+    boolean ckid;
+
+}
+
 class User {
 
     @SerializedName("id")

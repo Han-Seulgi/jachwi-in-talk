@@ -41,9 +41,7 @@ public class MainActivity extends ActivityGroup {
             else { requestPermission(); }
         }
 
-        Api api = Api.Factory.INSTANCE.create();
-
-
+/*        Api api = Api.Factory.INSTANCE.create();
 
         api.getUser("test").enqueue(new Callback<User>() {
             public void onResponse(Call<User> call, Response<User> response) {
@@ -72,7 +70,7 @@ public class MainActivity extends ActivityGroup {
             public void onFailure(Call<UserFeed> call, Throwable t) {
                 Log.i("abcdefg", t.getMessage());
             }
-        });
+        });*/
     }
 
     private boolean checkPermission() {
