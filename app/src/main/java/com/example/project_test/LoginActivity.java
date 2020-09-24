@@ -21,14 +21,6 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.naverLog:          //네이버아이디로그인 화면 전환
-                intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.gglLog:           //구글아이디로그인 화면 전환
-                intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                break;
             case R.id.jnBtn:             //회원가입 버튼 누르면 회원가입 화면으로
                 intent = new Intent(LoginActivity.this, JoinActivity.class);
                 startActivity(intent);

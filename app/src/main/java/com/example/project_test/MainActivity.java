@@ -41,23 +41,26 @@ public class MainActivity extends ActivityGroup {
             else { requestPermission(); }
         }
 
-        //Api api = Api.Factory.INSTANCE.create();
+        Api api = Api.Factory.INSTANCE.create();
 
-        com.example.project_test.Api api = Factory.INSTANCE.create();
 
-//        api.getUser("user1").enqueue(new Callback<User>() {
-//            public void onResponse(Call<User> call, Response<User> response) {
-//                User user = response.body();
-//                Log.i("abcdefg", user.toString());
-//            }
-//
-//            public void onFailure(Call<User> call, Throwable t) {
-//                Log.i("abcdefg", t.getMessage());
-//            }
-//        });
+
+        api.getUser("test").enqueue(new Callback<User>() {
+            public void onResponse(Call<User> call, Response<User> response) {
+                User user = response.body();
+                Log.i("abcdefg", user.toString());
+            }
+
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.i("abcdefg", t.getMessage());
+            }
+        });
 
         api.getAllUser().enqueue(new Callback<UserFeed>() {
             public void onResponse(Call<UserFeed> call, Response<UserFeed> response) {
+
+                Log.i("abcdefg",response.toString());
+
                 UserFeed userFeed = response.body();
                 List<User> users = userFeed.items;
 

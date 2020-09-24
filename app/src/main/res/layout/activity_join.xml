@@ -40,27 +40,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="40dp" />
+        app:layout_constraintGuide_begin="20dp" />
 
     <!--아이디-->
     <TextView
         android:id="@+id/idTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:text="아이디"
+        android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
+    <!--<com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/idET"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="33dp"
+        app:layout_constraintLeft_toRightOf="@+id/idTxt"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:ems="9"
+            android:padding="8dp"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>-->
+
     <EditText
         android:id="@+id/idET"
         android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:ems="9"
+        android:padding="8dp"
+        android:background="#ffffff"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="23dp"
-        android:hint="아이디를 입력해주세요"
+        android:layout_marginTop="33dp"
+        android:hint="아이디입력"
         android:singleLine="true"
         android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@+id/idTxt"
@@ -72,31 +95,34 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="70dp"
+        android:visibility="gone"
         android:src="@drawable/check"
         app:layout_constraintLeft_toRightOf="@+id/idET"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintBottom_toBottomOf="@+id/idET" />
 
     <!--비밀번호-->
     <TextView
         android:id="@+id/pwTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="25dp"
         android:text="비밀번호"
+        android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/idTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/idET" />
 
     <EditText
         android:id="@+id/pwET"
         android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:ems="9"
+        android:padding="8dp"
+        android:background="#ffffff"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
-        android:hint="비밀번호를 입력해주세요"
+        android:layout_marginTop="20dp"
+        android:hint="비밀번호 입력"
         android:singleLine="true"
         android:inputType="textPassword"
         android:textSize="15sp"
@@ -109,20 +135,24 @@
         android:id="@+id/pwckTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="25dp"
         android:text="비밀번호확인"
+        android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/pwTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/pwET" />
 
     <EditText
         android:id="@+id/pwckET"
         android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:ems="9"
+        android:padding="8dp"
+        android:background="#ffffff"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
-        android:hint="비밀번호를 입력해주세요"
+        android:layout_marginTop="20dp"
+        android:hint="비밀번호 확인"
         android:singleLine="true"
         android:inputType="textPassword"
         android:textSize="15sp"
@@ -136,29 +166,33 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
         android:src="@drawable/check"
+        android:visibility="gone"
         app:layout_constraintLeft_toRightOf="@+id/pwckET"
-        app:layout_constraintTop_toBottomOf="@id/pwET" />
-
+        app:layout_constraintBottom_toBottomOf="@id/pwckET" />
 
     <!--닉네임-->
     <TextView
         android:id="@+id/nameTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="25dp"
         android:text="닉네임"
+        android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/pwckTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/pwckET" />
 
     <EditText
         android:id="@+id/nameET"
         android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:ems="9"
+        android:padding="8dp"
+        android:background="#ffffff"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
-        android:hint="닉네임을 입력해주세요"
+        android:layout_marginTop="20dp"
+        android:hint="닉네임 입력"
         android:singleLine="true"
         android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@+id/nameTxt"
@@ -168,38 +202,78 @@
         android:id="@+id/nameck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
         android:src="@drawable/check"
+        android:visibility="gone"
         app:layout_constraintLeft_toRightOf="@+id/nameET"
-        app:layout_constraintTop_toBottomOf="@id/pwckET" />
-
+        app:layout_constraintBottom_toBottomOf="@id/nameET" />
 
     <!--이메일-->
     <TextView
         android:id="@+id/emailTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="25dp"
         android:text="이메일"
+        android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/nameTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/nameET" />
 
     <EditText
         android:id="@+id/emailET"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:ems="9"
+        android:padding="8dp"
+        android:background="#ffffff"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
-        android:hint="이메일을 입력해주세요"
+        android:layout_marginTop="20dp"
+        android:hint="이메일 입력"
         android:singleLine="true"
         android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@+id/emailTxt"
         app:layout_constraintTop_toBottomOf="@+id/nameET" />
 
-    <!--거주지-->
+    <TextView
+        android:id="@+id/a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/emailET"
+        app:layout_constraintRight_toLeftOf="@+id/emailSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/nameET"
+        android:text="@"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="25dp"
+        android:layout_marginHorizontal="3dp"
+        />
+
+    <Spinner
+        android:id="@+id/emailSpinner"
+        android:layout_width="110dp"
+        android:layout_height="40dp"
+        android:padding="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="#ffffff"
+        app:layout_constraintLeft_toRightOf="@+id/a"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameET"
+        />
+
+    <ImageView
+        android:id="@+id/emailck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/check"
+        android:visibility="gone"
+        app:layout_constraintLeft_toRightOf="@+id/btnCheck"
+        app:layout_constraintBottom_toBottomOf="@id/btnCheck" />
+
+    <!--거주지
     <TextView
         android:id="@+id/adrsTxt"
         android:layout_width="wrap_content"
@@ -221,17 +295,28 @@
         android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@+id/adrsTxt"
         app:layout_constraintTop_toBottomOf="@+id/emailET" />
+        -->
 
+    <!--이메일 확인 버튼-->
+    <Button
+        android:id="@+id/btnCheck"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:text="중복확인"
+        app:layout_constraintLeft_toLeftOf="@id/emailET"
+        app:layout_constraintTop_toBottomOf="@+id/emailET" />
 
     <!--완료 버튼-->
     <Button
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:text="완료"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adrsET" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
