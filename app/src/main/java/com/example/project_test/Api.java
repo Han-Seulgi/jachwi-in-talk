@@ -50,6 +50,9 @@ public interface Api {
     @GET("post")
     Call<PostList> getList(@Query("board_code") int var1);
 
+    @GET("DeletePost")
+    Call<DeletePost> deletepost(@Query("post_title") String var1);
+
 
 
 

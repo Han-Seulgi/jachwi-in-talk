@@ -1,6 +1,7 @@
 package com.example.project_test.Info;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project_test.Api;
+import com.example.project_test.DeletePost;
 import com.example.project_test.Info.InfoContent.infoActivityContent;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.R;
@@ -21,6 +25,10 @@ import com.example.project_test.R;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapter.InfoViewHolder> {
     private ArrayList<InfoListData> datas;
@@ -52,6 +60,10 @@ public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapte
             holder.delete.setVisibility(View.VISIBLE);
             Log.i("recyclerview","글 아이디: "+id+"접속아이디: "+LoginActivity.user_ac);
         }
+        else {
+            holder.edit.setVisibility(View.GONE);
+            holder.delete.setVisibility(View.GONE);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,10 +80,45 @@ public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapte
                 Toast.makeText(v.getContext(),"수정",Toast.LENGTH_SHORT).show();
             }
         });
-        holder.delete.setOnClickListener(new View.OnClickListener() {
+        /*holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(),"삭제",Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                AlertDialog dialog;
+                dialog = builder.setMessage("게시물을 삭제하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.i("delete", "게시물 삭제하기" + title);
+
+                                Api api = Api.Factory.INSTANCE.create();
+
+                                Log.i("hihihi", "아오"+title);
+
+                                api.deletepost(title).enqueue(new Callback<DeletePost>() {
+                                    @Override
+                                    public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
+                                        //DeletePost deletePost = response.body();
+                                        //boolean del = deletePost.delete;
+
+                                        Log.i("delete", "성공" + response);
+                                    }
+                                    @Override
+                                    public void onFailure(Call<DeletePost> call, Throwable t) {
+                                        Log.i("delete",t.getMessage());
+                                    }
+                                });
+
+                            }
+                        }
+                ).create();
+                dialog.show();
             }
         });
     }
