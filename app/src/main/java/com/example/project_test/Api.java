@@ -2,6 +2,7 @@ package com.example.project_test;
 
 import android.util.Log;
 
+import com.example.project_test.Info.PostList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -46,12 +47,15 @@ public interface Api {
     @POST("join/joinUser")
     Call<Join> joinUser(@Field("id")String var1,@Field("pw")String var2, @Field("name")String var3,@Field("email")String var4);
 
+    @GET("post")
+    Call<PostList> getList(@Query("board_code") int var1);
+
 
 
 
 
     public static final class Factory {
-        static final Api.Factory INSTANCE;
+        public static final Api.Factory INSTANCE;
 
         public final Api create() {
 

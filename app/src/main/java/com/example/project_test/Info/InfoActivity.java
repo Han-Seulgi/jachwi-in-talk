@@ -2,26 +2,44 @@ package com.example.project_test.Info;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project_test.Api;
+import com.example.project_test.LoginActivity;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.Writing.InfoWritingActivity;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class InfoActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     private RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
+    private InfoRecyclerAdapter adapter;
+
+    /*String[] testTitle = {"에어컨 청소 팁좀 알려주세요~", "안녕하세요", "드디어 입주^^!!", "오늘은 운동삼아 걸어서 퇴근했어요", "우리 초코 산책", "드디어 금요일!!!", "안녕하세요", "드디어 입주^^!!"}; // 게시물 제목 가져오기
+    String[] day = {"2020.6.20", "2020.6.20", "2020.6.19", "2020.6.19", "2020.6.18", "2020.6.17", "2020.6.18", "2020.6.17"}; //게시물 내용
+    Integer[] img = {R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information};*/
+
+    ArrayList<InfoListData> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +54,60 @@ public class InfoActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        Button writing = findViewById(R.id.writing);
-
         recyclerView = findViewById(R.id.recyclerView);
+        Button writing = findViewById(R.id.writing); //글쓰기 버튼
         recyclerView.setHasFixedSize(true);
+        adapter = new InfoRecyclerAdapter();
+
+        final ArrayList<String> title1 = new ArrayList<>();
+        final ArrayList<String> day1 = new ArrayList<>();
+        final ArrayList<String> id1 = new ArrayList<>();
+
+        data = new ArrayList<>();
+
+        //서버 연결
+        Api api = Api.Factory.INSTANCE.create();
+        api.getList(77).enqueue(new Callback<PostList>() {
+            @Override
+            public void onResponse(Call<PostList> call, Response<PostList> response) {
+                PostList postList = response.body();
+                List<PostData> postData = postList.items;
+
+                //리스트에 제목, 날짜, 작성자 아이디 넣기
+                for (PostData d:postData) {
+                    title1.add(d.post_title);
+                    day1.add(d.post_day);
+                    id1.add(d.id);
+                    Log.i("abc","All: " + d.toString());
+                }
+
+                //리스트를 배열로 바꾸기, 이미지 배열 생성
+                String[] title = title1.toArray(new String[title1.size()]);
+                String[] day = day1.toArray(new String[day1.size()]);
+                Integer[] img = new Integer[title1.size()];
+                String[] id = id1.toArray(new String[id1.size()]);
+
+                //넘어온 데이터의 사이즈에 맞춰 이미지 생성(?), 리사이클러뷰 데이터파일에 데이터 넘기기
+                int i = 0;
+                while (i < title.length) {
+                    img[i] = R.drawable.information;
+                    data.add(new InfoListData(img[i], title[i], day[i], id[i]));
+                    i++;
+                }
+                adapter.setData(data);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<PostList> call, Throwable t) {
+                    Log.i("abcdef", t.getMessage());
+            }
+        }); //서버연결
 
         layoutManager = new LinearLayoutManager(this);
-
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new InfoRecyclerAdapter();
-        recyclerView.setAdapter(adapter);
-
+        //글쓰기버튼 이벤트
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +116,8 @@ public class InfoActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     //상단탭 메뉴

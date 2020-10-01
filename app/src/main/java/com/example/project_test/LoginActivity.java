@@ -17,6 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
+    public static String user_ac;
 
     Button loginBtn, jnBtn;
     EditText idEt, pwEt;
@@ -68,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         Toast.makeText(getApplicationContext(),"로그인 성공",Toast.LENGTH_SHORT).show();
+                                        user_ac = strID;
                                     }
                                     //패스워드 불일치
                                     else {
