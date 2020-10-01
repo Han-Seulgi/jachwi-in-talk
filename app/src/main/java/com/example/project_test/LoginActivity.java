@@ -21,7 +21,8 @@ public class LoginActivity extends AppCompatActivity {
 
     Button loginBtn, jnBtn;
     EditText idEt, pwEt;
-    String strID, strPW;
+    public static String strID;
+    String strPW;
     AlertDialog.Builder loginfail;
 
     @Override

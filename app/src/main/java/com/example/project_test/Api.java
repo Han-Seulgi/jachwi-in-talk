@@ -53,6 +53,10 @@ public interface Api {
     @GET("DeletePost")
     Call<DeletePost> deletepost(@Query("post_title") String var1);
 
+    @FormUrlEncoded
+    @POST("Write/Writing")
+    Call<Write> Writing(@Field("post_code")int var1,@Field("id")String var2,@Field("post_title")String var3,@Field("post_con")String var4,@Field("board_code")int var5);
+
 
 
 

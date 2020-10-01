@@ -25,18 +25,19 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_item,parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_item,parent, false);//뷰 생성
 
-        RecipeViewHolder holder = new RecipeViewHolder(view);
+        RecipeViewHolder holder = new RecipeViewHolder(view); //생성된 뷰를 뷰홀더에 인자로 넣어줌
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) { //데이터를 아이템 뷰 홀더에 바인딩
         RecipeListData data = datas.get(position);
-
         holder.img.setImageResource(data.getImg());
+
+
         holder.count.setText(data.getCount());
         holder.title.setText(data.getTitle());
         final String t = data.getTitle();

@@ -18,7 +18,7 @@ import com.example.project_test.Api;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
-import com.example.project_test.Writing.InfoWritingActivity;
+import com.example.project_test.InfoWritingActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;

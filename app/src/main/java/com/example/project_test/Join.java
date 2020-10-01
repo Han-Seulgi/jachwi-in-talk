@@ -1,8 +1,8 @@
 package com.example.project_test;
 
-import androidx.annotation.NonNull;
+        import androidx.annotation.NonNull;
 
-import com.google.gson.annotations.SerializedName;
+        import com.google.gson.annotations.SerializedName;
 
 class ValidateID {
     @SerializedName("newID")
