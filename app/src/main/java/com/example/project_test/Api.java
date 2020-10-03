@@ -54,11 +54,8 @@ public interface Api {
     Call<DeletePost> deletepost(@Query("post_title") String var1);
 
     @FormUrlEncoded
-    @POST("Write/Writing")
-    Call<Write> Writing(@Field("post_code")int var1,@Field("id")String var2,@Field("post_title")String var3,@Field("post_con")String var4,@Field("board_code")int var5);
-
-
-
+    @POST("Write")
+    Call<Write> Write(@Field("id")String var1,@Field("post_title")String var2,@Field("post_con")String var3,@Field("board_code")int var4);
 
 
     public static final class Factory {
@@ -81,7 +78,6 @@ public interface Api {
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
-            Log.i("abcdef","Factory.INSTANCE.create");
             return retrofit.create(Api.class);
         }
 

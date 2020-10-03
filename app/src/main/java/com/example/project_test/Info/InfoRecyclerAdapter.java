@@ -80,12 +80,6 @@ public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapte
                 Toast.makeText(v.getContext(),"수정",Toast.LENGTH_SHORT).show();
             }
         });
-        /*holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(),"삭제",Toast.LENGTH_SHORT).show();
-            }
-        });*/
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,14 +93,9 @@ public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapte
 
                                 Api api = Api.Factory.INSTANCE.create();
 
-                                Log.i("hihihi", "아오"+title);
-
                                 api.deletepost(title).enqueue(new Callback<DeletePost>() {
                                     @Override
                                     public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
-                                        //DeletePost deletePost = response.body();
-                                        //boolean del = deletePost.delete;
-
                                         Log.i("delete", "성공" + response);
                                     }
                                     @Override

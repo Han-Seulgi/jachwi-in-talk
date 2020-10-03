@@ -1,7 +1,6 @@
-package com.example.project_test;
+package com.example.project_test.Writing;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,19 +15,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.project_test.Api;
+import com.example.project_test.LoginActivity;
+import com.example.project_test.R;
+import com.example.project_test.Write;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class InfoWritingActivity extends AppCompatActivity {
     Toolbar toolbar;
-
     Button writing;
     EditText tedit, cedit, pedit ;
     TextView tv0, tv1 , title2;
     ImageView wimg;
     String post_title, post_con;
-    int post_code = 0;
     int board_code;
 
     private AlertDialog dialog;
@@ -51,9 +53,6 @@ public class InfoWritingActivity extends AppCompatActivity {
         wimg = findViewById(R.id.wimg);
 
 
-
-
-
         //상단탭
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,23 +61,22 @@ public class InfoWritingActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
         //글쓰기 _올리기
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                post_code++;
                 post_title = tedit.getText().toString();
                 post_con = cedit.getText().toString();
-                if(title2.getText().toString() == "자취인정보"){
+                if(title2.getText().toString().equals("자취인정보")){
                     board_code = 77;
                 }
 
+                Log.i("결과는",LoginActivity.user_ac + post_title + post_con + board_code);
 
-                if (post_title.equals("") || post_con.equals("")) {
+
+               if (post_title.equals("") || post_con.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(InfoWritingActivity.this);
-
                     dialog = builder.setMessage("글 작성이 완료되지 않았습니다.").setNegativeButton("확인", null)
                             .create();
                     dialog.show();
@@ -86,12 +84,13 @@ public class InfoWritingActivity extends AppCompatActivity {
                 }
 
                 else {
-                    Api api = Api.Factory.INSTANCE.create();
-
-                    api.Writing(post_code,LoginActivity.strID,post_title, post_con,board_code).enqueue(new Callback<Write>() {
+                  Api api = Api.Factory.INSTANCE.create();
+                     api.Write(LoginActivity.user_ac, post_title, post_con, board_code).enqueue(new Callback<Write>() {
                         public void onResponse(Call<Write> call, Response<Write> response) {
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(InfoWritingActivity.this);
+                            Log.i("결과는" , response.toString());
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(InfoWritingActivity.this);
                             dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -101,12 +100,8 @@ public class InfoWritingActivity extends AppCompatActivity {
                                     .create();
                             dialog.show();
                         }
-
                         public void onFailure(Call<Write> call, Throwable t) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(InfoWritingActivity.this);
-                            dialog = builder.setMessage("작성 실패").setNegativeButton("확인", null)
-                                    .create();
-                            dialog.show();
+                            Log.i("작성실패", t.getMessage());
                         }
 
                     });

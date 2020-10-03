@@ -41,6 +41,7 @@ public class MainActivity extends ActivityGroup {
             else { requestPermission(); }
         }
 
+
 /*        Api api = Api.Factory.INSTANCE.create();
 
         api.getUser("test").enqueue(new Callback<User>() {

@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,13 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
-import com.example.project_test.LoginActivity;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
-import com.example.project_test.InfoWritingActivity;
+import com.example.project_test.Writing.InfoWritingActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,10 +31,6 @@ public class InfoActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
     private InfoRecyclerAdapter adapter;
-
-    /*String[] testTitle = {"에어컨 청소 팁좀 알려주세요~", "안녕하세요", "드디어 입주^^!!", "오늘은 운동삼아 걸어서 퇴근했어요", "우리 초코 산책", "드디어 금요일!!!", "안녕하세요", "드디어 입주^^!!"}; // 게시물 제목 가져오기
-    String[] day = {"2020.6.20", "2020.6.20", "2020.6.19", "2020.6.19", "2020.6.18", "2020.6.17", "2020.6.18", "2020.6.17"}; //게시물 내용
-    Integer[] img = {R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information,R.drawable.information};*/
 
     ArrayList<InfoListData> data;
 
