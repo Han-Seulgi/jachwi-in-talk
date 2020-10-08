@@ -40,4 +40,27 @@
         app:layout_constraintLeft_toLeftOf="@+id/img"
         app:layout_constraintRight_toRightOf="@+id/img" />
 
+
+    <ImageButton
+        android:id="@+id/edit"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="#00ffffff"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/title"
+        android:src="@drawable/modify" />
+
+    <ImageButton
+        android:id="@+id/delete"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="#00ffffff"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/title"
+        app:layout_constraintLeft_toRightOf="@id/edit"
+        android:src="@drawable/delete" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

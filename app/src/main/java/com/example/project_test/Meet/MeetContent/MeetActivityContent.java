@@ -247,6 +247,7 @@ public class MeetActivityContent extends AppCompatActivity {
             }
         });
 
+
         //댓글
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
