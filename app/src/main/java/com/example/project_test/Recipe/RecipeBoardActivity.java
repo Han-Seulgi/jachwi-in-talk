@@ -2,6 +2,7 @@ package com.example.project_test.Recipe;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,12 +15,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project_test.Api;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.Writing.WritingActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RecipeBoardActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -28,11 +35,10 @@ public class RecipeBoardActivity extends AppCompatActivity {
     private RecipeRecyclerAdapter adapter;
     private GridLayoutManager layoutManager;
 
-    final int image[] = {R.drawable.recipeimg2, R.drawable.recipeimg3, R.drawable.recipeimg4, R.drawable.recipeimg5, R.drawable.recipeimg6, R.drawable.recipeimg7,R.drawable.recipeimg1, R.drawable.recipeimg8, R.drawable.recipe,R.drawable.food2};
-    int cnt[] = {50, 10, 60, 30, 100, 120,116,200,222,10};
-    final String title[] = {"맛있는 감자탕", "짬뽕먹고싶다!", "만두만들기", "연근조림만드는법", "볶음밥레시피!", "초간단 김밥","그냥저냥 요리","토마토마토","고치돈","새우깡을 만들어보자"};
-
     TextView tabTitle;
+
+    ArrayList<RecipeListData> data;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,36 +52,85 @@ public class RecipeBoardActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        Button writing = findViewById(R.id.writing);//글쓰기 버튼
         tabTitle = findViewById(R.id.title);
-        String tt = tabTitle.getText().toString();
+        final String tt = tabTitle.getText().toString();
 
-        RecyclerView rv = findViewById(R.id.rv);
-        Button writing = findViewById(R.id.writing);
-
-        ArrayList<RecipeListData> data = new ArrayList<>();
-
-        int i = 0;
-        while (i < title.length) {
-            data.add(new RecipeListData(image[i], cnt[i], title[i],tt));
-            i++;
-        }
+        rv = findViewById(R.id.rv);
+        rv.setHasFixedSize(true);
         adapter = new RecipeRecyclerAdapter();
-        adapter.setData(data);
-        rv.setAdapter(adapter);
+
+        /*final ArrayList<String> comment1 = new ArrayList<>();//댓글수,추천수
+        final ArrayList<String> like1 = new ArrayList<>();*/
+
+        data = new ArrayList<>();
+
+        //서버 연결
+        Api api = Api.Factory.INSTANCE.create();
+        api.getRecipeList(11).enqueue(new Callback<RecipePostList>() {
+            @Override
+            public void onResponse(Call<RecipePostList> call, Response<RecipePostList> response) {
+                RecipePostList postList = response.body();
+                List<PostData> postData = postList.items;
+
+                ArrayList<String> title1 = new ArrayList<>();
+                ArrayList<String> day1 = new ArrayList<>();
+                ArrayList<String> id1 = new ArrayList<>();
+                ArrayList<String> con1 = new ArrayList<>();
+
+                //리스트에 제목, 날짜, 작성자 아이디 넣기
+                for (PostData d:postData) {
+                    title1.add(d.post_title);
+                    day1.add(d.post_day);
+                    id1.add(d.id);
+                    con1.add(d.post_con);
+                    Log.i("abc","요리 All: " + d.toString());
+                }
+
+                //리스트를 배열로 바꾸기, 이미지 배열 생성
+                final String[] title = title1.toArray(new String[title1.size()]);
+                String[] day = day1.toArray(new String[day1.size()]);
+                String[] id = id1.toArray(new String[id1.size()]);
+                String[] con = con1.toArray(new String[con1.size()]);
+                final int[] img = new int[title1.size()];
+                /*int[] comment_cnt = new int[title1.size()];
+                int[] like_cnt = new int[title1.size()];*/
+
+                //넘어온 데이터의 사이즈에 맞춰 이미지 생성(?), 리사이클러뷰 데이터파일에 데이터 넘기기
+                int i = 0;
+                while (i < title.length) {
+                    img[i] = R.drawable.recipe;
+                    data.add(new RecipeListData(img[i], title[i], day[i], id[i], tt, con[i]));
+                    i++;
+                }
+                adapter.setData(data);
+                rv.setAdapter(adapter);
+
+                ExtendedFloatingActionButton fab = findViewById(R.id.fab);
+                fab.extend();
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(RecipeBoardActivity.this, RecipeRandom.class);
+                        intent.putExtra("img",img);
+                        intent.putExtra("title",title);
+                        intent.putExtra("size",title.length);
+                        startActivity(intent);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<RecipePostList> call, Throwable t) {
+                Log.i("abcdef", t.getMessage());
+            }
+        }); //서버연결
+
+
         layoutManager = new GridLayoutManager(this, 2);
         rv.setLayoutManager(layoutManager);
 
-        ExtendedFloatingActionButton fab = findViewById(R.id.fab);
-        fab.extend();
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RecipeBoardActivity.this, RecipeRandom.class);
-                intent.putExtra("img",image);
-                intent.putExtra("title",title);
-                startActivity(intent);
-            }
-        });
+
 
         writing.setOnClickListener(new View.OnClickListener() {
             @Override

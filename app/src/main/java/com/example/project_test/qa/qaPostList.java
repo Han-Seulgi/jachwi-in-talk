@@ -1,11 +1,11 @@
-package com.example.project_test.Info;
+package com.example.project_test.qa;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class PostList {
+public class qaPostList {
     @SerializedName("data")
     List<PostData> items;
 }

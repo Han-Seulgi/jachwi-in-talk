@@ -3,6 +3,7 @@ package com.example.project_test.Recipe;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -15,6 +16,7 @@ import androidx.annotation.Nullable;
 import com.example.project_test.Content.ContentWithPicture;
 import com.example.project_test.R;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class RecipeRandom extends Activity {
@@ -25,7 +27,8 @@ public class RecipeRandom extends Activity {
     TextView showContent;
     TextView click;
 
-    int img[], index;
+    int[] img;
+    int size, random;
     String title[];
 
     @Override
@@ -43,6 +46,8 @@ public class RecipeRandom extends Activity {
         Intent intent = getIntent();
         img = intent.getIntArrayExtra("img"); // img[] 라는 배열에 게시물 이미지 저장
         title = intent.getStringArrayExtra("title"); // title[]이라는 배열에 게시물 제목 저장
+        size = intent.getIntExtra("size", 0);
+        Log.i("random","index: " + size);
 
         btnClose = findViewById(R.id.btnClose);
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -55,9 +60,11 @@ public class RecipeRandom extends Activity {
 
     public void mOnRec(View v) { // 추천받기(다시추천) 버튼
         Random r = new Random();
-        index = r.nextInt(10); // 게시물의 갯수 만큼의 범위에서 랜덤값 추출
-        iv.setImageResource(img[index]);
-        tv.setText(title[index]);
+        random = r.nextInt(size); // 게시물의 갯수 만큼의 범위에서 랜덤값 추출
+        Log.i("abc", "이미지 배열 넘어왔니" + Arrays.toString(img));
+        Log.i("abc","랜덤이미지시바: " + img[random]);
+        iv.setImageResource(img[random]);
+        tv.setText(title[random]);
         tv.setVisibility(View.VISIBLE);
 
         showContent.setVisibility(View.VISIBLE);
@@ -67,7 +74,7 @@ public class RecipeRandom extends Activity {
 
     public void mOnShow(View v){ //레시피 보러가기 버튼
         Intent intent = new Intent(v.getContext(), ContentWithPicture.class);
-        intent.putExtra("제목", title[index]); //게시물의 제목
+        intent.putExtra("제목", title[random]); //게시물의 제목
         intent.putExtra("탭이름", "자취앤집밥"); //게시판의 제목
         v.getContext().startActivity(intent);
         finish();

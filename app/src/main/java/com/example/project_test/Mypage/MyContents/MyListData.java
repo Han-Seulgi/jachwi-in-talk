@@ -1,18 +1,15 @@
-package com.example.project_test.Recipe;
+package com.example.project_test.Mypage.MyContents;
 
-public class RecipeListData {
-    private int img;
+public class MyListData {
+    private int img, board;
     private String title, day, id, con;
-    private String tabTitle;
 
-    /*private int comment_cnt,like_cnt;*/
-
-    public RecipeListData(int img, String title, String day, String id, String tabTitle, String con) {
+    public MyListData(int img, String title, int board, String day, String id, String con) {
         this.img = img;
         this.title = title;
+        this.board = board;
         this.day = day;
         this.id = id;
-        this.tabTitle = tabTitle;
         this.con = con;
     }
 
@@ -24,6 +21,10 @@ public class RecipeListData {
         return this.title;
     }
 
+    public int getBoard() {
+        return this.board;
+    }
+
     public String getDay() {
         return this.day;
     }
@@ -32,7 +33,7 @@ public class RecipeListData {
         return this.id;
     }
 
-    public String getTabTitle() {return this.tabTitle;}
-
-    public String getCon() {return this.con;}
+    public String getCon() {
+        return this.con;
+    }
 }

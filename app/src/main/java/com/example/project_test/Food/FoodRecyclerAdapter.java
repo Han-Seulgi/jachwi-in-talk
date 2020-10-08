@@ -1,66 +1,151 @@
 package com.example.project_test.Food;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project_test.Api;
+import com.example.project_test.DeletePost;
 import com.example.project_test.Food.FoodContent.FoodActivityContent;
+import com.example.project_test.LoginActivity;
 import com.example.project_test.R;
 
-public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapter.ViewHolder> {
-    //ImageView img;
+import java.util.ArrayList;
+import java.util.List;
 
-    private String[] title = {"점심으로 베가보쌈 어때요?", "퐁닭떡볶이 신메뉴 추천!!!", "오늘 곱창집 세일하던데 맛 좋아요~", "학교 앞에 피자집 새로 생겨서 한번 가봤어요", "청년다방 떡볶이", "여기 혼밥 하기 딱이에요!", "오늘 여기서 혼자 밥 먹고 왔는데 분위기 좋아요"}; // 게시물 제목
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    private String[] content = {"2020.6.20", "2020.6.20", "2020.6.19", "2020.6.18", "2020.6.18", "2020.6.18", "2020.6.17"}; //게시물 내용
+public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapter.FoodViewHolder> {
+    private ArrayList<FoodListData> datas;
 
-    private Integer[] img = {R.drawable.foodboard, R.drawable.foodboard, R.drawable.foodboard, R.drawable.foodboard, R.drawable.foodboard, R.drawable.foodboard, R.drawable.foodboard};
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
-        public TextView textView2;
-        public ImageView imageView;
+    public void setData(ArrayList<FoodListData> list) {datas = list;}
 
-        public ViewHolder(View view) {
-            super(view);
-            this.imageView = view.findViewById(R.id.img);
-            this.textView = view.findViewById(R.id.tv1);
-            this.textView2 = view.findViewById(R.id.tv2);
-        }
-    }
-
+    @NonNull
     @Override
-    public FoodRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FoodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-        FoodRecyclerAdapter.ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
 
+        FoodViewHolder holder = new FoodViewHolder(view);
+
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(final FoodRecyclerAdapter.ViewHolder holder, final int position) {
-        holder.textView.setText(title[position]);
-        holder.textView2.setText(content[position]);
-        holder.imageView.setImageResource(img[position]);
+    public void onBindViewHolder(@NonNull FoodViewHolder holder, final int position) {
+        FoodListData data = datas.get(position);
+
+        final String title = data.getTitle();
+        final String id = data.getId();
+        final String day = data.getDay();
+        final String con = data.getCon();
+
+        holder.imageView.setImageResource(data.getImg());
+        holder.textView.setText(title);
+        holder.textView2.setText(day);
+
+        if( id.equals(LoginActivity.user_ac)) {
+            holder.edit.setVisibility(View.VISIBLE);
+            holder.delete.setVisibility(View.VISIBLE);
+            Log.i("fd","글 아이디: "+id+"접속아이디: "+LoginActivity.user_ac);
+        }
+        else {
+            holder.edit.setVisibility(View.GONE);
+            holder.delete.setVisibility(View.GONE);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() { //글 목록 클릭했을 때
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), FoodActivityContent.class);
-                intent.putExtra("제목", title[position]); //게시물의 제목
+                intent.putExtra("제목", title); //게시물의 제목
+                intent.putExtra("작성자", id);
+                intent.putExtra("날짜", day);
+                intent.putExtra("내용", con);
                 v.getContext().startActivity(intent);
+            }
+        });
+
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(),"수정",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                AlertDialog dialog;
+                dialog = builder.setMessage("게시물을 삭제하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.i("delete", "게시물 삭제하기" + title);
+
+                                Api api = Api.Factory.INSTANCE.create();
+
+                                Log.i("hihihi", "아오"+title);
+
+                                api.deletepost(title).enqueue(new Callback<DeletePost>() {
+                                    @Override
+                                    public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
+                                        //DeletePost deletePost = response.body();
+                                        //boolean del = deletePost.delete;
+
+                                        Log.i("delete", "성공" + response);
+                                        datas.remove(position);
+                                        notifyItemRemoved(position);
+                                        notifyItemRangeChanged(position, datas.size());
+                                        Log.i("delete", "갱신도 성공");
+                                    }
+                                    @Override
+                                    public void onFailure(Call<DeletePost> call, Throwable t) {
+                                        Log.i("delete",t.getMessage());
+                                    }
+                                });
+
+                            }
+                        }
+                ).create();
+                dialog.show();
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return title.length;
+        return datas.size();
+    }
+
+    public class FoodViewHolder extends RecyclerView.ViewHolder {
+        public ImageView imageView;
+        public TextView textView;
+        public TextView textView2;
+        public ImageButton edit, delete;
+
+        public FoodViewHolder(View view) {
+            super(view);
+
+            imageView = view.findViewById(R.id.img);
+            textView = view.findViewById(R.id.tv1);
+            textView2 = view.findViewById(R.id.tv2);
+            delete = itemView.findViewById(R.id.delete);
+            edit = itemView.findViewById(R.id.edit);
+        }
     }
 
 }

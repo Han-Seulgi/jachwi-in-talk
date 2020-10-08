@@ -1,18 +1,14 @@
-package com.example.project_test.Recipe;
+package com.example.project_test.qa;
 
-public class RecipeListData {
+public class qaListData {
     private int img;
     private String title, day, id, con;
-    private String tabTitle;
 
-    /*private int comment_cnt,like_cnt;*/
-
-    public RecipeListData(int img, String title, String day, String id, String tabTitle, String con) {
+    public qaListData(int img, String title, String day, String id, String con) {
         this.img = img;
         this.title = title;
         this.day = day;
         this.id = id;
-        this.tabTitle = tabTitle;
         this.con = con;
     }
 
@@ -31,8 +27,6 @@ public class RecipeListData {
     public String getId() {
         return this.id;
     }
-
-    public String getTabTitle() {return this.tabTitle;}
 
     public String getCon() {return this.con;}
 }

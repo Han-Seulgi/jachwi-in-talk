@@ -2,6 +2,7 @@ package com.example.project_test.Meet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,11 +14,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project_test.Api;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.Writing.MeetWritingActivity;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MeetActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -26,9 +33,7 @@ public class MeetActivity extends AppCompatActivity {
     private MeetRecyclerAdapter adapter;
     private GridLayoutManager layoutManager;
 
-    final int image[] = {R.drawable.meeting1,R.drawable.meeting2,R.drawable.meeting3,R.drawable.meeting4,R.drawable.meeting5};
-    int cnt[] = {1,3,5,8,13};
-    final String title[] = {"응암동 공부 스터디모임","강아지 산책모임","영어 회화 모임 ","바리스타 1급 같이 하실 분!","같이 여행가요~"};
+    ArrayList<MeetListData> data;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,22 +48,61 @@ public class MeetActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        RecyclerView rv = findViewById(R.id.rv);
+        rv = findViewById(R.id.rv);
+        rv.setHasFixedSize(true);
+
+        adapter = new MeetRecyclerAdapter();
         Button writing = findViewById(R.id.writing);
 
-        ArrayList<MeetListData> data = new ArrayList<>();
+        data = new ArrayList<>();
+        //서버 연결
+        Api api = Api.Factory.INSTANCE.create();
+        api.getMeetList(33).enqueue(new Callback<MeetPostList>() {
+            @Override
+            public void onResponse(Call<MeetPostList> call, Response<MeetPostList> response) {
+                MeetPostList postList = response.body();
+                List<PostData> postData = postList.items;
 
-        int i = 0;
-        while (i < title.length) {
-            data.add(new MeetListData(image[i], cnt[i], title[i]));
-            i++;
-        }
-        adapter = new MeetRecyclerAdapter();
-        adapter.setData(data);
-        rv.setAdapter(adapter);
+                ArrayList<String> title1 = new ArrayList<>();
+                ArrayList<String> day1 = new ArrayList<>();
+                ArrayList<String> id1 = new ArrayList<>();
+                ArrayList<String> con1 = new ArrayList<>();
+
+                //리스트에 제목, 날짜, 작성자 아이디 넣기
+                for (PostData d:postData) {
+                    title1.add(d.post_title);
+                    day1.add(d.post_day);
+                    id1.add(d.id);
+                    con1.add(d.post_con);
+                    Log.i("abc","모임 All: " + d.toString());
+                }
+
+                //리스트를 배열로 바꾸기, 이미지 배열 생성
+                String[] title = title1.toArray(new String[title1.size()]);
+                String[] day = day1.toArray(new String[day1.size()]);
+                String[] id = id1.toArray(new String[id1.size()]);
+                String[] con = con1.toArray(new String[con1.size()]);
+                Integer[] img = new Integer[title1.size()];
+
+                //넘어온 데이터의 사이즈에 맞춰 이미지 생성(?), 리사이클러뷰 데이터파일에 데이터 넘기기
+                int i = 0;
+                while (i < title.length) {
+                    img[i] = R.drawable.meet2;
+                    data.add(new MeetListData(img[i], title[i], day[i], id[i], con[i]));
+                    i++;
+                }
+                adapter.setData(data);
+                rv.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<MeetPostList> call, Throwable t) {
+                Log.i("abcdef", t.getMessage());
+            }
+        }); //서버연결
+
         layoutManager = new GridLayoutManager(this, 1);
         rv.setLayoutManager(layoutManager);
-
 
         writing.setOnClickListener(new View.OnClickListener() {
             @Override

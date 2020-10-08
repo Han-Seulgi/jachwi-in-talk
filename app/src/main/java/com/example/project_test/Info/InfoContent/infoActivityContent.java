@@ -19,7 +19,7 @@ public class infoActivityContent extends AppCompatActivity {
     private RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
-    TextView tabTitle, text1;
+    TextView tabTitle, text1, writer, contents;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +36,22 @@ public class infoActivityContent extends AppCompatActivity {
 
             tabTitle = findViewById(R.id.title);
             tabTitle.setText("자취인정보");
+
             text1 = findViewById(R.id.text1);
+            writer = findViewById(R.id.id_day);
+            contents = findViewById(R.id.con);
 
+            //받아오기
             Intent intent = getIntent();
-            String a = intent.getStringExtra("제목");
+            String title = intent.getStringExtra("제목");
+            String id = intent.getStringExtra("작성자");
+            String day = intent.getStringExtra("날짜");
+            String con = intent.getStringExtra("내용");
 
-            text1.setText(a);
+            //setText
+            text1.setText(title);
+            writer.setText(id+"\n"+day);
+            contents.setText(con);
             
             recyclerView = findViewById(R.id.recyclerView);
             recyclerView.setHasFixedSize(true);

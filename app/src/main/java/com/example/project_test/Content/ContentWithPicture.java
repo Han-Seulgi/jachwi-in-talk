@@ -22,7 +22,7 @@ public class ContentWithPicture extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.Adapter adapter2;
 
-    TextView text1, tabTitle;
+    TextView text1, tabTitle, writer, contents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +38,25 @@ public class ContentWithPicture extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         tabTitle = findViewById(R.id.title);
-
         text1 = findViewById(R.id.text1);
+        writer = findViewById(R.id.id_day);
+        contents = findViewById(R.id.con);
+
+        //받아오기
         Intent intent = getIntent();
-        String a = intent.getStringExtra("제목");
-        String t = intent.getStringExtra("탭이름");
-        text1.setText(a);
-        tabTitle.setText(t);
+
+        String tt = intent.getStringExtra("탭이름");
+        String title = intent.getStringExtra("제목");
+        String id = intent.getStringExtra("작성자");
+        String day = intent.getStringExtra("날짜");
+        String con = intent.getStringExtra("내용");
+
+        //setText
+        tabTitle.setText(tt);
+        text1.setText(title);
+        writer.setText(id+"\n"+day);
+        contents.setText(con);
+
 
         recyclerView = findViewById(R.id.recyclerView);
         //recyclerView.setHasFixedSize(true);

@@ -2,6 +2,7 @@ package com.example.project_test.Food;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,16 +14,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.project_test.Api;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.Writing.FoodWritingActivity;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class FoodActivity extends AppCompatActivity{
     Toolbar toolbar;
 
-    private RecyclerView recyclerView;
+    /*private RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter adapter;*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +59,8 @@ public class FoodActivity extends AppCompatActivity{
         adapter2.notifyDataSetChanged();
 
         Button writing = findViewById(R.id.writing);
+
+
 
 //        recyclerView = findViewById(R.id.recyclerView);
 //        recyclerView.setHasFixedSize(true);

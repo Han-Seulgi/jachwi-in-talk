@@ -40,16 +40,22 @@ public class MeetRecyclerAdapter extends RecyclerView.Adapter<MeetRecyclerAdapte
     public void onBindViewHolder(@NonNull MeetViewHolder holder, int position) {
         MeetListData data = datas.get(position);
 
+        final String title = data.getTitle();
+        final String id = data.getId();
+        final String day = data.getDay();
+        final String con = data.getCon();
+
         holder.img.setImageResource(data.getImg());
-        holder.count.setText(data.getCount());
-        holder.title.setText(data.getTitle());
-        final String t = data.getTitle();
+        holder.title.setText(title);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MeetActivityContent.class);
-                intent.putExtra("제목", t); //게시물의 제목
+                intent.putExtra("제목", title); //게시물의 제목
+                intent.putExtra("작성자", id);
+                intent.putExtra("날짜", day);
+                intent.putExtra("내용", con);
                 v.getContext().startActivity(intent);
             }
         });
@@ -62,13 +68,12 @@ public class MeetRecyclerAdapter extends RecyclerView.Adapter<MeetRecyclerAdapte
 
     public class MeetViewHolder extends RecyclerView.ViewHolder {
         public ImageView img;
-        public TextView count,title;
+        public TextView title;
 
         public MeetViewHolder(@NonNull View itemView) {
             super(itemView);
 
             img = (ImageView) itemView.findViewById(R.id.img);
-            count = itemView.findViewById(R.id.count);
             title = itemView.findViewById(R.id.title);
         }
     }

@@ -2,13 +2,14 @@ package com.example.project_test.Info;
 
 public class InfoListData {
     private int img;
-    private String title, day, id;
+    private String title, day, id, con;
 
-    public InfoListData(int img, String title, String day, String id) {
+    public InfoListData(int img, String title, String day, String id, String con) {
         this.img = img;
         this.title = title;
         this.day = day;
         this.id = id;
+        this.con = con;
     }
 
     public int getImg() {
@@ -26,4 +27,5 @@ public class InfoListData {
     public String getId() {
         return this.id;
     }
+    public String getCon() {return this.con;}
 }

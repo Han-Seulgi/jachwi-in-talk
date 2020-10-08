@@ -1,4 +1,4 @@
-package com.example.project_test.Info;
+package com.example.project_test.qa;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,24 +27,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapter.InfoViewHolder> {
-    private ArrayList<InfoListData> datas;
+public class qaRecyclerAdapter extends RecyclerView.Adapter<qaRecyclerAdapter.qaViewHolder> {
+    private ArrayList<qaListData> datas;
 
-    public void setData(ArrayList<InfoListData> list) {datas = list;}
+    public void setData(ArrayList<qaListData> list) { datas = list; }
 
     @NonNull
     @Override
-    public InfoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public qaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
 
-        InfoViewHolder holder = new InfoViewHolder(view);
+        qaViewHolder holder = new qaViewHolder(view);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final InfoViewHolder holder, final int position) {
-        InfoListData data = datas.get(position);
+    public void onBindViewHolder(final qaRecyclerAdapter.qaViewHolder holder, final int position) {
+        qaListData data = datas.get(position);
 
         final String title = data.getTitle();
         final String id = data.getId();
@@ -129,12 +129,12 @@ public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapte
         return datas.size();
     }
 
-    public class InfoViewHolder extends RecyclerView.ViewHolder {
+    public class qaViewHolder extends RecyclerView.ViewHolder{
         public ImageView imageView;
         public TextView textView,textView2;
         public ImageButton delete, edit;
 
-        public InfoViewHolder(@NonNull View itemView) {
+        public qaViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageView = (ImageView) itemView.findViewById(R.id.img);
@@ -144,5 +144,4 @@ public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapte
             edit = itemView.findViewById(R.id.edit);
         }
     }
-
 }

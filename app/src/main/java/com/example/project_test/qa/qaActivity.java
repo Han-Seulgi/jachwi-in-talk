@@ -2,6 +2,7 @@ package com.example.project_test.qa;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,16 +13,26 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project_test.Api;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.qa.qaContent.QAWritingActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class qaActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     private RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
+    private qaRecyclerAdapter adapter;
+
+    ArrayList<qaListData> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +47,60 @@ public class qaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Button writing = findViewById(R.id.writing);
-
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
+        adapter = new qaRecyclerAdapter();
+
+        data = new ArrayList<>();
+
+        //서버 연결
+        Api api = Api.Factory.INSTANCE.create();
+        api.getQnAList(66).enqueue(new Callback<qaPostList>() {
+            @Override
+            public void onResponse(Call<qaPostList> call, Response<qaPostList> response) {
+                qaPostList postList = response.body();
+                List<PostData> postData = postList.items;
+
+                ArrayList<String> title1 = new ArrayList<>();
+                ArrayList<String> day1 = new ArrayList<>();
+                ArrayList<String> id1 = new ArrayList<>();
+                ArrayList<String> con1 = new ArrayList<>();
+
+                //리스트에 제목, 날짜, 작성자 아이디 넣기
+                for (PostData d:postData) {
+                    title1.add(d.post_title);
+                    day1.add(d.post_day);
+                    id1.add(d.id);
+                    con1.add(d.post_con);
+                    Log.i("abc","QA All: " + d.toString());
+                }
+
+                //리스트를 배열로 바꾸기, 이미지 배열 생성
+                String[] title = title1.toArray(new String[title1.size()]);
+                String[] day = day1.toArray(new String[day1.size()]);
+                String[] id = id1.toArray(new String[id1.size()]);
+                String[] con = con1.toArray(new String[con1.size()]);
+                Integer[] img = new Integer[title1.size()];
+
+                //넘어온 데이터의 사이즈에 맞춰 이미지 생성(?), 리사이클러뷰 데이터파일에 데이터 넘기기
+                int i = 0;
+                while (i < title.length) {
+                    img[i] = R.drawable.information;
+                    data.add(new qaListData(img[i], title[i], day[i], id[i], con[i]));
+                    i++;
+                }
+                adapter.setData(data);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<qaPostList> call, Throwable t) {
+                Log.i("abcdef", t.getMessage());
+            }
+        }); //서버연결
 
         layoutManager = new LinearLayoutManager(this);
-
         recyclerView.setLayoutManager(layoutManager);
-
-        adapter = new RecyclerAdapter();
-        recyclerView.setAdapter(adapter);
 
 
         writing.setOnClickListener(new View.OnClickListener() {
