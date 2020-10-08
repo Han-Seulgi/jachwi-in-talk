@@ -2,7 +2,7 @@
 <resources>
     <string-array name="cat">
         <item >운동</item>
-        <item >취미</item>
-        <item >여행</item>
+        <item >음식</item>
+        <item >영화</item>
     </string-array>
 </resources>

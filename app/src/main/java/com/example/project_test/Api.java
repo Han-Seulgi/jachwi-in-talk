@@ -88,6 +88,18 @@ public interface Api {
     @POST("Write")
     Call<Write> Write(@Field("id")String var1,@Field("post_title")String var2,@Field("post_con")String var3,@Field("board_code")int var4);
 
+    @FormUrlEncoded
+    @POST("CookWrite")
+    Call<CookWrite> CookWrite(@Field("cook_src")String var1,@Field("post_con")String var2);
+
+    @FormUrlEncoded
+    @POST("FoodWrite")
+    Call<FoodWrite> FoodWrite(@Field("food_lct")String var1);
+
+    @FormUrlEncoded
+    @POST("MeetWrite")
+    Call<MeetWrite> MeetWrite(@Field("meet_tag")int var1,@Field("meet_lct")String var2,@Field("meet_p")int var3);
+
 
     public static final class Factory {
         public static final Api.Factory INSTANCE;

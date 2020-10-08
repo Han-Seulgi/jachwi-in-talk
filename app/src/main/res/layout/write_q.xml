@@ -72,7 +72,7 @@
                 android:textSize="20dp" />
 
             <EditText
-                android:id="@+id/edit1"
+                android:id="@+id/tedit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -82,7 +82,7 @@
         </RelativeLayout>
 
         <EditText
-            android:id="@+id/editTextName1"
+            android:id="@+id/cedit"
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:layout_marginTop="30dp"
@@ -108,7 +108,7 @@
                 android:src="@drawable/gal" />
 
             <EditText
-                android:id="@+id/editTextName2"
+                android:id="@+id/pedit"
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
                 android:layout_gravity="center"
