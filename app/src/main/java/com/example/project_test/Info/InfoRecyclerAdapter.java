@@ -96,14 +96,9 @@ public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapte
 
                                 Api api = Api.Factory.INSTANCE.create();
 
-                                Log.i("hihihi", "아오"+title);
-
                                 api.deletepost(title).enqueue(new Callback<DeletePost>() {
                                     @Override
                                     public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
-                                        //DeletePost deletePost = response.body();
-                                        //boolean del = deletePost.delete;
-
                                         Log.i("delete", "성공" + response);
                                         datas.remove(position);
                                         notifyItemRemoved(position);

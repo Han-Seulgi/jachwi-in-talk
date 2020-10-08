@@ -26,7 +26,6 @@ import retrofit2.http.Query;
 
 public interface Api {
 
-    //로그인
     @GET("login")
     Call<User> getUser(@Query("id")String var1);
 
@@ -40,7 +39,6 @@ public interface Api {
     @POST("mold/get_mold_dispose")
     Call<ResponseBody> aa(@Field("aa")String var1, @Field("bb")String var2);
 
-    //회원가입
     @GET("join")
     Call<ValidateID> validateUser(@Query("id")String var1);
 
@@ -86,6 +84,9 @@ public interface Api {
 
 
 
+    @FormUrlEncoded
+    @POST("Write")
+    Call<Write> Write(@Field("id")String var1,@Field("post_title")String var2,@Field("post_con")String var3,@Field("board_code")int var4);
 
 
     public static final class Factory {
@@ -108,7 +109,6 @@ public interface Api {
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
-            Log.i("abcdef","Factory.INSTANCE.create");
             return retrofit.create(Api.class);
         }
 

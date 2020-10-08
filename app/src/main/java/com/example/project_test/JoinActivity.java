@@ -343,8 +343,7 @@ public class JoinActivity extends AppCompatActivity {
                         checkPw = false;
                     }
             }
-        }
-
+        }??
     };*/
 
 

@@ -41,6 +41,7 @@ public class MainActivity extends ActivityGroup {
             else { requestPermission(); }
         }
 
+
 /*        Api api = Api.Factory.INSTANCE.create();
 
         api.getUser("test").enqueue(new Callback<User>() {
@@ -121,10 +122,12 @@ public class MainActivity extends ActivityGroup {
     }*/
 
     private void createTab() {
+        //tabHost 위젯과 연결
         TabHost tabHost = (TabHost) findViewById(R.id.tabhost);
+        //TabHost를 설정할 때 가장 먼저 호출
         tabHost.setup(getLocalActivityManager());
 
-        //탭 아이콘~
+        //탭 아이콘
         ImageView tab1 = new ImageView(this);
         tab1.setImageResource(R.drawable.boardicon1);
         ImageView tab2 = new ImageView(this);
@@ -134,7 +137,8 @@ public class MainActivity extends ActivityGroup {
         ImageView tab4 = new ImageView(this);
         tab4.setImageResource(R.drawable.safetyicon1);
 
-        tabHost.addTab(tabHost.newTabSpec("TAB1").setIndicator(tab1)
+        //Tab Spec생성 및 Tab 추가
+        tabHost.addTab(tabHost.newTabSpec("TAB1").setIndicator(tab1) //화면에 보여주는 Tab명
                 .setContent(new Intent(this,BoardActivity.class)));
         tabHost.addTab(tabHost.newTabSpec("TAB2").setIndicator(tab2)
                 .setContent(new Intent(this, RoomActivity.class)));
