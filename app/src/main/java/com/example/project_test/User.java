@@ -17,13 +17,19 @@ class UserIdCheck{
 
 }
 
-class User {
+public class User {
 
     @SerializedName("id")
     String id;
 
     @SerializedName("password")
     String password;
+
+    @SerializedName("name")
+    public String name;
+
+    @SerializedName("email")
+    public String email;
 
     @NonNull
     @Override

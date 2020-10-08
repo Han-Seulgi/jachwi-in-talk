@@ -34,9 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:text="질문제목"
-            android:textSize="20dp"
-            android:layout_marginTop="20dp"/>
+            android:textSize="20dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -67,11 +67,13 @@
                 android:text="모꼬지 \n2020.5.21.22:01" />
 
             <ImageButton
+                android:id="@+id/modify"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/modify" />
 
             <ImageButton
+                android:id="@+id/delete"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/delete" />
@@ -93,22 +95,48 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="260dp" />
 
-        <fragment
-            app:layout_constraintTop_toBottomOf="@id/guideline1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:id="@+id/map"
-            android:layout_gravity="center"
-            android:layout_width="380dp"
-            android:layout_height="150dp"
-            class="com.google.android.gms.maps.MapFragment"/>
+    <fragment
+        android:id="@+id/map"
+        class="com.google.android.gms.maps.MapFragment"
+        android:layout_width="380dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline1" />
+
+    <LinearLayout
+        android:id="@+id/likes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map">
+
+        <ImageButton
+            android:id="@+id/like"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/likes" />
+
+        <TextView
+            android:id="@+id/textLikenum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:text="0"
+            android:textSize="17dp" />
+
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="417dp" />
+        app:layout_constraintGuide_begin="460dp" />
 
     <View
         android:layout_width="match_parent"
@@ -119,13 +147,13 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@+id/map"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginVertical="15dp"
+        android:id="@+id/recyclerView"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:id="@+id/recyclerView"
-        android:background="#F0F0F0"/>
+        android:layout_marginVertical="15dp"
+        android:background="#F0F0F0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/likes" />
 
 
     <RelativeLayout
@@ -133,29 +161,29 @@
         android:layout_height="wrap_content"
         android:background="#eeeeee"
         android:paddingVertical="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        app:layout_constraintBottom_toBottomOf="parent">
+
         <EditText
             android:id="@+id/editTextName1"
             android:layout_width="300dp"
             android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:background="@drawable/border"
             android:hint="댓글을 입력해주세요."
             android:textAlignment="center"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
             android:textColor="@android:color/black" />
 
         <Button
             android:id="@+id/push"
             android:layout_width="70dp"
             android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:background="#47A1DC"
             android:text="완료"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:textColor="#ffffff" />
     </RelativeLayout>
 

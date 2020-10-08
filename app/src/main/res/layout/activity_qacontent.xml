@@ -67,11 +67,13 @@
                 android:text="모꼬지 \n2020.5.21.22:01" />
 
             <ImageButton
+                android:id="@+id/modify"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/modify" />
+                android:src="@drawable/modify"/>
 
             <ImageButton
+                android:id="@+id/delete"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/delete" />
@@ -85,6 +87,28 @@
             android:layout_marginVertical="15dp"
             android:text="궁금해요 ㅜㅜ 정보 알고계신 분\n 알려주세요 \n 자취 시작한 지 얼마 되지 않아 모르는게 많네요 ㅜ"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/like"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/likes" />
+
+            <TextView
+                android:id="@+id/textLikenum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:text="0"
+                android:textSize="17dp"/>
+
+        </LinearLayout>
     </LinearLayout>
 
     <!--댓글-->

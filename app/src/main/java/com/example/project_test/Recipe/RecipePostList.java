@@ -8,6 +8,9 @@ import java.util.List;
 public class RecipePostList {
     @SerializedName("data")
     List<PostData> items;
+
+    @SerializedName("post_code")
+    public int pcode;
 }
 
 class PostData {

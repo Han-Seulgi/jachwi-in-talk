@@ -3,26 +3,60 @@ package com.example.project_test.Mypage;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import com.example.project_test.Api;
+import com.example.project_test.LoginActivity;
 import com.example.project_test.Mypage.MyContents.MyContentsActivity;
 import com.example.project_test.R;
+import com.example.project_test.User;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyPageActivity extends AppCompatActivity {
     Button userSetBtn, logout, addkwd;
     ImageButton gomycon;
+    TextView textName;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
 
+        //상단탭
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        textName = findViewById(R.id.name);
+
+        //아이디를 이용해 유저 정보 검색
+        Api api = Api.Factory.INSTANCE.create();
+        api.getUser(LoginActivity.user_ac).enqueue(new Callback<User>() {
+            public void onResponse(Call<User> call, Response<User> response) {
+                User user = response.body();
+                textName.setText(user.name+" 님");
+            }
+
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
 
     }
 
@@ -39,7 +73,9 @@ public class MyPageActivity extends AppCompatActivity {
                 logout.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        Intent i = new Intent(MyPageActivity.this , LoginActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(i);
                     }
                 });
                 logout.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -60,5 +96,15 @@ public class MyPageActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
         }
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return true;
     }
 }

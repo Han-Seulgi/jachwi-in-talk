@@ -71,6 +71,8 @@ public class LoginActivity extends AppCompatActivity {
                                         startActivity(intent);
                                         Toast.makeText(getApplicationContext(),"로그인 성공",Toast.LENGTH_SHORT).show();
                                         user_ac = strID;
+                                        idEt.setText("");
+                                        pwEt.setText("");
                                     }
                                     //패스워드 불일치
                                     else {
@@ -90,6 +92,15 @@ public class LoginActivity extends AppCompatActivity {
 
                                 public void onFailure(Call<User> call, Throwable t) {
                                     Log.i("abcdefg", t.getMessage());
+                                    loginfail = new AlertDialog.Builder(LoginActivity.this);
+                                    loginfail.setTitle("서버 연결 실패");
+                                    loginfail.setMessage("서버에 연결되지 않았습니다");
+                                    loginfail.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    });
+                                    loginfail.show();
                                 }
                             });
                         }
@@ -110,6 +121,15 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<UserIdCheck> call, Throwable t) {
                         Log.i("abcdefg", t.getMessage());
+                        loginfail = new AlertDialog.Builder(LoginActivity.this);
+                        loginfail.setTitle("서버 연결 실패");
+                        loginfail.setMessage("서버에 연결되지 않았습니다");
+                        loginfail.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                        loginfail.show();
                     }
                 });
                 break;

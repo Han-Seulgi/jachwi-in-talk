@@ -2,8 +2,11 @@ package com.example.project_test;
 
 import android.util.Log;
 
+import com.example.project_test.Content.CookList;
+import com.example.project_test.Food.FoodContent.FoodList;
 import com.example.project_test.Food.FoodPostList;
 import com.example.project_test.Info.InfoPostList;
+import com.example.project_test.Meet.MeetContent.MeetList;
 import com.example.project_test.Meet.MeetPostList;
 import com.example.project_test.Mypage.MyContents.MyPostList;
 import com.example.project_test.Recipe.RecipePostList;
@@ -99,6 +102,52 @@ public interface Api {
     @FormUrlEncoded
     @POST("MeetWrite")
     Call<MeetWrite> MeetWrite(@Field("meet_tag")int var1,@Field("meet_lct")String var2,@Field("meet_p")int var3);
+
+    @GET("post/getcontent")
+    Call<PostList> getcontent(@Query("post_title") String var1);
+
+    @GET("post/cook")
+    Call<CookList> getrecipe(@Query("post_code") int var1);
+
+    @GET("post/food")
+    Call<FoodList> getlocation(@Query("post_code") int var1);
+
+    @GET("post/meet")
+    Call<MeetList> getmeetday(@Query("post_code") int var1);
+
+    @GET("like")
+    Call<likeCheck> addlike(@Query("id") String var1, @Query("post_code") int var2);
+
+    @GET("like/validateLike")
+    Call<likeCheck> validateLike(@Query("id") String var1, @Query("post_code") int var2);
+
+    @GET("like/getlikenum")
+    Call<likeCheck> getlikenum(@Query("post_code") int var1);
+
+    @GET("like/addlikenum")
+    Call<likeCheck> addlikenum(@Query("post_code") int var1);
+
+    @GET("like/deletelike")
+    Call<likeCheck> deletelike(@Query("id") String var1, @Query("post_code") int var2);
+
+    @GET("like/sublikenum")
+    Call<likeCheck> sublikenum(@Query("post_code") int var1);
+
+    @FormUrlEncoded
+    @POST("Modify")
+    Call<Write> Modify(@Field("post_title")String var1,@Field("post_con")String var2,@Field("post_code")int var3);
+
+    @FormUrlEncoded
+    @POST("Modify/cook")
+    Call<Write> ModifyCook(@Field("cook_src")String var1,@Field("cook_rcp")String var2,@Field("post_code")int var3);
+
+    @FormUrlEncoded
+    @POST("Modify/food")
+    Call<Write> ModifyFood(@Field("food_lct")String var1,@Field("post_code")int var2);
+
+//    @FormUrlEncoded
+//    @POST("Modify/meet")
+//    Call<Write> ModifyMeet(@Field("meet_tag")int var1, @Field("meet_lct")String var2, @Field("meet_p")int var3, @Field("meet_day")String var4, @Field("post_code")int var5);
 
 
     public static final class Factory {
