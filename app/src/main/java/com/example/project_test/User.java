@@ -23,7 +23,7 @@ public class User {
     String id;
 
     @SerializedName("password")
-    String password;
+    public String password;
 
     @SerializedName("name")
     public String name;

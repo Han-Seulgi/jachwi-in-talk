@@ -9,6 +9,7 @@ import com.example.project_test.Info.InfoPostList;
 import com.example.project_test.Meet.MeetContent.MeetList;
 import com.example.project_test.Meet.MeetPostList;
 import com.example.project_test.Mypage.MyContents.MyPostList;
+import com.example.project_test.Mypage.ValidateMypage;
 import com.example.project_test.Recipe.RecipePostList;
 import com.example.project_test.qa.qaPostList;
 import com.google.gson.Gson;
@@ -85,7 +86,23 @@ public interface Api {
     @GET("post/checkWriter")
     Call<MyPostList> checkWriter(@Query("id") String var1); //내가 쓴 글
 
+    //마이페이지 유효성
+    @GET("join/validateName")
+    Call<ValidateMypage> mypagename(@Query("name")String var1);
 
+    @GET("join/validateEmail")
+    Call<ValidateMypage> mypageemail(@Query("email")String var1);
+
+    @FormUrlEncoded
+    @POST("UserInfo")
+    Call<ValidateMypage> updateUser(@Field("id")String var1, @Field("name")String var2,@Field("email")String var3);
+
+    @FormUrlEncoded
+    @POST("UserInfo/password")
+    Call<ValidateMypage> changepassword(@Field("id")String var1, @Field("password")String var2);
+
+    @GET("UserInfo/withdraw")
+    Call<ValidateMypage> deleteUser(@Query("id")String var1);
 
     @FormUrlEncoded
     @POST("Write")

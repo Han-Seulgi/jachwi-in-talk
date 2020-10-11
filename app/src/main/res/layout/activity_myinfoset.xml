@@ -99,11 +99,11 @@
 
     <ImageView
         android:id="@+id/nameck"
-        android:layout_width="wrap_content"
+        android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:src="@drawable/check"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintRight_toRightOf="@+id/nameET"
         app:layout_constraintBottom_toBottomOf="@id/nameET" />
 
@@ -173,12 +173,12 @@
 
     <ImageView
         android:id="@+id/emailck"
-        android:layout_width="wrap_content"
+        android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="2dp"
         android:src="@drawable/check"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintLeft_toRightOf="@+id/btnCheck"
         app:layout_constraintBottom_toBottomOf="@id/btnCheck" />
 
