@@ -19,6 +19,7 @@ import com.example.project_test.Food.FoodActivity;
 import com.example.project_test.Info.InfoActivity;
 import com.example.project_test.Meet.MeetActivity;
 import com.example.project_test.Mypage.MyPageActivity;
+import com.example.project_test.SharenRent.SharenRentActivity;
 import com.example.project_test.qa.qaActivity;
 import com.example.project_test.Recipe.RecipeBoardActivity;
 import com.example.project_test.qa.qaContent.qaActivityContent;
@@ -125,7 +126,8 @@ public class BoardActivity extends AppCompatActivity {
                         startActivity(intent);
 
                     } else if (v.getId() == R.id.btn5) {  //나눔대여 게시판
-
+                        Intent intent = new Intent(BoardActivity.this, SharenRentActivity.class);
+                        startActivity(intent);
 
                     } else if (v.getId() == R.id.btn6) { //자취Q&A 게시판
                         Intent intent = new Intent(BoardActivity.this, qaActivity.class);

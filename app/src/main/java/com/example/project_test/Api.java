@@ -1,7 +1,5 @@
 package com.example.project_test;
 
-import android.util.Log;
-
 import com.example.project_test.Content.CookList;
 import com.example.project_test.Food.FoodContent.FoodList;
 import com.example.project_test.Food.FoodPostList;
@@ -11,6 +9,8 @@ import com.example.project_test.Meet.MeetPostList;
 import com.example.project_test.Mypage.MyContents.MyPostList;
 import com.example.project_test.Mypage.ValidateMypage;
 import com.example.project_test.Recipe.RecipePostList;
+import com.example.project_test.SharenRent.CategoryData;
+import com.example.project_test.Writing.WritingCategoryData;
 import com.example.project_test.qa.qaPostList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -161,6 +161,12 @@ public interface Api {
     @FormUrlEncoded
     @POST("Modify/food")
     Call<Write> ModifyFood(@Field("food_lct")String var1,@Field("post_code")int var2);
+
+    @GET("Category")
+    Call<CategoryData> getCategory(@Query("board_code") int var1);
+
+    @GET("Category")
+    Call<WritingCategoryData> getWritingCategory(@Query("board_code") int var1);
 
 //    @FormUrlEncoded
 //    @POST("Modify/meet")
