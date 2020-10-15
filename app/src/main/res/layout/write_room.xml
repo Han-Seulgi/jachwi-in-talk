@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/tab3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="167dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FF9263">
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="보금자리"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"></TextView>
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="10dp"
+                android:text="글쓰기"
+                android:textSize="22dp" />
+
+            <Button
+                android:id="@+id/writing"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:background="#47A1DC"
+                android:text="올리기"
+                android:textColor="#ffffff" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="10dp"
+                android:text="위치"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/tedit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tv1"
+                android:hint="위치를 입력해주세요."
+                android:textSize="18dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="10dp"
+                android:text="가격"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/medit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tv2"
+                android:hint="가격을 입력해주세요."
+                android:textSize="18dp" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/cedit"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="15dp"
+            android:padding="5dp"
+            android:gravity="top"
+            android:background="@drawable/border"
+            android:hint="이곳에 소개글을 입력해주세요"
+            android:textSize="18dp"
+            android:textColor="@android:color/black" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="15dp">
+
+            <ImageView
+                android:id="@+id/wimg"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/gal" />
+
+            <EditText
+                android:id="@+id/pedit"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:hint=" 사진을 등록해주세요"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

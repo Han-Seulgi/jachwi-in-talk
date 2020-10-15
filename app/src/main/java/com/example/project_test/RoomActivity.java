@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -17,6 +18,8 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.project_test.Content.ContentWithPicture;
 import com.example.project_test.Mypage.MyPageActivity;
+import com.example.project_test.qa.qaActivity;
+import com.example.project_test.qa.qaContent.QAWritingActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -33,7 +36,6 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
     GroundOverlayOptions roomMark1, roomMark2, roomMark3;
 
     ImageButton back;
-    Button write;
 
     Toolbar toolbar;
     TextView tabTitle;
@@ -51,6 +53,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         tabTitle =findViewById(R.id.title);
         tt = tabTitle.getText().toString();
 
+
         //상단탭
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,6 +64,17 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         mf = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mf.getMapAsync(this);
+        Button write = findViewById(R.id.write);
+
+
+        write.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RoomActivity.this, RoomWriting.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
     //상단탭 메뉴

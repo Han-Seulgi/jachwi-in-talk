@@ -120,6 +120,10 @@ public interface Api {
     @POST("MeetWrite")
     Call<MeetWrite> MeetWrite(@Field("meet_tag")int var1,@Field("meet_lct")String var2,@Field("meet_p")int var3);
 
+    @FormUrlEncoded
+    @POST("Cmt")
+    Call<Cmt> Cmt(@Field("id")String var1,@Field("cmt_con")String var2);
+
     @GET("post/getcontent")
     Call<PostList> getcontent(@Query("post_title") String var1);
 
