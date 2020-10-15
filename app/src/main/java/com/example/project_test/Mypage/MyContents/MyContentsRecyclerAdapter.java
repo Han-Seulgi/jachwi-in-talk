@@ -49,19 +49,6 @@ public class MyContentsRecyclerAdapter extends RecyclerView.Adapter<MyContentsRe
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         MyListData data = datas.get(position);
 
-        int board_code = data.getBoard();
-        switch (board_code) {
-            case 11 : holder.textView2.setText("요리"); break;
-            case 22 : holder.textView2.setText("맛집공유"); break;
-            case 33 : holder.textView2.setText("모임"); break;
-            case 44 : holder.textView2.setText("나눔"); break;
-            case 55 : holder.textView2.setText("대여"); break;
-            case 66 : holder.textView2.setText("자취Q&A"); break;
-            case 77 : holder.textView2.setText("생활정보"); break;
-            case 88 : holder.textView2.setText("방구하기"); break;
-            default: break;
-        }
-
         final String title = data.getTitle();
         final String id = data.getId();
         final String day = data.getDay();
@@ -69,7 +56,7 @@ public class MyContentsRecyclerAdapter extends RecyclerView.Adapter<MyContentsRe
 
         holder.imageView.setImageResource(data.getImg());
         holder.textView.setText(title);
-        //holder.textView2.setText(data.getBoard());
+        holder.textView2.setText(data.getBoard());
         holder.textView3.setText(day);
 
         //안해도됨

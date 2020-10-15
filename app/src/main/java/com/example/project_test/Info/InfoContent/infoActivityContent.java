@@ -21,12 +21,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
 import com.example.project_test.Cmt;
+import com.example.project_test.CmtData;
+import com.example.project_test.CmtList;
+import com.example.project_test.CommentListData;
+import com.example.project_test.CommentRecyclerAdapter;
 import com.example.project_test.LoginActivity;
-import com.example.project_test.Meet.MeetContent.MeetActivityContent;
 import com.example.project_test.Modify.InfoModifyActivity;
 import com.example.project_test.PostList;
 import com.example.project_test.R;
 import com.example.project_test.likeCheck;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,7 +43,7 @@ public class infoActivityContent extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
+    //private RecyclerView.Adapter adapter;
     TextView tabTitle, text1, writer, contents, textLikenum;
     int postcode, likenum;
     ImageButton like, modify, delete;
@@ -47,6 +53,9 @@ public class infoActivityContent extends AppCompatActivity {
 
     private AlertDialog dialog;
 
+
+    private CommentRecyclerAdapter adapter;
+    ArrayList<CommentListData> data;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +72,11 @@ public class infoActivityContent extends AppCompatActivity {
 
             tabTitle = findViewById(R.id.title);
             tabTitle.setText("자취인정보");
+
+            //댓글
+            recyclerView = findViewById(R.id.recyclerView);
+            recyclerView.setHasFixedSize(true);
+            adapter = new CommentRecyclerAdapter();
 
             text1 = findViewById(R.id.text1);
             writer = findViewById(R.id.id_day);
@@ -105,6 +119,8 @@ public class infoActivityContent extends AppCompatActivity {
 
                 }
             });
+
+            data = new ArrayList<>();
 
             //받아오기
             Intent intent = getIntent();
@@ -151,6 +167,46 @@ public class infoActivityContent extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<likeCheck> call, Throwable t) {
+                        }
+                    });
+
+                    //댓글 가져오기
+                    api.getComments(postcode).enqueue(new Callback<CmtList>() {
+                        @Override
+                        public void onResponse(Call<CmtList> call, Response<CmtList> response) {
+                            CmtList cmtList = response.body();
+                            List<CmtData> cmtData = cmtList.items;
+
+                            ArrayList<Integer> cmt_code1 = new ArrayList<>();
+                            ArrayList<String> cmt_id1 = new ArrayList<>();
+                            ArrayList<String> cmt_con1 = new ArrayList<>();
+                            ArrayList<String> cmt_day1 = new ArrayList<>();
+
+                            for(CmtData d:cmtData) {
+                                cmt_code1.add(d.cmt_code);
+                                cmt_id1.add(d.id);
+                                cmt_con1.add(d.cmt_con);
+                                cmt_day1.add(d.cmt_day);
+                                Log.i("infocmt",d.toString());
+                            }
+
+                            Integer[] cmt_code = cmt_code1.toArray(new Integer[cmt_code1.size()]);
+                            String[] cmt_id = cmt_id1.toArray(new String[cmt_id1.size()]);
+                            String[] cmt_con = cmt_con1.toArray(new String[cmt_con1.size()]);
+                            String[] cmt_day = cmt_day1.toArray(new String[cmt_day1.size()]);
+
+                            int i = 0;
+                            while (i<cmt_code.length){
+                                data.add(new CommentListData(cmt_code[i],cmt_id[i],cmt_con[i],cmt_day[i]));
+                                i++;
+                            }
+                            adapter.setData(data);
+                            recyclerView.setAdapter(adapter);
+                        }
+
+                        @Override
+                        public void onFailure(Call<CmtList> call, Throwable t) {
+
                         }
                     });
                 }
@@ -276,16 +332,9 @@ public class infoActivityContent extends AppCompatActivity {
                 }
             });
 
-            //댓글
-            recyclerView = findViewById(R.id.recyclerView);
-            recyclerView.setHasFixedSize(true);
-
             layoutManager = new LinearLayoutManager(this);
-
             recyclerView.setLayoutManager(layoutManager);
 
-            adapter = new InfoRecyclerAdapterContent();
-            recyclerView.setAdapter(adapter);
         }
 
     @Override

@@ -13,11 +13,17 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.example.project_test.Api;
 import com.example.project_test.Content.ContentWithPicture;
+import com.example.project_test.PostList;
 import com.example.project_test.R;
 
 import java.util.Arrays;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RecipeRandom extends Activity {
     TextView tv;
@@ -31,6 +37,9 @@ public class RecipeRandom extends Activity {
     int size, random;
     String title[];
 
+    String id;
+    String day;
+    String con;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +70,6 @@ public class RecipeRandom extends Activity {
     public void mOnRec(View v) { // 추천받기(다시추천) 버튼
         Random r = new Random();
         random = r.nextInt(size); // 게시물의 갯수 만큼의 범위에서 랜덤값 추출
-        Log.i("abc", "이미지 배열 넘어왔니" + Arrays.toString(img));
-        Log.i("abc","랜덤이미지시바: " + img[random]);
         iv.setImageResource(img[random]);
         tv.setText(title[random]);
         tv.setVisibility(View.VISIBLE);
@@ -72,20 +79,32 @@ public class RecipeRandom extends Activity {
         click.setTextSize(20);
     }
 
-    public void mOnShow(View v){ //레시피 보러가기 버튼
-        Intent intent = new Intent(v.getContext(), ContentWithPicture.class);
-        intent.putExtra("제목", title[random]); //게시물의 제목
-        intent.putExtra("탭이름", "자취앤집밥"); //게시판의 제목
-        v.getContext().startActivity(intent);
-        finish();
-    }
+    public void mOnShow(final View v){ //레시피 보러가기 버튼
+        final Api api = Api.Factory.INSTANCE.create();
 
-    //바깥레이어 클릭시에도 안닫힘
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if(event.getAction()==MotionEvent.ACTION_OUTSIDE) {
-            return false;
-        }
-        return true;
+        api.getcontent(title[random]).enqueue(new Callback<PostList>() {
+            @Override
+            public void onResponse(Call<PostList> call, Response<PostList> response) {
+                PostList postlist = response.body();
+                id = postlist.id;
+                con = postlist.con;
+                day = postlist.day;
+
+                Intent intent = new Intent(v.getContext(), ContentWithPicture.class);
+                intent.putExtra("제목", title[random]); //게시물의 제목
+                intent.putExtra("탭이름", "자취앤집밥"); //게시판의 제목
+                intent.putExtra("작성자", id);
+                intent.putExtra("날짜", day);
+                intent.putExtra("내용", con);
+                v.getContext().startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<PostList> call, Throwable t) {
+
+            }
+        });
+
     }
 }

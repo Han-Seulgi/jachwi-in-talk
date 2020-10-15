@@ -15,11 +15,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
+import com.example.project_test.CmtData;
+import com.example.project_test.CmtList;
+import com.example.project_test.CommentListData;
+import com.example.project_test.CommentRecyclerAdapter;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.Modify.RecipeModifyActivity;
 import com.example.project_test.PostList;
 import com.example.project_test.R;
 import com.example.project_test.likeCheck;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,13 +39,17 @@ public class ContentWithPicture extends AppCompatActivity {
     private RecyclerView recyclerViewImg;
     public RecyclerView.LayoutManager layoutManager;
     private LinearLayoutManager layoutManager2;
-    private RecyclerView.Adapter adapter;
+    //private RecyclerView.Adapter adapter;
+    private CommentRecyclerAdapter adapter;
     private RecyclerView.Adapter adapter2;
 
     TextView text1, tabTitle, writer, contents, textLikenum;
+    TextView src, rcp;
     int postcode, likenum;
     ImageButton like, modify, delete;
     String title, content, source, recipe;
+
+    ArrayList<CommentListData> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +64,14 @@ public class ContentWithPicture extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        //댓글
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        adapter = new CommentRecyclerAdapter();
+
+        //사진
+        recyclerViewImg = findViewById(R.id.recyclerViewImg);
+
         tabTitle = findViewById(R.id.title);
         text1 = findViewById(R.id.text1);
         writer = findViewById(R.id.id_day);
@@ -61,6 +80,14 @@ public class ContentWithPicture extends AppCompatActivity {
         textLikenum = findViewById(R.id.textLikenum);
         modify = findViewById(R.id.modify);
         delete = findViewById(R.id.delete);
+
+        src = findViewById(R.id.src);
+        rcp = findViewById(R.id.rcp);
+
+        src.setVisibility(View.VISIBLE);
+        rcp.setVisibility(View.VISIBLE);
+
+        data = new ArrayList<>();
 
         //받아오기
         Intent intent = getIntent();
@@ -109,6 +136,9 @@ public class ContentWithPicture extends AppCompatActivity {
                         recipe = cookList.rcp;
                         source = cookList.src;
 
+                        src.setText("재료: "+source);
+                        rcp.setText("레시피: "+recipe);
+
                         Log.i("abcdef", recipe+source+"");
                     }
 
@@ -130,6 +160,46 @@ public class ContentWithPicture extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<likeCheck> call, Throwable t) {
+                    }
+                });
+
+                //댓글 가져오기
+                api.getComments(postcode).enqueue(new Callback<CmtList>() {
+                    @Override
+                    public void onResponse(Call<CmtList> call, Response<CmtList> response) {
+                        CmtList cmtList = response.body();
+                        List<CmtData> cmtData = cmtList.items;
+
+                        ArrayList<Integer> cmt_code1 = new ArrayList<>();
+                        ArrayList<String> cmt_id1 = new ArrayList<>();
+                        ArrayList<String> cmt_con1 = new ArrayList<>();
+                        ArrayList<String> cmt_day1 = new ArrayList<>();
+
+                        for(CmtData d:cmtData) {
+                            cmt_code1.add(d.cmt_code);
+                            cmt_id1.add(d.id);
+                            cmt_con1.add(d.cmt_con);
+                            cmt_day1.add(d.cmt_day);
+                            Log.i("cmt",d.toString());
+                        }
+
+                        Integer[] cmt_code = cmt_code1.toArray(new Integer[cmt_code1.size()]);
+                        String[] cmt_id = cmt_id1.toArray(new String[cmt_id1.size()]);
+                        String[] cmt_con = cmt_con1.toArray(new String[cmt_con1.size()]);
+                        String[] cmt_day = cmt_day1.toArray(new String[cmt_day1.size()]);
+
+                        int i = 0;
+                        while (i<cmt_code.length){
+                            data.add(new CommentListData(cmt_code[i],cmt_id[i],cmt_con[i],cmt_day[i]));
+                            i++;
+                        }
+                        adapter.setData(data);
+                        recyclerView.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onFailure(Call<CmtList> call, Throwable t) {
+
                     }
                 });
             }
@@ -257,20 +327,12 @@ public class ContentWithPicture extends AppCompatActivity {
             }
         });
 
-        //댓글
-        recyclerView = findViewById(R.id.recyclerView);
-        //recyclerView.setHasFixedSize(true);
-        recyclerViewImg = findViewById(R.id.recyclerViewImg);
-
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         layoutManager2 = new LinearLayoutManager(this);
         layoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerViewImg.setLayoutManager(layoutManager2);
-
-        adapter = new RecyclerAdapterContent();
-        recyclerView.setAdapter(adapter);
 
         adapter2 = new RecyclerAdapterImg();
         recyclerViewImg.setAdapter(adapter2);

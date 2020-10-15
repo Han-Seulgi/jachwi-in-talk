@@ -20,12 +20,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
 import com.example.project_test.Cmt;
-import com.example.project_test.Info.InfoContent.infoActivityContent;
+import com.example.project_test.CmtData;
+import com.example.project_test.CmtList;
+import com.example.project_test.CommentListData;
+import com.example.project_test.CommentRecyclerAdapter;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.Modify.FoodModifyActivity;
 import com.example.project_test.PostList;
 import com.example.project_test.R;
 import com.example.project_test.likeCheck;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,8 +42,8 @@ public class FoodActivityContent extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
-    TextView text1, writer, contents, textLikenum;
+    //private RecyclerView.Adapter adapter;
+    TextView text1, writer, contents, textLikenum, lct;
     int postcode, likenum;
     ImageButton like, modify, delete;
     String title, content, location,cmt_con;
@@ -46,6 +52,9 @@ public class FoodActivityContent extends AppCompatActivity {
 
     private AlertDialog dialog;
 
+
+    private CommentRecyclerAdapter adapter;
+    ArrayList<CommentListData> data;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +68,12 @@ public class FoodActivityContent extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
+            //댓글
+            recyclerView = findViewById(R.id.recyclerView);
+            recyclerView.setHasFixedSize(true);
+            adapter = new CommentRecyclerAdapter();
 
             text1 = findViewById(R.id.text1);
             writer = findViewById(R.id.id_day);
@@ -102,6 +117,10 @@ public class FoodActivityContent extends AppCompatActivity {
                 }
             });
 
+            lct = findViewById(R.id.lct);
+
+            data = new ArrayList<>();
+
             //받아오기
             Intent intent = getIntent();
             title = intent.getStringExtra("제목");
@@ -140,6 +159,7 @@ public class FoodActivityContent extends AppCompatActivity {
                         public void onResponse(Call<FoodList> call, Response<FoodList> response) {
                             FoodList foodList = response.body();
                             location = foodList.lct;
+                            lct.setText(location);
 
                             Log.i("abcdef", location+"");
                         }
@@ -162,6 +182,46 @@ public class FoodActivityContent extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<likeCheck> call, Throwable t) {
+                        }
+                    });
+
+                    //댓글 가져오기
+                    api.getComments(postcode).enqueue(new Callback<CmtList>() {
+                        @Override
+                        public void onResponse(Call<CmtList> call, Response<CmtList> response) {
+                            CmtList cmtList = response.body();
+                            List<CmtData> cmtData = cmtList.items;
+
+                            ArrayList<Integer> cmt_code1 = new ArrayList<>();
+                            ArrayList<String> cmt_id1 = new ArrayList<>();
+                            ArrayList<String> cmt_con1 = new ArrayList<>();
+                            ArrayList<String> cmt_day1 = new ArrayList<>();
+
+                            for(CmtData d:cmtData) {
+                                cmt_code1.add(d.cmt_code);
+                                cmt_id1.add(d.id);
+                                cmt_con1.add(d.cmt_con);
+                                cmt_day1.add(d.cmt_day);
+                                Log.i("cmt",d.toString());
+                            }
+
+                            Integer[] cmt_code = cmt_code1.toArray(new Integer[cmt_code1.size()]);
+                            String[] cmt_id = cmt_id1.toArray(new String[cmt_id1.size()]);
+                            String[] cmt_con = cmt_con1.toArray(new String[cmt_con1.size()]);
+                            String[] cmt_day = cmt_day1.toArray(new String[cmt_day1.size()]);
+
+                            int i = 0;
+                            while (i<cmt_code.length){
+                                data.add(new CommentListData(cmt_code[i],cmt_id[i],cmt_con[i],cmt_day[i]));
+                                i++;
+                            }
+                            adapter.setData(data);
+                            recyclerView.setAdapter(adapter);
+                        }
+
+                        @Override
+                        public void onFailure(Call<CmtList> call, Throwable t) {
+
                         }
                     });
                 }
@@ -288,16 +348,9 @@ public class FoodActivityContent extends AppCompatActivity {
                 }
             });
 
-            //댓글
-            recyclerView = findViewById(R.id.recyclerView);
-            recyclerView.setHasFixedSize(true);
-
             layoutManager = new LinearLayoutManager(this);
-
             recyclerView.setLayoutManager(layoutManager);
 
-            adapter = new FoodRecyclerAdapterContent();
-            recyclerView.setAdapter(adapter);
         }
 
     @Override

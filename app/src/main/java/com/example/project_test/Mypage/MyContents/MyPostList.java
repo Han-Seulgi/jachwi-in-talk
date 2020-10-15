@@ -25,9 +25,9 @@ class PostData {
     @SerializedName("post_day")
     @Expose
     String post_day;
-    @SerializedName("board_code")
+    @SerializedName("board_name")
     @Expose
-    int board_code;
+    String board_name;
 
     @Override
     public String toString() {
@@ -37,7 +37,7 @@ class PostData {
                 ", post_title='" + post_title + '\'' +
                 ", post_con='" + post_con + '\'' +
                 ", post_day='" + post_day + '\'' +
-                ", board_code='" + board_code + '\'' +
+                ", board_code='" + board_name + '\'' +
                 '}';
     }
 }

@@ -1,5 +1,7 @@
 package com.example.project_test;
 
+import android.util.Log;
+
 import com.example.project_test.Content.CookList;
 import com.example.project_test.Food.FoodContent.FoodList;
 import com.example.project_test.Food.FoodPostList;
@@ -176,6 +178,17 @@ public interface Api {
 //    @POST("Modify/meet")
 //    Call<Write> ModifyMeet(@Field("meet_tag")int var1, @Field("meet_lct")String var2, @Field("meet_p")int var3, @Field("meet_day")String var4, @Field("post_code")int var5);
 
+    //댓글가져오기
+    @GET("Cmt/getComments")
+    Call<CmtList> getComments(@Query("post_code") int var1);
+
+    @GET("Cmt/getqacomments")
+    Call<CmtList> getqacomments(@Query("post_code") int var1);
+
+
+    //댓글삭제
+    @GET("Cmt/deletecmt")
+    Call<DeleteCmt> deletecmt(@Query("cmt_code") int var1);
 
     public static final class Factory {
         public static final Api.Factory INSTANCE;

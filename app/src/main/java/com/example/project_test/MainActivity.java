@@ -129,13 +129,13 @@ public class MainActivity extends ActivityGroup {
 
         //탭 아이콘
         ImageView tab1 = new ImageView(this);
-        tab1.setImageResource(R.drawable.boardicon1);
+        tab1.setImageResource(R.drawable.selector1);
         ImageView tab2 = new ImageView(this);
-        tab2.setImageResource(R.drawable.roomicon1);
+        tab2.setImageResource(R.drawable.selector2);
         ImageView tab3 = new ImageView(this);
-        tab3.setImageResource(R.drawable.eventicon1);
+        tab3.setImageResource(R.drawable.selector3);
         ImageView tab4 = new ImageView(this);
-        tab4.setImageResource(R.drawable.safetyicon1);
+        tab4.setImageResource(R.drawable.selector4);
 
         //Tab Spec생성 및 Tab 추가
         tabHost.addTab(tabHost.newTabSpec("TAB1").setIndicator(tab1) //화면에 보여주는 Tab명

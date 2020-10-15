@@ -7,16 +7,17 @@
 
     <LinearLayout
         android:id="@+id/base"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FF9263">
+
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
@@ -33,108 +34,141 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="5dp"
             android:text="질문제목"
-            android:textSize="20dp"
-            android:layout_marginTop="20dp"/>
+            android:textSize="20dp" />
     </LinearLayout>
 
-    <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/base"
-        android:id="@+id/contents"
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/userimg" />
-
-            <TextView
-                android:id="@+id/id_day"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="모꼬지 \n2020.5.21.22:01" />
-
-            <ImageButton
-                android:id="@+id/modify"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/modify" />
-
-            <ImageButton
-                android:id="@+id/delete"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/delete" />
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginVertical="10dp"
-            android:layout_gravity="center"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/recyclerViewImg"
-            android:background="#F0F0F0"/>
-
-        <TextView
-            android:id="@+id/con"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="15dp"
-            android:layout_marginHorizontal="15dp"
-            android:text="오늘은 이 요리를 만들어봤어요 !!!1 \n 생각보다 쉬운 요리니까 \n 한번 만들어먹어보세요^^ " />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/like"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/likes" />
-
-            <TextView
-                android:id="@+id/textLikenum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="20dp"
-                android:text="0"
-                android:textSize="17dp"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <!--댓글-->
-    <View
-        app:layout_constraintTop_toBottomOf="@+id/contents"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#4682B4"
-        tools:ignore="MissingConstraints" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@+id/contents"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginVertical="15dp"
-        android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:id="@+id/recyclerView"
-        android:background="#F0F0F0"/>
+        app:layout_constraintTop_toBottomOf="@+id/base">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/userimg" />
+
+                    <TextView
+                        android:id="@+id/id_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:text="모꼬지 \n2020.5.21.22:01" />
+
+                    <ImageButton
+                        android:id="@+id/modify"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/modify" />
+
+                    <ImageButton
+                        android:id="@+id/delete"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/delete" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/src"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="재료"
+                    android:visibility="visible" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewImg"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:background="#F0F0F0" />
+
+                <TextView
+                    android:id="@+id/rcp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="레시피"
+                    android:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/con"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="15dp"
+                    android:text="오늘은 이 요리를 만들어봤어요 !!!1 \n 생각보다 쉬운 요리니까 \n 한번 만들어먹어보세요^^ " />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/like"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="#ffffff"
+                        android:src="@drawable/likes" />
+
+                    <TextView
+                        android:id="@+id/textLikenum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="20dp"
+                        android:text="0"
+                        android:textSize="17dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--댓글-->
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#4682B4"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/contents"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F0F0F0"
+                android:paddingBottom="130dp"
+                 />
+
+        </LinearLayout>
+    </ScrollView>
 
 
     <RelativeLayout
@@ -142,29 +176,29 @@
         android:layout_height="wrap_content"
         android:background="#eeeeee"
         android:paddingVertical="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        app:layout_constraintBottom_toBottomOf="parent">
+
         <EditText
             android:id="@+id/editTextName1"
             android:layout_width="300dp"
             android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:background="@drawable/border"
             android:hint="댓글을 입력해주세요."
             android:textAlignment="center"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
             android:textColor="@android:color/black" />
 
         <Button
             android:id="@+id/push"
             android:layout_width="70dp"
             android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:background="#47A1DC"
             android:text="완료"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:textColor="#ffffff" />
     </RelativeLayout>
 

@@ -29,3 +29,4 @@ public class InfoListData {
     }
     public String getCon() {return this.con;}
 }
+//cmt_code[i],cmt_id[i],cmt_con[i],cmt_day[i])

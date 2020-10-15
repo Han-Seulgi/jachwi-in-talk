@@ -1,10 +1,10 @@
 package com.example.project_test.Mypage.MyContents;
 
 public class MyListData {
-    private int img, board;
-    private String title, day, id, con;
+    private int img;
+    private String title, board, day, id, con;
 
-    public MyListData(int img, String title, int board, String day, String id, String con) {
+    public MyListData(int img, String title, String board, String day, String id, String con) {
         this.img = img;
         this.title = title;
         this.board = board;
@@ -21,7 +21,7 @@ public class MyListData {
         return this.title;
     }
 
-    public int getBoard() {
+    public String getBoard() {
         return this.board;
     }
 
