@@ -2,6 +2,7 @@ package com.example.project_test;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,9 +25,16 @@ import com.example.project_test.qa.qaActivity;
 import com.example.project_test.Recipe.RecipeBoardActivity;
 import com.example.project_test.qa.qaContent.qaActivityContent;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class BoardActivity extends AppCompatActivity {
     ViewFlipper vflip1, vflip2, vflip3;
-    View vflipview1[] = new View[2], vflipview2[] = new View[2];
+    View vflipview1[], vflipview2[] = new View[2];
     ImageButton btn1, btn2, btn3, btn4, btn5, btn6, vimg1, vimg2;
     ImageButton imageButtons[] = {btn1, btn2, btn3, btn4, btn5, btn6};
     TextView v1txt1, v1txt2, v2txt1, v2txt2;
@@ -69,41 +77,97 @@ public class BoardActivity extends AppCompatActivity {
         imageButtons[5] = findViewById(R.id.btn6);
 
         //첫 번째 탭의 게시 인기글 뷰 플리퍼
-        int f1_images[] = {R.drawable.vflipimg, R.drawable.recipeimg2}; //뷰 플리퍼에 들어갈 게시판 이미지
-        final String f1_text1[] = {"초간단 냉라면 레시피!!", "감자탕레시피"};  //뷰 플리퍼에 들어갈 텍스트(제목)
-        final String f1_text2[] = {"요즘 너무 더워서 냉라면을\n 만들어먹어봤어요~", "집에서 감자탕 만들어먹어요"};  //뷰 플리퍼에 들어갈 텍스트(내용)
+        Api api = Api.Factory.INSTANCE.create();
 
-        for (int i = 0; i < f1_images.length; i++) {
-            vflipview1[i] = (View) View.inflate(this, R.layout.view_item, null);
-            //이미지 추가
-            ImageView imageView = vflipview1[i].findViewById(R.id.view_img);
-            imageView.setBackgroundResource(f1_images[i]);
-            //텍스트 추가
-            TextView textView1 = vflipview1[i].findViewById(R.id.view_title);
-            textView1.setText(f1_text1[i]);
-            TextView textView2 = vflipview1[i].findViewById(R.id.view_content);
-            textView2.setText(f1_text2[i]);
-            //뷰플리퍼에 뷰 추가
-            vflip1.addView(vflipview1[i]);
-        }
-        //뷰플리퍼 시간, 애니메이션 설정
-        vflip1.setFlipInterval(4000);   // 몇 초 후에 이미지가 넘어갈것인가(1000 당 1초니까 4초후에 넘어가는거야)
-        vflip1.setAutoStart(true);      //자동시작유무(true:자동)
-        vflip1.setInAnimation(this, android.R.anim.slide_in_left); //animation
-        vflip1.setOutAnimation(this, android.R.anim.slide_out_right); //animation
+        api.CheckCook().enqueue(new Callback<PopularPost>() {
+            @Override
+            public void onResponse(Call<PopularPost> call, Response<PopularPost> response) {
+                Log.i("popular", "인기글 가져오기 성공");
+
+                PopularPost popularPost = response.body();
+                List<PopularData> popularData = popularPost.items;
+
+                ArrayList<String> title1 = new ArrayList<>();
+                ArrayList<String> con1 = new ArrayList<>();
+
+                //리스트에 제목, 내용 넣기
+                for (PopularData d:popularData) {
+                    title1.add(d.post_title);
+                    con1.add(d.post_con);
+                    Log.i("popular","정보 All: " + d.toString());
+                }
+
+                //리스트를 배열로 바꾸기, 이미지 배열 생성
+                final String[] title = title1.toArray(new String[title1.size()]);
+                String[] con = con1.toArray(new String[con1.size()]);
+                Integer[] img = new Integer[title1.size()];
+                //int[] images = {R.drawable.vflipimg, R.drawable.recipeimg2}; //뷰 플리퍼에 들어갈 게시판 이미지
+
+                for(int j=0; j<img.length; j++) {
+                    img[j] = R.drawable.vflipimg;
+                }
+
+                for (int i = 0; i < img.length; i++) {
+                    vflipview1 = new View[img.length];
+                    vflipview1[i] = (View) View.inflate(BoardActivity.this, R.layout.view_item, null);
+                    //뷰플리퍼 안에 들어갈 뷰 레이아웃
+
+                    //이미지 추가
+                    ImageView imageView = vflipview1[i].findViewById(R.id.view_img);
+                    imageView.setBackgroundResource(img[i]);
+
+                    //텍스트 추가
+                    TextView textView1 = vflipview1[i].findViewById(R.id.view_title);
+                    textView1.setText(title[i]);
+                    TextView textView2 = vflipview1[i].findViewById(R.id.view_content);
+                    textView2.setText(con[i]);
+
+                    //Log.i("popular", img[i] + title[i] + con[i]);
+
+                    //뷰플리퍼에 뷰 추가
+                    vflip1.addView(vflipview1[i]);
+                }
+
+                //뷰플리퍼 시간, 애니메이션 설정
+                vflip1.setFlipInterval(4000);   // 몇 초 후에 이미지가 넘어갈것인가(1000 당 1초)
+                vflip1.setAutoStart(true);      //자동시작유무(true:자동)
+                vflip1.setInAnimation(BoardActivity.this, android.R.anim.slide_in_left); //animation
+                vflip1.setOutAnimation(BoardActivity.this, android.R.anim.slide_out_right); //animation
+
+/*
+                vflip1.setOnClickListener(new View.OnClickListener() { //뷰 플리퍼 클릭했을 때
+                    @Override
+                    public void onClick(View v) {
+                        int i = vflip1.getDisplayedChild();    //현재 페이지 가져오기
+
+                        Intent intent = new Intent(getApplicationContext(), qaActivityContent.class);
+                        intent.putExtra("제목", title[i]); //게시물의 제목
+                        startActivity(intent);
+
+                    }
+                });*/
+
+            }
+
+            @Override
+            public void onFailure(Call<PopularPost> call, Throwable t) {
+                Log.i("popular", t.getMessage());
+            }
+        });
 
 
+/*
         vflip1.setOnClickListener(new View.OnClickListener() { //뷰 플리퍼 클릭했을 때
             @Override
             public void onClick(View v) {
                 int i = vflip1.getDisplayedChild();    //현재 페이지 가져오기
 
                 Intent intent = new Intent(getApplicationContext(), qaActivityContent.class);
-                intent.putExtra("제목", f1_text1[i]); //게시물의 제목
+                intent.putExtra("제목", title1[i]); //게시물의 제목
                 startActivity(intent);
 
             }
-        });
+        });*/
 
         //첫 번째 탭 6개의 게시판
         for (int i = 0; i < imageButtons.length; i++) {

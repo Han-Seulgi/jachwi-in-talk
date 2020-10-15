@@ -190,6 +190,10 @@ public interface Api {
     @GET("Cmt/deletecmt")
     Call<DeleteCmt> deletecmt(@Query("cmt_code") int var1);
 
+    //인기글
+    @POST("PopularPost/cook")
+    Call<PopularPost> CheckCook();
+
     public static final class Factory {
         public static final Api.Factory INSTANCE;
 
