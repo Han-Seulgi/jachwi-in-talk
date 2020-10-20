@@ -1,7 +1,5 @@
 package com.example.project_test;
 
-import android.util.Log;
-
 import com.example.project_test.Content.CookList;
 import com.example.project_test.Food.FoodContent.FoodList;
 import com.example.project_test.Food.FoodPostList;
@@ -12,6 +10,7 @@ import com.example.project_test.Mypage.MyContents.MyPostList;
 import com.example.project_test.Mypage.ValidateMypage;
 import com.example.project_test.Recipe.RecipePostList;
 import com.example.project_test.SharenRent.CategoryData;
+import com.example.project_test.Writing.Img;
 import com.example.project_test.Writing.WritingCategoryData;
 import com.example.project_test.qa.qaPostList;
 import com.google.gson.Gson;
@@ -185,7 +184,6 @@ public interface Api {
     @GET("Cmt/getqacomments")
     Call<CmtList> getqacomments(@Query("post_code") int var1);
 
-
     //댓글삭제
     @GET("Cmt/deletecmt")
     Call<DeleteCmt> deletecmt(@Query("cmt_code") int var1);
@@ -193,6 +191,10 @@ public interface Api {
     //인기글
     @POST("PopularPost/cook")
     Call<PopularPost> CheckCook();
+
+    @FormUrlEncoded
+    @POST("Image")
+    Call<Img> imgupload(@Field("id") String var1, @Field("img_data") String var2);
 
     public static final class Factory {
         public static final Api.Factory INSTANCE;

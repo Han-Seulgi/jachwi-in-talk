@@ -5,24 +5,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.MutableLiveData;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import com.example.project_test.Emergency.EmergencyActivity;
-
-import com.example.project_test.Api.Factory;
 
 public class MainActivity extends ActivityGroup {
 
@@ -77,7 +67,8 @@ public class MainActivity extends ActivityGroup {
     private boolean checkPermission() {
         int result = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE);
         int result2 = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
-        if(result == PackageManager.PERMISSION_GRANTED && result2==PackageManager.PERMISSION_GRANTED) { // 이전에 요청 허락 했으면
+        int result3 = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if(result == PackageManager.PERMISSION_GRANTED && result2==PackageManager.PERMISSION_GRANTED && result3==PackageManager.PERMISSION_GRANTED) { // 이전에 요청 허락 했으면
             return true;
         }
         else { // 이전에 요청 허락 하지 않았으면
@@ -92,8 +83,11 @@ public class MainActivity extends ActivityGroup {
         else if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)){
             Toast.makeText(MainActivity.this, "앱의 주요기능을 이용하실 수 없습니다",Toast.LENGTH_SHORT).show();
         }
+        else if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            Toast.makeText(MainActivity.this, "앱의 주요기능을 이용하실 수 없습니다",Toast.LENGTH_SHORT).show();
+        }
         else {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.CALL_PHONE, Manifest.permission.ACCESS_FINE_LOCATION},1000);
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.CALL_PHONE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE},1000);
         }
     }
 
