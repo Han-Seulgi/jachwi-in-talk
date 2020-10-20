@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -36,8 +37,11 @@ public class RecipeBoardActivity extends AppCompatActivity {
     private GridLayoutManager layoutManager;
 
     TextView tabTitle;
+    SearchView search;
 
     ArrayList<RecipeListData> data;
+    //검색을 위한 전체 데이터 리스트 복사본
+    ArrayList<RecipeListData> cdata;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,8 +57,10 @@ public class RecipeBoardActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Button writing = findViewById(R.id.writing);//글쓰기 버튼
+        search = findViewById(R.id.search);
         tabTitle = findViewById(R.id.title);
         final String tt = tabTitle.getText().toString();
+
 
         rv = findViewById(R.id.rv);
         rv.setHasFixedSize(true);
@@ -64,6 +70,8 @@ public class RecipeBoardActivity extends AppCompatActivity {
         final ArrayList<String> like1 = new ArrayList<>();*/
 
         data = new ArrayList<>();
+        //복사본
+        cdata = new ArrayList<>();
 
         //서버 연결
         Api api = Api.Factory.INSTANCE.create();
@@ -106,6 +114,9 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 adapter.setData(data);
                 rv.setAdapter(adapter);
 
+                //복사본에 모든 데이터 저장
+                cdata.addAll(data);
+
                 ExtendedFloatingActionButton fab = findViewById(R.id.fab);
                 fab.extend();
                 fab.setOnClickListener(new View.OnClickListener() {
@@ -131,13 +142,29 @@ public class RecipeBoardActivity extends AppCompatActivity {
         rv.setLayoutManager(layoutManager);
 
 
-
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RecipeBoardActivity.this, WritingActivity.class);
                 startActivity(intent);
 
+            }
+        });
+
+
+        //검색
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i("search", query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.i("search", newText);
+                msearch(newText);
+                return true;
             }
         });
     }
@@ -165,5 +192,31 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 return true;
         }
         return true;
+    }
+
+    //검색을 수행하는 메소드
+    public void msearch(String txt) {
+
+        //문자 입력시마다 리스트를 지우고 새로 뿌림
+        data.clear();
+
+        //문자 입력이 없을때는 모든 데이터 보여줌
+        if(txt.length() == 0) {
+            data.addAll(cdata);
+        }
+
+        //문자 입력
+        else{
+            //데이터 리스트 복사본의 모든 데이터 검색
+            for(int i = 0; i<cdata.size(); i++) {
+                //모든 데이터의 입력받은 단어가 포함되어 있으면 true 반환
+                if(cdata.get(i).getTitle().contains(txt)) {
+                    //검색된 데이터를 리스트에 추가
+                    data.add(cdata.get(i));
+                }
+            }
+        }
+        //리스트 데이터가 변경되었으므로 어댑터 갱신
+        adapter.notifyDataSetChanged();
     }
 }

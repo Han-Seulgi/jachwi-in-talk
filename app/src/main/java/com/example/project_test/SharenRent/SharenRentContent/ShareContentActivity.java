@@ -62,7 +62,7 @@ public class ShareContentActivity extends AppCompatActivity {
         writer = findViewById(R.id.id_day);
         contents = findViewById(R.id.con);
         pricetxt = findViewById(R.id.price);
-        termtxt = findViewById(R.id.price);
+        termtxt = findViewById(R.id.term);
         like = findViewById(R.id.like);
         textLikenum = findViewById(R.id.textLikenum);
         modify = findViewById(R.id.modify);
