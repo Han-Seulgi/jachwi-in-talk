@@ -36,8 +36,10 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -147,9 +149,49 @@ public class WritingActivity extends AppCompatActivity {
                     return;
                 }
                 else {
-                    Api api = Api.Factory.INSTANCE.create();
+                    final Api api = Api.Factory.INSTANCE.create();
                     api.Write(LoginActivity.user_ac, post_title, post_con, board_code).enqueue(new Callback<Write>() {
                         public void onResponse(Call<Write> call, Response<Write> response) {
+
+                            api.CookWrite(cook_src, post_con).enqueue(new Callback<CookWrite>() {
+                                public void onResponse(Call<CookWrite> call, Response<CookWrite> response) {
+
+                                    Log.i("결과는" , response.toString());
+                                }
+                                public void onFailure(Call<CookWrite> call, Throwable t) {
+                                    Log.i("작성실패", t.getMessage());
+                                }
+                            });
+
+
+                            if(imgString2 != null)
+                            {
+                                Log.i("writeimg", String.valueOf(imgString2.length()));
+                                api.imgupload(LoginActivity.user_ac, imgString2).enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        try {
+                                            Log.i("img" , response.body().string().trim());
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        //Img i = response.body();
+                                        //String d = i.img_data;
+                                        //boolean upload = i.insert;
+
+                                        //if (upload==true){
+                                            Log.i("img", "업로드 성공");
+                                        //}
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        Log.i("img", "업로드 실패"+t.getMessage());
+                                    }
+                                });
+                            }
+                            else Log.i("img", "사진 없이 올림");
 
                             Log.i("결과는" , response.toString());
 
@@ -166,74 +208,6 @@ public class WritingActivity extends AppCompatActivity {
                             Log.i("작성실패", t.getMessage());
                         }
                     });
-
-                    api.CookWrite(cook_src, post_con).enqueue(new Callback<CookWrite>() {
-                        public void onResponse(Call<CookWrite> call, Response<CookWrite> response) {
-
-                            Log.i("결과는" , response.toString());
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(WritingActivity.this);
-                            dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                }
-                            }).create();
-                            dialog.show();
-                        }
-                        public void onFailure(Call<CookWrite> call, Throwable t) {
-                            Log.i("작성실패", t.getMessage());
-                        }
-                    });
-
-                    api.imgupload(LoginActivity.user_ac, imgString2).enqueue(new Callback<Img>() {
-                        @Override
-                        public void onResponse(Call<Img> call, Response<Img> response) {
-                            Img i = response.body();
-                            boolean upload = i.insert;
-
-                            if (upload==true){
-                                Log.i("img", "업로드 성공");
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Img> call, Throwable t) {
-                                Log.i("img", "업로드 실패"+t.getMessage());
-                        }
-                    });
-
-                    /*//댓글 작성
-            push.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    cmt_con = editTextName1.getText().toString();
-
-                    Api api = Api.Factory.INSTANCE.create();
-                    api.Cmt(LoginActivity.user_ac, cmt_con).enqueue(new Callback<Cmt>() {
-                        public void onResponse(Call<Cmt> call, Response<Cmt> response) {
-
-                            Log.i("결과는" , response.toString());
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(qaActivityContent.this);
-                            dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                }
-                            })
-                                    .create();
-                            dialog.show();
-                        }
-                        public void onFailure(Call<Cmt> call, Throwable t) {
-                            Log.i("작성실패", t.getMessage());
-                        }
-
-                    });
-
-                }
-            });*/
 
 
                 }
@@ -336,11 +310,12 @@ public class WritingActivity extends AppCompatActivity {
                 //try {
                     ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 
-                    Bitmap bm = BitmapFactory.decodeFile(realPath);
+                    Bitmap bm = BitmapFactory.decodeFile(realPath); //크롭안된 이미지
                     bm.compress(Bitmap.CompressFormat.JPEG,100,outStream);
                     byte bytes[] = outStream.toByteArray();
                     imgString2 = Base64.encodeToString(bytes, Base64.NO_WRAP);
                     Log.i("img",imgString2);
+                Log.i("siva", String.valueOf(imgString2.length()));
 
                 imgs.add(imgString2);
 

@@ -10,7 +10,6 @@ import com.example.project_test.Mypage.MyContents.MyPostList;
 import com.example.project_test.Mypage.ValidateMypage;
 import com.example.project_test.Recipe.RecipePostList;
 import com.example.project_test.SharenRent.CategoryData;
-import com.example.project_test.Writing.Img;
 import com.example.project_test.Writing.WritingCategoryData;
 import com.example.project_test.qa.qaPostList;
 import com.google.gson.Gson;
@@ -194,7 +193,10 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("Image")
-    Call<Img> imgupload(@Field("id") String var1, @Field("img_data") String var2);
+    Call<ResponseBody> imgupload(@Field("id") String var1, @Field("img_data") String var2);
+
+    /*@GET("Image")
+    Call<Img> imgupload(@Query("id") String var1, @Query("img_data") String var2);*/
 
     public static final class Factory {
         public static final Api.Factory INSTANCE;
