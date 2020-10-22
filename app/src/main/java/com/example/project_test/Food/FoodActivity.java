@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -27,6 +28,7 @@ import retrofit2.Response;
 
 public class FoodActivity extends AppCompatActivity{
     Toolbar toolbar;
+    SearchView search;
 
     /*private RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
@@ -44,17 +46,19 @@ public class FoodActivity extends AppCompatActivity{
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        search = findViewById(R.id.search);
+
         ViewPager pager = findViewById(R.id.pager);
         pager.setOffscreenPageLimit(2);
 
         FoodAdapter adapter2 = new FoodAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter2);
 
-        Fragment FoodActivityTab1 = new FoodActivityTab1();
+        final Fragment FoodActivityTab1 = new FoodActivityTab1();
         adapter2.addItem(FoodActivityTab1);
         adapter2.notifyDataSetChanged();
 
-        Fragment FoodActivityTab2 = new FoodActivityTab2();
+        final Fragment FoodActivityTab2 = new FoodActivityTab2();
         adapter2.addItem(FoodActivityTab2);
         adapter2.notifyDataSetChanged();
 
@@ -76,6 +80,23 @@ public class FoodActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(FoodActivity.this, FoodWritingActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        //검색
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i("search", query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.i("search", newText);
+                ((com.example.project_test.Food.FoodActivityTab1) FoodActivityTab1).msearch(newText);
+                ((com.example.project_test.Food.FoodActivityTab2) FoodActivityTab2).msearch(newText);
+                return true;
             }
         });
     }
