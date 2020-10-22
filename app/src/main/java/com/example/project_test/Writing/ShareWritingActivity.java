@@ -16,8 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.project_test.Api;
+import com.example.project_test.FoodWrite;
+import com.example.project_test.LoginActivity;
 import com.example.project_test.MySpinnerAdapter;
 import com.example.project_test.R;
+import com.example.project_test.Write;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +36,7 @@ public class ShareWritingActivity extends AppCompatActivity {
     EditText tedit, cedit, wedit, pedit;
     TextView tv1, tv2 , tv3, tv4, title2;
     String post_title, post_con;
-    int board_code, meet_tag, meet_p;
+    int board_code, share_p;
 
     private AlertDialog dialog;
 
@@ -98,9 +101,57 @@ public class ShareWritingActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        //올리기 버튼 클릭시
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                post_title = tedit.getText().toString();
+                post_con = cedit.getText().toString();
+
+                if(title2.getText().toString().equals("나눔")){
+                    board_code = 44;
+                }
+
+                Log.i("결과는", LoginActivity.user_ac + post_title + post_con + board_code);
+
+
+                if (post_title.equals("") || post_con.equals("")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ShareWritingActivity.this);
+                    dialog = builder.setMessage("글 작성이 완료되지 않았습니다.").setNegativeButton("확인", null)
+                            .create();
+                    dialog.show();
+                    return;
+                }
+
+
+                else {
+
+
+                    Api api = Api.Factory.INSTANCE.create();
+                    api.Write(LoginActivity.user_ac, post_title, post_con, board_code).enqueue(new Callback<Write>() {
+                        public void onResponse(Call<Write> call, Response<Write> response) {
+
+                            Log.i("결과는" , response.toString());
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ShareWritingActivity.this);
+                            dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            })
+                                    .create();
+                            dialog.show();
+                        }
+                        public void onFailure(Call<Write> call, Throwable t) {
+                            Log.i("작성실패", t.getMessage());
+                        }
+
+                    });
+
+
+                }
 
             }
         });

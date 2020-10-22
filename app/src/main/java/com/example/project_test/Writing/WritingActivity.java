@@ -27,10 +27,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.project_test.Api;
+import com.example.project_test.Cmt;
 import com.example.project_test.CookWrite;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.R;
 import com.example.project_test.Write;
+import com.example.project_test.qa.qaContent.qaActivityContent;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;

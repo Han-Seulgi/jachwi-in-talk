@@ -7,12 +7,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.view.View.OnClickListener;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.project_test.Api;
 import com.example.project_test.LoginActivity;
@@ -26,7 +29,8 @@ import retrofit2.Response;
 
 public class MyPageActivity extends AppCompatActivity {
     Button userSetBtn, logout, addkwd;
-    ImageButton gomycon;
+    ImageButton gomycon, btn1,btn2, btn3, btn4, btn5;
+    ConstraintLayout mplayout;
     TextView textName;
     Toolbar toolbar;
 
@@ -44,6 +48,8 @@ public class MyPageActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         textName = findViewById(R.id.name);
+        mplayout=(ConstraintLayout)findViewById(R.id.mplayout);
+
 
         //아이디를 이용해 유저 정보 검색
         Api api = Api.Factory.INSTANCE.create();
@@ -59,6 +65,7 @@ public class MyPageActivity extends AppCompatActivity {
         });
 
     }
+
 
     public void mypageClick(View v) {
         switch (v.getId()) {
@@ -95,6 +102,11 @@ public class MyPageActivity extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), MyContentsActivity.class);
                 startActivity(intent);
                 break;
+
+            case R.id.btn2:
+                mplayout.setBackgroundColor(getResources().getColor(R.color.red));
+                break;
+
         }
     }
     public boolean onOptionsItemSelected(MenuItem item) {

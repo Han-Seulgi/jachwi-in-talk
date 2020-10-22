@@ -60,6 +60,8 @@
                 android:tooltipText="지역 검색하기" />
 
         </LinearLayout>
+
+
         <fragment
             android:id="@+id/map"
             class="com.google.android.gms.maps.MapFragment"

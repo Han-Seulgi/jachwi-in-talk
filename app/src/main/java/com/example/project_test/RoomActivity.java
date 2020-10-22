@@ -3,9 +3,11 @@ package com.example.project_test;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -102,6 +104,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         return true;
     }
 
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
@@ -145,4 +148,5 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
     }
+
 }

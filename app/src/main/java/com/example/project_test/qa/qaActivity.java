@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
+import com.example.project_test.Meet.MeetListData;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.qa.qaContent.QAWritingActivity;
@@ -32,7 +34,10 @@ public class qaActivity extends AppCompatActivity {
     public RecyclerView.LayoutManager layoutManager;
     private qaRecyclerAdapter adapter;
 
+    SearchView search;
+
     ArrayList<qaListData> data;
+    ArrayList<qaListData> cdata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +52,14 @@ public class qaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Button writing = findViewById(R.id.writing);
+        search = findViewById(R.id.search);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         adapter = new qaRecyclerAdapter();
 
         data = new ArrayList<>();
+        //복사본 리스트 생성
+        cdata = new ArrayList<>();
 
         //서버 연결
         Api api = Api.Factory.INSTANCE.create();
@@ -91,6 +99,9 @@ public class qaActivity extends AppCompatActivity {
                 }
                 adapter.setData(data);
                 recyclerView.setAdapter(adapter);
+
+                //복사본에 모든 데이터 저장
+                cdata.addAll(data);
             }
 
             @Override
@@ -103,12 +114,30 @@ public class qaActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
 
+
+        //글쓰기버튼 이벤트
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(qaActivity.this, QAWritingActivity.class);
                 startActivity(intent);
 
+            }
+        });
+
+        //검색
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i("search", query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.i("search", newText);
+                msearch(newText);
+                return true;
             }
         });
     }
@@ -136,6 +165,32 @@ public class qaActivity extends AppCompatActivity {
                 return true;
         }
         return true;
+    }
+
+    //검색을 수행하는 메소드
+    public void msearch(String txt) {
+
+        //문자 입력시마다 리스트를 지우고 새로 뿌림
+        data.clear();
+
+        //문자 입력이 없을때는 모든 데이터 보여줌
+        if(txt.length() == 0) {
+            data.addAll(cdata);
+        }
+
+        //문자 입력
+        else{
+            //데이터 리스트 복사본의 모든 데이터 검색
+            for(int i = 0; i<cdata.size(); i++) {
+                //모든 데이터의 입력받은 단어가 포함되어 있으면
+                if(cdata.get(i).getTitle().contains(txt)) {
+                    //검색된 데이터를 리스트에 추가
+                    data.add(cdata.get(i));
+                }
+            }
+        }
+        //리스트 데이터가 변경되었으므로 어댑터 갱신
+        adapter.notifyDataSetChanged();
     }
 }
 

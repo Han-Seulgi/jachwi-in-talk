@@ -7,14 +7,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
+import com.example.project_test.Info.InfoListData;
+import com.example.project_test.Info.InfoRecyclerAdapter;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.Writing.MeetWritingActivity;
@@ -30,13 +34,18 @@ public class MeetActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     private RecyclerView rv;
+    public RecyclerView.LayoutManager layoutManager;
     private MeetRecyclerAdapter adapter;
-    private GridLayoutManager layoutManager;
+
+
+    SearchView search;
 
     ArrayList<MeetListData> data;
+    //검색을 위한 전체 데이터 리스트 복사본
+    ArrayList<MeetListData> cdata;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_meet);
 
@@ -48,13 +57,17 @@ public class MeetActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        Button writing = findViewById(R.id.writing); //글쓰기 버튼
+        search = findViewById(R.id.search);
         rv = findViewById(R.id.rv);
         rv.setHasFixedSize(true);
-
         adapter = new MeetRecyclerAdapter();
-        Button writing = findViewById(R.id.writing);
 
         data = new ArrayList<>();
+        //복사본 리스트 생성
+        cdata = new ArrayList<>();
+
+
         //서버 연결
         Api api = Api.Factory.INSTANCE.create();
         api.getMeetList(33).enqueue(new Callback<MeetPostList>() {
@@ -93,6 +106,9 @@ public class MeetActivity extends AppCompatActivity {
                 }
                 adapter.setData(data);
                 rv.setAdapter(adapter);
+
+                //복사본에 모든 데이터 저장
+                cdata.addAll(data);
             }
 
             @Override
@@ -101,9 +117,10 @@ public class MeetActivity extends AppCompatActivity {
             }
         }); //서버연결
 
-        layoutManager = new GridLayoutManager(this, 1);
+        layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);
 
+        //글쓰기버튼 이벤트
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,6 +129,23 @@ public class MeetActivity extends AppCompatActivity {
 
             }
         });
+
+        //검색
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i("search", query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.i("search", newText);
+                msearch(newText);
+                return true;
+            }
+        });
+
 
     }
 
@@ -138,5 +172,31 @@ public class MeetActivity extends AppCompatActivity {
                 return true;
         }
         return true;
+    }
+
+    //검색을 수행하는 메소드
+    public void msearch(String txt) {
+
+        //문자 입력시마다 리스트를 지우고 새로 뿌림
+        data.clear();
+
+        //문자 입력이 없을때는 모든 데이터 보여줌
+        if(txt.length() == 0) {
+            data.addAll(cdata);
+        }
+
+        //문자 입력
+        else{
+            //데이터 리스트 복사본의 모든 데이터 검색
+            for(int i = 0; i<cdata.size(); i++) {
+                //모든 데이터의 입력받은 단어가 포함되어 있으면
+                if(cdata.get(i).getTitle().contains(txt)) {
+                    //검색된 데이터를 리스트에 추가
+                    data.add(cdata.get(i));
+                }
+            }
+        }
+        //리스트 데이터가 변경되었으므로 어댑터 갱신
+        adapter.notifyDataSetChanged();
     }
 }
