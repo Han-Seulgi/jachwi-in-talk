@@ -24,11 +24,12 @@ import com.example.project_test.CmtData;
 import com.example.project_test.CmtList;
 import com.example.project_test.CommentListData;
 import com.example.project_test.CommentRecyclerAdapter;
+import com.example.project_test.Img;
 import com.example.project_test.LoginActivity;
-import com.example.project_test.Meet.MeetContent.MeetActivityContent;
 import com.example.project_test.Modify.RecipeModifyActivity;
 import com.example.project_test.PostList;
 import com.example.project_test.R;
+import com.example.project_test.imgs;
 import com.example.project_test.likeCheck;
 
 import java.util.ArrayList;
@@ -47,11 +48,11 @@ public class ContentWithPicture extends AppCompatActivity {
     private LinearLayoutManager layoutManager2;
     //private RecyclerView.Adapter adapter;
     private CommentRecyclerAdapter adapter;
-    private RecyclerView.Adapter adapter2;
+    private RecyclerAdapterImg imgadapter;
 
     TextView text1, tabTitle, writer, contents, textLikenum;
     TextView src, rcp;
-    int postcode, likenum;
+    int postcode, likenum, code;
     ImageButton like, modify, delete;
     String title, content, source, recipe, cmt_con;
     EditText editTextName1;
@@ -59,6 +60,8 @@ public class ContentWithPicture extends AppCompatActivity {
     private AlertDialog dialog;
 
     ArrayList<CommentListData> data;
+    ArrayList<ImgListData> imgdatas;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,7 @@ public class ContentWithPicture extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         adapter = new CommentRecyclerAdapter();
+        imgadapter = new RecyclerAdapterImg();
 
         //사진
         recyclerViewImg = findViewById(R.id.recyclerViewImg);
@@ -131,6 +135,7 @@ public class ContentWithPicture extends AppCompatActivity {
 
             }
         });
+        imgdatas = new ArrayList<>();
 
         //받아오기
         Intent intent = getIntent();
@@ -140,6 +145,7 @@ public class ContentWithPicture extends AppCompatActivity {
         String id = intent.getStringExtra("작성자");
         String day = intent.getStringExtra("날짜");
         content = intent.getStringExtra("내용");
+        code = intent.getIntExtra("코드",0);
 
         //setText
         tabTitle.setText(tt);
@@ -242,6 +248,49 @@ public class ContentWithPicture extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<CmtList> call, Throwable t) {
+
+                    }
+                });
+
+                //사진
+                api.getImg(postcode).enqueue(new Callback<Img>() {
+                    @Override
+                    public void onResponse(Call<Img> call, Response<Img> response) {
+//                        try {
+//                            Log.i("imgtest" , response.body().string().trim());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+
+                        //byte[] encodeByte = Base64.decode(img_data, Base64.NO_WRAP);
+                        //Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+
+                        Img img = response.body();
+                        List<imgs> imgd = img.imgdata;
+
+                        //ArrayList<Integer> img_code1 = new ArrayList<>();
+                        ArrayList<String> img_data1 = new ArrayList<>();
+
+                        for(imgs d:imgd) {
+                            //img_code1.add(d.img_code);
+                            img_data1.add(d.img_data);
+                            Log.i("dimg",d.toString());
+                        }
+
+                        //Integer[] img_code = img_code1.toArray(new Integer[img_code1.size()]);
+                        String[] img_data = img_data1.toArray(new String[img_data1.size()]);
+
+                        int i = 0;
+                        while (i<img_data.length){
+                            imgdatas.add(new ImgListData(img_data[i]));
+                            i++;
+                        }
+                        imgadapter.setData(imgdatas);
+                        recyclerViewImg.setAdapter(imgadapter);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Img> call, Throwable t) {
 
                     }
                 });
@@ -377,8 +426,6 @@ public class ContentWithPicture extends AppCompatActivity {
         layoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerViewImg.setLayoutManager(layoutManager2);
 
-        adapter2 = new RecyclerAdapterImg();
-        recyclerViewImg.setAdapter(adapter2);
     }
 
     @Override

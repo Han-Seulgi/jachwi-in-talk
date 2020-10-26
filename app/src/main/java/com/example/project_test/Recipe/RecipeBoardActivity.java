@@ -85,6 +85,9 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 ArrayList<String> day1 = new ArrayList<>();
                 ArrayList<String> id1 = new ArrayList<>();
                 ArrayList<String> con1 = new ArrayList<>();
+                ArrayList<Integer> code1 = new ArrayList<>();
+
+
 
                 //리스트에 제목, 날짜, 작성자 아이디 넣기
                 for (PostData d:postData) {
@@ -92,6 +95,7 @@ public class RecipeBoardActivity extends AppCompatActivity {
                     day1.add(d.post_day);
                     id1.add(d.id);
                     con1.add(d.post_con);
+                    code1.add(d.post_code);
                     Log.i("abc","요리 All: " + d.toString());
                 }
 
@@ -101,6 +105,7 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 String[] id = id1.toArray(new String[id1.size()]);
                 String[] con = con1.toArray(new String[con1.size()]);
                 final int[] img = new int[title1.size()];
+                final Integer[] code = code1.toArray(new Integer[code1.size()]);
                 /*int[] comment_cnt = new int[title1.size()];
                 int[] like_cnt = new int[title1.size()];*/
 
@@ -108,7 +113,7 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 int i = 0;
                 while (i < title.length) {
                     img[i] = R.drawable.recipe;
-                    data.add(new RecipeListData(img[i], title[i], day[i], id[i], tt, con[i]));
+                    data.add(new RecipeListData(img[i], title[i], day[i], id[i], tt, con[i], code[i]));
                     i++;
                 }
                 adapter.setData(data);

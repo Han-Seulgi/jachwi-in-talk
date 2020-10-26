@@ -52,6 +52,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
         final String id = data.getId();
         final String day = data.getDay();
         final String con = data.getCon();
+        final int code = data.getCode();
 
         holder.img.setImageResource(data.getImg());
         holder.title.setText(title);
@@ -75,6 +76,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
                 intent.putExtra("작성자", id);
                 intent.putExtra("날짜", day);
                 intent.putExtra("내용", con);
+                intent.putExtra("코드", code);
                 v.getContext().startActivity(intent);
             }
         });

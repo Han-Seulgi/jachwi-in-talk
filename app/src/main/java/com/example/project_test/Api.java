@@ -110,7 +110,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("CookWrite")
-    Call<CookWrite> CookWrite(@Field("cook_src")String var1,@Field("post_con")String var2);
+    Call<CookWrite> CookWrite(@Field("cook_src")String var1,@Field("cook_rcp")String var2);
 
     @FormUrlEncoded
     @POST("FoodWrite")
@@ -195,8 +195,13 @@ public interface Api {
     @POST("Image")
     Call<ResponseBody> imgupload(@Field("id") String var1, @Field("img_data") String var2);
 
-    /*@GET("Image")
-    Call<Img> imgupload(@Query("id") String var1, @Query("img_data") String var2);*/
+    @FormUrlEncoded
+    @POST("Image/getImg")
+    Call<Img> getImg(@Field("post_code") int var1);
+
+    /*@FormUrlEncoded
+    @POST("Image/getImg")
+    Call<ResponseBody> getImg(@Field("post_code") int var1);*/
 
     public static final class Factory {
         public static final Api.Factory INSTANCE;
