@@ -1,25 +1,31 @@
 package com.example.project_test.Content;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
+import com.example.project_test.Cmt;
 import com.example.project_test.CmtData;
 import com.example.project_test.CmtList;
 import com.example.project_test.CommentListData;
 import com.example.project_test.CommentRecyclerAdapter;
 import com.example.project_test.LoginActivity;
+import com.example.project_test.Meet.MeetContent.MeetActivityContent;
 import com.example.project_test.Modify.RecipeModifyActivity;
 import com.example.project_test.PostList;
 import com.example.project_test.R;
@@ -47,7 +53,10 @@ public class ContentWithPicture extends AppCompatActivity {
     TextView src, rcp;
     int postcode, likenum;
     ImageButton like, modify, delete;
-    String title, content, source, recipe;
+    String title, content, source, recipe, cmt_con;
+    EditText editTextName1;
+    Button push;
+    private AlertDialog dialog;
 
     ArrayList<CommentListData> data;
 
@@ -88,6 +97,40 @@ public class ContentWithPicture extends AppCompatActivity {
         rcp.setVisibility(View.VISIBLE);
 
         data = new ArrayList<>();
+        editTextName1 = findViewById(R.id.editTextName1);
+        push = findViewById(R.id.push);
+
+        //댓글 작성
+        push.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                cmt_con = editTextName1.getText().toString();
+
+                Api api = Api.Factory.INSTANCE.create();
+                api.Cmt(LoginActivity.user_ac,postcode,cmt_con).enqueue(new Callback<Cmt>() {
+                    public void onResponse(Call<Cmt> call, Response<Cmt> response) {
+
+                        Log.i("결과는" , response.toString());
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ContentWithPicture.this);
+                        dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        })
+                                .create();
+                        dialog.show();
+                    }
+                    public void onFailure(Call<Cmt> call, Throwable t) {
+                        Log.i("작성실패", t.getMessage());
+                    }
+
+                });
+
+            }
+        });
 
         //받아오기
         Intent intent = getIntent();

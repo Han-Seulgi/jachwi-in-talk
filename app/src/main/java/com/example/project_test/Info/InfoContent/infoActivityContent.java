@@ -96,7 +96,7 @@ public class infoActivityContent extends AppCompatActivity {
                     cmt_con = editTextName1.getText().toString();
 
                     Api api = Api.Factory.INSTANCE.create();
-                    api.Cmt(LoginActivity.user_ac, cmt_con).enqueue(new Callback<Cmt>() {
+                    api.Cmt(LoginActivity.user_ac,postcode,cmt_con).enqueue(new Callback<Cmt>() {
                         public void onResponse(Call<Cmt> call, Response<Cmt> response) {
 
                             Log.i("결과는" , response.toString());

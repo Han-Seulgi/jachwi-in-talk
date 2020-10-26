@@ -122,7 +122,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("Cmt")
-    Call<Cmt> Cmt(@Field("id")String var1,@Field("cmt_con")String var2);
+    Call<Cmt> Cmt(@Field("id")String var1,@Field("post_code")int var2,@Field("cmt_con")String var3);
 
     @GET("post/getcontent")
     Call<PostList> getcontent(@Query("post_title") String var1);
