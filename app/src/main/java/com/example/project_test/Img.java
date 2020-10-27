@@ -8,5 +8,8 @@ public class Img {
     @SerializedName("data")
     public List<imgs> imgdata;
 
+//    @SerializedName("data")
+//    public String imgdata;
+
 }
 

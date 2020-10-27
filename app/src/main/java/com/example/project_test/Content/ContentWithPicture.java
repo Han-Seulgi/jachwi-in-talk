@@ -291,7 +291,7 @@ public class ContentWithPicture extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Img> call, Throwable t) {
-
+                        Log.e("dimg",t.getLocalizedMessage());
                     }
                 });
             }
