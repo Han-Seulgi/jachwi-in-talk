@@ -22,6 +22,7 @@ import com.example.project_test.MeetWrite;
 import com.example.project_test.MySpinnerAdapter;
 import com.example.project_test.R;
 import com.example.project_test.Write;
+import com.example.project_test.likeCheck;
 
 import java.util.ArrayList;
 
@@ -120,7 +121,7 @@ public class MeetWritingActivity extends AppCompatActivity {
                 else {
 
 
-                    Api api = Api.Factory.INSTANCE.create();
+                    final Api api = Api.Factory.INSTANCE.create();
                     api.Write(LoginActivity.user_ac, post_title, post_con, board_code).enqueue(new Callback<Write>() {
                         public void onResponse(Call<Write> call, Response<Write> response) {
 
@@ -156,6 +157,21 @@ public class MeetWritingActivity extends AppCompatActivity {
                             })
                                     .create();
                             dialog.show();
+
+                            api.newlike().enqueue(new Callback<likeCheck>() {
+                                @Override
+                                public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
+                                    likeCheck lc = response.body();
+                                    boolean newlk = lc.newlike;
+
+                                    Log.i("aaaa" , newlk+"");
+                                }
+
+                                @Override
+                                public void onFailure(Call<likeCheck> call, Throwable t) {
+
+                                }
+                            });
                         }
                         public void onFailure(Call<MeetWrite> call, Throwable t) {
                             Log.i("작성실패", t.getMessage());

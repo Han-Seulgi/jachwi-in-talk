@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
 public class Write {
     @SerializedName("insert")
     public boolean insert ;
-
 }
 
 

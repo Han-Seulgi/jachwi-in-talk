@@ -31,6 +31,8 @@ import com.example.project_test.CookWrite;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.R;
 import com.example.project_test.Write;
+import com.example.project_test.likeCheck;
+import com.example.project_test.qa.qaContent.qaActivityContent;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -208,6 +210,21 @@ public class WritingActivity extends AppCompatActivity {
                                 }
                             }).create();
                             dialog.show();
+
+                            api.newlike().enqueue(new Callback<likeCheck>() {
+                                @Override
+                                public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
+                                    likeCheck lc = response.body();
+                                    boolean newlk = lc.newlike;
+
+                                    Log.i("aaaa" , newlk+"");
+                                }
+
+                                @Override
+                                public void onFailure(Call<likeCheck> call, Throwable t) {
+
+                                }
+                            });
                         }
                         public void onFailure(Call<Write> call, Throwable t) {
                             Log.i("작성실패", t.getMessage());

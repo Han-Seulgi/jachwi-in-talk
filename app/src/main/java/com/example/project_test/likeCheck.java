@@ -20,5 +20,9 @@ public class likeCheck {
 
     @SerializedName("like_cnt")
     public int likenum;
+
+    @SerializedName("newlike")
+    public boolean newlike;
+
 }
 

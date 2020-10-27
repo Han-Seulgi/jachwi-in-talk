@@ -154,6 +154,9 @@ public interface Api {
     @GET("like/sublikenum")
     Call<likeCheck> sublikenum(@Query("post_code") int var1);
 
+    @GET("like/newlike")
+    Call<likeCheck> newlike();
+
     @FormUrlEncoded
     @POST("Modify")
     Call<Write> Modify(@Field("post_title")String var1,@Field("post_con")String var2,@Field("post_code")int var3);

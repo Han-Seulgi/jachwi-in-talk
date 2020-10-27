@@ -19,6 +19,7 @@ import com.example.project_test.Api;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.R;
 import com.example.project_test.Write;
+import com.example.project_test.likeCheck;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -84,7 +85,7 @@ public class InfoWritingActivity extends AppCompatActivity {
                 }
 
                 else {
-                  Api api = Api.Factory.INSTANCE.create();
+                  final Api api = Api.Factory.INSTANCE.create();
                      api.Write(LoginActivity.user_ac, post_title, post_con, board_code).enqueue(new Callback<Write>() {
                         public void onResponse(Call<Write> call, Response<Write> response) {
 
@@ -99,12 +100,28 @@ public class InfoWritingActivity extends AppCompatActivity {
                             })
                                     .create();
                             dialog.show();
+
+                            api.newlike().enqueue(new Callback<likeCheck>() {
+                                @Override
+                                public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
+                                    likeCheck lc = response.body();
+                                    boolean newlk = lc.newlike;
+
+                                    Log.i("aaaa" , newlk+"");
+                                }
+
+                                @Override
+                                public void onFailure(Call<likeCheck> call, Throwable t) {
+
+                                }
+                            });
                         }
                         public void onFailure(Call<Write> call, Throwable t) {
                             Log.i("작성실패", t.getMessage());
                         }
 
                     });
+
                 }
 
             }
