@@ -128,12 +128,6 @@ public class BoardActivity extends AppCompatActivity {
                     vflip1.addView(vflipview1[i]);
                 }
 
-                //뷰플리퍼 시간, 애니메이션 설정
-                vflip1.setFlipInterval(4000);   // 몇 초 후에 이미지가 넘어갈것인가(1000 당 1초)
-                vflip1.setAutoStart(true);      //자동시작유무(true:자동)
-                vflip1.setInAnimation(BoardActivity.this, android.R.anim.slide_in_left); //animation
-                vflip1.setOutAnimation(BoardActivity.this, android.R.anim.slide_out_right); //animation
-
 /*
                 vflip1.setOnClickListener(new View.OnClickListener() { //뷰 플리퍼 클릭했을 때
                     @Override
@@ -149,12 +143,21 @@ public class BoardActivity extends AppCompatActivity {
 
             }
 
+
+
             @Override
             public void onFailure(Call<PopularPost> call, Throwable t) {
                 Log.i("popular", t.getMessage());
             }
+
+
         });
 
+        //뷰플리퍼 시간, 애니메이션 설정
+        vflip1.setFlipInterval(4000);   // 몇 초 후에 이미지가 넘어갈것인가(1000 당 1초)
+        vflip1.setAutoStart(true);      //자동시작유무(true:자동)
+        vflip1.setInAnimation(BoardActivity.this, android.R.anim.slide_in_left); //animation
+        vflip1.setOutAnimation(BoardActivity.this, android.R.anim.slide_out_right); //animation
 
 /*
         vflip1.setOnClickListener(new View.OnClickListener() { //뷰 플리퍼 클릭했을 때
