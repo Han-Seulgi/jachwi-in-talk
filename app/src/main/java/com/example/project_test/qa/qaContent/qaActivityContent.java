@@ -22,11 +22,13 @@ import com.example.project_test.Api;
 import com.example.project_test.Cmt;
 import com.example.project_test.CmtList;
 import com.example.project_test.CommentListData;
+import com.example.project_test.DeletePost;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.Modify.QnaModifyActivity;
 import com.example.project_test.PostList;
 import com.example.project_test.R;
 import com.example.project_test.likeCheck;
+import com.example.project_test.qa.qaListData;
 import com.example.project_test.qnaCmtData;
 
 import java.util.ArrayList;
@@ -65,6 +67,8 @@ public class qaActivityContent extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
 
             text1 = findViewById(R.id.text1);
             writer = findViewById(R.id.id_day);
@@ -313,6 +317,42 @@ public class qaActivityContent extends AppCompatActivity {
 
                         }
                     });
+                }
+            });
+
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    AlertDialog dialog;
+                    dialog = builder.setMessage("게시물을 삭제하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Log.i("delete", "게시물 삭제하기" + title);
+
+                                    Api api = Api.Factory.INSTANCE.create();
+
+                                    Log.i("hihihi", "아오"+title);
+
+                                    api.deletepost(title).enqueue(new Callback<DeletePost>() {
+                                        @Override
+                                        public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
+                                            //DeletePost deletePost = response.body();
+                                            //boolean del = deletePost.delete;
+
+                                            Log.i("delete", "성공" + response);
+                                            Toast.makeText(getApplicationContext(),"삭제됨",Toast.LENGTH_SHORT).show();
+
+                                        }
+                                        @Override
+                                        public void onFailure(Call<DeletePost> call, Throwable t) {
+                                            Log.i("delete",t.getMessage());
+                                        }
+                                    });
+                                }
+                            }
+                    ).create();
+                    dialog.show();
                 }
             });
 
