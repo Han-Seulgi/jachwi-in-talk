@@ -13,11 +13,9 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -407,26 +405,31 @@ public class RecipeModifyActivity extends AppCompatActivity {
                         System.currentTimeMillis()+".jpg";
                 Log.e("mImageCaptureUri: ", "Croped" + filePath);
 
-                //base64 encoding
-                ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-
-                Bitmap bm = BitmapFactory.decodeFile(realPath); //크롭안된 이미지
-                bm.compress(Bitmap.CompressFormat.JPEG,100,outStream);
-                byte bytes[] = outStream.toByteArray();
-                imgString2 = Base64.encodeToString(bytes, Base64.NO_WRAP);
-                imgs.add(imgString2);
-                Log.i("imgArray",imgs.get(0));
-                imgString = imgs.toArray(new String[imgs.size()]);
 
                 if (extras != null) {
                     photoBitmap = extras.getParcelable("data");//레이아웃 이미지 칸에 bitmap보여줌
-                    ImageView iv = new ImageView(getBaseContext());
+                    /*ImageView iv = new ImageView(getBaseContext());
                     iv.setImageBitmap(photoBitmap);
-
-                    imgLayout.addView(iv, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    imgLayout.addView(iv, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);*/
 
                     imgPath = filePath;
                     saveCropImage(photoBitmap,imgPath);//자른 이미지를 외부저장소, 앨범에 저장
+
+                    //base64 encoding
+                    ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+
+                    Bitmap bm = BitmapFactory.decodeFile(imgPath); //크롭안된 이미지
+                    bm.compress(Bitmap.CompressFormat.JPEG,100,outStream);
+                    byte bytes[] = outStream.toByteArray();
+                    imgString2 = Base64.encodeToString(bytes, Base64.NO_WRAP);
+                    imgs.add(imgString2);
+                    Log.i("imgArray", String.valueOf(imgs.size()));
+                    imgString = imgs.toArray(new String[imgs.size()]);
+
+                    imglist.add(new ThumbnailListData(imgString2));
+                    adapter.setData(imglist);
+                    rv.setAdapter(adapter);
+                    rv.setLayoutManager(layoutManager);
 
                     break;
                 }
