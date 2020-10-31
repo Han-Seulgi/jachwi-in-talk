@@ -1,13 +1,11 @@
 package com.example.project_test;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -27,12 +24,10 @@ import com.example.project_test.Info.InfoContent.infoActivityContent;
 import com.example.project_test.Meet.MeetActivity;
 import com.example.project_test.Meet.MeetContent.MeetActivityContent;
 import com.example.project_test.Mypage.MyPageActivity;
+import com.example.project_test.Recipe.RecipeBoardActivity;
 import com.example.project_test.SharenRent.SharenRentActivity;
 import com.example.project_test.qa.qaActivity;
-import com.example.project_test.Recipe.RecipeBoardActivity;
 import com.example.project_test.qa.qaContent.qaActivityContent;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -203,7 +198,6 @@ public class BoardActivity extends AppCompatActivity {
             public void onFailure(Call<PopularPost> call, Throwable t) {
                 Log.i("popular", t.getMessage());
             }
-
 
         });
 
