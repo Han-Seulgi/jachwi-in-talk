@@ -13,11 +13,9 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,6 +23,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
 import com.example.project_test.CookWrite;
@@ -74,6 +74,11 @@ public class WritingActivity extends AppCompatActivity {
     String[] imgString;
     ArrayList<String> imgs = new ArrayList<>();
 
+    private RecyclerView rv;
+    private LinearLayoutManager layoutManager;
+    ArrayList<ThumbnailListData> imglist;
+    RecyclerAdapterThumbnail adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +95,12 @@ public class WritingActivity extends AppCompatActivity {
 
         tv0 = findViewById(R.id.tv0);
         tv1 = findViewById(R.id.tv1);
+
+        rv = findViewById(R.id.rvT);
+        adapter = new RecyclerAdapterThumbnail();
+        imglist = new ArrayList<>();
+        layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
         imgLayout = findViewById(R.id.imgLayout);
         //상단탭
@@ -255,29 +266,6 @@ public class WritingActivity extends AppCompatActivity {
         startActivityForResult(albumIntent, PICK_FROM_ALBUM);
     }
 
-    /*//파일 경로 생성
-    private Uri getImageUri(String saveFile) {
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()+"/download",
-                folderName);
-        if (!mediaStorageDir.exists()){
-            if (!mediaStorageDir.mkdirs()){
-                Log.d("cameraapp","failed tot create directory");
-                return null;
-            }
-        }
-
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        if(saveFile !=null){
-            mediaFile = new File(mediaStorageDir.getPath()+File.separator+saveFile);
-        }
-        else{
-            mediaFile = new File(mediaStorageDir.getPath()+File.separator+"pic_"+timeStamp+".jpg");
-        }
-        mImageCaptureUri = Uri.fromFile(mediaFile);
-        imgPath = mImageCaptureUri.getPath();
-        return  mImageCaptureUri;
-    }*/
-
     public String getRealPathFromURI(Uri contentUri){
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContentResolver().query(contentUri,proj,null,null,null);
@@ -324,32 +312,32 @@ public class WritingActivity extends AppCompatActivity {
                         System.currentTimeMillis()+".jpg";
                 Log.e("mImageCaptureUri: ", "Croped" + filePath);
 
-                //base64 encoding
-                ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-
-                Bitmap bm = BitmapFactory.decodeFile(realPath); //크롭안된 이미지
-                bm.compress(Bitmap.CompressFormat.JPEG,100,outStream);
-                byte bytes[] = outStream.toByteArray();
-                imgString2 = Base64.encodeToString(bytes, Base64.NO_WRAP);
-                imgs.add(imgString2);
-                Log.i("imgArray", String.valueOf(imgs.size()));
-                imgString = imgs.toArray(new String[imgs.size()]);
 
                 if (extras != null) {
                     photoBitmap = extras.getParcelable("data");//레이아웃 이미지 칸에 bitmap보여줌
-                    ImageView iv = new ImageView(getBaseContext());
+                    /*ImageView iv = new ImageView(getBaseContext());
                     iv.setImageBitmap(photoBitmap);
-                    imgLayout.addView(iv, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    imgLayout.addView(iv, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);*/
+
+                    imglist.add(new ThumbnailListData(photoBitmap));
+                    adapter.setData(imglist);
+                    rv.setAdapter(adapter);
+                    rv.setLayoutManager(layoutManager);
 
                     imgPath = filePath;
                     saveCropImage(photoBitmap,imgPath);//자른 이미지를 외부저장소, 앨범에 저장
 
-                    /*if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT) {
-                        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,Uri.fromFile(mediaFile)));
-                    }
-                    else{
-                        sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED,Uri.parse("file://"+Environment.getExternalStorageDirectory())));
-                    }*/
+                    //base64 encoding
+                    ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+
+                    Bitmap bm = BitmapFactory.decodeFile(imgPath); //크롭안된 이미지
+                    bm.compress(Bitmap.CompressFormat.JPEG,100,outStream);
+                    byte bytes[] = outStream.toByteArray();
+                    imgString2 = Base64.encodeToString(bytes, Base64.NO_WRAP);
+                    imgs.add(imgString2);
+                    Log.i("imgArray", String.valueOf(imgs.size()));
+                    imgString = imgs.toArray(new String[imgs.size()]);
+
                     break;
                 }
                 //임시파일 삭제

@@ -148,6 +148,13 @@
                 android:layout_marginRight="15dp"
                 android:src="@drawable/gal" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#f0f0f0"
+                >
+            </androidx.recyclerview.widget.RecyclerView>
             <!--<EditText
                 android:id="@+id/pedit"
                 android:layout_width="match_parent"

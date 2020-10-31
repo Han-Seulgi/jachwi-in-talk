@@ -25,12 +25,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
-import com.example.project_test.DeleteImg;
+import com.example.project_test.Img;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.R;
 import com.example.project_test.Write;
+import com.example.project_test.Writing.ThumbnailListData;
+import com.example.project_test.imgs;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -38,7 +42,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -55,7 +58,7 @@ public class RecipeModifyActivity extends AppCompatActivity {
     int post_code;
 
     String[] img_data;
-    ArrayList<Integer> img_code;
+    Integer[] img_code;
     ImageButton imgup;
 
     private AlertDialog dialog;
@@ -78,6 +81,11 @@ public class RecipeModifyActivity extends AppCompatActivity {
     String[] imgString;
     ArrayList<String> imgs = new ArrayList<>();
 
+    private RecyclerView rv;
+    private LinearLayoutManager layoutManager;
+    ArrayList<ThumbnailListData> imglist;
+    RecyclerAdapterThumbnail adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +101,12 @@ public class RecipeModifyActivity extends AppCompatActivity {
         tv0 = findViewById(R.id.tv0);
         imgup = findViewById(R.id.imgup);
         imgLayout = findViewById(R.id.imgLayout);
+
+        rv = findViewById(R.id.rvT);
+        adapter = new RecyclerAdapterThumbnail();
+        imglist = new ArrayList<>();
+        layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
         //상단탭
         toolbar = findViewById(R.id.toolbar);
@@ -110,8 +124,7 @@ public class RecipeModifyActivity extends AppCompatActivity {
         cook_rcp = intent.getStringExtra("레시피");
         cook_src = intent.getStringExtra("재료");
         post_code = intent.getIntExtra("게시글코드", 0);
-        img_data = intent.getStringArrayExtra("사진");
-        img_code = intent.getIntegerArrayListExtra("사진코드");
+
         tedit.setText(post_title);
         nedit.setText(cook_src);
         cedit.setText(cook_rcp);
@@ -119,7 +132,43 @@ public class RecipeModifyActivity extends AppCompatActivity {
 
         final Api api = Api.Factory.INSTANCE.create();
 
-        //올렸던 사진
+        //사진
+        api.getImg(post_code).enqueue(new Callback<Img>() {
+            @Override
+            public void onResponse(Call<Img> call, Response<Img> response) {
+
+                Img img = response.body();
+                List<com.example.project_test.imgs> imgd = img.imgdata;
+
+                ArrayList<Integer> img_code1 = new ArrayList<>();
+                ArrayList<String> img_data1 = new ArrayList<>();
+
+                for (imgs d : imgd) {
+                    img_code1.add(d.img_code);
+                    img_data1.add(d.img_data);
+                    Log.i("dimg", d.toString());
+                }
+
+                img_code = img_code1.toArray(new Integer[img_code1.size()]);
+                img_data = img_data1.toArray(new String[img_data1.size()]);
+
+                int i = 0;
+                while (i < img_data.length) {
+                    imglist.add(new ThumbnailListData(img_code[i], img_data[i]));
+                    i++;
+                }
+                adapter.setData(imglist);
+                rv.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<Img> call, Throwable t) {
+                Log.e("dimg", t.getLocalizedMessage());
+            }
+        });
+        rv.setLayoutManager(layoutManager);
+
+        /*//올렸던 사진
         for(int i = 0; img_data.length>i; i++){
             final int position = i;
             byte[] encodeByte = Base64.decode(String.valueOf(img_data[i]), Base64.NO_WRAP);
@@ -151,7 +200,7 @@ public class RecipeModifyActivity extends AppCompatActivity {
                     return false;
                 }
             });
-        }
+        }*/
 
         imgup.setOnClickListener(new View.OnClickListener() {
             @Override
