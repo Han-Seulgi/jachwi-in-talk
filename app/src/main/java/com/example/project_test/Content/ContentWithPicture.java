@@ -63,6 +63,10 @@ public class ContentWithPicture extends AppCompatActivity {
     ArrayList<CommentListData> data;
     ArrayList<ImgListData> imgdatas;
 
+    String[] img_data;
+    ArrayList<Integer> img_code1;
+    //Integer[] img_code;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,17 +273,17 @@ public class ContentWithPicture extends AppCompatActivity {
                         Img img = response.body();
                         List<imgs> imgd = img.imgdata;
 
-                        //ArrayList<Integer> img_code1 = new ArrayList<>();
+                        img_code1 = new ArrayList<>();
                         ArrayList<String> img_data1 = new ArrayList<>();
 
                         for(imgs d:imgd) {
-                            //img_code1.add(d.img_code);
+                            img_code1.add(d.img_code);
                             img_data1.add(d.img_data);
                             Log.i("dimg",d.toString());
                         }
 
-                        //Integer[] img_code = img_code1.toArray(new Integer[img_code1.size()]);
-                        String[] img_data = img_data1.toArray(new String[img_data1.size()]);
+                        //img_code = img_code1.toArray(new Integer[img_code1.size()]);
+                        img_data = img_data1.toArray(new String[img_data1.size()]);
 
                         int i = 0;
                         while (i<img_data.length){
@@ -415,10 +419,7 @@ public class ContentWithPicture extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.i("delete", "게시물 삭제하기" + title);
-
                                 Api api = Api.Factory.INSTANCE.create();
-
-                                Log.i("hihihi", "아오"+title);
 
                                 api.deletepost(title).enqueue(new Callback<DeletePost>() {
                                     @Override
@@ -453,12 +454,11 @@ public class ContentWithPicture extends AppCompatActivity {
                 intent.putExtra("재료", source); //재료
                 intent.putExtra("레시피", recipe); //레시피
                 intent.putExtra("게시글코드", postcode); //게시물의 코드
+                intent.putExtra("사진", img_data);
+                intent.putExtra("사진코드", img_code1);
                 v.getContext().startActivity(intent);
             }
         });
-
-
-
 
 
         layoutManager = new LinearLayoutManager(this);

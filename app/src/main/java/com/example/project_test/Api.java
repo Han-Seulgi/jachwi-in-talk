@@ -194,13 +194,21 @@ public interface Api {
     @POST("PopularPost/cook")
     Call<PopularPost> CheckCook();
 
+    //이미지
     @FormUrlEncoded
     @POST("Image")
-    Call<ResponseBody> imgupload(@Field("id") String var1, @Field("img_data") String var2);
+    Call<ResponseBody> imgupload(@Field("id") String var1, @Field("img_data") String[] var2);
 
     @FormUrlEncoded
     @POST("Image/getImg")
     Call<Img> getImg(@Field("post_code") int var1);
+
+    @GET("Image/deleteImg")
+    Call<DeleteImg> deleteImg(@Query("img_code")int var1);
+
+    @FormUrlEncoded
+    @POST("Image/modifyImg")
+    Call<ResponseBody> imgmodify(@Field("id") String var1, @Field("img_data") String[] var2, @Field("post_code") int var3);
 
     /*@FormUrlEncoded
     @POST("Image/getImg")

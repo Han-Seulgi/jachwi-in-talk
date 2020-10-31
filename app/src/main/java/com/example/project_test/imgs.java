@@ -3,9 +3,9 @@ package com.example.project_test;
 import com.google.gson.annotations.SerializedName;
 
 public class imgs {
-//    @SerializedName("img_code")
-//    public
-//    int img_code;
+    @SerializedName("img_code")
+    public
+    int img_code;
 
     @SerializedName("img_data")
     public
