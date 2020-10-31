@@ -1,11 +1,13 @@
 package com.example.project_test;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,17 +15,24 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.project_test.Content.ContentWithPicture;
 import com.example.project_test.Food.FoodActivity;
+import com.example.project_test.Food.FoodContent.FoodActivityContent;
 import com.example.project_test.Info.InfoActivity;
+import com.example.project_test.Info.InfoContent.infoActivityContent;
 import com.example.project_test.Meet.MeetActivity;
+import com.example.project_test.Meet.MeetContent.MeetActivityContent;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.SharenRent.SharenRentActivity;
 import com.example.project_test.qa.qaActivity;
 import com.example.project_test.Recipe.RecipeBoardActivity;
 import com.example.project_test.qa.qaContent.qaActivityContent;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +43,14 @@ import retrofit2.Response;
 
 public class BoardActivity extends AppCompatActivity {
     ViewFlipper vflip1, vflip2, vflip3;
-    View vflipview1[], vflipview2[] = new View[2];
+    View[] vflipview1;
+    final View vflipview2[] = new View[2];
     ImageButton btn1, btn2, btn3, btn4, btn5, btn6, vimg1, vimg2;
     ImageButton imageButtons[] = {btn1, btn2, btn3, btn4, btn5, btn6};
     TextView v1txt1, v1txt2, v2txt1, v2txt2;
     Button changebtn;
     Toolbar toolbar;
+    Intent intent;
 
     int i = 0, t = 0, j=0;
 
@@ -77,73 +88,116 @@ public class BoardActivity extends AppCompatActivity {
         imageButtons[5] = findViewById(R.id.btn6);
 
         //첫 번째 탭의 게시 인기글 뷰 플리퍼
-        Api api = Api.Factory.INSTANCE.create();
+        final Api api = Api.Factory.INSTANCE.create();
 
         api.CheckCook().enqueue(new Callback<PopularPost>() {
             @Override
             public void onResponse(Call<PopularPost> call, Response<PopularPost> response) {
-                Log.i("popular", "인기글 가져오기 성공");
 
                 PopularPost popularPost = response.body();
                 List<PopularData> popularData = popularPost.items;
 
-                ArrayList<String> title1 = new ArrayList<>();
+                final ArrayList<String> title1 = new ArrayList<>();
                 ArrayList<String> con1 = new ArrayList<>();
 
                 //리스트에 제목, 내용 넣기
                 for (PopularData d:popularData) {
                     title1.add(d.post_title);
                     con1.add(d.post_con);
-                    Log.i("popular","정보 All: " + d.toString());
                 }
 
                 //리스트를 배열로 바꾸기, 이미지 배열 생성
                 final String[] title = title1.toArray(new String[title1.size()]);
-                String[] con = con1.toArray(new String[con1.size()]);
-                Integer[] img = new Integer[title1.size()];
-                //int[] images = {R.drawable.vflipimg, R.drawable.recipeimg2}; //뷰 플리퍼에 들어갈 게시판 이미지
-
-                for(int j=0; j<img.length; j++) {
-                    img[j] = R.drawable.vflipimg;
-                }
+                final String[] con = con1.toArray(new String[con1.size()]);
+                final Integer[] img = new Integer[title1.size()];
 
                 for (int i = 0; i < img.length; i++) {
+
                     vflipview1 = new View[img.length];
                     vflipview1[i] = (View) View.inflate(BoardActivity.this, R.layout.view_item, null);
                     //뷰플리퍼 안에 들어갈 뷰 레이아웃
-
-                    //이미지 추가
-                    ImageView imageView = vflipview1[i].findViewById(R.id.view_img);
-                    imageView.setBackgroundResource(img[i]);
 
                     //텍스트 추가
                     TextView textView1 = vflipview1[i].findViewById(R.id.view_title);
                     textView1.setText(title[i]);
                     TextView textView2 = vflipview1[i].findViewById(R.id.view_content);
                     textView2.setText(con[i]);
+                    final ImageView imageView = vflipview1[i].findViewById(R.id.view_img);
 
-                    //Log.i("popular", img[i] + title[i] + con[i]);
+
+                    final int finalI = i;
+                    api.getcontent(title[i]).enqueue(new Callback<PostList>() {
+                        @Override
+                        public void onResponse(Call<PostList> call, Response<PostList> response) {
+                            PostList postlist = response.body();
+                            int  bcode = postlist.bcode;
+
+                            if (bcode == 11) { //자취앤집밥 게시판이라면
+                                img[finalI] = R.drawable.vflip2;
+                            } else if (bcode == 22) { //자취앤혼밥 게시판이라면
+                                img[finalI] = R.drawable.vflip3;
+                            } else if (bcode == 33) { //자취인만남 게시판이라면
+                                img[finalI] = R.drawable.vflip1;
+                            } else if (bcode == 66) { //자취Q&A 게시판이라면
+                                img[finalI] = R.drawable.vflip5;
+                            } else { //자취인정보 게시판이라면
+                                img[finalI] = R.drawable.vflip4;
+                            }
+                            imageView.setBackgroundResource(img[finalI]);
+                        }
+                        @Override
+                        public void onFailure(Call<PostList> call, Throwable t) {
+                        }
+
+                    });
 
                     //뷰플리퍼에 뷰 추가
                     vflip1.addView(vflipview1[i]);
+
+                    vflip1.setOnClickListener(new View.OnClickListener() { //뷰 플리퍼 클릭했을 때
+                        @Override
+                        public void onClick(View v) {
+                            final int i = vflip1.getDisplayedChild();    //현재 페이지 가져오기
+
+                            api.getcontent(title[i]).enqueue(new Callback<PostList>() {
+                                public void onResponse(Call<PostList> call, Response<PostList> response) {
+                                    PostList postlist = response.body();
+                                    String id = postlist.id;
+                                    String day = postlist.day;
+                                    int  bcode = postlist.bcode;
+
+                                    if(bcode == 11) { //자취앤집밥 게시판이라면
+                                        intent = new Intent(getApplicationContext(), ContentWithPicture.class);
+                                    }
+                                    else if(bcode == 22) { //자취앤혼밥 게시판이라면
+                                        intent = new Intent(getApplicationContext(), FoodActivityContent.class);
+                                    }
+                                    else if(bcode == 33) { //자취인만남 게시판이라면
+                                        intent = new Intent(getApplicationContext(), MeetActivityContent.class);
+                                    }
+                                    else if(bcode == 66) { //자취Q&A 게시판이라면
+                                        intent = new Intent(getApplicationContext(), qaActivityContent.class);
+                                    }
+                                    else { //자취인정보 게시판이라면
+                                        intent = new Intent(getApplicationContext(), infoActivityContent.class);
+                                    }
+                                    intent.putExtra("제목", title[i]);
+                                    intent.putExtra("작성자", id);
+                                    intent.putExtra("날짜", day);
+                                    intent.putExtra("내용", con[i]);
+                                    startActivity(intent);
+
+                                }
+                                public void onFailure(Call<PostList> call, Throwable t) {
+                                    Log.i("실패", t.getMessage());
+                                }
+
+                            });
+                        }
+                    });
                 }
 
-/*
-                vflip1.setOnClickListener(new View.OnClickListener() { //뷰 플리퍼 클릭했을 때
-                    @Override
-                    public void onClick(View v) {
-                        int i = vflip1.getDisplayedChild();    //현재 페이지 가져오기
-
-                        Intent intent = new Intent(getApplicationContext(), qaActivityContent.class);
-                        intent.putExtra("제목", title[i]); //게시물의 제목
-                        startActivity(intent);
-
-                    }
-                });*/
-
             }
-
-
 
             @Override
             public void onFailure(Call<PopularPost> call, Throwable t) {
@@ -158,19 +212,6 @@ public class BoardActivity extends AppCompatActivity {
         vflip1.setAutoStart(true);      //자동시작유무(true:자동)
         vflip1.setInAnimation(BoardActivity.this, android.R.anim.slide_in_left); //animation
         vflip1.setOutAnimation(BoardActivity.this, android.R.anim.slide_out_right); //animation
-
-/*
-        vflip1.setOnClickListener(new View.OnClickListener() { //뷰 플리퍼 클릭했을 때
-            @Override
-            public void onClick(View v) {
-                int i = vflip1.getDisplayedChild();    //현재 페이지 가져오기
-
-                Intent intent = new Intent(getApplicationContext(), qaActivityContent.class);
-                intent.putExtra("제목", title1[i]); //게시물의 제목
-                startActivity(intent);
-
-            }
-        });*/
 
         //첫 번째 탭 6개의 게시판
         for (int i = 0; i < imageButtons.length; i++) {

@@ -19,4 +19,7 @@ public class PostList {
 
     @SerializedName("post_day")
     public String day;
+
+    @SerializedName("board_code")
+    public int bcode;
 }
