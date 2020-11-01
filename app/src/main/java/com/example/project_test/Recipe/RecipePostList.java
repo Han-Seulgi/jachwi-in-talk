@@ -1,5 +1,6 @@
 package com.example.project_test.Recipe;
 
+import com.example.project_test.imgs;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,6 +13,7 @@ public class RecipePostList {
     @SerializedName("post_code")
     public int pcode;
 }
+
 
 class PostData {
     @SerializedName("post_code")
@@ -32,6 +34,7 @@ class PostData {
     @SerializedName("board_code")
     @Expose
     int board_code;
+
 
     @Override
     public String toString() {

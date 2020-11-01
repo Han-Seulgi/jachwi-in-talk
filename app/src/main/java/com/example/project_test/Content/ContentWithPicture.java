@@ -123,10 +123,10 @@ public class ContentWithPicture extends AppCompatActivity {
                         Log.i("결과는" , response.toString());
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(ContentWithPicture.this);
-                        dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                        dialog = builder.setMessage("작성하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                finish();
+                                Toast.makeText(getApplicationContext(),"작성완료",Toast.LENGTH_SHORT).show();
                             }
                         })
                                 .create();

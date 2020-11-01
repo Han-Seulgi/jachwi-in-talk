@@ -25,6 +25,7 @@ import com.example.project_test.CmtData;
 import com.example.project_test.CmtList;
 import com.example.project_test.CommentListData;
 import com.example.project_test.CommentRecyclerAdapter;
+import com.example.project_test.Content.ContentWithPicture;
 import com.example.project_test.DeletePost;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.Modify.InfoModifyActivity;
@@ -103,10 +104,10 @@ public class infoActivityContent extends AppCompatActivity {
                             Log.i("결과는" , response.toString());
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(infoActivityContent.this);
-                            dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                            dialog = builder.setMessage("작성하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    finish();
+                                    Toast.makeText(getApplicationContext(),"작성완료",Toast.LENGTH_SHORT).show();
                                 }
                             })
                                     .create();

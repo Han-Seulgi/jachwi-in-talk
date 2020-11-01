@@ -1,6 +1,5 @@
 package com.example.project_test.Recipe;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,14 +43,10 @@ public class RecipeBoardActivity extends AppCompatActivity {
     //검색을 위한 전체 데이터 리스트 복사본
     ArrayList<RecipeListData> cdata;
 
-    public static Context CONTEXT;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_recipe);
-
-        CONTEXT = this;
 
         //상단탭
         toolbar = findViewById(R.id.toolbar);
@@ -229,10 +224,4 @@ public class RecipeBoardActivity extends AppCompatActivity {
         //리스트 데이터가 변경되었으므로 어댑터 갱신
         adapter.notifyDataSetChanged();
     }
-
-    /*@Override
-    public void onResume() {
-        super.onResume();
-        adapter.notifyDataSetChanged();
-    }*/
 }
