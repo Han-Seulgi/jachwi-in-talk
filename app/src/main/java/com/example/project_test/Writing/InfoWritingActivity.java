@@ -1,6 +1,7 @@
 package com.example.project_test.Writing;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.project_test.Api;
+import com.example.project_test.Info.InfoActivity;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.R;
 import com.example.project_test.Write;
@@ -96,6 +98,12 @@ public class InfoWritingActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     finish();
+                                    Intent intent = new Intent(InfoWritingActivity.this, InfoActivity.class);
+
+                                    startActivity(intent);
+                                    finish();
+
+
                                 }
                             })
                                     .create();

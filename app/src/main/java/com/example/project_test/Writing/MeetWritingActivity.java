@@ -25,6 +25,7 @@ import com.example.project_test.Write;
 import com.example.project_test.likeCheck;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +37,8 @@ public class MeetWritingActivity extends AppCompatActivity {
     EditText tedit, cedit, wedit,nedit;
     TextView tv1, tv2 , tv3, tv4, title2;
     String post_title, post_con, meet_lct;
-    int board_code, meet_tag, meet_p;
+    int board_code, meet_p;
+    String meet_tag;
 
     private AlertDialog dialog;
 
@@ -62,15 +64,44 @@ public class MeetWritingActivity extends AppCompatActivity {
 
         spinner = findViewById(R.id.meetSpinner);
 
-        ArrayList<String> items = new ArrayList<String>();
-        items.add("운동");
-        items.add("음식");
-        items.add("영화");
+        //분류 가져오기
+        final ArrayList<String> items = new ArrayList<String>();
 
-        MySpinnerAdapter adapter = new MySpinnerAdapter(this, android.R.layout.simple_spinner_item,items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setSelection(adapter.getCount());
+        Api api = Api.Factory.INSTANCE.create();
+        api.getWritingCategory(33).enqueue(new Callback<WritingCategoryData>() {
+            @Override
+            public void onResponse(Call<WritingCategoryData> call, Response<WritingCategoryData> response) {
+                Log.i("abced","성공");
+
+                WritingCategoryData cgList = response.body();
+                List<Category> cg = cgList.items;
+
+                //리스트에 넣기
+                for (Category s:cg) {
+                    items.add(s.tag);
+                }
+                items.add("선택");
+
+                MySpinnerAdapter adapter = new MySpinnerAdapter(MeetWritingActivity.this, android.R.layout.simple_spinner_item,items);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+                spinner.setSelection(adapter.getCount());
+            }
+
+            @Override
+            public void onFailure(Call<WritingCategoryData> call, Throwable t) {
+                Log.i("abced",t.getMessage());
+            }
+        });
+
+//        items.add("운동");
+//        items.add("음식");
+//        items.add("영화");
+//
+//        MySpinnerAdapter adapter = new MySpinnerAdapter(this, android.R.layout.simple_spinner_item,items);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner.setAdapter(adapter);
+//        spinner.setSelection(adapter.getCount());
 
 
         //상단탭
@@ -88,28 +119,32 @@ public class MeetWritingActivity extends AppCompatActivity {
                 post_title = tedit.getText().toString();
                 post_con = cedit.getText().toString();
                 meet_lct = wedit.getText().toString();
-                meet_p = Integer.parseInt(nedit.getText().toString());
+                String p = nedit.getText().toString();
+                meet_tag = spinner.getSelectedItem().toString();
 
 
                 if(title2.getText().toString().equals("자취인만남")){
                     board_code = 33;
                 }
 
-                if(spinner.getSelectedItem().toString().equals("운동")){
-                    meet_tag = 3301;
-                }
-                if(spinner.getSelectedItem().toString().equals("음식")){
-                    meet_tag = 3302;
-                }
+                meet_tag = (String) spinner.getSelectedItem();
 
-                if(spinner.getSelectedItem().toString().equals("영화")){
-                    meet_tag = 3303;
+//                if(spinner.getSelectedItem().toString().equals("운동")){
+//                    meet_tag = 3301;
+//                }
+//                if(spinner.getSelectedItem().toString().equals("음식")){
+//                    meet_tag = 3302;
+//                }
+//
+//                if(spinner.getSelectedItem().toString().equals("영화")){
+//                    meet_tag = 3303;
+//
+//                }
 
-                }
                 Log.i("결과는", LoginActivity.user_ac + post_title + post_con + board_code);
 
 
-                if (post_title.equals("") || post_con.equals("") || meet_lct.equals("")) {
+                if (post_title.equals("") || post_con.equals("") || meet_lct.equals("") || p.equals("") || meet_tag.equals("선택") ) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MeetWritingActivity.this);
                     dialog = builder.setMessage("글 작성이 완료되지 않았습니다.").setNegativeButton("확인", null)
                             .create();
@@ -119,7 +154,7 @@ public class MeetWritingActivity extends AppCompatActivity {
 
 
                 else {
-
+                    meet_p = Integer.parseInt(p);
 
                     final Api api = Api.Factory.INSTANCE.create();
                     api.Write(LoginActivity.user_ac, post_title, post_con, board_code).enqueue(new Callback<Write>() {
@@ -127,15 +162,51 @@ public class MeetWritingActivity extends AppCompatActivity {
 
                             Log.i("결과는" , response.toString());
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(MeetWritingActivity.this);
-                            dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
+                            //post_code가 제대로 저장되지 않아 바꿨음
+                            api.MeetWrite(meet_tag, meet_lct, meet_p).enqueue(new Callback<MeetWrite>() {
+                                public void onResponse(Call<MeetWrite> call, Response<MeetWrite> response) {
+
+                                    Log.i("결과는" , response.toString());
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MeetWritingActivity.this);
+                                    dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            finish();
+                                        }
+                                    })
+                                            .create();
+                                    dialog.show();
+
+                                    api.newlike().enqueue(new Callback<likeCheck>() {
+                                        @Override
+                                        public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
+                                            likeCheck lc = response.body();
+                                            boolean newlk = lc.newlike;
+
+                                            Log.i("aaaa" , newlk+"");
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<likeCheck> call, Throwable t) {
+
+                                        }
+                                    });
                                 }
-                            })
-                                    .create();
-                            dialog.show();
+                                public void onFailure(Call<MeetWrite> call, Throwable t) {
+                                    Log.i("작성실패", t.getMessage());
+                                }
+
+                            });
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(MeetWritingActivity.this);
+////                            dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+////                                @Override
+////                                public void onClick(DialogInterface dialog, int which) {
+////                                    finish();
+////                                }
+////                            })
+////                                    .create();
+////                            dialog.show();
                         }
                         public void onFailure(Call<Write> call, Throwable t) {
                             Log.i("작성실패", t.getMessage());
@@ -143,41 +214,7 @@ public class MeetWritingActivity extends AppCompatActivity {
 
                     });
 
-                    api.MeetWrite(meet_tag, meet_lct, meet_p).enqueue(new Callback<MeetWrite>() {
-                        public void onResponse(Call<MeetWrite> call, Response<MeetWrite> response) {
 
-                            Log.i("결과는" , response.toString());
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(MeetWritingActivity.this);
-                            dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                }
-                            })
-                                    .create();
-                            dialog.show();
-
-                            api.newlike().enqueue(new Callback<likeCheck>() {
-                                @Override
-                                public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
-                                    likeCheck lc = response.body();
-                                    boolean newlk = lc.newlike;
-
-                                    Log.i("aaaa" , newlk+"");
-                                }
-
-                                @Override
-                                public void onFailure(Call<likeCheck> call, Throwable t) {
-
-                                }
-                            });
-                        }
-                        public void onFailure(Call<MeetWrite> call, Throwable t) {
-                            Log.i("작성실패", t.getMessage());
-                        }
-
-                    });
 
 
 

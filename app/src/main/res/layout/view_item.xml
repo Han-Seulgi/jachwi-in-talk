@@ -8,13 +8,15 @@
         android:id="@+id/view_img"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:layout_margin="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="7dp"
         />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="7dp">
     <TextView
         android:id="@+id/view_title"
         android:layout_width="wrap_content"

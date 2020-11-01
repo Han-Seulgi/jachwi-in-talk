@@ -3,8 +3,8 @@ package com.example.project_test.Meet.MeetContent;
 import com.google.gson.annotations.SerializedName;
 
 public class MeetList {
-    @SerializedName("meet_tag")
-    public int tag;
+    @SerializedName("tag_name")
+    public String tag;
 
     @SerializedName("meet_lct")
     public String lct;

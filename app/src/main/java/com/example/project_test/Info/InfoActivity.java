@@ -141,6 +141,13 @@ public class InfoActivity extends AppCompatActivity {
             }
         });
 
+        //갱신
+        //adapter.notifyDataSetChanged();
+//        Intent intent = new Intent(InfoActivity.this, InfoActivity.class);
+//
+//        startActivity(intent);
+//
+//        finish();
 
     }
 

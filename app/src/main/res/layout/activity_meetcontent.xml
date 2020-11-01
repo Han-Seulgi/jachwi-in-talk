@@ -77,10 +77,10 @@
 
                 <ImageView
                     android:id="@+id/iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="400dp"
+                    android:layout_height="217dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/meeting1" />
+                    android:scaleType="fitXY"/>
 
                 <TextView
                     android:id="@+id/text1"
@@ -95,7 +95,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
-                    android:text="위치:   응암동"
                     android:textSize="18sp" />
 
                 <TextView
@@ -103,7 +102,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
-                    android:text="인원:    5명"
                     android:textSize="18sp" />
 
                 <TextView
@@ -111,15 +109,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
-                    android:text="날짜:   ~2020.07.05"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/textcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:text="내용"
                     android:textSize="18sp" />
 
                 <TextView
@@ -127,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
-                    android:layout_marginVertical="10dp"
+                    android:layout_marginVertical="13dp"
                     android:text="응암동 스타벅스에서 같이 공부할 분 구해요!\n끝나고 같이 저녁도 먹고, 주말엔 스트레스 풀 겸 당구도 한게임\n편하게 칠 수 있는 모임 가져봐요~ 기간은 7월 5일까지 입니당!" />
 
                 <LinearLayout

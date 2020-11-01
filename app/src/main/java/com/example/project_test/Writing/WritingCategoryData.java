@@ -12,5 +12,6 @@ public class WritingCategoryData {
 class Category {
     @SerializedName("tag_name")
     public String tag;
+
 }
 

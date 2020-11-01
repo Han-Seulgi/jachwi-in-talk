@@ -1,5 +1,6 @@
 package com.example.project_test.SharenRent;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
+import com.example.project_test.Writing.FoodWritingActivity;
 
 import java.util.ArrayList;
 
@@ -38,6 +41,8 @@ public class SharenRentActivity extends AppCompatActivity {
     private  int[] img2 = {R.drawable.chocolate, R.drawable.rrimg1, R.drawable.rrimg2, R.drawable.rrimg3};
     private String[] title2 = {"초콜릿", "계란", "계란", "빵"};
 
+    private AlertDialog dialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,16 @@ public class SharenRentActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(SharenRentActivity.this);
+        dialog = builder.setMessage("개발중입니다").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        })
+                .create();
+        dialog.show();
 
         //나눔
         titletv1 = findViewById(R.id.titletv1);
@@ -96,24 +111,6 @@ public class SharenRentActivity extends AppCompatActivity {
         adapter2.setData(data2);
         rv2.setAdapter(adapter2);
 
-        //버튼 클릭
-        goshare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ShareActivity.class);
-                intent.putExtra("탭이름", tabtitle1);
-                v.getContext().startActivity(intent);
-            }
-        });
-
-        gorent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), RentActivity.class);
-                intent.putExtra("탭이름", tabtitle2);
-                v.getContext().startActivity(intent);
-            }
-        });
     }
 
     //상단탭 메뉴

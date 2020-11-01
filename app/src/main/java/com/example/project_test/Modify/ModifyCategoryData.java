@@ -1,10 +1,10 @@
-package com.example.project_test.SharenRent;
+package com.example.project_test.Modify;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class CategoryData {
+public class ModifyCategoryData {
     @SerializedName("data")
     public List<Category> items;
 }
@@ -12,4 +12,5 @@ public class CategoryData {
 class Category {
     @SerializedName("tag_name")
     public String tag;
+
 }

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Content.ContentWithPicture;
 import com.example.project_test.R;
-import com.example.project_test.SharenRent.SharenRentContent.ShareContentActivity;
 
 import java.util.ArrayList;
 
@@ -53,13 +52,13 @@ public class SRRecyclerAdapter extends RecyclerView.Adapter<SRRecyclerAdapter.SR
         holder.itemView.setOnClickListener(new View.OnClickListener() { //글 목록 클릭했을 때
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ShareContentActivity.class);
-                intent.putExtra("탭이름", tt);
-                intent.putExtra("제목", title);
-                intent.putExtra("작성자", "1111");
-                intent.putExtra("날짜", "1111");
-                intent.putExtra("내용", "1111");
-                v.getContext().startActivity(intent);
+//                Intent intent = new Intent(v.getContext(), ShareContentActivity.class);
+////                intent.putExtra("탭이름", tt);
+////                intent.putExtra("제목", title);
+////                intent.putExtra("작성자", "1111");
+////                intent.putExtra("날짜", "1111");
+////                intent.putExtra("내용", "1111");
+////                v.getContext().startActivity(intent);
             }
         });
     }

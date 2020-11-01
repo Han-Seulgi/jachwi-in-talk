@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.example.project_test.Api;
 import com.example.project_test.Cmt;
 import com.example.project_test.Content.ContentWithPicture;
 import com.example.project_test.DeletePost;
+import com.example.project_test.Food.FoodContent.FoodList;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.Meet.MeetContent.MeetRecyclerAdapterContent;
 import com.example.project_test.Modify.MeetModifyActivity;
@@ -40,10 +42,11 @@ public class MeetActivityContent extends AppCompatActivity {
     private RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
-    int postcode, likenum, tag, pnum;
-    TextView text1, writer, contents, textLikenum;
+    int postcode, likenum, pnum , img1;
+    TextView text1, writer, contents, textLikenum, locationtv, numtv, datetv;
+    ImageView iv;
     ImageButton like, modify, delete;
-    String title, content, location, date , cmt_con;
+    String title, content, location, date , cmt_con, tag;
     EditText editTextName1;
     Button push;
 
@@ -65,12 +68,16 @@ public class MeetActivityContent extends AppCompatActivity {
         text1 = findViewById(R.id.text1);
         writer = findViewById(R.id.id_day);
         contents = findViewById(R.id.con);
+        locationtv = findViewById(R.id.location);
+        numtv = findViewById(R.id.num);
+        datetv = findViewById(R.id.date);
         like = findViewById(R.id.like);
         textLikenum = findViewById(R.id.textLikenum);
         modify = findViewById(R.id.modify);
         delete = findViewById(R.id.delete);
         editTextName1 = findViewById(R.id.editTextName1);
         push = findViewById(R.id.push);
+        iv = findViewById(R.id.iv);
 
         //댓글 작성
         push.setOnClickListener(new View.OnClickListener() {
@@ -109,9 +116,10 @@ public class MeetActivityContent extends AppCompatActivity {
         title = intent.getStringExtra("제목");
         String id = intent.getStringExtra("작성자");
         String day = intent.getStringExtra("날짜");
+        //int img = intent.getIntExtra("사진", 0);
         content = intent.getStringExtra("내용");
 
-        //setText
+        //set
         text1.setText(title);
         writer.setText(id+"\n"+day);
         contents.setText(content);
@@ -137,19 +145,34 @@ public class MeetActivityContent extends AppCompatActivity {
                 PostList postlist = response.body();
                 postcode = postlist.pcode;
 
-//                //게시글 코드로 카테고리, 위치, 인원수, 날짜 가져오기
-//                api.getmeetday(postcode).enqueue(new Callback<MeetList>() {
-//                    @Override
-//                    public void onResponse(Call<MeetList> call, Response<MeetList> response) {
-//                        MeetList meetList = response.body();
-//
-//                        Log.i("abcdef", location+"");
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<MeetList> call, Throwable t) {
-//                    }
-//                });
+                //게시글 코드로 카테고리, 위치, 인원수, 날짜 가져오기
+                api.getmeetday(postcode).enqueue(new Callback<MeetList>() {
+                    @Override
+                    public void onResponse(Call<MeetList> call, Response<MeetList> response) {
+                        MeetList meetList = response.body();
+
+                        tag = meetList.tag;
+                        location = meetList.lct;
+                        date = meetList.day;
+                        pnum = meetList.pnum;
+                        locationtv.setText("위치:   "+location);
+                        numtv.setText("인원:   "+pnum);
+                        datetv.setText("날짜:   "+date);
+
+                        //태그에 따라 사진 설정
+                        if(tag.equals("운동")) img1=R.drawable.meeting2;
+                        else if(tag.equals("음식")) img1=R.drawable.meeting4;
+                        else if(tag.equals("영화")) img1=R.drawable.meeting6;
+                        else if(tag.equals("독서")) img1=R.drawable.meeting1;
+                        else if(tag.equals("공연/전시")) img1=R.drawable.meeting3;
+                        else if(tag.equals("기타")) img1=R.drawable.meeting5;
+                        iv.setImageResource(img1);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MeetList> call, Throwable t) {
+                    }
+                });
 
 
                 //추천수 설정

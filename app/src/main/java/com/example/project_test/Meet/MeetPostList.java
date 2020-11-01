@@ -28,6 +28,9 @@ class PostData {
     @SerializedName("board_code")
     @Expose
     int board_code;
+    @SerializedName("tag_name")
+    @Expose
+    String tag_name;
 
     @Override
     public String toString() {

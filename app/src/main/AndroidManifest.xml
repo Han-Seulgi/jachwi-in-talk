@@ -63,11 +63,7 @@
         <activity android:name=".Info.InfoActivity" android:label="자취인정보 게시판 화면"/>
         <activity android:name=".Info.InfoContent.infoActivityContent" android:label="자취인정보 게시물내용"/>
         <activity android:name=".SharenRent.SharenRentActivity" android:label="자취와생활 게시판 화면" />
-        <activity android:name=".SharenRent.ShareActivity" android:label="나눔 게시판 화면"/>
-        <activity android:name=".Writing.ShareWritingActivity" android:label="나눔 글쓰기 화면"/>
-        <activity android:name=".Writing.RentWritingActivity" android:label="대여 글쓰기 화면"/>
         <activity android:name=".SharenRent.SharenRentContent.ShareContentActivity" android:label="나눔대여 게시판 게시물내용"/>
-        <activity android:name=".SharenRent.RentActivity" android:label="대여 게시판 화면"/>
         <activity android:name=".Writing.WritingActivity" android:label="자취앤집밥 글쓰기 화면"/>
         <activity android:name=".Writing.FoodWritingActivity" android:label="자취앤혼밥 글쓰기 화면"/>
         <activity android:name=".Writing.InfoWritingActivity" android:label="자취인정보 글쓰기 화면"/>

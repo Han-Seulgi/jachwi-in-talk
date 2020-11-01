@@ -22,6 +22,7 @@ import com.example.project_test.Info.InfoRecyclerAdapter;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.Writing.MeetWritingActivity;
+import com.example.project_test.Writing.WritingCategoryData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,19 +70,20 @@ public class MeetActivity extends AppCompatActivity {
 
 
         //서버 연결
-        Api api = Api.Factory.INSTANCE.create();
+        final Api api = Api.Factory.INSTANCE.create();
         api.getMeetList(33).enqueue(new Callback<MeetPostList>() {
             @Override
             public void onResponse(Call<MeetPostList> call, Response<MeetPostList> response) {
                 MeetPostList postList = response.body();
                 List<PostData> postData = postList.items;
 
-                ArrayList<String> title1 = new ArrayList<>();
-                ArrayList<String> day1 = new ArrayList<>();
-                ArrayList<String> id1 = new ArrayList<>();
-                ArrayList<String> con1 = new ArrayList<>();
+                final ArrayList<String> title1 = new ArrayList<>();
+                final ArrayList<String> day1 = new ArrayList<>();
+                final ArrayList<String> id1 = new ArrayList<>();
+                final ArrayList<String> con1 = new ArrayList<>();
+                final ArrayList<Integer> img1 = new ArrayList<>();
 
-                //리스트에 제목, 날짜, 작성자 아이디 넣기
+                //리스트에 제목, 날짜, 작성자 아이디, 내용 넣기
                 for (PostData d:postData) {
                     title1.add(d.post_title);
                     day1.add(d.post_day);
@@ -90,25 +92,51 @@ public class MeetActivity extends AppCompatActivity {
                     Log.i("abc","모임 All: " + d.toString());
                 }
 
-                //리스트를 배열로 바꾸기, 이미지 배열 생성
-                String[] title = title1.toArray(new String[title1.size()]);
-                String[] day = day1.toArray(new String[day1.size()]);
-                String[] id = id1.toArray(new String[id1.size()]);
-                String[] con = con1.toArray(new String[con1.size()]);
-                Integer[] img = new Integer[title1.size()];
+                //리스트에 사진 넣기 -> 포스트를 가져올 때와 같이 작성날짜로 내림차순(검색조건 변경시 같이 변경해야 함)
+                api.getMeetCategory().enqueue(new Callback<MeetPostList>() {
+                    @Override
+                    public void onResponse(Call<MeetPostList> call, Response<MeetPostList> response) {
+                        MeetPostList postList = response.body();
+                        List<PostData> postData = postList.items;
 
-                //넘어온 데이터의 사이즈에 맞춰 이미지 생성(?), 리사이클러뷰 데이터파일에 데이터 넘기기
-                int i = 0;
-                while (i < title.length) {
-                    img[i] = R.drawable.meet2;
-                    data.add(new MeetListData(img[i], title[i], day[i], id[i], con[i]));
-                    i++;
-                }
-                adapter.setData(data);
-                rv.setAdapter(adapter);
+                        for(PostData t:postData) {
+                            Log.i("abc"," " + t.tag_name);
+                            if(t.tag_name.equals("운동")) img1.add(R.drawable.meeting2);
+                            else if(t.tag_name.equals("음식")) img1.add(R.drawable.meeting4);
+                            else if(t.tag_name.equals("영화")) img1.add(R.drawable.meeting6);
+                            else if(t.tag_name.equals("독서")) img1.add(R.drawable.meeting1);
+                            else if(t.tag_name.equals("공연/전시")) img1.add(R.drawable.meeting3);
+                            else if(t.tag_name.equals("기타")) img1.add(R.drawable.meeting5);
+                        }
 
-                //복사본에 모든 데이터 저장
-                cdata.addAll(data);
+                        //리스트를 배열로 바꾸기, 이미지 배열 생성
+                        String[] title = title1.toArray(new String[title1.size()]);
+                        String[] day = day1.toArray(new String[day1.size()]);
+                        String[] id = id1.toArray(new String[id1.size()]);
+                        String[] con = con1.toArray(new String[con1.size()]);
+                        Integer[] img = img1.toArray(new Integer[img1.size()]);
+
+                        //넘어온 데이터의 사이즈에 맞춰 이미지 생성(?), 리사이클러뷰 데이터파일에 데이터 넘기기
+                        int i = 0;
+                        while (i < title.length) {
+                            //img[i] = R.drawable.meet2;
+                            data.add(new MeetListData(img[i], title[i], day[i], id[i], con[i]));
+                            i++;
+                        }
+                        adapter.setData(data);
+                        rv.setAdapter(adapter);
+
+                        //복사본에 모든 데이터 저장
+                        cdata.addAll(data);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MeetPostList> call, Throwable t) {
+                        Log.i("abc"," " + t.getMessage());
+                    }
+                });
+
+
             }
 
             @Override

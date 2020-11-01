@@ -6,10 +6,10 @@ import com.example.project_test.Food.FoodPostList;
 import com.example.project_test.Info.InfoPostList;
 import com.example.project_test.Meet.MeetContent.MeetList;
 import com.example.project_test.Meet.MeetPostList;
+import com.example.project_test.Modify.ModifyCategoryData;
 import com.example.project_test.Mypage.MyContents.MyPostList;
 import com.example.project_test.Mypage.ValidateMypage;
 import com.example.project_test.Recipe.RecipePostList;
-import com.example.project_test.SharenRent.CategoryData;
 import com.example.project_test.Writing.WritingCategoryData;
 import com.example.project_test.qa.qaPostList;
 import com.google.gson.Gson;
@@ -118,7 +118,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("MeetWrite")
-    Call<MeetWrite> MeetWrite(@Field("meet_tag")int var1,@Field("meet_lct")String var2,@Field("meet_p")int var3);
+    Call<MeetWrite> MeetWrite(@Field("meet_tag")String var1,@Field("meet_lct")String var2,@Field("meet_p")int var3);
 
     @FormUrlEncoded
     @POST("Cmt")
@@ -170,14 +170,17 @@ public interface Api {
     Call<Write> ModifyFood(@Field("food_lct")String var1,@Field("post_code")int var2);
 
     @GET("Category")
-    Call<CategoryData> getCategory(@Query("board_code") int var1);
-
-    @GET("Category")
     Call<WritingCategoryData> getWritingCategory(@Query("board_code") int var1);
 
-//    @FormUrlEncoded
-//    @POST("Modify/meet")
-//    Call<Write> ModifyMeet(@Field("meet_tag")int var1, @Field("meet_lct")String var2, @Field("meet_p")int var3, @Field("meet_day")String var4, @Field("post_code")int var5);
+    @GET("Category")
+    Call<ModifyCategoryData> getModifyCategory(@Query("board_code") int var1);
+
+    @GET("Category/meetTag")
+    Call<MeetPostList> getMeetCategory();
+
+    @FormUrlEncoded
+    @POST("Modify/meet")
+    Call<Write> ModifyMeet(@Field("meet_tag")String var1, @Field("meet_lct")String var2, @Field("meet_p")int var3, @Field("meet_day")String var4, @Field("post_code")int var5);
 
     //댓글가져오기
     @GET("Cmt/getComments")

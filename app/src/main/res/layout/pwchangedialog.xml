@@ -14,7 +14,7 @@
 
     <EditText
         android:id="@+id/pw1"
-        android:layout_width="350dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
@@ -34,7 +34,7 @@
 
     <EditText
         android:id="@+id/pw2"
-        android:layout_width="350dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
@@ -44,7 +44,7 @@
 
     <EditText
         android:id="@+id/ckpw2"
-        android:layout_width="350dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"

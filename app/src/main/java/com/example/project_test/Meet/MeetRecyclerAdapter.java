@@ -55,8 +55,9 @@ public class MeetRecyclerAdapter extends RecyclerView.Adapter<MeetRecyclerAdapte
         final String id = data.getId();
         final String day = data.getDay();
         final String con = data.getCon();
+        final int dimg = data.getImg();
 
-        holder.img.setImageResource(data.getImg());
+        holder.img.setImageResource(dimg);
         holder.title.setText(title);
 
         if( id.equals(LoginActivity.user_ac)) {
@@ -77,6 +78,7 @@ public class MeetRecyclerAdapter extends RecyclerView.Adapter<MeetRecyclerAdapte
                 intent.putExtra("작성자", id);
                 intent.putExtra("날짜", day);
                 intent.putExtra("내용", con);
+                //intent.putExtra("사진", dimg);
                 v.getContext().startActivity(intent);
             }
         });

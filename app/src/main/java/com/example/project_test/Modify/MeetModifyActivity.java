@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,8 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.project_test.Api;
+import com.example.project_test.MySpinnerAdapter;
 import com.example.project_test.R;
 import com.example.project_test.Write;
+import com.example.project_test.Writing.MeetWritingActivity;
+import com.example.project_test.Writing.WritingCategoryData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,10 +35,13 @@ public class MeetModifyActivity extends AppCompatActivity {
     Button writing;
     EditText tedit, cedit, nedit, wedit;
     TextView tv0;
-    String post_title, post_con, meet_lct, meet_day;
-    int post_code, meet_tag, meet_p;
+    String post_title, post_con, meet_lct, meet_day, meet_tag;
+    int post_code, meet_p;
 
     private AlertDialog dialog;
+
+    Spinner spinner;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,7 +51,49 @@ public class MeetModifyActivity extends AppCompatActivity {
         writing = findViewById(R.id.writing);
         tedit = findViewById(R.id.tedit);
         cedit = findViewById(R.id.cedit);
+        wedit = findViewById(R.id.wedit);
+        nedit = findViewById(R.id.nedit);
         tv0 = findViewById(R.id.tv0);
+
+        spinner = findViewById(R.id.meetSpinner);
+
+        //분류 가져오기
+        final ArrayList<String> items = new ArrayList<>();
+
+        Api api = Api.Factory.INSTANCE.create();
+        api.getModifyCategory(33).enqueue(new Callback<ModifyCategoryData>() {
+            @Override
+            public void onResponse(Call<ModifyCategoryData> call, Response<ModifyCategoryData> response) {
+                Log.i("abced","성공");
+
+                ModifyCategoryData cgList = response.body();
+                List<Category> cg = cgList.items;
+
+                //리스트에 넣기
+                for (Category s:cg) {
+                    items.add(s.tag);
+                }
+                items.add("선택");
+
+                MySpinnerAdapter adapter = new MySpinnerAdapter(MeetModifyActivity.this, android.R.layout.simple_spinner_item,items);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+                spinner.setSelection(adapter.getCount());
+
+                int cnt=0;
+                for (String i:items) {
+                    if(i.equals(meet_tag)) {
+                        spinner.setSelection(cnt);
+                    }
+                    cnt++;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ModifyCategoryData> call, Throwable t) {
+                Log.i("abced",t.getMessage());
+            }
+        });
 
         //상단탭
         toolbar = findViewById(R.id.toolbar);
@@ -56,13 +108,17 @@ public class MeetModifyActivity extends AppCompatActivity {
         Intent intent = getIntent();
         post_title = intent.getStringExtra("제목");
         post_con = intent.getStringExtra("내용");
-//        meet_tag = intent.getIntExtra("태그", 3306);
-//        meet_lct = intent.getStringExtra("위치");
-//        meet_p = intent.getIntExtra("인원", 0);
-//        meet_day = intent.getStringExtra("날짜");
+        meet_tag = intent.getStringExtra("태그");
+        meet_lct = intent.getStringExtra("위치");
+        meet_p = intent.getIntExtra("인원", 0);
+        meet_day = intent.getStringExtra("날짜");
         post_code = intent.getIntExtra("게시글코드", 0);
+
+        //set
         tedit.setText(post_title);
         cedit.setText(post_con);
+        nedit.setText(meet_p+"");
+        wedit.setText(meet_lct);
 
         //글쓰기 _올리기
         writing.setOnClickListener(new View.OnClickListener() {
@@ -71,14 +127,20 @@ public class MeetModifyActivity extends AppCompatActivity {
 
                 post_title = tedit.getText().toString();
                 post_con = cedit.getText().toString();
+                meet_lct = wedit.getText().toString();
+                String p = nedit.getText().toString();
+                meet_tag = spinner.getSelectedItem().toString();
 
-                if (post_title.equals("") || post_con.equals("")) {
+
+                if (post_title.equals("") || post_con.equals("") || meet_lct.equals("") || p.equals("") || meet_tag.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MeetModifyActivity.this);
                     dialog = builder.setMessage("글 작성이 완료되지 않았습니다.").setNegativeButton("확인", null)
                             .create();
                     dialog.show();
                     return;
                 } else {
+                    meet_p = Integer.parseInt(p);
+
                     final Api api = Api.Factory.INSTANCE.create();
 
                     api.Modify(post_title, post_con, post_code).enqueue(new Callback<Write>() {
@@ -87,7 +149,14 @@ public class MeetModifyActivity extends AppCompatActivity {
                             Write write = response.body();
                             boolean insert = write.insert;
                             Log.i("abcdef", insert + "");
-                            AlertDialog.Builder builder = new AlertDialog.Builder(MeetModifyActivity.this);
+                            api.ModifyMeet(meet_tag, meet_lct, meet_p, meet_day, post_code).enqueue(new Callback<Write>() {
+                                @Override
+                                public void onResponse(Call<Write> call, Response<Write> response) {
+                                    Write write = response.body();
+                                    boolean insert = write.insert;
+                                    Log.i("abcdef", insert + "");
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MeetModifyActivity.this);
                                     dialog = builder.setMessage("수정 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -96,31 +165,13 @@ public class MeetModifyActivity extends AppCompatActivity {
                                     })
                                             .create();
                                     dialog.show();
+                                }
 
-
-//                            api.ModifyMeet(meet_tag, meet_lct, meet_p, meet_day, post_code).enqueue(new Callback<Write>() {
-//                                @Override
-//                                public void onResponse(Call<Write> call, Response<Write> response) {
-//                                    Write write = response.body();
-//                                    boolean insert = write.insert;
-//                                    Log.i("abcdef", insert + "");
-//
-//                                    AlertDialog.Builder builder = new AlertDialog.Builder(MeetModifyActivity.this);
-//                                    dialog = builder.setMessage("수정 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(DialogInterface dialog, int which) {
-//                                            finish();
-//                                        }
-//                                    })
-//                                            .create();
-//                                    dialog.show();
-//                                }
-//
-//                                @Override
-//                                public void onFailure(Call<Write> call, Throwable t) {
-//                                    Log.i("수정실패", t.getMessage());
-//                                }
-//                            });
+                                @Override
+                                public void onFailure(Call<Write> call, Throwable t) {
+                                    Log.i("수정실패", t.getMessage());
+                                }
+                            });
                         }
 
                         public void onFailure(Call<Write> call, Throwable t) {
