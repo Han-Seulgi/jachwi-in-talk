@@ -26,7 +26,7 @@ import retrofit2.Response;
 public class QnaModifyActivity extends AppCompatActivity {
     Toolbar toolbar;
     Button writing;
-    EditText tedit, cedit, pedit ;
+    EditText tedit, cedit;
     TextView tv0;
     String post_title, post_con;
     int post_code;
@@ -42,7 +42,6 @@ public class QnaModifyActivity extends AppCompatActivity {
         writing = findViewById(R.id.writing);
         tedit = findViewById(R.id.tedit);
         cedit = findViewById(R.id.cedit);
-        pedit = findViewById(R.id.pedit);
         tv0 = findViewById(R.id.tv0);
 
 

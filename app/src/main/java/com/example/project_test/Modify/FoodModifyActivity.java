@@ -26,7 +26,7 @@ import retrofit2.Response;
 public class FoodModifyActivity extends AppCompatActivity {
     Toolbar toolbar;
     Button writing;
-    EditText tedit, wedit, cedit, editTextName2;
+    EditText tedit, wedit, cedit;
     TextView tv0;
     String post_title, post_con, food_lct;
     int post_code;
@@ -43,7 +43,6 @@ public class FoodModifyActivity extends AppCompatActivity {
         tedit = findViewById(R.id.tedit);
         wedit = findViewById(R.id.wedit);
         cedit = findViewById(R.id.cedit);
-        editTextName2 = findViewById(R.id.editTextName2);
         tv0 = findViewById(R.id.tv0);
 
         //상단탭

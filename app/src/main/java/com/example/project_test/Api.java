@@ -7,6 +7,7 @@ import com.example.project_test.Info.InfoPostList;
 import com.example.project_test.Meet.MeetContent.MeetList;
 import com.example.project_test.Meet.MeetPostList;
 import com.example.project_test.Modify.ModifyCategoryData;
+import com.example.project_test.Mypage.KeywordList;
 import com.example.project_test.Mypage.MyContents.MyPostList;
 import com.example.project_test.Mypage.ValidateMypage;
 import com.example.project_test.Recipe.RecipePostList;
@@ -216,6 +217,17 @@ public interface Api {
     /*@FormUrlEncoded
     @POST("Image/getImg")
     Call<ResponseBody> getImg(@Field("post_code") int var1);*/
+
+    @GET("Keyword")
+    Call<KeywordList> getkeyword(@Query("id")String var1);
+
+    @FormUrlEncoded
+    @POST("Keyword/addkw")
+    Call<KeywordList> addkeyword(@Field("keyword") String var1, @Field("id") String var2);
+
+    @FormUrlEncoded
+    @POST("Keyword/delkw")
+    Call<KeywordList> deletekeyword(@Field("keyword") String var1, @Field("id") String var2);
 
     public static final class Factory {
         public static final Api.Factory INSTANCE;

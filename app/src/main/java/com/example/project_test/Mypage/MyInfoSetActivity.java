@@ -239,11 +239,10 @@ public class MyInfoSetActivity extends AppCompatActivity {
 //                pwch.setNegativeButton("취소", null);
 //
 //                pwch.show();
-                final String ps = "";
+                //final String ps = "";
 
                 PwChangeActivity customDialog = new PwChangeActivity(MyInfoSetActivity.this);
-                customDialog.callFunction(ps);
-
+                customDialog.callFunction();
             }
         });
 

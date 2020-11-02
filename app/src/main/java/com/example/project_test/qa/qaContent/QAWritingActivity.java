@@ -30,7 +30,7 @@ import retrofit2.Response;
 public class QAWritingActivity extends AppCompatActivity {
     Toolbar toolbar;
     Button writing;
-    EditText tedit, cedit, pedit ;
+    EditText tedit, cedit;
     TextView tv0, tv1 , title2;
     ImageView wimg;
     String post_title, post_con;
@@ -46,7 +46,6 @@ public class QAWritingActivity extends AppCompatActivity {
         writing = findViewById(R.id.writing);
         tedit = findViewById(R.id.tedit);
         cedit = findViewById(R.id.cedit);
-        pedit = findViewById(R.id.pedit);
         title2 = findViewById(R.id.title2);
 
 

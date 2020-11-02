@@ -104,16 +104,16 @@
 
             <ImageButton
                 android:id="@+id/like"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="#ffffff"
-                android:src="@drawable/likes" />
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="#CDCDCD"
+                android:src="@drawable/ic_like" />
 
             <TextView
                 android:id="@+id/textLikenum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginEnd="20dp"
                 android:text="0"
                 android:textSize="17dp"/>

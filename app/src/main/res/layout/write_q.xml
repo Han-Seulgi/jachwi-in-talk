@@ -94,30 +94,6 @@
             android:textSize="18dp"
             android:textColor="@android:color/black" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginHorizontal="15dp">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/gal" />
-
-            <EditText
-                android:id="@+id/pedit"
-                android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:layout_gravity="center"
-                android:background="@drawable/border"
-                android:hint=" 사진을 등록해주세요"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="18dp" />
-        </LinearLayout>
     </LinearLayout>
 
 

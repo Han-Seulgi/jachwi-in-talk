@@ -34,7 +34,7 @@ public class PwChangeActivity {
         this.context = context;
     }
 
-    public void callFunction(String ps) {
+    public void callFunction() {
 
         // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성
         final Dialog dlg = new Dialog(context);

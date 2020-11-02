@@ -97,6 +97,7 @@ public class qaActivity extends AppCompatActivity {
                     data.add(new qaListData(img[i], title[i], day[i], id[i], con[i]));
                     i++;
                 }
+
                 adapter.setData(data);
                 recyclerView.setAdapter(adapter);
 

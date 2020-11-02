@@ -57,6 +57,7 @@ public class SharenRentActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(SharenRentActivity.this);
+        builder.setCancelable(false);
         dialog = builder.setMessage("개발중입니다").setNegativeButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
