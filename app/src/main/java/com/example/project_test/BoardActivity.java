@@ -118,8 +118,6 @@ public class BoardActivity extends AppCompatActivity {
                     TextView textView2 = vflipview1[i].findViewById(R.id.view_content);
                     textView2.setText(con[i]);
                     final ImageView imageView = vflipview1[i].findViewById(R.id.view_img);
-
-
                     final int finalI = i;
                     api.getcontent(title[i]).enqueue(new Callback<PostList>() {
                         @Override

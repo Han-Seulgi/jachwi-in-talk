@@ -74,7 +74,7 @@
         <activity android:name=".Modify.MeetModifyActivity" android:label="자취인만남 글수정 화면"/>
         <activity android:name=".Content.ContentWithPicture" android:label="사진이 있는 게시물내용"/>
         <activity android:name=".RoomActivity" android:label="보금자리 화면"/>
-        <activity android:name=".RoomWriting" android:label="보금자리 글쓰기 화면"/>
+        <activity android:name=".DaumWebViewActivity" android:label="보금자리 글쓰기 화면"/>
         <activity android:name=".EventActivity" android:label="행사알리미 화면"/>
         <activity android:name=".Emergency.EmergencyActivity" android:label="안전지키미 화면"/>
         <activity android:name=".Emergency.EmergencySet" android:label="안전지키미 설정화면"/>

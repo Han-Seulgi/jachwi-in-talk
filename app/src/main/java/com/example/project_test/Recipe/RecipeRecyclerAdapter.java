@@ -33,6 +33,10 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
         datas = list;
     }
 
+    public void addData(RecipeListData data){
+        datas.add(data);
+    }
+
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

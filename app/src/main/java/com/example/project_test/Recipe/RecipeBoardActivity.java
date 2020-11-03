@@ -87,8 +87,6 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 ArrayList<String> con1 = new ArrayList<>();
                 ArrayList<Integer> code1 = new ArrayList<>();
 
-
-
                 //리스트에 제목, 날짜, 작성자 아이디 넣기
                 for (PostData d:postData) {
                     title1.add(d.post_title);
@@ -152,7 +150,6 @@ public class RecipeBoardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(RecipeBoardActivity.this, WritingActivity.class);
                 startActivity(intent);
-
             }
         });
 

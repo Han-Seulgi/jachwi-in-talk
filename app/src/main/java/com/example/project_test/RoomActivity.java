@@ -72,7 +72,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         write.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RoomActivity.this, RoomWriting.class);
+                Intent intent = new Intent(RoomActivity.this, DaumWebViewActivity.class);
                 startActivity(intent);
 
             }

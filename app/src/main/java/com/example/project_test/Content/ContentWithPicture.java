@@ -418,17 +418,15 @@ public class ContentWithPicture extends AppCompatActivity {
                 dialog = builder.setMessage("게시물을 삭제하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Log.i("delete", "게시물 삭제하기" + title);
                                 Api api = Api.Factory.INSTANCE.create();
 
                                 api.deletepost(title).enqueue(new Callback<DeletePost>() {
                                     @Override
                                     public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
-                                        //DeletePost deletePost = response.body();
-                                        //boolean del = deletePost.delete;
 
                                         Log.i("delete", "성공" + response);
                                         Toast.makeText(getApplicationContext(),"삭제됨",Toast.LENGTH_SHORT).show();
+
 
                                     }
                                     @Override
