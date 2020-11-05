@@ -14,6 +14,7 @@ import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,14 +28,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.project_test.Api;
+import com.example.project_test.LoginActivity;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.ShakeNumberActivity;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class EmergencyActivity extends AppCompatActivity {
@@ -51,7 +60,8 @@ public class EmergencyActivity extends AppCompatActivity {
     private String mCameraId;
     private SoundPool sound_pool; //사이렌
     private int sound_beep; //사이렌
-
+    private boolean boolsound=true;
+    int sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +103,8 @@ public class EmergencyActivity extends AppCompatActivity {
         //카메라(손전등사용)
         cm = (CameraManager) getSystemService(CAMERA_SERVICE);
 
+        final Api api = Api.Factory.INSTANCE.create();
+
         //이벤트
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             //@RequiresApi(api = Build.VERSION_CODES.M)
@@ -109,23 +121,57 @@ public class EmergencyActivity extends AppCompatActivity {
                         return;
 
                     case 1:
-                        try {
-                            String to = "01000000000"; //마이페이지에서 설정한 문자 번호
-                            String message = "서울특별시 서대문구 홍은2동 모꼬지 님이 위험에 빠졌습니다.!"; // 사용자의 위치
+                            //문자번호 가져오기
+                            api.getmsgnum(LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+                                @Override
+                                public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
+                                    MsgNumList mnl = response.body();
+                                    List<MsgNumData> mData = mnl.items;
 
-                            Uri smsUri = Uri.parse("tel:"+to);
-                            Intent it = new Intent(Intent.ACTION_VIEW, smsUri);
-                            it.putExtra("address", to);
-                            it.putExtra("sms_body", message);
-                            it.setType("vnd.android-dir/mms-sms");
-                            startActivity(it);
+                                    ArrayList<String> mn = new ArrayList<>();
 
-                            Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_SHORT).show();
+                                    for (MsgNumData d:mData) {
+                                        mn.add(d.msgnum);
+                                    }
+                                    if(mn.size() == 0) {
+                                        AlertDialog dialog;
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(EmergencyActivity.this);
+                                        dialog = builder.setMessage("설정에서 연락처를 저장하세요").setNegativeButton("확인", null).create();
+                                        dialog.show();
+                                    }
+                                    else {
+                                        try {
+                                            String msgnum[] = mn.toArray(new String[mn.size()]);
 
-                        } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), "전송실패", Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                        }
+                                            //String to = "01000000000";
+                                            String message = "테스트문자"; // 사용자의 위치
+
+                                            for (String num : msgnum) {
+                                                String to = num;  //마이페이지에서 설정한 문자 번호
+                                                //문자보내기
+                                                SmsManager smsManager= SmsManager.getDefault();
+                                                smsManager.sendTextMessage(to, null, message, null, null);
+//                                                Uri smsUri = Uri.parse("tel:" + to);
+//                                                Intent it = new Intent(Intent.ACTION_VIEW, smsUri);
+//                                                it.putExtra("address", to);
+//                                                it.putExtra("sms_body", message);
+//                                                it.setType("vnd.android-dir/mms-sms");
+//                                                startActivity(it);
+                                            }
+                                            Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_SHORT).show();
+                                        }
+                                        catch (Exception e)  {
+                                            Toast.makeText(getApplicationContext(), "전송실패", Toast.LENGTH_SHORT).show();
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<MsgNumList> call, Throwable t) {
+
+                                }
+                            });
                         return;
 
                     case 2:
@@ -134,29 +180,79 @@ public class EmergencyActivity extends AppCompatActivity {
                         startActivity(count_itnt);
                         return;
                     case 3: //경고음 버튼 눌렀을 때
-                        try {
-                            sound_pool.play(sound_beep, 3f, 3f, 0, -1, 1f); // (재생시킬 파일, 왼쪽 볼륨 크기, 오른쪽 볼륨 크기, 우선순위, 재생횟수, 재생속도)
-                        } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), "경고음 실패", Toast.LENGTH_SHORT).show();
-                        }
+                        //시스템설정값 가져오기
+                        api.getemergency(LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+                            @Override
+                            public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
+                                MsgNumList mnl = response.body();
+                                List<MsgNumData> mData = mnl.items;
+
+                                int volume = mData.get(0).sysvolume;
+
+                                if(boolsound) {
+                                    try {
+                                        float sv = volume/100.0f; //(0~1)
+                                        sp = sound_pool.play(sound_beep, sv, sv, 0, -1, 1f); // (재생시킬 파일, 왼쪽 볼륨 크기, 오른쪽 볼륨 크기, 우선순위, 재생횟수, 재생속도)
+                                        boolsound = false;
+                                    } catch (Exception e) {
+                                        Toast.makeText(getApplicationContext(), "경고음 실패", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                else {
+                                    sound_pool.pause(sp);
+                                    boolsound = true;
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<MsgNumList> call, Throwable t) {
+
+                            }
+                        });
                         return;
+
                     case 4:
+                        //설정 화면
                         Intent intent = new Intent(EmergencyActivity.this, EmergencySet.class);
                         startActivity(intent);
                         return;
+
                     case 5: //긴급전화 버튼 눌렀을 때
-                       Intent intent2 = new Intent(Intent.ACTION_CALL);
-                       intent2.setData(Uri.parse("tel:01022222222")); //마이페이지에서 설정한 전화번호
+                        //전화번호 가져오기
+                        api.getemergency(LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+                            @Override
+                            public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
+                                MsgNumList mnl = response.body();
+                                List<MsgNumData> mData = mnl.items;
 
+                                String callnum = mData.get(0).callnum;
 
-                        try {
-                            startActivity(intent2);
-                            Toast.makeText(EmergencyActivity.this, "전화걸기 성공", Toast.LENGTH_SHORT).show();
-                        }
-                        catch(Exception e) {
-                            e.printStackTrace();
-                            Toast.makeText(EmergencyActivity.this, "전화걸기 실패", Toast.LENGTH_SHORT).show();
-                        }
+                                if(callnum == null || callnum.equals(""))
+                                {
+                                    AlertDialog dialog;
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(EmergencyActivity.this);
+                                    dialog = builder.setMessage("설정에서 연락처를 저장하세요").setNegativeButton("확인", null).create();
+                                    dialog.show();
+                                }
+                                else {
+                                    Intent intent2 = new Intent(Intent.ACTION_CALL);
+                                    intent2.setData(Uri.parse("tel:" + callnum));
+                                    try {
+                                        startActivity(intent2);
+                                        Toast.makeText(EmergencyActivity.this, "전화걸기 성공", Toast.LENGTH_SHORT).show();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(EmergencyActivity.this, "전화걸기 실패", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<MsgNumList> call, Throwable t) {
+
+                            }
+                        });
+
 
                         return;
 

@@ -1,6 +1,7 @@
 package com.example.project_test;
 
 import com.example.project_test.Content.CookList;
+import com.example.project_test.Emergency.MsgNumList;
 import com.example.project_test.Food.FoodContent.FoodList;
 import com.example.project_test.Food.FoodPostList;
 import com.example.project_test.Info.InfoPostList;
@@ -228,6 +229,28 @@ public interface Api {
     @FormUrlEncoded
     @POST("Keyword/delkw")
     Call<KeywordList> deletekeyword(@Field("keyword") String var1, @Field("id") String var2);
+
+    @GET("MessageNum")
+    Call<MsgNumList> getmsgnum(@Query("id")String var1);
+
+    @FormUrlEncoded
+    @POST("MessageNum/addnum")
+    Call<MsgNumList> addmsgnum(@Field("msg_num") String var1, @Field("id") String var2);
+
+    @FormUrlEncoded
+    @POST("MessageNum/delnum")
+    Call<MsgNumList> delmsgnum(@Field("msg_num") String var1, @Field("id") String var2);
+
+    @GET("Emergency")
+    Call<MsgNumList> getemergency(@Query("id")String var1);
+
+    @FormUrlEncoded
+    @POST("Emergency/addcallnum")
+    Call<MsgNumList> addcallnum(@Field("call_num") String var1, @Field("id") String var2);
+
+    @FormUrlEncoded
+    @POST("Emergency/setsystem")
+    Call<MsgNumList> setsystem(@Field("sys_sensor") int var1, @Field("sys_volume") int var2, @Field("id") String var3);
 
     public static final class Factory {
         public static final Api.Factory INSTANCE;

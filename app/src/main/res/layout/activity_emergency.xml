@@ -40,7 +40,6 @@
             android:verticalSpacing="40dp"
 
             ></GridView>
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
