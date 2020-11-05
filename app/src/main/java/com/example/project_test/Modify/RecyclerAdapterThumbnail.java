@@ -13,12 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
-import com.example.project_test.DeleteImg;
 import com.example.project_test.R;
 import com.example.project_test.Writing.ThumbnailListData;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +37,7 @@ public class RecyclerAdapterThumbnail extends RecyclerView.Adapter<RecyclerAdapt
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pictures_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
+
         return viewHolder;
     }
 
@@ -56,19 +58,25 @@ public class RecyclerAdapterThumbnail extends RecyclerView.Adapter<RecyclerAdapt
             @Override
             public boolean onLongClick(View v) {
                 Api api = Api.Factory.INSTANCE.create();
-                api.deleteImg(img_code).enqueue(new Callback<DeleteImg>() {
+                api.deleteImg(img_code).enqueue(new Callback<ResponseBody>() {
                     @Override
-                    public void onResponse(Call<DeleteImg> call, Response<DeleteImg> response) {
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            Log.i("img" , response.body().string().trim());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                         Log.i("imgdelete","성공"+img_code);
                         datas.remove(position);
                         notifyItemRemoved(position);
                         notifyItemRangeChanged(position, datas.size());
-                        Log.i("imgdelete", "갱신도 성공");
+                        Log.i("imgdelete", "갱신도 성공"+position);
                         notifyItemRemoved(position);
                     }
 
                     @Override
-                    public void onFailure(Call<DeleteImg> call, Throwable t) {
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.i("imgdelete",t.getMessage()+"실패");
                     }
                 });

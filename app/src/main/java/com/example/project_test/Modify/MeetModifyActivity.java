@@ -20,8 +20,6 @@ import com.example.project_test.Api;
 import com.example.project_test.MySpinnerAdapter;
 import com.example.project_test.R;
 import com.example.project_test.Write;
-import com.example.project_test.Writing.MeetWritingActivity;
-import com.example.project_test.Writing.WritingCategoryData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,14 +145,11 @@ public class MeetModifyActivity extends AppCompatActivity {
                         public void onResponse(Call<Write> call, Response<Write> response) {
 
                             Write write = response.body();
-                            boolean insert = write.insert;
-                            Log.i("abcdef", insert + "");
+
                             api.ModifyMeet(meet_tag, meet_lct, meet_p, meet_day, post_code).enqueue(new Callback<Write>() {
                                 @Override
                                 public void onResponse(Call<Write> call, Response<Write> response) {
                                     Write write = response.body();
-                                    boolean insert = write.insert;
-                                    Log.i("abcdef", insert + "");
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(MeetModifyActivity.this);
                                     dialog = builder.setMessage("수정 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {

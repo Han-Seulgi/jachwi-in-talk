@@ -1,5 +1,6 @@
 package com.example.project_test.Recipe;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
@@ -28,13 +29,36 @@ import retrofit2.Response;
 
 public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAdapter.RecipeViewHolder> {
     private ArrayList<RecipeListData> datas;
+    private Activity rActivity;
+    private int MODIFY_POST = 200;
+    private int DELETE_POST = 300;
 
-    public void setData(ArrayList<RecipeListData> list){
+
+    public void setData(Activity act, ArrayList<RecipeListData> list){
         datas = list;
+        rActivity = act;
     }
 
     public void addData(RecipeListData data){
         datas.add(data);
+        notifyItemInserted(0);
+        notifyDataSetChanged();
+
+        Log.i("itemcount", String.valueOf(getItemCount()));
+    }
+
+//    public void updateData(ArrayList<RecipeListData> d){
+//        datas.clear();
+//        datas.addAll(d);
+//        notifyDataSetChanged();
+//        //notifyItemChanged(position);
+//    }
+
+    public void deleteData(int position) {
+        datas.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, datas.size());
+        Log.i("delete", "갱신도 성공"+position);
     }
 
     @NonNull
@@ -81,7 +105,11 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
                 intent.putExtra("날짜", day);
                 intent.putExtra("내용", con);
                 intent.putExtra("코드", code);
-                v.getContext().startActivity(intent);
+                intent.putExtra("requestmod", MODIFY_POST);
+                intent.putExtra("requestdel", DELETE_POST);
+                intent.putExtra("position", position);
+                Log.i("rradapter: ", "MOD_POST: " +MODIFY_POST+"   DEL_POST: "+DELETE_POST+"   Act: "+rActivity);
+                rActivity.startActivityForResult(intent, 777);
             }
         });
 
@@ -104,7 +132,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
                                         datas.remove(position);
                                         notifyItemRemoved(position);
                                         notifyItemRangeChanged(position, datas.size());
-                                        Log.i("delete", "갱신도 성공");
+                                        Log.i("delete", "갱신도 성공"+position);
                                     }
                                     @Override
                                     public void onFailure(Call<DeletePost> call, Throwable t) {

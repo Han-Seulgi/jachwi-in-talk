@@ -165,6 +165,7 @@ public class RecipeModifyActivity extends AppCompatActivity {
             }
         });
         rv.setLayoutManager(layoutManager);
+        
 
         /*//올렸던 사진
         for(int i = 0; img_data.length>i; i++){
@@ -232,124 +233,219 @@ public class RecipeModifyActivity extends AppCompatActivity {
         });
 
         //글쓰기 _올리기
-        writing.setOnClickListener(new View.OnClickListener() {
+        int request = getIntent().getIntExtra("request", -1);
+        Log.i("modifyrequest", String.valueOf(request));
+        switch (request) {
+//            case 0: AlertDialog.Builder builder = new AlertDialog.Builder(RecipeModifyActivity.this);
+//                dialog = builder.setMessage("수정 오류").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        finish();
+//                    }
+//                }).create();
+//                dialog.show(); break;
+            case 1000:
+            writing.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    post_title = tedit.getText().toString();
+                    post_con = cedit2.getText().toString();
+                    cook_src = nedit.getText().toString();
+                    cook_rcp = cedit.getText().toString();
+
+                    if (post_title.equals("") || cook_src.equals("") || cook_rcp.equals("")) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(RecipeModifyActivity.this);
+                        dialog = builder.setMessage("글 작성이 완료되지 않았습니다.").setNegativeButton("확인", null)
+                                .create();
+                        dialog.show();
+                        return;
+                    } else {
+                        api.Modify(post_title, post_con, post_code).enqueue(new Callback<Write>() {
+                            public void onResponse(Call<Write> call, Response<Write> response) {
+                                Write write = response.body();
+                                api.ModifyCook(cook_src, cook_rcp, post_code).enqueue(new Callback<Write>() {
+                                    @Override
+                                    public void onResponse(Call<Write> call, Response<Write> response) {
+                                        Write write = response.body();
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Write> call, Throwable t) {
+                                        Log.i("수정실패", t.getMessage());
+                                    }
+                                });
+
+                                getimg();
+
+                                if (imgString2!=null) {
+                                    api.imgmodify(LoginActivity.user_ac, imgString, post_code).enqueue(new Callback<ResponseBody>() {
+                                        @Override
+                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                            try {
+                                                Log.i("img", response.body().string().trim());
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            //Img i = response.body();
+                                            //String d = i.img_data;
+                                            //boolean upload = i.insert;
+
+                                            //if (upload==true){
+                                            Log.i("img", "업로드 성공");
+
+                                            //}
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                            Log.i("img", "업로드 실패" + t.getMessage());
+                                        }
+                                    });
+                                } else {
+                                    Log.i("img", "사진 없이 올림");
+                                }
+                                AlertDialog.Builder builder = new AlertDialog.Builder(RecipeModifyActivity.this);
+                                dialog = builder.setMessage("수정 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        returnResult();
+                                        finish();
+                                    }
+                                }).create();
+                                dialog.show();
+
+                            }
+
+                            public void onFailure(Call<Write> call, Throwable t) {
+                                Log.i("onfailure", t.getMessage());
+                                AlertDialog.Builder builder = new AlertDialog.Builder(RecipeModifyActivity.this);
+                                dialog = builder.setMessage("작성 실패").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                    }
+                                }).create();
+                                dialog.show();
+                            }
+                        });
+                    }
+                }
+            });break;
+        }
+    }
+
+    private void returnResult() {
+        /*final String[] recipe = new String[1];
+        final String[] source = new String[1];
+
+        final Api api = Api.Factory.INSTANCE.create();
+        api.getRecipeList(11).enqueue(new Callback<RecipePostList>() {
             @Override
-            public void onClick(View v) {
+            public void onResponse(Call<RecipePostList> call, Response<RecipePostList> response) {
+                RecipePostList postList = response.body();
+                List<PostData> postData = postList.items;
+
+                api.getrecipe(post_code).enqueue(new Callback<CookList>() {
+                    @Override
+                    public void onResponse(Call<CookList> call, Response<CookList> response) {
+                        CookList cookList = response.body();
+                        recipe[0] = cookList.rcp;
+                        source[0] = cookList.src;
+                        Log.i("abcdef", recipe[0] + source[0] +"");
+                    }
+
+                    @Override
+                    public void onFailure(Call<CookList> call, Throwable t) {
+                    }
+                });
+
+                ArrayList<String> title1 = new ArrayList<>();
+                ArrayList<String> day1 = new ArrayList<>();
+                ArrayList<String> id1 = new ArrayList<>();
+                ArrayList<String> con1 = new ArrayList<>();
+
+                //리스트에 제목, 날짜, 작성자 아이디 넣기
+                for (PostData d : postData) {
+                    title1.add(d.title);
+                    day1.add(d.day);
+                    id1.add(d.id);
+                    con1.add(d.con);
+                    Log.i("abc", "요리 All: " + d.toString());
+                }
+
+                //리스트를 배열로 바꾸기, 이미지 배열 생성
+                final String[] title = title1.toArray(new String[title1.size()]);
+                String[] day = day1.toArray(new String[day1.size()]);
+                String[] id = id1.toArray(new String[id1.size()]);
+                String[] con = con1.toArray(new String[con1.size()]);*/
 
                 post_title = tedit.getText().toString();
                 post_con = cedit2.getText().toString();
                 cook_src = nedit.getText().toString();
                 cook_rcp = cedit.getText().toString();
 
-                if (post_title.equals("") || cook_src.equals("") || cook_rcp.equals("")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RecipeModifyActivity.this);
-                    dialog = builder.setMessage("글 작성이 완료되지 않았습니다.").setNegativeButton("확인", null)
-                            .create();
-                    dialog.show();
-                    return;
-                } else {
+                Intent intent = new Intent();
+                intent.putExtra("title", post_title);
+                intent.putExtra("con", post_con);
+                intent.putExtra("rcp", cook_rcp);
+                intent.putExtra("src", cook_src);
 
+                setResult(RESULT_OK, intent);
+                Log.i("recipemodifyact", "수정");
+                //finish();
+            //}
 
-                    api.Modify(post_title, post_con, post_code).enqueue(new Callback<Write>() {
-                        public void onResponse(Call<Write> call, Response<Write> response) {
+            /*public void onFailure(Call<RecipePostList> call, Throwable t) {
+                Log.i("onfailure", t.getMessage());
+                AlertDialog.Builder builder = new AlertDialog.Builder(RecipeModifyActivity.this);
+                dialog = builder.setMessage("작성 실패").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).create();
+                dialog.show();
+            }
+        });*/
+    }
 
-                            Write write = response.body();
-                            boolean insert = write.insert;
-                            Log.i("abcdef", insert + "");
+    private void getimg() {
+        Api api = Api.Factory.INSTANCE.create();
+        //사진
+        api.getImg(post_code).enqueue(new Callback<Img>() {
+            @Override
+            public void onResponse(Call<Img> call, Response<Img> response) {
 
-                            api.ModifyCook(cook_src, cook_rcp, post_code).enqueue(new Callback<Write>() {
-                                @Override
-                                public void onResponse(Call<Write> call, Response<Write> response) {
-                                    Write write = response.body();
-                                    boolean insert = write.insert;
-                                    Log.i("abcdef", insert + "");
+                Img img = response.body();
+                List<com.example.project_test.imgs> imgd = img.imgdata;
 
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(RecipeModifyActivity.this);
-                                    dialog = builder.setMessage("수정 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            finish();
-                                        }
-                                    })
-                                            .create();
-                                    dialog.show();
-                                }
+                ArrayList<Integer> img_code1 = new ArrayList<>();
+                ArrayList<String> img_data1 = new ArrayList<>();
 
-                                @Override
-                                public void onFailure(Call<Write> call, Throwable t) {
-                                    Log.i("수정실패", t.getMessage());
-                                }
-                            });
-
-                            if(imgString2 != null)
-                            {
-                                api.imgmodify(LoginActivity.user_ac, imgString, post_code).enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                        try {
-                                            Log.i("img" , response.body().string().trim());
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-
-                                        //Img i = response.body();
-                                        //String d = i.img_data;
-                                        //boolean upload = i.insert;
-
-                                        //if (upload==true){
-                                        Log.i("img", "업로드 성공");
-
-                                        //}
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        Log.i("img", "업로드 실패"+t.getMessage());
-                                    }
-                                });
-                            }
-
-                            else
-                            {
-                                api.imgmodify(LoginActivity.user_ac, img_data, post_code).enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                                        try {
-//                                            Log.i("img" , response.body().string().trim());
-//                                        } catch (IOException e) {
-//                                            e.printStackTrace();
-//                                        }
-
-                                        //Img i = response.body();
-                                        //String d = i.img_data;
-                                        //boolean upload = i.insert;
-
-                                        //if (upload==true){
-                                        Log.i("img", "업로드 성공");
-
-                                        //}
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        Log.i("img", "업로드 실패"+t.getMessage());
-                                    }
-                                });
-                                Log.i("img", "사진 없이 올림");}
-
-
-                        }
-
-                        public void onFailure(Call<Write> call, Throwable t) {
-                            Log.i("수정실패", t.getMessage());
-                        }
-
-                    });
+                for (imgs d : imgd) {
+                    img_code1.add(d.img_code);
+                    img_data1.add(d.img_data);
+                    Log.i("dimg", d.toString());
                 }
 
+                img_code = img_code1.toArray(new Integer[img_code1.size()]);
+                img_data = img_data1.toArray(new String[img_data1.size()]);
+
+                int i = 0;
+                while (i < img_data.length) {
+                    imglist.add(new ThumbnailListData(img_code[i], img_data[i]));
+                    i++;
+                }
+                adapter.setData(imglist);
+            }
+
+            @Override
+            public void onFailure(Call<Img> call, Throwable t) {
+                Log.e("dimg", t.getLocalizedMessage());
             }
         });
-
     }
 
     //갤러리에서 사진선택

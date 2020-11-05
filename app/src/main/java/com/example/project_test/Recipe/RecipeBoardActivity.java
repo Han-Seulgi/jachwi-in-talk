@@ -43,6 +43,12 @@ public class RecipeBoardActivity extends AppCompatActivity {
     //검색을 위한 전체 데이터 리스트 복사본
     ArrayList<RecipeListData> cdata;
 
+    private final int WRITE_POST = 100;
+    private final int MODIFY_POST = 200;
+    private final int DELETE_POST = 300;
+
+    public String tt;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +65,7 @@ public class RecipeBoardActivity extends AppCompatActivity {
         Button writing = findViewById(R.id.writing);//글쓰기 버튼
         search = findViewById(R.id.search);
         tabTitle = findViewById(R.id.title);
-        final String tt = tabTitle.getText().toString();
+        tt = tabTitle.getText().toString();
 
 
         rv = findViewById(R.id.rv);
@@ -89,11 +95,11 @@ public class RecipeBoardActivity extends AppCompatActivity {
 
                 //리스트에 제목, 날짜, 작성자 아이디 넣기
                 for (PostData d:postData) {
-                    title1.add(d.post_title);
-                    day1.add(d.post_day);
+                    title1.add(d.title);
+                    day1.add(d.day);
                     id1.add(d.id);
-                    con1.add(d.post_con);
-                    code1.add(d.post_code);
+                    con1.add(d.con);
+                    code1.add(d.pcode);
                     Log.i("abc","요리 All: " + d.toString());
                 }
 
@@ -114,7 +120,7 @@ public class RecipeBoardActivity extends AppCompatActivity {
                     data.add(new RecipeListData(img[i], title[i], day[i], id[i], tt, con[i], code[i]));
                     i++;
                 }
-                adapter.setData(data);
+                adapter.setData(RecipeBoardActivity.this, data);
                 rv.setAdapter(adapter);
 
                 //복사본에 모든 데이터 저장
@@ -149,7 +155,8 @@ public class RecipeBoardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RecipeBoardActivity.this, WritingActivity.class);
-                startActivity(intent);
+                intent.putExtra("request", WRITE_POST);
+                startActivityForResult(intent, WRITE_POST);
             }
         });
 
@@ -169,7 +176,62 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent rdata) {
+        super.onActivityResult(requestCode, resultCode, rdata);
+//        if (resultCode == RESULT_OK) {
+        Log.i("refresh", "requestcode: "+requestCode);
+        Log.i("rbact", "requestcode: "+requestCode+"resultcode"+resultCode);
+            switch (requestCode) {
+                case WRITE_POST: if(resultCode == 1){
+                    Log.i("refresh", "갱신");
+                    int img = R.drawable.recipe;
+                    String title = rdata.getStringExtra("title");
+                    String day = rdata.getStringExtra("day");
+                    String id = rdata.getStringExtra("id");
+                    String con = rdata.getStringExtra("con");
+                    int code = rdata.getIntExtra("code", 0);
+
+                    adapter.addData(new RecipeListData(img, title, day, id, tt, con, code));
+                    Log.i("WRITE_POST", "올리기 갱신: "+title+day+id+con+code);
+
+                }break;
+
+                case 777:
+                    int position = rdata.getIntExtra("position", 0);
+                    int rc = rdata.getIntExtra("rc", 0);
+                    if (rc == 1) {
+                        //adapter.updateData(data);
+                    } else if (rc == 2) {
+                        adapter.deleteData(position);
+                    } else Log.i("mod/del fail", "실패");
+
+                /*case MODIFY_POST: {
+                    Log.i("refresh", "수정");
+                    int position = rdata.getIntExtra("position", -1);
+
+                    adapter.notifyItemChanged(position);
+                    break;
+                }
+
+                case DELETE_POST: {
+                    Log.i("refresh", "삭제");
+                    break;
+                }*/
+            //}
+        }
+    }
+
+    //    @Override
+//    protected void onResume() {
+//        Log.i("refresh", "onresume");
+//        super.onResume();
+//        adapter.notifyDataSetChanged();
+//    }
 
     //상단탭 메뉴
     @Override

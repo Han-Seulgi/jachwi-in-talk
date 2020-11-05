@@ -208,8 +208,11 @@ public interface Api {
     @POST("Image/getImg")
     Call<Img> getImg(@Field("post_code") int var1);
 
+//    @GET("Image/deleteImg")
+//    Call<DeleteImg> deleteImg(@Query("img_code")int var1);
+
     @GET("Image/deleteImg")
-    Call<DeleteImg> deleteImg(@Query("img_code")int var1);
+    Call<ResponseBody> deleteImg(@Query("img_code")int var1);
 
     @FormUrlEncoded
     @POST("Image/modifyImg")

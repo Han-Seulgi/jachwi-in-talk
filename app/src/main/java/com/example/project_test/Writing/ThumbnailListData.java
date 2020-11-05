@@ -6,6 +6,7 @@ public class ThumbnailListData {
     int imgcode;
     String imgdata;
     Bitmap pbm;
+
     public ThumbnailListData(String imgdata) {
         this.imgdata = imgdata;
     }
@@ -24,4 +25,5 @@ public class ThumbnailListData {
     public String getImgdata() {return imgdata;}
 
     public Bitmap getPbm() { return pbm; }
+
 }

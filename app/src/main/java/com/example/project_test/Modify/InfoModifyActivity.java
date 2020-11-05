@@ -86,8 +86,6 @@ public class InfoModifyActivity extends AppCompatActivity {
                         public void onResponse(Call<Write> call, Response<Write> response) {
 
                             Write write = response.body();
-                            boolean insert = write.insert;
-                            Log.i("abcdef" , insert+"");
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(InfoModifyActivity.this);
                             dialog = builder.setMessage("수정 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {

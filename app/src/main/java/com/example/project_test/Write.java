@@ -1,13 +1,21 @@
 package com.example.project_test;
 
-import androidx.annotation.NonNull;
-
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Write {
-    @SerializedName("insert")
-    public boolean insert ;
+    @SerializedName("data")
+    public List<PostList> items;
+
+    @SerializedName("post_code")
+    public int pcode;
+
+    @Override
+    public String toString() {
+        return "Write{" +
+                "items=" + items +
+                ", pcode=" + pcode +
+                '}';
+    }
 }
-
-
-

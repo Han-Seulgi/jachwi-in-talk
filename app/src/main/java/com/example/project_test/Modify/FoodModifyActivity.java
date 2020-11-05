@@ -86,15 +86,11 @@ public class FoodModifyActivity extends AppCompatActivity {
                         public void onResponse(Call<Write> call, Response<Write> response) {
 
                             Write write = response.body();
-                            boolean insert = write.insert;
-                            Log.i("abcdef", insert + "");
 
                             api.ModifyFood(food_lct, post_code).enqueue(new Callback<Write>() {
                                 @Override
                                 public void onResponse(Call<Write> call, Response<Write> response) {
                                     Write write = response.body();
-                                    boolean insert = write.insert;
-                                    Log.i("abcdef", insert + "");
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(FoodModifyActivity.this);
                                     dialog = builder.setMessage("수정 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
