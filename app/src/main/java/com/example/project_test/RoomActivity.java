@@ -3,11 +3,9 @@ package com.example.project_test;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -20,8 +18,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.project_test.Content.ContentWithPicture;
 import com.example.project_test.Mypage.MyPageActivity;
-import com.example.project_test.qa.qaActivity;
-import com.example.project_test.qa.qaContent.QAWritingActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -44,6 +40,8 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     String tt;
 
+    String add;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +52,6 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         tabTitle =findViewById(R.id.title);
         tt = tabTitle.getText().toString();
-
 
         //상단탭
         toolbar = findViewById(R.id.toolbar);
@@ -72,7 +69,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         write.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RoomActivity.this, DaumWebViewActivity.class);
+                Intent intent = new Intent(RoomActivity.this, RoomWriting.class);
                 startActivity(intent);
 
             }

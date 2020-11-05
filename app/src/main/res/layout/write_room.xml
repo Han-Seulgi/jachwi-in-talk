@@ -63,6 +63,30 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/t_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="10dp"
+                android:text="제목"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/t_title"
+                android:hint="제목을 입력해주세요."
+                android:textSize="18dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
                 android:id="@+id/tv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,14 +96,15 @@
                 android:text="위치"
                 android:textSize="20dp" />
 
-            <EditText
-                android:id="@+id/tedit"
+            <Button
+                android:id="@+id/btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:layout_toRightOf="@+id/tv1"
                 android:hint="위치를 입력해주세요."
                 android:textSize="18dp" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -105,6 +130,74 @@
                 android:hint="가격을 입력해주세요."
                 android:textSize="18dp" />
         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="10dp"
+                android:text="만료날짜"
+                android:textSize="20dp" />
+
+            <EditText
+            android:id="@+id/y_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/text"
+            android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/y_text"
+                android:hint="년"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/m_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/year"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/m_text"
+                android:hint="월"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/d_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/month"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/d_text"
+                android:hint="일"
+                android:textSize="18dp" />
+        </RelativeLayout>
+
+
 
         <EditText
             android:id="@+id/cedit"

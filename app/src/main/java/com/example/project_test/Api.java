@@ -255,6 +255,10 @@ public interface Api {
     @POST("Emergency/setsystem")
     Call<MsgNumList> setsystem(@Field("sys_sensor") int var1, @Field("sys_volume") int var2, @Field("id") String var3);
 
+    @FormUrlEncoded
+    @POST("RoomWrite")
+    Call<Room> roomWrite(@Field("room_lct") String var1, @Field("room_p") String var2, @Field("date") String var3);
+
     public static final class Factory {
         public static final Api.Factory INSTANCE;
 

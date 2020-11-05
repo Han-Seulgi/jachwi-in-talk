@@ -73,8 +73,9 @@
         <activity android:name=".Modify.QnaModifyActivity" android:label="자취qna 글수정 화면"/>
         <activity android:name=".Modify.MeetModifyActivity" android:label="자취인만남 글수정 화면"/>
         <activity android:name=".Content.ContentWithPicture" android:label="사진이 있는 게시물내용"/>
-        <activity android:name=".RoomActivity" android:label="보금자리 화면"/>
         <activity android:name=".DaumWebViewActivity" android:label="보금자리 글쓰기 화면"/>
+        <activity android:name=".RoomActivity" android:label="보금자리 화면"/>
+        <activity android:name=".RoomWriting" android:label="보금자리 글쓰기 화면"/>
         <activity android:name=".EventActivity" android:label="행사알리미 화면"/>
         <activity android:name=".Emergency.EmergencyActivity" android:label="안전지키미 화면"/>
         <activity android:name=".Emergency.EmergencySet" android:label="안전지키미 설정화면" android:windowSoftInputMode="stateAlwaysHidden"/>
@@ -82,7 +83,6 @@
         <activity android:name=".Mypage.MyPageActivity" android:label="마이페이지"/>
         <activity android:name=".Mypage.MyInfoSetActivity" android:label="내 정보 수정 화면"/>
         <activity android:name=".Mypage.MyContents.MyContentsActivity" android:label="내가 쓴 글 목록"/>
-
         <receiver android:name=".BootReceiver"
             android:enabled="true"
             android:label="부팅시 작동하는 브로드캐스트 리시버">
