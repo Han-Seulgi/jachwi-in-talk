@@ -56,6 +56,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
+
     <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
@@ -67,6 +68,7 @@
         android:textSize="12sp"
         app:layout_constraintLeft_toRightOf="@+id/userSetBtn"
         app:layout_constraintTop_toBottomOf="@+id/name" />
+
 
     <View
         android:id="@+id/line2"
@@ -113,6 +115,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myContent">
 
+        <Button
+            android:onClick="clickBtn"
+            android:text="알림테스트"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -129,6 +138,7 @@
             android:orientation="horizontal">
 
             <Switch
+                android:id="@+id/switch1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -171,6 +181,8 @@
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/kwdlist"
         app:layout_constraintLeft_toRightOf="@+id/kwdadd" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

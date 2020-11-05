@@ -1,5 +1,13 @@
 package com.example.project_test.Mypage;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.support.v4.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,26 +16,34 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.view.View;
 import android.view.View.OnClickListener;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.example.project_test.Api;
 import com.example.project_test.LoginActivity;
+import com.example.project_test.MainActivity;
 import com.example.project_test.Mypage.MyContents.MyContentsActivity;
 import com.example.project_test.R;
 import com.example.project_test.User;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +56,10 @@ public class MyPageActivity extends AppCompatActivity {
     Button userSetBtn, logout, addkwd;
     ImageButton gomycon, btn1,btn2, btn3, btn4, btn5;
     ConstraintLayout mplayout;
-    TextView textName;
+    TextView textName, kwdaad;
     Toolbar toolbar;
+    Switch switch1;
+    RecyclerView kwdlist;
 
     private RecyclerView recyclerView;
     public GridLayoutManager layoutManager;
@@ -64,13 +82,21 @@ public class MyPageActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         textName = findViewById(R.id.name);
-        mplayout=(ConstraintLayout)findViewById(R.id.mplayout);
+        mplayout = (ConstraintLayout) findViewById(R.id.mplayout);
         recyclerView = findViewById(R.id.kwdlist);
         recyclerView.setHasFixedSize(true);
         adapter = new KwRecyclerAdapter();
+        switch1 = findViewById(R.id.switch1);
+        kwdaad = findViewById(R.id.kwdadd);
+        kwdlist = findViewById(R.id.kwdlist);
 
-        layoutManager = new GridLayoutManager(this,2);
+
+
+        layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
+
+
+
 
         //아이디를 이용해 유저 정보 검색
         Api api = Api.Factory.INSTANCE.create();
@@ -84,6 +110,9 @@ public class MyPageActivity extends AppCompatActivity {
 
             }
         });
+
+
+
 
         //키워드 가져와서 넣기
         api.getkeyword(LoginActivity.user_ac).enqueue(new Callback<KeywordList>() {
@@ -107,6 +136,38 @@ public class MyPageActivity extends AppCompatActivity {
 
 
     }
+
+    public void clickBtn (View view){
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder = null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelID = "channel_01";
+            String channelName = "MyChannel01";
+
+            NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+
+            notificationManager.createNotificationChannel(channel);
+            builder = new NotificationCompat.Builder(this, channelID);
+        } else {
+            builder = new NotificationCompat.Builder(this, null);
+        }
+        builder.setSmallIcon(android.R.drawable.ic_menu_view);
+
+        builder.setContentTitle("New 게시물");
+        builder.setContentText("키워드 알림");
+        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.orange);
+        builder.setLargeIcon(bm);
+
+        Notification notification = builder.build();
+
+        notificationManager.notify(1, notification);
+
+
+    }
+
+
 
 
 

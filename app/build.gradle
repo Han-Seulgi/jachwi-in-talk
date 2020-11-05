@@ -42,7 +42,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.google.android.material:material:1.1.0-alpha04'
-
+    implementation "androidx.core:core:1.0.2"
     implementation "androidx.viewpager:viewpager:1.0.0"
 
     //noinspection GradleCompatible
@@ -56,6 +56,7 @@ dependencies {
 
     //Scalars 변환기 라이브러리(응답결과를 String 자체로 받아서 보여주는 Converter(사용자가 직접 변환시 사용)
     implementation 'com.squareup.retrofit2:converter-scalars:2.6.4'
+
 
 
 
