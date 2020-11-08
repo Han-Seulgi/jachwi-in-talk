@@ -11,7 +11,6 @@ public class FoodListData {
         this.id = id;
         this.con = con;
     }
-
     public int getImg() {
         return this.img;
     }

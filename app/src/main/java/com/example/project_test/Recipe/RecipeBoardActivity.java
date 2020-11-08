@@ -1,5 +1,6 @@
 package com.example.project_test.Recipe;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,9 +44,10 @@ public class RecipeBoardActivity extends AppCompatActivity {
     //검색을 위한 전체 데이터 리스트 복사본
     ArrayList<RecipeListData> cdata;
 
+    Activity act;
     private final int WRITE_POST = 100;
-    private final int MODIFY_POST = 200;
-    private final int DELETE_POST = 300;
+    private final int MODIFY_POST = 1;
+    private final int DELETE_POST = 2;
 
     public String tt;
 
@@ -67,17 +69,14 @@ public class RecipeBoardActivity extends AppCompatActivity {
         tabTitle = findViewById(R.id.title);
         tt = tabTitle.getText().toString();
 
-
         rv = findViewById(R.id.rv);
         rv.setHasFixedSize(true);
         adapter = new RecipeRecyclerAdapter();
 
-        /*final ArrayList<String> comment1 = new ArrayList<>();//댓글수,추천수
-        final ArrayList<String> like1 = new ArrayList<>();*/
-
         data = new ArrayList<>();
         //복사본
         cdata = new ArrayList<>();
+        act = RecipeBoardActivity.this;
 
         //서버 연결
         Api api = Api.Factory.INSTANCE.create();
@@ -117,7 +116,7 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 int i = 0;
                 while (i < title.length) {
                     img[i] = R.drawable.recipe;
-                    data.add(new RecipeListData(img[i], title[i], day[i], id[i], tt, con[i], code[i]));
+                    data.add(new RecipeListData(img[i], title[i], day[i], id[i], tt, con[i]));
                     i++;
                 }
                 adapter.setData(RecipeBoardActivity.this, data);
@@ -154,7 +153,7 @@ public class RecipeBoardActivity extends AppCompatActivity {
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeBoardActivity.this, WritingActivity.class);
+                Intent intent = new Intent(act, WritingActivity.class);
                 intent.putExtra("request", WRITE_POST);
                 startActivityForResult(intent, WRITE_POST);
             }
@@ -187,42 +186,36 @@ public class RecipeBoardActivity extends AppCompatActivity {
         Log.i("refresh", "requestcode: "+requestCode);
         Log.i("rbact", "requestcode: "+requestCode+"resultcode"+resultCode);
             switch (requestCode) {
-                case WRITE_POST: if(resultCode == 1){
+                case WRITE_POST: if(resultCode == RESULT_OK){
                     Log.i("refresh", "갱신");
                     int img = R.drawable.recipe;
                     String title = rdata.getStringExtra("title");
                     String day = rdata.getStringExtra("day");
                     String id = rdata.getStringExtra("id");
                     String con = rdata.getStringExtra("con");
-                    int code = rdata.getIntExtra("code", 0);
+                    //int code = rdata.getIntExtra("code", 0);
 
-                    adapter.addData(new RecipeListData(img, title, day, id, tt, con, code));
-                    Log.i("WRITE_POST", "올리기 갱신: "+title+day+id+con+code);
+                    adapter.addData(new RecipeListData(img, title, day, id, tt, con));
+                    adapter.notifyDataSetChanged();
+                    Log.i("WRITE_POST", "올리기 갱신: "+title+day+id+con);
 
                 }break;
 
                 case 777:
+                    if(resultCode == RESULT_OK){
                     int position = rdata.getIntExtra("position", 0);
                     int rc = rdata.getIntExtra("rc", 0);
-                    if (rc == 1) {
-                        //adapter.updateData(data);
-                    } else if (rc == 2) {
+                    if (rc == MODIFY_POST) {
+                        int img = R.drawable.recipe;
+                        String title = rdata.getStringExtra("title");
+                        String id = rdata.getStringExtra("id");
+                        String day = rdata.getStringExtra("day");
+                        String con = rdata.getStringExtra("con");
+                        adapter.updateData(position, new RecipeListData(img, title, day, id, tt, con));
+                    } else if (rc == DELETE_POST) {
                         adapter.deleteData(position);
                     } else Log.i("mod/del fail", "실패");
-
-                /*case MODIFY_POST: {
-                    Log.i("refresh", "수정");
-                    int position = rdata.getIntExtra("position", -1);
-
-                    adapter.notifyItemChanged(position);
-                    break;
-                }
-
-                case DELETE_POST: {
-                    Log.i("refresh", "삭제");
-                    break;
-                }*/
-            //}
+            }
         }
     }
 

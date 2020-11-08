@@ -233,7 +233,6 @@ public class WritingActivity extends AppCompatActivity {
                                     public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
                                         likeCheck lc = response.body();
                                         boolean newlk = lc.newlike;
-
                                         Log.i("aaaa", newlk + "");
                                     }
 
@@ -242,9 +241,6 @@ public class WritingActivity extends AppCompatActivity {
 
                                     }
                                 });
-
-
-
                             }
 
                             public void onFailure(Call<Write> call, Throwable t) {
@@ -259,13 +255,10 @@ public class WritingActivity extends AppCompatActivity {
                                 dialog.show();
                             }
                         });
-
-
                     }
                 }
             }); break;
         }
-
     }
 
     private void returnResult() {

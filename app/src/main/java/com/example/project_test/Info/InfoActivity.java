@@ -1,5 +1,6 @@
 package com.example.project_test.Info;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.project_test.Api;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
-import com.example.project_test.Recipe.RecipeListData;
 import com.example.project_test.Writing.InfoWritingActivity;
 
 import java.util.ArrayList;
@@ -39,6 +40,11 @@ public class InfoActivity extends AppCompatActivity {
     ArrayList<InfoListData> data;
     //검색을 위한 전체 데이터 리스트 복사본
     ArrayList<InfoListData> cdata;
+
+    Activity act;
+    private final int WRITE_POST = 100;
+    private final int MODIFY_POST = 1;
+    private final int DELETE_POST = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,7 @@ public class InfoActivity extends AppCompatActivity {
         data = new ArrayList<>();
         //복사본 리스트 생성
         cdata = new ArrayList<>();
+        act = InfoActivity.this;
 
         //서버 연결
         Api api = Api.Factory.INSTANCE.create();
@@ -99,7 +106,7 @@ public class InfoActivity extends AppCompatActivity {
                     data.add(new InfoListData(img[i], title[i], day[i], id[i], con[i]));
                     i++;
                 }
-                adapter.setData(data);
+                adapter.setData(act, data);
                 recyclerView.setAdapter(adapter);
 
                 //복사본에 모든 데이터 저장
@@ -119,9 +126,9 @@ public class InfoActivity extends AppCompatActivity {
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InfoActivity.this, InfoWritingActivity.class);
-                startActivity(intent);
-
+                Intent intent = new Intent(act, InfoWritingActivity.class);
+                intent.putExtra("request", WRITE_POST);
+                startActivityForResult(intent, WRITE_POST);
             }
         });
 
@@ -141,14 +148,45 @@ public class InfoActivity extends AppCompatActivity {
             }
         });
 
-        //갱신
-        //adapter.notifyDataSetChanged();
-//        Intent intent = new Intent(InfoActivity.this, InfoActivity.class);
-//
-//        startActivity(intent);
-//
-//        finish();
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent rdata) {
+        super.onActivityResult(requestCode, resultCode, rdata);
+//        if (resultCode == RESULT_OK) {
+        Log.i("refresh", "requestcode: "+requestCode);
+        Log.i("rbact", "requestcode: "+requestCode+"resultcode"+resultCode);
+        switch (requestCode) {
+            case WRITE_POST: if(resultCode == RESULT_OK){
+                Log.i("refresh", "갱신");
+                int img = R.drawable.information;
+                String title = rdata.getStringExtra("title");
+                String day = rdata.getStringExtra("day");
+                String id = rdata.getStringExtra("id");
+                String con = rdata.getStringExtra("con");
+
+                adapter.addData(new InfoListData(img, title, day, id, con));
+                adapter.notifyDataSetChanged();
+                Log.i("WRITE_POST", "올리기 갱신: "+title+day+id+con);
+
+            }break;
+
+            case 777:
+                if(resultCode == RESULT_OK){
+                int position = rdata.getIntExtra("position", 0);
+                int rc = rdata.getIntExtra("rc", 0);
+                if (rc == MODIFY_POST) {
+                    int img = R.drawable.information;
+                    String title = rdata.getStringExtra("title");
+                    String id = rdata.getStringExtra("id");
+                    String day = rdata.getStringExtra("day");
+                    String con = rdata.getStringExtra("con");
+                    adapter.updateData(position, new InfoListData(img, title, day, id, con));
+                } else if (rc == DELETE_POST) {
+                    adapter.deleteData(position);
+                } else Log.i("mod/del fail", "실패");
+                } else Log.i("mod/del fail", "아무것도 안함");
+        }
     }
 
     //상단탭 메뉴

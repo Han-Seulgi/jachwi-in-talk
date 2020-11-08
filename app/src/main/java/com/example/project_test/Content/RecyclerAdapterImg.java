@@ -25,6 +25,11 @@ public class RecyclerAdapterImg extends RecyclerView.Adapter<com.example.project
     }
     //int imgs [] = {R.drawable.rrimg1,R.drawable.rrimg2,R.drawable.rrimg3,R.drawable.rrimg4};
 
+    public void addData(ImgListData data){
+        datas.add(data);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -1,18 +1,19 @@
 package com.example.project_test.Food;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
-import com.example.project_test.Info.InfoListData;
 import com.example.project_test.R;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 public class FoodActivityTab1 extends Fragment {
 
@@ -31,6 +34,9 @@ public class FoodActivityTab1 extends Fragment {
     ArrayList<FoodListData> data;
     ArrayList<FoodListData> cdata;
 
+    public Activity act;
+    private final int WRITE_POST = 100;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup v = (ViewGroup)inflater.inflate(R.layout.activity_food_tab1, container, false);
 
@@ -40,7 +46,8 @@ public class FoodActivityTab1 extends Fragment {
 
         data = new ArrayList<>();
         cdata = new ArrayList<>();
-        Log.i("foood","또 뭔데 ");
+        act = FoodActivityTab1.super.getActivity();
+
         //서버 연결
         Api api = Api.Factory.INSTANCE.create();
         api.getFoodList(22).enqueue(new Callback<FoodPostList>() {
@@ -76,7 +83,7 @@ public class FoodActivityTab1 extends Fragment {
                     data.add(new FoodListData(img[i], title[i], day[i], id[i], con[i]));
                     i++;
                 }
-                adapter.setData(data);
+                adapter.setData(act, data);
                 recyclerView.setAdapter(adapter);
 
                 cdata.addAll(data);
@@ -92,6 +99,47 @@ public class FoodActivityTab1 extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         return v;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent rdata) {
+        super.onActivityResult(requestCode, resultCode, rdata);
+//        if (resultCode == RESULT_OK) {
+        Log.i("refresh", "requestcode: "+requestCode);
+        Log.i("rbact", "requestcode: "+requestCode+"resultcode"+resultCode);
+        switch (requestCode) {
+            case WRITE_POST: if(resultCode == RESULT_OK){
+                Log.i("refresh", "갱신");
+                int img = R.drawable.foodboard;
+                String title = rdata.getStringExtra("title");
+                String day = rdata.getStringExtra("day");
+                String id = rdata.getStringExtra("id");
+                String con = rdata.getStringExtra("con");
+
+                adapter.addData(new FoodListData(img, title, day, id, con));
+                adapter.notifyDataSetChanged();
+                Log.i("WRITE_POST", "올리기 갱신: "+title+day+id+con);
+
+            }break;
+
+            case 777:
+                if(resultCode == RESULT_OK){
+                int position = rdata.getIntExtra("position", 0);
+                int rc = rdata.getIntExtra("rc", 0);
+                Log.i("mod", ""+rc);
+                if (rc == 1) {
+                    int img = R.drawable.foodboard;
+                    String title = rdata.getStringExtra("title");
+                    String id = rdata.getStringExtra("id");
+                    String day = rdata.getStringExtra("day");
+                    String con = rdata.getStringExtra("con");
+                    adapter.updateData(position, new FoodListData(img, title, day, id, con));
+                    Log.i("mod", "update");
+                } else if (rc == 2) {
+                    adapter.deleteData(position);
+                } else Log.i("mod/del fail", "실패");
+                }
+        }
     }
 
     //검색을 수행하는 메소드

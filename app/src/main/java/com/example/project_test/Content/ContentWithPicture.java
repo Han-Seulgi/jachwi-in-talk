@@ -56,7 +56,7 @@ public class ContentWithPicture extends AppCompatActivity {
     TextView src, rcp;
     int postcode, likenum, code, position;
     ImageButton like, modify, delete;
-    String title, content, source, recipe, cmt_con;
+    String title, content, source, recipe, cmt_con, id, day;
     EditText editTextName1;
     Button push;
     private AlertDialog dialog;
@@ -64,14 +64,15 @@ public class ContentWithPicture extends AppCompatActivity {
     ArrayList<CommentListData> data;
     ArrayList<ImgListData> imgdatas;
 
-    private final int MOD = 1000;
-
     String[] img_data;
     ArrayList<Integer> img_code1;
     //Integer[] img_code;
 
+    private final int MOD = 1000;
     String rtitle, rcon, rsource, rrecipe;
+    String[] rimgdata;
 
+    boolean mod = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +91,10 @@ public class ContentWithPicture extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         adapter = new CommentRecyclerAdapter();
-        imgadapter = new RecyclerAdapterImg();
 
         //사진
         recyclerViewImg = findViewById(R.id.recyclerViewImg);
+        imgadapter = new RecyclerAdapterImg();
 
         tabTitle = findViewById(R.id.title);
         text1 = findViewById(R.id.text1);
@@ -114,23 +115,51 @@ public class ContentWithPicture extends AppCompatActivity {
         editTextName1 = findViewById(R.id.editTextName1);
         push = findViewById(R.id.push);
 
+        imgdatas = new ArrayList<>();
+
+        //받아오기
+        Intent intent = getIntent();
+
+        String tt = intent.getStringExtra("탭이름");
+        title = intent.getStringExtra("제목");
+        id = intent.getStringExtra("작성자");
+        day = intent.getStringExtra("날짜");
+        content = intent.getStringExtra("내용");
+        //code = intent.getIntExtra("코드",0);
+
+        //setText
+        tabTitle.setText(tt);
+        text1.setText(title);
+        writer.setText(id+"\n"+day);
+        contents.setText(content);
+
         //댓글 작성
         push.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 cmt_con = editTextName1.getText().toString();
 
                 Api api = Api.Factory.INSTANCE.create();
                 api.Cmt(LoginActivity.user_ac,postcode,cmt_con).enqueue(new Callback<Cmt>() {
                     public void onResponse(Call<Cmt> call, Response<Cmt> response) {
+                        Cmt cmt = response.body();
+                        List<CmtData> cmtData = cmt.cmtdatas;
 
-                        Log.i("결과는" , response.toString());
+                        final ArrayList<Integer> cmtcode = new ArrayList<>();
+                        final ArrayList<String> cmtday = new ArrayList<>();
+                        for (CmtData d:cmtData) {
+                            cmtcode.add(d.cmt_code);
+                            cmtday.add(d.cmt_day);
+                        }
+
+                        Log.i("comment" , String.valueOf(cmtcode.get(0))+cmtday.get(0));
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(ContentWithPicture.this);
                         dialog = builder.setMessage("작성하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                adapter.addData(new CommentListData(cmtcode.get(0), id, cmt_con, cmtday.get(0)));
+
                                 Toast.makeText(getApplicationContext(),"작성완료",Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -145,23 +174,6 @@ public class ContentWithPicture extends AppCompatActivity {
 
             }
         });
-        imgdatas = new ArrayList<>();
-
-        //받아오기
-        Intent intent = getIntent();
-
-        String tt = intent.getStringExtra("탭이름");
-        title = intent.getStringExtra("제목");
-        String id = intent.getStringExtra("작성자");
-        String day = intent.getStringExtra("날짜");
-        content = intent.getStringExtra("내용");
-        code = intent.getIntExtra("코드",0);
-
-        //setText
-        tabTitle.setText(tt);
-        text1.setText(title);
-        writer.setText(id+"\n"+day);
-        contents.setText(content);
 
         //현재 접속한 아이디와 글 작성자가 같으면 수정, 삭제 가능
         if( id.equals(LoginActivity.user_ac)) {
@@ -434,8 +446,7 @@ public class ContentWithPicture extends AppCompatActivity {
                     intent.putExtra("사진", img_data);
                     intent.putExtra("사진코드", img_code1);
                     intent.putExtra("request", MOD);
-
-                    startActivityForResult(intent, 1000);
+                    startActivityForResult(intent, MOD);
                 }
             });
         }
@@ -477,7 +488,6 @@ public class ContentWithPicture extends AppCompatActivity {
             });
         }
 
-
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -490,40 +500,55 @@ public class ContentWithPicture extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent rdata) {
         super.onActivityResult(requestCode, resultCode, rdata);
-        Log.i("contentwithpic", "requestcode: "+requestCode+"resultcode"+resultCode);
+        Log.i("contentwithpic", "requestcode: " + requestCode + "resultcode" + resultCode);
         //if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case MOD: {
-                    if (resultCode == RESULT_OK){
+        switch (requestCode) {
+            case MOD: {
+                if (resultCode == RESULT_OK) {
                     Log.i("refresh", "수정후화면");
                     rtitle = rdata.getStringExtra("title");
                     rcon = rdata.getStringExtra("con");
                     rsource = rdata.getStringExtra("src");
                     rrecipe = rdata.getStringExtra("rcp");
+                    rimgdata = rdata.getStringArrayExtra("imgd");
 
                     text1.setText(rtitle);
                     contents.setText(rcon);
-                    src.setText("재료: "+rsource);
-                    rcp.setText("레시피: "+rrecipe);
+                    src.setText("재료: " + rsource);
+                    rcp.setText("레시피: " + rrecipe);
+
+                    int i = 0;
+                    while (i < rimgdata.length) {
+                        imgadapter.addData(new ImgListData(rimgdata[i]));
+                        i++;
+                    }
 
 //                    Intent intent = new Intent();
 //                    intent.putExtra("position", position);
 //                    setResult(RESULT_OK, intent);
-                    }
-                    break;
+
+                    mod = true;
                 }
+                break;
             }
+        }
         //}
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra("position", position);
-        intent.putExtra("rc", 1);
-        setResult(RESULT_OK, intent);
-        Log.i("refresh", "뒤로가기");
-        finish();
+        if(mod){
+            Intent intent = new Intent();
+            intent.putExtra("position", position);
+            intent.putExtra("title", rtitle);
+            intent.putExtra("id", id);
+            intent.putExtra("day", day);
+            intent.putExtra("con", rcon);
+            intent.putExtra("rc", 1);
+            setResult(RESULT_OK, intent);
+            Log.i("refresh", "뒤로가기");
+            finish();}
+        else finish();
         super.onBackPressed();
     }
 
@@ -533,12 +558,18 @@ public class ContentWithPicture extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                Intent intent = new Intent();
-                intent.putExtra("position", position);
-                intent.putExtra("resultCode", 1);
-                setResult(RESULT_OK, intent);
-                Log.i("refresh", "상단바뒤로가기");
-                finish();
+                if(mod){
+                    Intent intent = new Intent();
+                    intent.putExtra("position", position);
+                    intent.putExtra("title", rtitle);
+                    intent.putExtra("id", id);
+                    intent.putExtra("day", day);
+                    intent.putExtra("con", rcon);
+                    intent.putExtra("rc", 1);
+                    setResult(RESULT_OK, intent);
+                    Log.i("refresh", "뒤로가기");
+                    finish();}
+                else finish();
                 return true;
         }
         return true;

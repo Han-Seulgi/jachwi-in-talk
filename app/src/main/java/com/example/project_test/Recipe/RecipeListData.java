@@ -5,9 +5,7 @@ public class RecipeListData {
     private String title, day, id, con;
     private String tabTitle;
 
-    /*private int comment_cnt,like_cnt;*/
-
-    public RecipeListData(int img, String title, String day, String id, String tabTitle, String con, int code) {
+    public RecipeListData(int img, String title, String day, String id, String tabTitle, String con) {
         this.img = img;
         this.title = title;
         this.day = day;
@@ -16,6 +14,16 @@ public class RecipeListData {
         this.con = con;
         this.code = code;
     }
+
+    /*public RecipeListData(int img, String title, String day, String id, String tabTitle, String con, int code) {
+        this.img = img;
+        this.title = title;
+        this.day = day;
+        this.id = id;
+        this.tabTitle = tabTitle;
+        this.con = con;
+        this.code = code;
+    }*/
 
     public int getImg() {
         return this.img;

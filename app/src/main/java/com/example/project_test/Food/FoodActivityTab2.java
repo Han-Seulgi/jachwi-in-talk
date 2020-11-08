@@ -1,24 +1,16 @@
 package com.example.project_test.Food;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project_test.Api;
 import com.example.project_test.R;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class FoodActivityTab2 extends Fragment{
 
@@ -40,7 +32,7 @@ public class FoodActivityTab2 extends Fragment{
         data = new ArrayList<>();
         cdata = new ArrayList<>();
         //서버 연결
-        Api api = Api.Factory.INSTANCE.create();
+        /*Api api = Api.Factory.INSTANCE.create();
         api.getFoodList(22).enqueue(new Callback<FoodPostList>() {
             @Override
             public void onResponse(Call<FoodPostList> call, Response<FoodPostList> response) {
@@ -87,7 +79,7 @@ public class FoodActivityTab2 extends Fragment{
         }); //서버연결
 
         layoutManager = new LinearLayoutManager(this.getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);*/
 
         return v;
     }

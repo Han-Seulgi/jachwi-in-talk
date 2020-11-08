@@ -1,40 +1,50 @@
 package com.example.project_test.Meet;
 
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project_test.Api;
-import com.example.project_test.Content.ContentWithPicture;
-import com.example.project_test.DeletePost;
-import com.example.project_test.LoginActivity;
 import com.example.project_test.Meet.MeetContent.MeetActivityContent;
 import com.example.project_test.R;
 
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MeetRecyclerAdapter extends RecyclerView.Adapter<MeetRecyclerAdapter.MeetViewHolder> {
     private ArrayList<MeetListData> datas;
+    private Activity rActivity;
+    private int MODIFY_POST = 200;
+    private int DELETE_POST = 300;
 
-    public void setData(ArrayList<MeetListData> list){
+    public void setData(Activity act, ArrayList<MeetListData> list){
         datas = list;
+        rActivity = act;
+    }
+
+    public void addData(MeetListData data){
+        datas.add(0,data);
+        notifyItemRangeInserted(0, datas.size());
+
+        Log.i("itemcount", String.valueOf(getItemCount()));
+    }
+
+    public void updateData(int position, MeetListData data){
+        datas.set(position, data);
+        notifyItemChanged(position);
+    }
+
+    public void deleteData(int position) {
+        datas.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, datas.size());
+        Log.i("delete", "갱신도 성공"+position);
     }
 
     @NonNull
@@ -60,16 +70,6 @@ public class MeetRecyclerAdapter extends RecyclerView.Adapter<MeetRecyclerAdapte
         holder.img.setImageResource(dimg);
         holder.title.setText(title);
 
-        if( id.equals(LoginActivity.user_ac)) {
-            holder.edit.setVisibility(View.VISIBLE);
-            holder.delete.setVisibility(View.VISIBLE);
-            Log.i("fd","글 아이디: "+id+"접속아이디: "+LoginActivity.user_ac);
-        }
-        else {
-            holder.edit.setVisibility(View.GONE);
-            holder.delete.setVisibility(View.GONE);
-        }
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,43 +79,14 @@ public class MeetRecyclerAdapter extends RecyclerView.Adapter<MeetRecyclerAdapte
                 intent.putExtra("날짜", day);
                 intent.putExtra("내용", con);
                 //intent.putExtra("사진", dimg);
-                v.getContext().startActivity(intent);
+                intent.putExtra("requestmod", MODIFY_POST);
+                intent.putExtra("requestdel", DELETE_POST);
+                intent.putExtra("position", position);
+                Log.i("rradapter: ", "MOD_POST: " +MODIFY_POST+"   DEL_POST: "+DELETE_POST+"   Act: "+rActivity);
+                rActivity.startActivityForResult(intent, 777);
             }
         });
 
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                AlertDialog dialog;
-                dialog = builder.setMessage("게시물을 삭제하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.i("delete", "게시물 삭제하기" + title);
-
-                                Api api = Api.Factory.INSTANCE.create();
-
-                                api.deletepost(title).enqueue(new Callback<DeletePost>() {
-                                    @Override
-                                    public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
-                                        Log.i("delete", "성공" + response);
-                                        datas.remove(position);
-                                        notifyItemRemoved(position);
-                                        notifyItemRangeChanged(position, datas.size());
-                                        Log.i("delete", "갱신도 성공");
-                                    }
-                                    @Override
-                                    public void onFailure(Call<DeletePost> call, Throwable t) {
-                                        Log.i("delete",t.getMessage());
-                                    }
-                                });
-
-                            }
-                        }
-                ).create();
-                dialog.show();
-            }
-        });
     }
 
     @Override
@@ -126,15 +97,12 @@ public class MeetRecyclerAdapter extends RecyclerView.Adapter<MeetRecyclerAdapte
     public class MeetViewHolder extends RecyclerView.ViewHolder {
         public ImageView img;
         public TextView title;
-        public ImageButton delete, edit;
 
         public MeetViewHolder(@NonNull View itemView) {
             super(itemView);
 
             img = (ImageView) itemView.findViewById(R.id.img);
             title = itemView.findViewById(R.id.title);
-            delete = itemView.findViewById(R.id.delete);
-            edit = itemView.findViewById(R.id.edit);
         }
     }
 }

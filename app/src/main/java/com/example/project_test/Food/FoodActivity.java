@@ -12,27 +12,18 @@ import android.widget.SearchView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.project_test.Api;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
 import com.example.project_test.Writing.FoodWritingActivity;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class FoodActivity extends AppCompatActivity{
     Toolbar toolbar;
     SearchView search;
 
-    /*private RecyclerView recyclerView;
-    public RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;*/
+    private final int WRITE_POST = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,22 +55,12 @@ public class FoodActivity extends AppCompatActivity{
 
         Button writing = findViewById(R.id.writing);
 
-
-
-//        recyclerView = findViewById(R.id.recyclerView);
-//        recyclerView.setHasFixedSize(true);
-//
-//        layoutManager = new LinearLayoutManager(this);
-//
-//        recyclerView.setLayoutManager(layoutManager);
-//
-//        adapter = new RecyclerAdapter();
-
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FoodActivity.this, FoodWritingActivity.class);
-                startActivity(intent);
+                intent.putExtra("request", WRITE_POST);
+                FoodActivityTab1.startActivityForResult(intent, WRITE_POST);
             }
         });
 

@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,7 +25,6 @@ import com.example.project_test.CmtData;
 import com.example.project_test.CmtList;
 import com.example.project_test.CommentListData;
 import com.example.project_test.CommentRecyclerAdapter;
-import com.example.project_test.Content.ContentWithPicture;
 import com.example.project_test.DeletePost;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.Modify.FoodModifyActivity;
@@ -46,17 +46,22 @@ public class FoodActivityContent extends AppCompatActivity {
     public RecyclerView.LayoutManager layoutManager;
     //private RecyclerView.Adapter adapter;
     TextView text1, writer, contents, textLikenum, lct;
-    int postcode, likenum;
+    int postcode, likenum, position;
     ImageButton like, modify, delete;
-    String title, content, location,cmt_con;
+    String title, content, location,cmt_con, id, day;
     EditText editTextName1;
     Button push;
 
     private AlertDialog dialog;
 
-
     private CommentRecyclerAdapter adapter;
     ArrayList<CommentListData> data;
+
+    private final int MOD = 1000;
+
+    String rtitle, rcon, rlct;
+
+    boolean mod = false;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -87,23 +92,49 @@ public class FoodActivityContent extends AppCompatActivity {
             editTextName1 = findViewById(R.id.editTextName1);
             push = findViewById(R.id.push);
 
+            lct = findViewById(R.id.lct);
+
+            data = new ArrayList<>();
+
+            //받아오기
+            Intent intent = getIntent();
+            title = intent.getStringExtra("제목");
+            id = intent.getStringExtra("작성자");
+            day = intent.getStringExtra("날짜");
+            content = intent.getStringExtra("내용");
+
+            //setText
+            text1.setText(title);
+            writer.setText(id+"\n"+day);
+            contents.setText(content);
+
             //댓글 작성
             push.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     cmt_con = editTextName1.getText().toString();
 
                     Api api = Api.Factory.INSTANCE.create();
                     api.Cmt(LoginActivity.user_ac,postcode,cmt_con).enqueue(new Callback<Cmt>() {
                         public void onResponse(Call<Cmt> call, Response<Cmt> response) {
+                            Cmt cmt = response.body();
+                            List<CmtData> cmtData = cmt.cmtdatas;
 
-                            Log.i("결과는" , response.toString());
+                            final ArrayList<Integer> cmtcode = new ArrayList<>();
+                            final ArrayList<String> cmtday = new ArrayList<>();
+                            for (CmtData d:cmtData) {
+                                cmtcode.add(d.cmt_code);
+                                cmtday.add(d.cmt_day);
+                            }
+
+                            Log.i("comment" , String.valueOf(cmtcode.get(0))+cmtday.get(0));
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(FoodActivityContent.this);
                             dialog = builder.setMessage("작성하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    adapter.addData(new CommentListData(cmtcode.get(0), id, cmt_con, cmtday.get(0)));
+
                                     Toast.makeText(getApplicationContext(),"작성완료",Toast.LENGTH_SHORT).show();
                                 }
                             })
@@ -118,22 +149,6 @@ public class FoodActivityContent extends AppCompatActivity {
 
                 }
             });
-
-            lct = findViewById(R.id.lct);
-
-            data = new ArrayList<>();
-
-            //받아오기
-            Intent intent = getIntent();
-            title = intent.getStringExtra("제목");
-            String id = intent.getStringExtra("작성자");
-            String day = intent.getStringExtra("날짜");
-            content = intent.getStringExtra("내용");
-
-            //setText
-            text1.setText(title);
-            writer.setText(id+"\n"+day);
-            contents.setText(content);
 
             //현재 접속한 아이디와 글 작성자가 같으면 수정, 삭제 가능
             if( id.equals(LoginActivity.user_ac)) {
@@ -337,55 +352,63 @@ public class FoodActivityContent extends AppCompatActivity {
                 }
             });
 
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                    AlertDialog dialog;
-                    dialog = builder.setMessage("게시물을 삭제하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Log.i("delete", "게시물 삭제하기" + title);
-
-                                    Api api = Api.Factory.INSTANCE.create();
-
-                                    Log.i("hihihi", "아오"+title);
-
-                                    api.deletepost(title).enqueue(new Callback<DeletePost>() {
-                                        @Override
-                                        public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
-                                            //DeletePost deletePost = response.body();
-                                            //boolean del = deletePost.delete;
-
-                                            Log.i("delete", "성공" + response);
-                                            Toast.makeText(getApplicationContext(),"삭제됨",Toast.LENGTH_SHORT).show();
-
-                                        }
-                                        @Override
-                                        public void onFailure(Call<DeletePost> call, Throwable t) {
-                                            Log.i("delete",t.getMessage());
-                                        }
-                                    });
-                                }
-                            }
-                    ).create();
-                    dialog.show();
-                }
-            });
-
-
             //수정 클릭
-            modify.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), FoodModifyActivity.class);
-                    intent.putExtra("제목", title); //게시물의 제목
-                    intent.putExtra("내용", content); //게시물의 내용
-                    intent.putExtra("위치", location);  //위치
-                    intent.putExtra("게시글코드", postcode); //게시물의 코드
-                    v.getContext().startActivity(intent);
-                }
-            });
+            int request = getIntent().getIntExtra("requestmod", -1);
+            int request2 = getIntent().getIntExtra("requestdel", -1);
+            position = getIntent().getIntExtra("position",-1);
+            Log.i("modifyrequest", String.valueOf(request));
+
+            if (request == 200) {
+                modify.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(FoodActivityContent.this, FoodModifyActivity.class);
+                        intent.putExtra("제목", title); //게시물의 제목
+                        intent.putExtra("내용", content); //게시물의 내용
+                        intent.putExtra("위치", location); //위치
+                        intent.putExtra("게시글코드", postcode); //게시물의 코드
+                        intent.putExtra("request", MOD);
+                        startActivityForResult(intent, MOD);
+                    }
+                });
+            }
+            if (request2 == 300) {
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                        AlertDialog dialog;
+                        dialog = builder.setMessage("게시물을 삭제하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Api api = Api.Factory.INSTANCE.create();
+
+                                        api.deletepost(title).enqueue(new Callback<DeletePost>() {
+                                            @Override
+                                            public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
+
+                                                Log.i("delete", "성공" + response);
+                                                Toast.makeText(getApplicationContext(), "삭제됨", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent();
+                                                intent.putExtra("position", position);
+                                                intent.putExtra("rc", 2);
+                                                setResult(RESULT_OK, intent);
+                                                Log.i("refresh", "뒤로가기");
+                                                finish();
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<DeletePost> call, Throwable t) {
+                                                Log.i("delete", t.getMessage());
+                                            }
+                                        });
+                                    }
+                                }
+                        ).create();
+                        dialog.show();
+                    }
+                });
+            }
 
             layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
@@ -393,12 +416,65 @@ public class FoodActivityContent extends AppCompatActivity {
         }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent rdata) {
+        super.onActivityResult(requestCode, resultCode, rdata);
+        Log.i("foodcontents", "requestcode: " + requestCode + "resultcode" + resultCode);
+        //if (resultCode == RESULT_OK) {
+        switch (requestCode) {
+            case MOD: {
+                if (resultCode == RESULT_OK) {
+                    Log.i("refresh", "수정후화면");
+                    rtitle = rdata.getStringExtra("title");
+                    rcon = rdata.getStringExtra("con");
+                    rlct = rdata.getStringExtra("lct");
+
+                    text1.setText(rtitle);
+                    contents.setText(rcon);
+                    lct.setText(rlct);
+
+                    mod = true;
+                }
+                break;
+            }
+        }
+        //}
+    }
+
+    @Override
+    public void onBackPressed() {
+            if(mod){
+        Intent intent = new Intent();
+        intent.putExtra("position", position);
+        intent.putExtra("title", rtitle);
+        intent.putExtra("id", id);
+        intent.putExtra("day", day);
+        intent.putExtra("con", rcon);
+        intent.putExtra("rc", 1);
+        setResult(RESULT_OK, intent);
+        Log.i("refresh", "뒤로가기");
+        finish();}
+            else finish();
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                finish();
+                if(mod){
+                    Intent intent = new Intent();
+                    intent.putExtra("position", position);
+                    intent.putExtra("title", rtitle);
+                    intent.putExtra("id", id);
+                    intent.putExtra("day", day);
+                    intent.putExtra("con", rcon);
+                    intent.putExtra("rc", 1);
+                    setResult(RESULT_OK, intent);
+                    Log.i("refresh", "상단바 뒤로가기");
+                    finish();}
+                else finish();
                 return true;
         }
         return true;
