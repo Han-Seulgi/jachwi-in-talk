@@ -58,7 +58,6 @@ public class MyPageActivity extends AppCompatActivity {
     ConstraintLayout mplayout;
     TextView textName, kwdaad;
     Toolbar toolbar;
-    Switch switch1;
     RecyclerView kwdlist;
 
     private RecyclerView recyclerView;
@@ -86,7 +85,6 @@ public class MyPageActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.kwdlist);
         recyclerView.setHasFixedSize(true);
         adapter = new KwRecyclerAdapter();
-        switch1 = findViewById(R.id.switch1);
         kwdaad = findViewById(R.id.kwdadd);
         kwdlist = findViewById(R.id.kwdlist);
 
