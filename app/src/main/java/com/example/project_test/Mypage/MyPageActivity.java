@@ -98,6 +98,7 @@ public class MyPageActivity extends AppCompatActivity {
 
 
 
+
         //아이디를 이용해 유저 정보 검색
         Api api = Api.Factory.INSTANCE.create();
         api.getUser(LoginActivity.user_ac).enqueue(new Callback<User>() {
@@ -110,7 +111,6 @@ public class MyPageActivity extends AppCompatActivity {
 
             }
         });
-
 
 
 
@@ -136,39 +136,6 @@ public class MyPageActivity extends AppCompatActivity {
 
 
     }
-
-    public void clickBtn (View view){
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder builder = null;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelID = "channel_01";
-            String channelName = "MyChannel01";
-
-            NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
-
-            notificationManager.createNotificationChannel(channel);
-            builder = new NotificationCompat.Builder(this, channelID);
-        } else {
-            builder = new NotificationCompat.Builder(this, null);
-        }
-        builder.setSmallIcon(android.R.drawable.ic_menu_view);
-
-        builder.setContentTitle("New 게시물");
-        builder.setContentText("키워드 알림");
-        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.orange);
-        builder.setLargeIcon(bm);
-
-        Notification notification = builder.build();
-
-        notificationManager.notify(1, notification);
-
-
-    }
-
-
-
 
 
 

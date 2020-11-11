@@ -1,7 +1,14 @@
 package com.example.project_test;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +18,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+
+import com.example.project_test.Mypage.KeywordList;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     static public String strID;
     String strPW;
     AlertDialog.Builder loginfail;
+    ArrayList<String> kw = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +53,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void btnClick(View v) {
         switch (v.getId()) {
-            case R.id.loginBtn:          //로그인 버튼 누르면 메인화면으로
+            case R.id.loginBtn:
+
                 Api api = Api.Factory.INSTANCE.create();
 
                 //입력한 아이디와 패스워드 값 가져오기
@@ -130,6 +145,48 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
                         loginfail.show();
+                    }
+                });
+
+                //키워드 알림
+                api.getkeyword(LoginActivity.user_ac).enqueue(new Callback<KeywordList>() {
+                    @Override
+                    public void onResponse(Call<KeywordList> call, Response<KeywordList> response) {
+                        KeywordList kl = response.body();
+
+                        if (!kl.equals("")) {
+                            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                            NotificationCompat.Builder builder = null;
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                String channelID = "channel_01";
+                                String channelName = "MyChannel01";
+
+                                NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+
+                                notificationManager.createNotificationChannel(channel);
+                                builder = new NotificationCompat.Builder(LoginActivity.this, channelID);
+                            } else {
+                                builder = new NotificationCompat.Builder(LoginActivity.this, null);
+                            }
+                            builder.setSmallIcon(android.R.drawable.ic_menu_view);
+
+                            builder.setContentTitle("New 게시물");
+                            builder.setContentText("키워드 알림");
+                            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.orange);
+                            builder.setLargeIcon(bm);
+
+                            Notification notification = builder.build();
+
+                            notificationManager.notify(1, notification);
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<KeywordList> call, Throwable t) {
+
                     }
                 });
                 break;

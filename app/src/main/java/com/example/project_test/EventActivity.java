@@ -1,11 +1,14 @@
 package com.example.project_test;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +16,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.project_test.Mypage.MyPageActivity;
 
+import org.w3c.dom.Text;
+
 public class EventActivity extends AppCompatActivity {
 
     Toolbar toolbar;
+    ImageView iv1;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,12 +35,17 @@ public class EventActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        iv1 = findViewById(R.id.iv1);
+
     }
 
         public void onButton(View v)
         { Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/onehomelife/"));
             startActivity(intent);
         }
+
+
 
 
     //상단탭 메뉴
