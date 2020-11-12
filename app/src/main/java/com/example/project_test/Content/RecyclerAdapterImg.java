@@ -22,8 +22,7 @@ public class RecyclerAdapterImg extends RecyclerView.Adapter<com.example.project
 
     public void setData(ArrayList<ImgListData> list){
         datas = list;
-    }
-    //int imgs [] = {R.drawable.rrimg1,R.drawable.rrimg2,R.drawable.rrimg3,R.drawable.rrimg4};
+    };
 
     @NonNull
     @Override

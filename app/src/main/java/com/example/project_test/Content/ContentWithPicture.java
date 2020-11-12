@@ -68,8 +68,6 @@ public class ContentWithPicture extends AppCompatActivity {
 
     String[] img_data;
     ArrayList<Integer> img_code1;
-    //Integer[] img_code;
-
     String rtitle, rcon, rsource, rrecipe;
 
 
@@ -106,7 +104,6 @@ public class ContentWithPicture extends AppCompatActivity {
 
         src = findViewById(R.id.src);
         rcp = findViewById(R.id.rcp);
-
         src.setVisibility(View.VISIBLE);
         rcp.setVisibility(View.VISIBLE);
 
@@ -124,8 +121,6 @@ public class ContentWithPicture extends AppCompatActivity {
                 Api api = Api.Factory.INSTANCE.create();
                 api.Cmt(LoginActivity.user_ac,postcode,cmt_con).enqueue(new Callback<Cmt>() {
                     public void onResponse(Call<Cmt> call, Response<Cmt> response) {
-
-                        Log.i("결과는" , response.toString());
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(ContentWithPicture.this);
                         dialog = builder.setMessage("작성하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
@@ -178,14 +173,11 @@ public class ContentWithPicture extends AppCompatActivity {
         final Api api = Api.Factory.INSTANCE.create();
 
         //제목으로 검색
-        Log.i("abcdefg", title);
         api.getcontent(title).enqueue(new Callback<PostList>() {
             @Override
             public void onResponse(Call<PostList> call, Response<PostList> response) {
                 PostList postlist = response.body();
                 postcode = postlist.pcode;
-
-                Log.i("abcdefg", content);
 
                 //게시글 코드로 레시피와 재료 가져오기
                 api.getrecipe(postcode).enqueue(new Callback<CookList>() {
@@ -266,15 +258,6 @@ public class ContentWithPicture extends AppCompatActivity {
                 api.getImg(postcode).enqueue(new Callback<Img>() {
                     @Override
                     public void onResponse(Call<Img> call, Response<Img> response) {
-//                        try {
-//                            Log.i("imgtest" , response.body().string().trim());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-
-                        //byte[] encodeByte = Base64.decode(img_data, Base64.NO_WRAP);
-                        //Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-
                         Img img = response.body();
                         List<imgs> imgd = img.imgdata;
 
@@ -284,10 +267,7 @@ public class ContentWithPicture extends AppCompatActivity {
                         for(imgs d:imgd) {
                             img_code1.add(d.img_code);
                             img_data1.add(d.img_data);
-                            Log.i("dimg",d.toString());
                         }
-
-                        //img_code = img_code1.toArray(new Integer[img_code1.size()]);
                         img_data = img_data1.toArray(new String[img_data1.size()]);
 
                         int i = 0;

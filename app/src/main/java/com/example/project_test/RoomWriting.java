@@ -2,6 +2,8 @@ package com.example.project_test;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -9,11 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,7 +38,7 @@ public class RoomWriting extends AppCompatActivity {
     EditText y_text,m_text,d_text;
     String year,month,day;
     String date;
-
+    int a;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +66,48 @@ public class RoomWriting extends AppCompatActivity {
 
         Intent intent = getIntent();
         address = intent.getStringExtra("주소");
+        a = intent.getIntExtra("체크", 0);
         btn.setText(address);
+        Log.i("List", "->1");
+        Log.i("List", "->" + a);
+
+     /*  Intent intent2 = getIntent();
+        a = intent2.getIntExtra("체크", 0);
+        Log.i("List", "->3");
+        Log.i("List", "->->" + a);
+
+
+        if(a == 1) {
+            Log.i("List", "->4");
+            List<Address> list = null;
+
+            String str = intent.getStringExtra("주소");
+            Log.i("List", "->.주소는" + str);
+
+            try {
+
+                Geocoder geocoder = new Geocoder(this);
+                list = geocoder.getFromLocationName(str, 10); // 지역이름, 읽을 개수
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생");
+            }
+
+            if (list != null) {
+                if (list.size() == 0) {
+                    Toast.makeText(RoomWriting.this, "해당되는 주소 정보는 없습니다", Toast.LENGTH_LONG);
+                } else {
+
+                    Toast.makeText(RoomWriting.this, list.get(0).toString(), Toast.LENGTH_LONG);
+
+                    //          list.get(0).getCountryName();  // 국가명
+                    //          list.get(0).getLatitude();        // 위도
+                    double abc = list.get(0).getLongitude();    // 경도
+                    Log.i("결과는", "->" + abc);
+                }
+            }
+        }*/
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

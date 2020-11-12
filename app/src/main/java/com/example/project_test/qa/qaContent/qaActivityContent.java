@@ -69,8 +69,6 @@ public class qaActivityContent extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
-
             text1 = findViewById(R.id.text1);
             writer = findViewById(R.id.id_day);
             contents = findViewById(R.id.con);

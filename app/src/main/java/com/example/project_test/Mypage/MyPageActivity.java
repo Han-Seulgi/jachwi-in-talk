@@ -163,8 +163,6 @@ public class MyPageActivity extends AppCompatActivity {
         Notification notification = builder.build();
 
         notificationManager.notify(1, notification);
-
-
     }
 
 

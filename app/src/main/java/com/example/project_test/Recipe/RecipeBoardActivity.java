@@ -17,13 +17,18 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
+import com.example.project_test.Content.ImgListData;
+import com.example.project_test.Img;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
+import com.example.project_test.RoomList;
 import com.example.project_test.Writing.WritingActivity;
+import com.example.project_test.imgs;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,6 +53,11 @@ public class RecipeBoardActivity extends AppCompatActivity {
     private final int DELETE_POST = 300;
 
     public String tt;
+
+    ArrayList<Integer> img_code1;
+    String[] img_data;
+    //ArrayList<ImgListData> imgdatas;
+    Random rmd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,8 +89,10 @@ public class RecipeBoardActivity extends AppCompatActivity {
         //복사본
         cdata = new ArrayList<>();
 
+        rmd = new Random();
+
         //서버 연결
-        Api api = Api.Factory.INSTANCE.create();
+        final Api api = Api.Factory.INSTANCE.create();
         api.getRecipeList(11).enqueue(new Callback<RecipePostList>() {
             @Override
             public void onResponse(Call<RecipePostList> call, Response<RecipePostList> response) {
@@ -92,6 +104,7 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 ArrayList<String> id1 = new ArrayList<>();
                 ArrayList<String> con1 = new ArrayList<>();
                 ArrayList<Integer> code1 = new ArrayList<>();
+                ArrayList<Integer> img1 = new ArrayList<>();
 
                 //리스트에 제목, 날짜, 작성자 아이디 넣기
                 for (PostData d:postData) {
@@ -108,18 +121,39 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 String[] day = day1.toArray(new String[day1.size()]);
                 String[] id = id1.toArray(new String[id1.size()]);
                 String[] con = con1.toArray(new String[con1.size()]);
-                final int[] img = new int[title1.size()];
+                //final Integer[] img = img1.toArray(new Integer[img1.size()]);
+                final Integer[] img = new Integer[title.length];
+                final Integer[] imgs = {R.drawable.recipe1, R.drawable.recipe2, R.drawable.recipe3,
+                R.drawable.recipe4, R.drawable.recipe5, R.drawable.recipe6,};
                 final Integer[] code = code1.toArray(new Integer[code1.size()]);
-                /*int[] comment_cnt = new int[title1.size()];
-                int[] like_cnt = new int[title1.size()];*/
 
-                //넘어온 데이터의 사이즈에 맞춰 이미지 생성(?), 리사이클러뷰 데이터파일에 데이터 넘기기
-                int i = 0;
-                while (i < title.length) {
-                    img[i] = R.drawable.recipe;
-                    data.add(new RecipeListData(img[i], title[i], day[i], id[i], tt, con[i], code[i]));
-                    i++;
+                for(int i=0; i<title.length; i++) {
+                    int num = rmd.nextInt(imgs.length);
+                    img[i] = imgs[num];
+                   /* api.getFirst(code[i]).enqueue(new Callback<Img>() {
+                        @Override
+                        public void onResponse(Call<Img> call, Response<Img> response) {
+                            Img img = response.body();
+                            List<imgs> imgd = img.imgdata;
+
+                            img_code1 = new ArrayList<>();
+                            ArrayList<String> img_data1 = new ArrayList<>();
+
+                            for (imgs d : imgd) {
+                                img_code1.add(d.img_code);
+                                img_data1.add(d.img_data);
+                            }
+                            img_data = img_data1.toArray(new String[img_data1.size()]);
+                        }
+
+                        @Override
+                        public void onFailure(Call<Img> call, Throwable t) {
+                            Log.e("dimg", t.getLocalizedMessage());
+                        }
+                    });*/
+                    data.add(new RecipeListData(img[i], title[i], day[i], id[i], tt, con[i]));
                 }
+
                 adapter.setData(RecipeBoardActivity.this, data);
                 rv.setAdapter(adapter);
 
@@ -146,8 +180,7 @@ public class RecipeBoardActivity extends AppCompatActivity {
             }
         }); //서버연결
 
-
-        layoutManager = new GridLayoutManager(this, 2);
+    layoutManager = new GridLayoutManager(this, 2);
         rv.setLayoutManager(layoutManager);
 
 
@@ -186,43 +219,37 @@ public class RecipeBoardActivity extends AppCompatActivity {
 //        if (resultCode == RESULT_OK) {
         Log.i("refresh", "requestcode: "+requestCode);
         Log.i("rbact", "requestcode: "+requestCode+"resultcode"+resultCode);
-            switch (requestCode) {
-                case WRITE_POST: if(resultCode == 1){
-                    Log.i("refresh", "갱신");
-                    int img = R.drawable.recipe;
-                    String title = rdata.getStringExtra("title");
-                    String day = rdata.getStringExtra("day");
-                    String id = rdata.getStringExtra("id");
-                    String con = rdata.getStringExtra("con");
-                    int code = rdata.getIntExtra("code", 0);
+        switch (requestCode) {
+            case WRITE_POST: if(resultCode == RESULT_OK){
+                Log.i("refresh", "갱신");
+                int img = R.drawable.recipe;
+                String title = rdata.getStringExtra("title");
+                String day = rdata.getStringExtra("day");
+                String id = rdata.getStringExtra("id");
+                String con = rdata.getStringExtra("con");
+                //int code = rdata.getIntExtra("code", 0);
 
-                    adapter.addData(new RecipeListData(img, title, day, id, tt, con, code));
-                    Log.i("WRITE_POST", "올리기 갱신: "+title+day+id+con+code);
+                adapter.addData(new RecipeListData(img, title, day, id, tt, con));
+                adapter.notifyDataSetChanged();
+                Log.i("WRITE_POST", "올리기 갱신: "+title+day+id+con);
 
-                }break;
+            }break;
 
-                case 777:
+            case 777:
+                if(resultCode == RESULT_OK){
                     int position = rdata.getIntExtra("position", 0);
                     int rc = rdata.getIntExtra("rc", 0);
-                    if (rc == 1) {
-                        //adapter.updateData(data);
-                    } else if (rc == 2) {
+                    if (rc == MODIFY_POST) {
+                        int img = R.drawable.recipe;
+                        String title = rdata.getStringExtra("title");
+                        String id = rdata.getStringExtra("id");
+                        String day = rdata.getStringExtra("day");
+                        String con = rdata.getStringExtra("con");
+                        adapter.updateData(position, new RecipeListData(img, title, day, id, tt, con));
+                    } else if (rc == DELETE_POST) {
                         adapter.deleteData(position);
                     } else Log.i("mod/del fail", "실패");
-
-                /*case MODIFY_POST: {
-                    Log.i("refresh", "수정");
-                    int position = rdata.getIntExtra("position", -1);
-
-                    adapter.notifyItemChanged(position);
-                    break;
                 }
-
-                case DELETE_POST: {
-                    Log.i("refresh", "삭제");
-                    break;
-                }*/
-            //}
         }
     }
 

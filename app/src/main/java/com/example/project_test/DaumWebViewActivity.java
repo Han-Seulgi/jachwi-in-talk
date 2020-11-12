@@ -79,11 +79,20 @@ public class DaumWebViewActivity extends AppCompatActivity {
                     daum_result.setText(String.format("(%s) %s %s", arg1, arg2, arg3));
 
                     Intent intent = new Intent(DaumWebViewActivity.this, RoomWriting.class);
-                    intent.putExtra("주소", arg2);
+                    intent.putExtra("주소", arg1+arg2+arg3);
+                    intent.putExtra("체크", 1);
                     startActivity(intent);
 
+                    Intent intent2 = new Intent(DaumWebViewActivity.this, RoomActivity.class);
+                    intent2.putExtra("주소", arg1+arg2+arg3);
+                    intent2.putExtra("체크", 1);
+                    startActivity(intent);
+
+
+
+
                     // WebView를 초기화 하지않으면 재사용할 수 없음
-                    // init_webView();
+                    init_webView();
                 }
 
             });

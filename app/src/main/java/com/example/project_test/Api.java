@@ -208,6 +208,10 @@ public interface Api {
     @POST("Image/getImg")
     Call<Img> getImg(@Field("post_code") int var1);
 
+    @FormUrlEncoded
+    @POST("Image/getFirst")
+    Call<Img> getFirst(@Field("post_code") int var1);
+
 //    @GET("Image/deleteImg")
 //    Call<DeleteImg> deleteImg(@Query("img_code")int var1);
 
@@ -258,6 +262,11 @@ public interface Api {
     @FormUrlEncoded
     @POST("RoomWrite")
     Call<Room> roomWrite(@Field("room_lct") String var1, @Field("room_p") String var2, @Field("date") String var3);
+
+    @GET("RoomList")
+    Call<RoomList> getAllRoom();
+
+
 
     public static final class Factory {
         public static final Api.Factory INSTANCE;

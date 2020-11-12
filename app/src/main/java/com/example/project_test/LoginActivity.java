@@ -66,11 +66,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                     //패스워드 일치
                                     if(pw.equals(strPW)) {
-                                        //Log.i("abcdefg", pw);
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         Toast.makeText(getApplicationContext(),"로그인 성공",Toast.LENGTH_SHORT).show();
-                                        //user_ac = strID;
                                         idEt.setText("");
                                         pwEt.setText("");
                                     }
