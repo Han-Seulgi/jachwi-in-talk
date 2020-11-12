@@ -51,7 +51,7 @@ public class MsgRecyclerAdapter extends RecyclerView.Adapter<MsgRecyclerAdapter.
 
                 //db에서 삭제
                 Api api = Api.Factory.INSTANCE.create();
-                api.delmsgnum(mn, LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+                api.delmsgnum(mn, EmergencyActivity.ID).enqueue(new Callback<MsgNumList>() {
                     @Override
                     public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
                         MsgNumList mnl = response.body();

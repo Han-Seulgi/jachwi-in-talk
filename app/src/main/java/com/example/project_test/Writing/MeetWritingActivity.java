@@ -1,5 +1,6 @@
 package com.example.project_test.Writing;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,11 +25,15 @@ import com.example.project_test.Meet.PostData;
 import com.example.project_test.MeetWrite;
 import com.example.project_test.MySpinnerAdapter;
 import com.example.project_test.R;
+import com.example.project_test.RoomWriting;
 import com.example.project_test.Write;
 import com.example.project_test.likeCheck;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,15 +42,26 @@ import retrofit2.Response;
 public class MeetWritingActivity extends AppCompatActivity {
     Toolbar toolbar;
     Button writing;
-    EditText tedit, cedit, wedit,nedit;
+    EditText tedit, cedit, wedit,nedit, dedit;
     TextView tv1, tv2 , tv3, tv4, title2;
     String post_title, post_con, meet_lct;
     int board_code, meet_p;
-    String meet_tag;
+    String meet_tag, meet_day;
 
     private AlertDialog dialog;
 
     Spinner spinner;
+
+    Calendar calendar = Calendar.getInstance();
+    DatePickerDialog.OnDateSetListener datepicker = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel(R.id.dedit);
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +73,8 @@ public class MeetWritingActivity extends AppCompatActivity {
         cedit = findViewById(R.id.cedit);
         wedit = findViewById(R.id.wedit);
         nedit = findViewById(R.id.nedit);
+        dedit = findViewById(R.id.dedit);
+        dedit.setFocusable(false);
         title2 = findViewById(R.id.title2);
 
 
@@ -113,6 +132,14 @@ public class MeetWritingActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        //달력 날짜 선택
+        dedit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(MeetWritingActivity.this, datepicker, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
         int request = getIntent().getIntExtra("request", -1);
         switch (request) {
             case 0:
@@ -133,6 +160,7 @@ public class MeetWritingActivity extends AppCompatActivity {
                         post_con = cedit.getText().toString();
                         meet_lct = wedit.getText().toString();
                         String p = nedit.getText().toString();
+                        meet_day = dedit.getText().toString();
                         meet_tag = spinner.getSelectedItem().toString();
 
                         if (title2.getText().toString().equals("자취인만남")) {
@@ -144,7 +172,7 @@ public class MeetWritingActivity extends AppCompatActivity {
 //                if(spinner.getSelectedItem().toString().equals("음식")){ meet_tag = 3302; }
 //                if(spinner.getSelectedItem().toString().equals("영화")){ meet_tag = 3303; }
                         Log.i("결과는", LoginActivity.user_ac + post_title + post_con + board_code);
-                        if (post_title.equals("") || post_con.equals("") || meet_lct.equals("") || p.equals("") || meet_tag.equals("선택")) {
+                        if (post_title.equals("") || post_con.equals("") || meet_lct.equals("") || p.equals("") ||  meet_day.equals("") || meet_tag.equals("선택")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(MeetWritingActivity.this);
                             dialog = builder.setMessage("글 작성이 완료되지 않았습니다.").setNegativeButton("확인", null).create();
                             dialog.show();
@@ -156,7 +184,7 @@ public class MeetWritingActivity extends AppCompatActivity {
                                 public void onResponse(Call<Write> call, Response<Write> response) {
                                     Log.i("결과는", response.toString());
                                     //post_code가 제대로 저장되지 않아 바꿨음
-                                    api.MeetWrite(meet_tag, meet_lct, meet_p).enqueue(new Callback<MeetWrite>() {
+                                    api.MeetWrite(meet_tag, meet_lct, meet_p, meet_day).enqueue(new Callback<MeetWrite>() {
                                         public void onResponse(Call<MeetWrite> call, Response<MeetWrite> response) {
                                             Log.i("결과는", response.toString());
                                             AlertDialog.Builder builder = new AlertDialog.Builder(MeetWritingActivity.this);
@@ -309,5 +337,13 @@ public class MeetWritingActivity extends AppCompatActivity {
                 return true;
         }
         return true;
+    }
+
+    private void updateLabel(int id) {
+        String myFormat = "yyyy-MM-dd";  //출력형식
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
+
+        EditText edit = findViewById(id);
+        edit.setText(sdf.format(calendar.getTime()));
     }
 }

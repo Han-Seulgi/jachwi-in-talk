@@ -124,7 +124,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("MeetWrite")
-    Call<MeetWrite> MeetWrite(@Field("meet_tag")String var1,@Field("meet_lct")String var2,@Field("meet_p")int var3);
+    Call<MeetWrite> MeetWrite(@Field("meet_tag")String var1,@Field("meet_lct")String var2,@Field("meet_p")int var3, @Field("meet_day")String var4);
 
     @FormUrlEncoded
     @POST("Cmt")
@@ -256,6 +256,10 @@ public interface Api {
     Call<MsgNumList> getemergency(@Query("id")String var1);
 
     @FormUrlEncoded
+    @POST("Emergency/adduser")
+    Call<Join> addemergency(@Field("id")String var1);
+
+    @FormUrlEncoded
     @POST("Emergency/addcallnum")
     Call<MsgNumList> addcallnum(@Field("call_num") String var1, @Field("id") String var2);
 
@@ -271,6 +275,16 @@ public interface Api {
     Call<RoomList> getAllRoom();
 
 
+
+    @FormUrlEncoded
+    @POST("Note")
+    Call<NewNote> newNote(@Field("sid") String var1, @Field("rid") String var2, @Field("note_con") String var3);
+
+    @GET("Note/getnote")
+    Call<Note> getnote(@Query("id")String var1);
+
+    @GET("Note/checknote")
+    Call<CheckNote> checknote(@Query("id")String var1);
 
     public static final class Factory {
         public static final Api.Factory INSTANCE;

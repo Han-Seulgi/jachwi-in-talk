@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -29,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-    public static String user_ac = "abc";
+    public static String user_ac;
 
     Button loginBtn, jnBtn;
     EditText idEt, pwEt;
@@ -81,6 +82,15 @@ public class LoginActivity extends AppCompatActivity {
 
                                     //패스워드 일치
                                     if(pw.equals(strPW)) {
+                                        user_ac = strID;
+
+                                        //SharedPreferences에 로그인한 아이디 저장
+                                        SharedPreferences preferences = getSharedPreferences("lastID", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = preferences.edit();
+                                        editor.putString("IDkey", user_ac);
+                                        editor.commit();
+
+                                        //Log.i("abcdefg", pw);
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         Toast.makeText(getApplicationContext(),"로그인 성공",Toast.LENGTH_SHORT).show();

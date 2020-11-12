@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -13,6 +16,15 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.example.project_test.Emergency.EmergencyActivity;
+import com.example.project_test.Mypage.MyInfoSetActivity;
+import com.example.project_test.Mypage.PwChangeActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends ActivityGroup {
 
@@ -30,6 +42,28 @@ public class MainActivity extends ActivityGroup {
             if(checkPermission()) {}
             else { requestPermission(); }
         }
+
+        //새로운 쪽지가 있는지 확인
+        Api api = Api.Factory.INSTANCE.create();
+        api.checknote(LoginActivity.user_ac).enqueue(new Callback<CheckNote>() {
+            @Override
+            public void onResponse(Call<CheckNote> call, Response<CheckNote> response) {
+                CheckNote cknote = response.body();
+                Boolean checknt = cknote.checknote;
+
+                Log.i("abccc", checknt+"");
+                if(checknt)
+                {
+                    //쪽지 다이얼로그 띄우기
+                    NoteDialog customDialog = new NoteDialog(MainActivity.this);
+                    customDialog.callFunction();
+                }
+            }
+            @Override
+            public void onFailure(Call<CheckNote> call, Throwable t) {
+                Log.i("abccc", t.getMessage());
+            }
+        });
 
 
 /*        Api api = Api.Factory.INSTANCE.create();
@@ -68,7 +102,8 @@ public class MainActivity extends ActivityGroup {
         int result = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE);
         int result2 = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
         int result3 = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if(result == PackageManager.PERMISSION_GRANTED && result2==PackageManager.PERMISSION_GRANTED && result3==PackageManager.PERMISSION_GRANTED) { // 이전에 요청 허락 했으면
+        int result4 = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.SEND_SMS);
+        if(result == PackageManager.PERMISSION_GRANTED && result2==PackageManager.PERMISSION_GRANTED && result3==PackageManager.PERMISSION_GRANTED && result4==PackageManager.PERMISSION_GRANTED) { // 이전에 요청 허락 했으면
             return true;
         }
         else { // 이전에 요청 허락 하지 않았으면
@@ -86,8 +121,11 @@ public class MainActivity extends ActivityGroup {
         else if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
             Toast.makeText(MainActivity.this, "앱의 주요기능을 이용하실 수 없습니다",Toast.LENGTH_SHORT).show();
         }
+        else if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.SEND_SMS)){
+            Toast.makeText(MainActivity.this, "일부 서비스를 이용하지 못 할 수 있습니다",Toast.LENGTH_SHORT).show();
+        }
         else {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.CALL_PHONE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE},1000);
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.CALL_PHONE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SEND_SMS},1000);
         }
     }
 
@@ -142,15 +180,15 @@ public class MainActivity extends ActivityGroup {
                 .setContent(new Intent(this, EmergencyActivity.class)));
 
 
-        //흔들어서 열면 안전지키미 선택되도록 설정
-        Intent it = new Intent(getIntent());
-        page = it.getIntExtra("page", -1);
-
-        if(page == 1) {
-            tabHost.setCurrentTab(3);
-        } else {
-            tabHost.setCurrentTab(0);
-        }
+//        //흔들어서 열면 안전지키미 선택되도록 설정
+//        Intent it = new Intent(getIntent());
+//        page = it.getIntExtra("page", -1);
+//
+//        if(page == 1) {
+//            tabHost.setCurrentTab(3);
+//        } else {
+//            tabHost.setCurrentTab(0);
+//        }
     }
 }
 

@@ -21,6 +21,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project_test.Emergency.MsgNumList;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -279,29 +281,46 @@ public class JoinActivity extends AppCompatActivity {
                     return;
                 }
                  else {
-                    Api api = Api.Factory.INSTANCE.create();
+                    final Api api = Api.Factory.INSTANCE.create();
 
                     api.joinUser(id, pw, name, email).enqueue(new Callback<Join>() {
-                        public void onResponse(Call<Join> call, Response<Join> response) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(JoinActivity.this);
-                            dialog = builder.setMessage("가입완료").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                }
-                            })
-                                    .create();
-                            dialog.show();
-                        }
+                         public void onResponse(Call<Join> call, Response<Join> response) {
+                             AlertDialog.Builder builder = new AlertDialog.Builder(JoinActivity.this);
+                             dialog = builder.setMessage("가입완료").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                 @Override
+                                 public void onClick(DialogInterface dialog, int which) {
+                                     finish();
+                                 }
+                             })
+                                     .create();
+                             dialog.show();
 
-                        public void onFailure(Call<Join> call, Throwable t) {
-                            Log.i("validate", t.getMessage());
-                            AlertDialog.Builder builder = new AlertDialog.Builder(JoinActivity.this);
-                            dialog = builder.setMessage("가입실패").setNegativeButton("확인", null)
-                                    .create();
-                            dialog.show();
-                        }
-                    });
+                             //emergency 테이블에 추가
+                             api.addemergency(id).enqueue(new Callback<Join>() {
+                                 @Override
+                                 public void onResponse(Call<Join> call, Response<Join> response) {
+                                     Join jn = response.body();
+
+                                     boolean jn2 = jn.success;
+
+                                     Log.i("ssss", jn2+"");
+                                 }
+
+                                 @Override
+                                 public void onFailure(Call<Join> call, Throwable t) {
+                                     Log.i("add", t.getMessage());
+                                 }
+                             });
+                         }
+
+                         public void onFailure(Call<Join> call, Throwable t) {
+                             Log.i("validate", t.getMessage());
+                             AlertDialog.Builder builder = new AlertDialog.Builder(JoinActivity.this);
+                             dialog = builder.setMessage("가입실패").setNegativeButton("확인", null)
+                                     .create();
+                             dialog.show();
+                         }
+                     });
                 }
 
             }

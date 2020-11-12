@@ -17,12 +17,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <meta-data
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
 
-    <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
 
@@ -84,6 +85,7 @@
         <activity android:name=".Mypage.MyPageActivity" android:label="마이페이지"/>
         <activity android:name=".Mypage.MyInfoSetActivity" android:label="내 정보 수정 화면"/>
         <activity android:name=".Mypage.MyContents.MyContentsActivity" android:label="내가 쓴 글 목록"/>
+        <activity android:name=".NoteActivity" android:label="쪽지"/>
         <receiver android:name=".BootReceiver"
             android:enabled="true"
             android:label="부팅시 작동하는 브로드캐스트 리시버">

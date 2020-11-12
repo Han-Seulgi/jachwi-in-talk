@@ -2,6 +2,7 @@ package com.example.project_test;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -11,6 +12,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.example.project_test.Emergency.EmergencyActivity;
+import com.example.project_test.Emergency.MsgNumList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ShakeService extends Service implements SensorEventListener {
 
@@ -29,6 +37,7 @@ public class ShakeService extends Service implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor accelerormeterSensor;
 
+    private String ID;
 
     @Nullable
     @Override
@@ -44,6 +53,48 @@ public class ShakeService extends Service implements SensorEventListener {
         //시스템 서비스를 가져와서 SensorManager 타입으로 저장
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE); // 센서 접근 할 수 있는 서비스
         accelerormeterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); //가속도 센서
+
+        //SharedPreferences에서 로그인한 아이디 읽어오기
+        SharedPreferences preferences = getSharedPreferences("lastID", MODE_PRIVATE);
+        ID = preferences.getString("IDkey", "none");
+        Log.i("아이디값", ID);
+
+        if(ID.equals("none"))
+        {
+            Log.d("svc", "서비스끝");
+        }
+
+        //시스템설정값 가져오기
+//        Api api = Api.Factory.INSTANCE.create();
+//        api.getemergency(ID).enqueue(new Callback<MsgNumList>() {
+//            @Override
+//            public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
+//                MsgNumList mnl = response.body();
+//                List<MsgNumData> mData = mnl.items;
+//
+//                int volume = mData.get(0).sysvolume;
+//
+//                if(boolsound) {
+//                    try {
+//                        float sv = volume/100.0f; //(0~1)
+//                        sp = sound_pool.play(sound_beep, sv, sv, 0, -1, 1f); // (재생시킬 파일, 왼쪽 볼륨 크기, 오른쪽 볼륨 크기, 우선순위, 재생횟수, 재생속도)
+//                        boolsound = false;
+//                    } catch (Exception e) {
+//                        Toast.makeText(getApplicationContext(), "경고음 실패", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//                else {
+//                    sound_pool.pause(sp);
+//                    boolsound = true;
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<MsgNumList> call, Throwable t) {
+//
+//            }
+//        });
+
     }
 
     @Override
@@ -85,8 +136,8 @@ public class ShakeService extends Service implements SensorEventListener {
                     //흔들리면 이벤트 발생
 
                     //앱 실행(반응 속도가 엄청 느림, 앱 연 상태에서 계속 열림)
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("page", 1); //원하는 탭 (안전알리미) 열기
+                    Intent intent = new Intent(getApplicationContext(), EmergencyActivity.class);
+                    intent.putExtra("code", 1); //흔들림으로 열었을 경우
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //새로운 TASK
                     getApplicationContext().startActivity(intent);
 

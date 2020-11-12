@@ -88,13 +88,18 @@ public class EmergencySet extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        //받아오기
+        Intent intent = getIntent();
+
+        final String ID = intent.getStringExtra("아이디");
+
         //자동 하이픈(-) 설정(핸드폰의 언어 기본설정이 한국어여야 함)
         editmsg.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         editcall.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         //전화번호, 시스템설정값 가져오기
         final Api api = Api.Factory.INSTANCE.create();
-        api.getemergency(LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+        api.getemergency(ID).enqueue(new Callback<MsgNumList>() {
             @Override
             public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
                 MsgNumList mnl = response.body();
@@ -104,13 +109,7 @@ public class EmergencySet extends AppCompatActivity {
                 int syssensor = mData.get(0).syssensor;
                 int sysvolume = mData.get(0).sysvolume;
 
-                if(callnum == null || callnum.equals(""))
-                {
-                    editcall.setText(callnum);
-                }
-                else {
-                    editcall.setText(callnum);
-                }
+                editcall.setText(callnum);
                 sensor.setProgress(syssensor);
                 volume.setProgress(sysvolume);
             }
@@ -122,7 +121,7 @@ public class EmergencySet extends AppCompatActivity {
         });
 
         //문자번호 가져오기
-        api.getmsgnum(LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+        api.getmsgnum(ID).enqueue(new Callback<MsgNumList>() {
             @Override
             public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
                 MsgNumList mnl = response.body();
@@ -180,7 +179,7 @@ public class EmergencySet extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
 
                     //db에 넣기
-                    api.addmsgnum(strmsg, LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+                    api.addmsgnum(strmsg, ID).enqueue(new Callback<MsgNumList>() {
                         @Override
                         public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
                             MsgNumList mnl = response.body();
@@ -222,7 +221,7 @@ public class EmergencySet extends AppCompatActivity {
                 }
                 else {
                     //db에 입력
-                    api.addcallnum(strcall, LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+                    api.addcallnum(strcall, ID).enqueue(new Callback<MsgNumList>() {
                         @Override
                         public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
                             MsgNumList mnl = response.body();
@@ -253,7 +252,7 @@ public class EmergencySet extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //문자번호 가져오기
-                api.getmsgnum(LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+                api.getmsgnum(ID).enqueue(new Callback<MsgNumList>() {
                     @Override
                     public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
                         MsgNumList mnl = response.body();
@@ -303,7 +302,7 @@ public class EmergencySet extends AppCompatActivity {
         calltest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                api.getemergency(LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+                api.getemergency(ID).enqueue(new Callback<MsgNumList>() {
                     @Override
                     public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
                         MsgNumList mnl = response.body();
@@ -367,7 +366,7 @@ public class EmergencySet extends AppCompatActivity {
                 Log.i("시스템", sen+"/"+vol);
 
                 //db에 입력
-                api.setsystem(sen, vol, LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+                api.setsystem(sen, vol, ID).enqueue(new Callback<MsgNumList>() {
                     @Override
                     public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
                         MsgNumList mnl = response.body();

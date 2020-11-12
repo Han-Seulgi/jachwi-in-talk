@@ -1,5 +1,6 @@
 package com.example.project_test.Modify;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,9 +22,13 @@ import com.example.project_test.Api;
 import com.example.project_test.MySpinnerAdapter;
 import com.example.project_test.R;
 import com.example.project_test.Write;
+import com.example.project_test.Writing.MeetWritingActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,7 +37,7 @@ import retrofit2.Response;
 public class MeetModifyActivity extends AppCompatActivity {
     Toolbar toolbar;
     Button writing;
-    EditText tedit, cedit, nedit, wedit;
+    EditText tedit, cedit, nedit, wedit, dedit;
     TextView tv0;
     String post_title, post_con, meet_lct, meet_day, meet_tag;
     int post_code, meet_p;
@@ -40,6 +46,16 @@ public class MeetModifyActivity extends AppCompatActivity {
 
     Spinner spinner;
 
+    Calendar calendar = Calendar.getInstance();
+    DatePickerDialog.OnDateSetListener datepicker = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel(R.id.dedit);
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +67,8 @@ public class MeetModifyActivity extends AppCompatActivity {
         cedit = findViewById(R.id.cedit);
         wedit = findViewById(R.id.wedit);
         nedit = findViewById(R.id.nedit);
+        dedit = findViewById(R.id.dedit);
+        dedit.setFocusable(false);
         tv0 = findViewById(R.id.tv0);
 
         spinner = findViewById(R.id.meetSpinner);
@@ -117,6 +135,15 @@ public class MeetModifyActivity extends AppCompatActivity {
         cedit.setText(post_con);
         nedit.setText(meet_p+"");
         wedit.setText(meet_lct);
+        dedit.setText(meet_day);
+
+        //달력 날짜 선택
+        dedit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(MeetModifyActivity.this, datepicker, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         //글쓰기 _올리기
         int request = getIntent().getIntExtra("request", -1);
@@ -140,9 +167,10 @@ public class MeetModifyActivity extends AppCompatActivity {
                 meet_lct = wedit.getText().toString();
                 String p = nedit.getText().toString();
                 meet_tag = spinner.getSelectedItem().toString();
+                meet_day = dedit.getText().toString();
 
 
-                if (post_title.equals("") || post_con.equals("") || meet_lct.equals("") || p.equals("") || meet_tag.equals("")) {
+                if (post_title.equals("") || post_con.equals("") || meet_lct.equals("") || p.equals("") || meet_day.equals("") || meet_tag.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MeetModifyActivity.this);
                     dialog = builder.setMessage("글 작성이 완료되지 않았습니다.").setNegativeButton("확인", null)
                             .create();
@@ -240,5 +268,13 @@ public class MeetModifyActivity extends AppCompatActivity {
         }
         return true;
 
+    }
+
+    private void updateLabel(int id) {
+        String myFormat = "yyyy-MM-dd";  //출력형식
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
+
+        EditText edit = findViewById(id);
+        edit.setText(sdf.format(calendar.getTime()));
     }
 }

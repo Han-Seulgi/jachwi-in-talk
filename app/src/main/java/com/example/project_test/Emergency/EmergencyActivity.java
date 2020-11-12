@@ -3,6 +3,7 @@ package com.example.project_test.Emergency;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,20 +63,29 @@ public class EmergencyActivity extends AppCompatActivity {
     private SoundPool sound_pool; //사이렌
     private int sound_beep; //사이렌
     private boolean boolsound=true;
-    int sp;
+    int sp, checkcode;
+    public static String ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency);
 
-        //상단탭
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //받아오기
+        Intent intent = getIntent();
+        checkcode = intent.getIntExtra("code",0);
+
+        Log.i("코드확인", checkcode+"");
+
+        if(!(checkcode==1)) {
+            //상단탭
+            toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowCustomEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.mypage);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
         //그리드뷰
         bm1 = BitmapFactory.decodeResource(getResources(), R.drawable.flash);
@@ -105,6 +116,11 @@ public class EmergencyActivity extends AppCompatActivity {
 
         final Api api = Api.Factory.INSTANCE.create();
 
+        //SharedPreferences에서 로그인한 아이디 읽어오기
+        SharedPreferences preferences = getSharedPreferences("lastID", MODE_PRIVATE);
+        ID = preferences.getString("IDkey", "none");
+        Log.i("아이디값", ID);
+
         //이벤트
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             //@RequiresApi(api = Build.VERSION_CODES.M)
@@ -122,7 +138,7 @@ public class EmergencyActivity extends AppCompatActivity {
 
                     case 1:
                             //문자번호 가져오기
-                            api.getmsgnum(LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+                            api.getmsgnum(ID).enqueue(new Callback<MsgNumList>() {
                                 @Override
                                 public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
                                     MsgNumList mnl = response.body();
@@ -181,7 +197,7 @@ public class EmergencyActivity extends AppCompatActivity {
                         return;
                     case 3: //경고음 버튼 눌렀을 때
                         //시스템설정값 가져오기
-                        api.getemergency(LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+                        api.getemergency(ID).enqueue(new Callback<MsgNumList>() {
                             @Override
                             public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
                                 MsgNumList mnl = response.body();
@@ -214,12 +230,13 @@ public class EmergencyActivity extends AppCompatActivity {
                     case 4:
                         //설정 화면
                         Intent intent = new Intent(EmergencyActivity.this, EmergencySet.class);
+                        intent.putExtra("아이디",ID);
                         startActivity(intent);
                         return;
 
                     case 5: //긴급전화 버튼 눌렀을 때
                         //전화번호 가져오기
-                        api.getemergency(LoginActivity.user_ac).enqueue(new Callback<MsgNumList>() {
+                        api.getemergency(ID).enqueue(new Callback<MsgNumList>() {
                             @Override
                             public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
                                 MsgNumList mnl = response.body();

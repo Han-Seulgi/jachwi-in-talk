@@ -6,6 +6,6 @@
         android:id="@+id/mail"
         app:showAsAction="always"
         android:icon="@drawable/mail"
-        android:title="쪽지함" />
+        android:title="쪽지전송" />
 
 </menu>

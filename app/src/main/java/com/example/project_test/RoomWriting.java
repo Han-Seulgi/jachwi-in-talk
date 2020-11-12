@@ -1,5 +1,6 @@
 package com.example.project_test;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,10 +41,21 @@ public class RoomWriting extends AppCompatActivity {
     String post_con,price;
     int board_code;
     AlertDialog dialog;
-    EditText y_text,m_text,d_text;
+    EditText day_text;
     String year,month,day;
     String date;
     int a;
+
+    Calendar calendar = Calendar.getInstance();
+    DatePickerDialog.OnDateSetListener datepicker = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel(R.id.day_text);
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,9 +77,8 @@ public class RoomWriting extends AppCompatActivity {
         cedit = findViewById(R.id.cedit);
         title2 = findViewById(R.id.title2);
         title = findViewById(R.id.title);
-        y_text = findViewById(R.id.y_text);
-        m_text = findViewById(R.id.m_text);
-        d_text = findViewById(R.id.d_text);
+        day_text = findViewById(R.id.day_text);
+        day_text.setFocusable(false);
 
         Intent intent = getIntent();
         address = intent.getStringExtra("주소");
@@ -117,22 +133,28 @@ public class RoomWriting extends AppCompatActivity {
             }
         });
 
+        //달력 날짜 선택
+        day_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(RoomWriting.this, datepicker, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 post_title = title.getText().toString();
                 price = medit.getText().toString();
                 post_con = cedit.getText().toString();
-                year = y_text.getText().toString();
-                month = m_text.getText().toString();
-                day = d_text.getText().toString();
-                date = year + "-" + month + "-" + day;
+                date = day_text.getText().toString();
+                //date = year + "-" + month + "-" + day;
 
                 if(title2.getText().toString().equals("보금자리")){
                     board_code = 88;
                 }
 
-                if (address.equals("") || price.equals("") || post_con.equals("")) {
+                if (address==null || address.equals("") || price.equals("") || post_con.equals("") || date.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RoomWriting.this);
                     dialog = builder.setMessage("글 작성이 완료되지 않았습니다.").setNegativeButton("확인", null)
                             .create();
@@ -219,6 +241,14 @@ public class RoomWriting extends AppCompatActivity {
         }
         return true;
 
+    }
+
+    private void updateLabel(int id) {
+        String myFormat = "yyyy-MM-dd";  //출력형식
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
+
+        EditText edit = findViewById(id);
+        edit.setText(sdf.format(calendar.getTime()));
     }
 }
 
