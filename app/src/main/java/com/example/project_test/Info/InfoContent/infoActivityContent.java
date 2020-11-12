@@ -126,13 +126,13 @@ public class infoActivityContent extends AppCompatActivity {
                                 cmtday.add(d.cmt_day);
                             }
 
-                            Log.i("comment" , String.valueOf(cmtcode.get(0))+cmtday.get(0));
+                            Log.i("infocomment" , String.valueOf(cmtcode.get(0))+cmtday.get(0));
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(infoActivityContent.this);
                             dialog = builder.setMessage("작성하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    adapter.addData(new CommentListData(cmtcode.get(0), id, cmt_con, cmtday.get(0)));
+                                    adapter.addData(new CommentListData(cmtcode.get(0), LoginActivity.user_ac, cmt_con, cmtday.get(0)));
 
                                     Toast.makeText(getApplicationContext(),"작성완료",Toast.LENGTH_SHORT).show();
                                 }

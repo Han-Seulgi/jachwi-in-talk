@@ -146,7 +146,7 @@ public class MeetActivityContent extends AppCompatActivity {
                         dialog = builder.setMessage("작성하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                adapter.addData(new CommentListData(cmtcode.get(0), id, cmt_con, cmtday.get(0)));
+                                adapter.addData(new CommentListData(cmtcode.get(0), LoginActivity.user_ac, cmt_con, cmtday.get(0)));
 
                                 Toast.makeText(getApplicationContext(),"작성완료",Toast.LENGTH_SHORT).show();
                             }
@@ -481,6 +481,7 @@ public class MeetActivityContent extends AppCompatActivity {
             intent.putExtra("id", id);
             intent.putExtra("day", day);
             intent.putExtra("con", rcon);
+            intent.putExtra("img", img1);
             intent.putExtra("rc", 1);
             setResult(RESULT_OK, intent);
             Log.i("refresh", "뒤로가기");
@@ -502,6 +503,7 @@ public class MeetActivityContent extends AppCompatActivity {
                     intent.putExtra("id", id);
                     intent.putExtra("day", day);
                     intent.putExtra("con", rcon);
+                    intent.putExtra("img", img1);
                     intent.putExtra("rc", 1);
                     setResult(RESULT_OK, intent);
                     Log.i("refresh", "뒤로가기");

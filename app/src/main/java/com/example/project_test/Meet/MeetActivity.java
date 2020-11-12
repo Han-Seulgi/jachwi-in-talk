@@ -185,7 +185,7 @@ public class MeetActivity extends AppCompatActivity {
         switch (requestCode) {
             case WRITE_POST: if(resultCode == RESULT_OK){
                 Log.i("refresh", "갱신");
-                int img = R.drawable.meetimg1;
+                int img = rdata.getIntExtra("img", 0);
                 String title = rdata.getStringExtra("title");
                 String day = rdata.getStringExtra("day");
                 String id = rdata.getStringExtra("id");
@@ -202,11 +202,12 @@ public class MeetActivity extends AppCompatActivity {
                 int position = rdata.getIntExtra("position", 0);
                 int rc = rdata.getIntExtra("rc", 0);
                 if (rc == MODIFY_POST) {
-                    int img = R.drawable.meetimg1;
                     String title = rdata.getStringExtra("title");
                     String id = rdata.getStringExtra("id");
                     String day = rdata.getStringExtra("day");
                     String con = rdata.getStringExtra("con");
+                    int img = rdata.getIntExtra("img", 0);
+
                     adapter.updateData(position, new MeetListData(img, title, day, id, con));
                 } else if (rc == DELETE_POST) {
                     adapter.deleteData(position);

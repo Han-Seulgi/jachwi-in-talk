@@ -16,16 +16,6 @@ public class RecipeListData {
         this.code = code;
     }
 
-    /*public RecipeListData(int img, String title, String day, String id, String tabTitle, String con, int code) {
-        this.img = img;
-        this.title = title;
-        this.day = day;
-        this.id = id;
-        this.tabTitle = tabTitle;
-        this.con = con;
-        this.code = code;
-    }*/
-
     public RecipeListData(String img_data, String title, String day, String id, String tabTitle, String con) {
         this.img_data = img_data;
         this.title = title;

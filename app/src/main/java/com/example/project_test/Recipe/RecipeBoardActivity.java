@@ -18,13 +18,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
-import com.example.project_test.Content.ImgListData;
-import com.example.project_test.Img;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
-import com.example.project_test.RoomList;
 import com.example.project_test.Writing.WritingActivity;
-import com.example.project_test.imgs;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
@@ -117,9 +113,9 @@ public class RecipeBoardActivity extends AppCompatActivity {
 
                 //리스트를 배열로 바꾸기, 이미지 배열 생성
                 final String[] title = title1.toArray(new String[title1.size()]);
-                String[] day = day1.toArray(new String[day1.size()]);
-                String[] id = id1.toArray(new String[id1.size()]);
-                String[] con = con1.toArray(new String[con1.size()]);
+                final String[] day = day1.toArray(new String[day1.size()]);
+                final String[] id = id1.toArray(new String[id1.size()]);
+                final String[] con = con1.toArray(new String[con1.size()]);
                 final int[] img = new int[title1.size()];
                 Integer[] imgs = {R.drawable.recipe1, R.drawable.recipe2, R.drawable.recipe3, R.drawable.recipe4,
                         R.drawable.recipe5, R.drawable.recipe6};

@@ -280,12 +280,14 @@ public class MeetWritingActivity extends AppCompatActivity {
                         String[] day = day1.toArray(new String[day1.size()]);
                         String[] id = id1.toArray(new String[id1.size()]);
                         String[] con = con1.toArray(new String[con1.size()]);
+                        Integer[] img = img1.toArray(new Integer[img1.size()]);
 
                         Intent intent = new Intent();
                         intent.putExtra("title", title[0]);
                         intent.putExtra("day", day[0]);
                         intent.putExtra("id", id[0]);
                         intent.putExtra("con", con[0]);
+                        intent.putExtra("img", img[0]);
 
                         setResult(RESULT_OK, intent);
                     }
