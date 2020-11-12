@@ -285,7 +285,7 @@ public class BoardActivity extends AppCompatActivity {
         final String f3_text1[] = {"아이스티", "오렌지", "물", "초콜릿", "콜라", "커피"};  //뷰 플리퍼에 들어갈 텍스트(제목)
         final String f3_text2[] = {"1000원", "2000원", "100원", "20000원", "3000원", "20원"};  //뷰 플리퍼에 들어갈 텍스트(가격)
 
-        //첫 번째 탭 나눔 HOT에서 다음 버튼을 눌렀을 때
+     /*   //첫 번째 탭 나눔 HOT에서 다음 버튼을 눌렀을 때
         changebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -305,7 +305,7 @@ public class BoardActivity extends AppCompatActivity {
                 }
                 //Log.d("iiii", String.valueOf(i));
             }
-        });
+        });*/
 
     }
 

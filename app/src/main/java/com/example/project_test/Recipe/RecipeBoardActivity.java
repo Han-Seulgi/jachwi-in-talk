@@ -121,15 +121,15 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 String[] id = id1.toArray(new String[id1.size()]);
                 String[] con = con1.toArray(new String[con1.size()]);
                 final int[] img = new int[title1.size()];
+                Integer[] imgs = {R.drawable.recipe1, R.drawable.recipe2, R.drawable.recipe3, R.drawable.recipe4,
+                        R.drawable.recipe5, R.drawable.recipe6};
                 final Integer[] code = code1.toArray(new Integer[code1.size()]);
-                /*int[] comment_cnt = new int[title1.size()];
-                int[] like_cnt = new int[title1.size()];*/
 
                 //넘어온 데이터의 사이즈에 맞춰 이미지 생성(?), 리사이클러뷰 데이터파일에 데이터 넘기기
                 int i = 0;
                 while (i < title.length) {
-                    img[i] = R.drawable.recipe;
-                    data.add(new RecipeListData(img[i], title[i], day[i], id[i], tt, con[i]));
+                    int a = rmd.nextInt(imgs.length);
+                    data.add(new RecipeListData(imgs[a], title[i], day[i], id[i], tt, con[i]));
                     i++;
                 }
 
