@@ -1,5 +1,6 @@
 package com.example.project_test.Recipe;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,9 +49,10 @@ public class RecipeBoardActivity extends AppCompatActivity {
     //검색을 위한 전체 데이터 리스트 복사본
     ArrayList<RecipeListData> cdata;
 
+    Activity act;
     private final int WRITE_POST = 100;
-    private final int MODIFY_POST = 200;
-    private final int DELETE_POST = 300;
+    private final int MODIFY_POST = 1;
+    private final int DELETE_POST = 2;
 
     public String tt;
 
@@ -77,17 +79,14 @@ public class RecipeBoardActivity extends AppCompatActivity {
         tabTitle = findViewById(R.id.title);
         tt = tabTitle.getText().toString();
 
-
         rv = findViewById(R.id.rv);
         rv.setHasFixedSize(true);
         adapter = new RecipeRecyclerAdapter();
 
-        /*final ArrayList<String> comment1 = new ArrayList<>();//댓글수,추천수
-        final ArrayList<String> like1 = new ArrayList<>();*/
-
         data = new ArrayList<>();
         //복사본
         cdata = new ArrayList<>();
+        act = RecipeBoardActivity.this;
 
         rmd = new Random();
 
@@ -121,37 +120,17 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 String[] day = day1.toArray(new String[day1.size()]);
                 String[] id = id1.toArray(new String[id1.size()]);
                 String[] con = con1.toArray(new String[con1.size()]);
-                //final Integer[] img = img1.toArray(new Integer[img1.size()]);
-                final Integer[] img = new Integer[title.length];
-                final Integer[] imgs = {R.drawable.recipe1, R.drawable.recipe2, R.drawable.recipe3,
-                R.drawable.recipe4, R.drawable.recipe5, R.drawable.recipe6,};
+                final int[] img = new int[title1.size()];
                 final Integer[] code = code1.toArray(new Integer[code1.size()]);
+                /*int[] comment_cnt = new int[title1.size()];
+                int[] like_cnt = new int[title1.size()];*/
 
-                for(int i=0; i<title.length; i++) {
-                    int num = rmd.nextInt(imgs.length);
-                    img[i] = imgs[num];
-                   /* api.getFirst(code[i]).enqueue(new Callback<Img>() {
-                        @Override
-                        public void onResponse(Call<Img> call, Response<Img> response) {
-                            Img img = response.body();
-                            List<imgs> imgd = img.imgdata;
-
-                            img_code1 = new ArrayList<>();
-                            ArrayList<String> img_data1 = new ArrayList<>();
-
-                            for (imgs d : imgd) {
-                                img_code1.add(d.img_code);
-                                img_data1.add(d.img_data);
-                            }
-                            img_data = img_data1.toArray(new String[img_data1.size()]);
-                        }
-
-                        @Override
-                        public void onFailure(Call<Img> call, Throwable t) {
-                            Log.e("dimg", t.getLocalizedMessage());
-                        }
-                    });*/
+                //넘어온 데이터의 사이즈에 맞춰 이미지 생성(?), 리사이클러뷰 데이터파일에 데이터 넘기기
+                int i = 0;
+                while (i < title.length) {
+                    img[i] = R.drawable.recipe;
                     data.add(new RecipeListData(img[i], title[i], day[i], id[i], tt, con[i]));
+                    i++;
                 }
 
                 adapter.setData(RecipeBoardActivity.this, data);
@@ -187,7 +166,7 @@ public class RecipeBoardActivity extends AppCompatActivity {
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeBoardActivity.this, WritingActivity.class);
+                Intent intent = new Intent(act, WritingActivity.class);
                 intent.putExtra("request", WRITE_POST);
                 startActivityForResult(intent, WRITE_POST);
             }

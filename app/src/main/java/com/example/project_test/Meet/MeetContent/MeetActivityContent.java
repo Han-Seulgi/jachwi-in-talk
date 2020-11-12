@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,16 +22,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
 import com.example.project_test.Cmt;
-import com.example.project_test.Content.ContentWithPicture;
+import com.example.project_test.CmtData;
+import com.example.project_test.CmtList;
+import com.example.project_test.CommentListData;
+import com.example.project_test.CommentRecyclerAdapter;
 import com.example.project_test.DeletePost;
-import com.example.project_test.Food.FoodContent.FoodList;
 import com.example.project_test.LoginActivity;
-import com.example.project_test.Meet.MeetContent.MeetRecyclerAdapterContent;
 import com.example.project_test.Modify.MeetModifyActivity;
 import com.example.project_test.PostList;
 import com.example.project_test.R;
-import com.example.project_test.Writing.FoodWritingActivity;
 import com.example.project_test.likeCheck;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,16 +45,24 @@ public class MeetActivityContent extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
-    int postcode, likenum, pnum , img1;
+    private CommentRecyclerAdapter adapter;
+    int postcode, likenum, pnum , img1, position;
     TextView text1, writer, contents, textLikenum, locationtv, numtv, datetv;
     ImageView iv;
     ImageButton like, modify, delete;
-    String title, content, location, date , cmt_con, tag;
+    String title, content, location, date , cmt_con, tag, day, id;
     EditText editTextName1;
     Button push;
 
+    ArrayList<CommentListData> data;
+
     private AlertDialog dialog;
+
+    private final int MOD = 1000;
+    String rtitle, rcon, rtag, rlct;
+    int rpnum;
+    //String rdate;
+    boolean mod = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +76,12 @@ public class MeetActivityContent extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        //댓글
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        adapter = new CommentRecyclerAdapter();
+        data = new ArrayList<>();
 
         text1 = findViewById(R.id.text1);
         writer = findViewById(R.id.id_day);
@@ -79,43 +97,11 @@ public class MeetActivityContent extends AppCompatActivity {
         push = findViewById(R.id.push);
         iv = findViewById(R.id.iv);
 
-        //댓글 작성
-        push.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                cmt_con = editTextName1.getText().toString();
-
-                Api api = Api.Factory.INSTANCE.create();
-                api.Cmt(LoginActivity.user_ac,postcode,cmt_con).enqueue(new Callback<Cmt>() {
-                    public void onResponse(Call<Cmt> call, Response<Cmt> response) {
-
-                        Log.i("결과는" , response.toString());
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MeetActivityContent.this);
-                        dialog = builder.setMessage("작성하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getApplicationContext(),"작성완료",Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                                .create();
-                        dialog.show();
-                    }
-                    public void onFailure(Call<Cmt> call, Throwable t) {
-                        Log.i("작성실패", t.getMessage());
-                    }
-
-                });
-
-            }
-        });
-
         //받아오기
         Intent intent = getIntent();
         title = intent.getStringExtra("제목");
-        String id = intent.getStringExtra("작성자");
-        String day = intent.getStringExtra("날짜");
+        id = intent.getStringExtra("작성자");
+        day = intent.getStringExtra("날짜");
         //int img = intent.getIntExtra("사진", 0);
         content = intent.getStringExtra("내용");
 
@@ -134,6 +120,48 @@ public class MeetActivityContent extends AppCompatActivity {
             modify.setVisibility(View.GONE);
             delete.setVisibility(View.GONE);
         }
+
+        //댓글 작성
+        push.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cmt_con = editTextName1.getText().toString();
+
+                Api api = Api.Factory.INSTANCE.create();
+                api.Cmt(LoginActivity.user_ac,postcode,cmt_con).enqueue(new Callback<Cmt>() {
+                    public void onResponse(Call<Cmt> call, Response<Cmt> response) {
+                        Cmt cmt = response.body();
+                        List<CmtData> cmtData = cmt.cmtdatas;
+
+                        final ArrayList<Integer> cmtcode = new ArrayList<>();
+                        final ArrayList<String> cmtday = new ArrayList<>();
+                        for (CmtData d:cmtData) {
+                            cmtcode.add(d.cmt_code);
+                            cmtday.add(d.cmt_day);
+                        }
+
+                        Log.i("comment" , String.valueOf(cmtcode.get(0))+cmtday.get(0));
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MeetActivityContent.this);
+                        dialog = builder.setMessage("작성하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                adapter.addData(new CommentListData(cmtcode.get(0), id, cmt_con, cmtday.get(0)));
+
+                                Toast.makeText(getApplicationContext(),"작성완료",Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                                .create();
+                        dialog.show();
+                    }
+                    public void onFailure(Call<Cmt> call, Throwable t) {
+                        Log.i("작성실패", t.getMessage());
+                    }
+
+                });
+
+            }
+        });
 
         //제목 이용해서 게시글코드 가져오기
         final Api api = Api.Factory.INSTANCE.create();
@@ -171,6 +199,46 @@ public class MeetActivityContent extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<MeetList> call, Throwable t) {
+                    }
+                });
+
+                //댓글 가져오기
+                api.getComments(postcode).enqueue(new Callback<CmtList>() {
+                    @Override
+                    public void onResponse(Call<CmtList> call, Response<CmtList> response) {
+                        CmtList cmtList = response.body();
+                        List<CmtData> cmtData = cmtList.items;
+
+                        ArrayList<Integer> cmt_code1 = new ArrayList<>();
+                        ArrayList<String> cmt_id1 = new ArrayList<>();
+                        ArrayList<String> cmt_con1 = new ArrayList<>();
+                        ArrayList<String> cmt_day1 = new ArrayList<>();
+
+                        for(CmtData d:cmtData) {
+                            cmt_code1.add(d.cmt_code);
+                            cmt_id1.add(d.id);
+                            cmt_con1.add(d.cmt_con);
+                            cmt_day1.add(d.cmt_day);
+                            Log.i("cmt",d.toString());
+                        }
+
+                        Integer[] cmt_code = cmt_code1.toArray(new Integer[cmt_code1.size()]);
+                        String[] cmt_id = cmt_id1.toArray(new String[cmt_id1.size()]);
+                        String[] cmt_con = cmt_con1.toArray(new String[cmt_con1.size()]);
+                        String[] cmt_day = cmt_day1.toArray(new String[cmt_day1.size()]);
+
+                        int i = 0;
+                        while (i<cmt_code.length){
+                            data.add(new CommentListData(cmt_code[i],cmt_id[i],cmt_con[i],cmt_day[i]));
+                            i++;
+                        }
+                        adapter.setData(data);
+                        recyclerView.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onFailure(Call<CmtList> call, Throwable t) {
+
                     }
                 });
 
@@ -300,70 +368,125 @@ public class MeetActivityContent extends AppCompatActivity {
             }
         });
 
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                AlertDialog dialog;
-                dialog = builder.setMessage("게시물을 삭제하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.i("delete", "게시물 삭제하기" + title);
-
-                                Api api = Api.Factory.INSTANCE.create();
-
-                                Log.i("hihihi", "아오"+title);
-
-                                api.deletepost(title).enqueue(new Callback<DeletePost>() {
-                                    @Override
-                                    public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
-                                        //DeletePost deletePost = response.body();
-                                        //boolean del = deletePost.delete;
-
-                                        Log.i("delete", "성공" + response);
-                                        Toast.makeText(getApplicationContext(),"삭제됨",Toast.LENGTH_SHORT).show();
-
-                                    }
-                                    @Override
-                                    public void onFailure(Call<DeletePost> call, Throwable t) {
-                                        Log.i("delete",t.getMessage());
-                                    }
-                                });
-                            }
-                        }
-                ).create();
-                dialog.show();
-            }
-        });
-
-
         //수정 클릭
-        modify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MeetModifyActivity.class);
-                intent.putExtra("제목", title); //게시물의 제목
-                intent.putExtra("내용", content); //게시물의 내용
-                intent.putExtra("태그", tag);  //카테고리
-                intent.putExtra("위치", location);  //위치
-                intent.putExtra("인원", pnum);  //인원
-                intent.putExtra("날짜", date);  //날짜
-                intent.putExtra("게시글코드", postcode); //게시물의 코드
-                v.getContext().startActivity(intent);
-            }
-        });
+        int request = getIntent().getIntExtra("requestmod", -1);
+        int request2 = getIntent().getIntExtra("requestdel", -1);
+        position = getIntent().getIntExtra("position",-1);
+        Log.i("modifyrequest", String.valueOf(request));
+        if (request == 200) {
+            modify.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MeetActivityContent.this, MeetModifyActivity.class);
+                    intent.putExtra("제목", title); //게시물의 제목
+                    intent.putExtra("내용", content); //게시물의 내용
+                    intent.putExtra("태그", tag);  //카테고리
+                    intent.putExtra("위치", location);  //위치
+                    intent.putExtra("인원", pnum);  //인원
+                    intent.putExtra("날짜", date);  //날짜
+                    intent.putExtra("게시글코드", postcode); //게시물의 코드
+                    intent.putExtra("request", MOD);
+                    startActivityForResult(intent, MOD);
+                }
+            });
+        }
+        if (request2 == 300) {
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    AlertDialog dialog;
+                    dialog = builder.setMessage("게시물을 삭제하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Api api = Api.Factory.INSTANCE.create();
 
+                                    api.deletepost(title).enqueue(new Callback<DeletePost>() {
+                                        @Override
+                                        public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
+
+                                            Log.i("delete", "성공" + response);
+                                            Toast.makeText(getApplicationContext(), "삭제됨", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent();
+                                            intent.putExtra("position", position);
+                                            intent.putExtra("rc", 2);
+                                            setResult(RESULT_OK, intent);
+                                            Log.i("refresh", "뒤로가기");
+                                            finish();
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<DeletePost> call, Throwable t) {
+                                            Log.i("delete", t.getMessage());
+                                        }
+                                    });
+                                }
+                            }
+                    ).create();
+                    dialog.show();
+                }
+            });
+        }
 
         //댓글
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-
         layoutManager = new LinearLayoutManager(this);
-
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new MeetRecyclerAdapterContent();
-        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent rdata) {
+        super.onActivityResult(requestCode, resultCode, rdata);
+        Log.i("meetcontents", "requestcode: " + requestCode + "resultcode" + resultCode);
+        //if (resultCode == RESULT_OK) {
+        switch (requestCode) {
+            case MOD: {
+                if (resultCode == RESULT_OK) {
+                    Log.i("refresh", "수정후화면");
+                    rtitle = rdata.getStringExtra("title");
+                    rcon = rdata.getStringExtra("con");
+                    rtag = rdata.getStringExtra("tag");
+                    rlct = rdata.getStringExtra("lct");
+                    //rdate = rdata.getStringExtra("date");
+                    rpnum = rdata.getIntExtra("pnum", 0);
+
+                    //태그에 따라 사진 설정
+                    if(rtag.equals("운동")) img1=R.drawable.meeting2;
+                    else if(rtag.equals("음식")) img1=R.drawable.meeting4;
+                    else if(rtag.equals("영화")) img1=R.drawable.meeting6;
+                    else if(rtag.equals("독서")) img1=R.drawable.meeting1;
+                    else if(rtag.equals("공연/전시")) img1=R.drawable.meeting3;
+                    else if(rtag.equals("기타")) img1=R.drawable.meeting5;
+                    iv.setImageResource(img1);
+
+                    text1.setText(rtitle);
+                    contents.setText(rcon);
+                    locationtv.setText("위치:   "+rlct);
+                    numtv.setText("인원:   "+rpnum);
+                    //datetv.setText("날짜:   "+rdate);
+                    mod = true;
+                }
+                break;
+            }
+        }
+        //}
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mod){
+            Intent intent = new Intent();
+            intent.putExtra("position", position);
+            intent.putExtra("title", rtitle);
+            intent.putExtra("id", id);
+            intent.putExtra("day", day);
+            intent.putExtra("con", rcon);
+            intent.putExtra("rc", 1);
+            setResult(RESULT_OK, intent);
+            Log.i("refresh", "뒤로가기");
+            finish();}
+        else finish();
+        super.onBackPressed();
     }
 
     @Override
@@ -372,7 +495,18 @@ public class MeetActivityContent extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                finish();
+                if(mod){
+                    Intent intent = new Intent();
+                    intent.putExtra("position", position);
+                    intent.putExtra("title", rtitle);
+                    intent.putExtra("id", id);
+                    intent.putExtra("day", day);
+                    intent.putExtra("con", rcon);
+                    intent.putExtra("rc", 1);
+                    setResult(RESULT_OK, intent);
+                    Log.i("refresh", "뒤로가기");
+                    finish();}
+                else finish();
                 return true;
         }
         return true;

@@ -1,5 +1,6 @@
 package com.example.project_test.Modify;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -56,6 +57,7 @@ public class RecipeModifyActivity extends AppCompatActivity {
     int post_code;
 
     String[] img_data;
+    ArrayList<String> img_data_test;
     Integer[] img_code;
     ImageButton imgup;
 
@@ -84,11 +86,13 @@ public class RecipeModifyActivity extends AppCompatActivity {
     ArrayList<ThumbnailListData> imglist;
     RecyclerAdapterThumbnail adapter;
 
+    Activity act;
+    private final int DELETE_IMG = 888;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.write_recipe);
-
 
         writing = findViewById(R.id.writing);
         tedit = findViewById(R.id.tedit);
@@ -105,6 +109,9 @@ public class RecipeModifyActivity extends AppCompatActivity {
         imglist = new ArrayList<>();
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        img_data_test = new ArrayList<>();
+        act = RecipeModifyActivity.this;
 
         //상단탭
         toolbar = findViewById(R.id.toolbar);
@@ -155,7 +162,8 @@ public class RecipeModifyActivity extends AppCompatActivity {
                     imglist.add(new ThumbnailListData(img_code[i], img_data[i]));
                     i++;
                 }
-                adapter.setData(imglist);
+
+                adapter.setData(RecipeModifyActivity.this, imglist);
                 rv.setAdapter(adapter);
             }
 
@@ -165,41 +173,7 @@ public class RecipeModifyActivity extends AppCompatActivity {
             }
         });
         rv.setLayoutManager(layoutManager);
-        
-
-        /*//올렸던 사진
-        for(int i = 0; img_data.length>i; i++){
-            final int position = i;
-            byte[] encodeByte = Base64.decode(String.valueOf(img_data[i]), Base64.NO_WRAP);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            //bitmap;
-            final ImageView iv = new ImageView(getBaseContext());
-            iv.setImageBitmap(bitmap);
-            imgLayout.addView(iv, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            //롱클릭시 삭제
-            iv.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    api.deleteImg(img_code.get(position)).enqueue(new Callback<DeleteImg>() {
-                        @Override
-                        public void onResponse(Call<DeleteImg> call, Response<DeleteImg> response) {
-                            Log.i("imgdelete","성공"+img_code.get(position));
-                            List<String> list = new ArrayList<>(Arrays.asList(img_data));
-                            list.remove(position);
-                            img_code.remove(position);
-                            img_data = list.toArray(new String[list.size()]);
-                            imgLayout.removeView(iv);
-                        }
-
-                        @Override
-                        public void onFailure(Call<DeleteImg> call, Throwable t) {
-                            Log.i("imgdelete",t.getMessage()+"실패");
-                        }
-                    });
-                    return false;
-                }
-            });
-        }*/
+        //Log.i("imgd array",img_data_test.get(0));
 
         imgup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -337,50 +311,6 @@ public class RecipeModifyActivity extends AppCompatActivity {
     }
 
     private void returnResult() {
-        /*final String[] recipe = new String[1];
-        final String[] source = new String[1];
-
-        final Api api = Api.Factory.INSTANCE.create();
-        api.getRecipeList(11).enqueue(new Callback<RecipePostList>() {
-            @Override
-            public void onResponse(Call<RecipePostList> call, Response<RecipePostList> response) {
-                RecipePostList postList = response.body();
-                List<PostData> postData = postList.items;
-
-                api.getrecipe(post_code).enqueue(new Callback<CookList>() {
-                    @Override
-                    public void onResponse(Call<CookList> call, Response<CookList> response) {
-                        CookList cookList = response.body();
-                        recipe[0] = cookList.rcp;
-                        source[0] = cookList.src;
-                        Log.i("abcdef", recipe[0] + source[0] +"");
-                    }
-
-                    @Override
-                    public void onFailure(Call<CookList> call, Throwable t) {
-                    }
-                });
-
-                ArrayList<String> title1 = new ArrayList<>();
-                ArrayList<String> day1 = new ArrayList<>();
-                ArrayList<String> id1 = new ArrayList<>();
-                ArrayList<String> con1 = new ArrayList<>();
-
-                //리스트에 제목, 날짜, 작성자 아이디 넣기
-                for (PostData d : postData) {
-                    title1.add(d.title);
-                    day1.add(d.day);
-                    id1.add(d.id);
-                    con1.add(d.con);
-                    Log.i("abc", "요리 All: " + d.toString());
-                }
-
-                //리스트를 배열로 바꾸기, 이미지 배열 생성
-                final String[] title = title1.toArray(new String[title1.size()]);
-                String[] day = day1.toArray(new String[day1.size()]);
-                String[] id = id1.toArray(new String[id1.size()]);
-                String[] con = con1.toArray(new String[con1.size()]);*/
-
                 post_title = tedit.getText().toString();
                 post_con = cedit2.getText().toString();
                 cook_src = nedit.getText().toString();
@@ -391,25 +321,13 @@ public class RecipeModifyActivity extends AppCompatActivity {
                 intent.putExtra("con", post_con);
                 intent.putExtra("rcp", cook_rcp);
                 intent.putExtra("src", cook_src);
+                intent.putExtra("imgd", img_data);
 
                 setResult(RESULT_OK, intent);
                 Log.i("recipemodifyact", "수정");
-                //finish();
-            //}
-
-            /*public void onFailure(Call<RecipePostList> call, Throwable t) {
-                Log.i("onfailure", t.getMessage());
-                AlertDialog.Builder builder = new AlertDialog.Builder(RecipeModifyActivity.this);
-                dialog = builder.setMessage("작성 실패").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                }).create();
-                dialog.show();
-            }
-        });*/
     }
+
+
 
     private void getimg() {
         Api api = Api.Factory.INSTANCE.create();
@@ -438,7 +356,7 @@ public class RecipeModifyActivity extends AppCompatActivity {
                     imglist.add(new ThumbnailListData(img_code[i], img_data[i]));
                     i++;
                 }
-                adapter.setData(imglist);
+                adapter.setData(act, imglist);
             }
 
             @Override
@@ -470,6 +388,13 @@ public class RecipeModifyActivity extends AppCompatActivity {
             return;
 
         switch (requestCode) {
+            case DELETE_IMG: {
+                Intent intent = new Intent();
+                int position = intent.getIntExtra("position", -1);
+                img_data_test.remove(position);
+                img_data = img_data_test.toArray(new String[img_data_test.size()]);
+            }break;
+
             case PICK_FROM_ALBUM: {
                 mImageCaptureUri = data.getData();
                 Log.e("앨범이미지크롭", mImageCaptureUri.getPath().toString());
@@ -523,7 +448,7 @@ public class RecipeModifyActivity extends AppCompatActivity {
                     imgString = imgs.toArray(new String[imgs.size()]);
 
                     imglist.add(new ThumbnailListData(imgString2));
-                    adapter.setData(imglist);
+                    adapter.setData(act, imglist);
                     rv.setAdapter(adapter);
                     rv.setLayoutManager(layoutManager);
 

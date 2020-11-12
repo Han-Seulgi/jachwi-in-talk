@@ -119,6 +119,18 @@ public class MeetModifyActivity extends AppCompatActivity {
         wedit.setText(meet_lct);
 
         //글쓰기 _올리기
+        int request = getIntent().getIntExtra("request", -1);
+        Log.i("modifyrequest", String.valueOf(request));
+        switch (request) {
+//            case 0: AlertDialog.Builder builder = new AlertDialog.Builder(RecipeModifyActivity.this);
+//                dialog = builder.setMessage("수정 오류").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        finish();
+//                    }
+//                }).create();
+//                dialog.show(); break;
+            case 1000:
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,6 +167,7 @@ public class MeetModifyActivity extends AppCompatActivity {
                                     dialog = builder.setMessage("수정 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
+                                            returnResult();
                                             finish();
                                         }
                                     })
@@ -177,9 +190,28 @@ public class MeetModifyActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        });break;}
 
     }
+
+    private void returnResult() {
+        post_title = tedit.getText().toString();
+        post_con = cedit.getText().toString();
+        meet_lct = wedit.getText().toString();
+        String p = nedit.getText().toString();
+        meet_tag = spinner.getSelectedItem().toString();
+
+        Intent intent = new Intent();
+        intent.putExtra("title", post_title);
+        intent.putExtra("con", post_con);
+        intent.putExtra("tag", meet_tag);
+        intent.putExtra("lct", meet_lct);
+        intent.putExtra("pnum", p);
+
+        setResult(RESULT_OK, intent);
+        Log.i("meetmodifyact", "수정");
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

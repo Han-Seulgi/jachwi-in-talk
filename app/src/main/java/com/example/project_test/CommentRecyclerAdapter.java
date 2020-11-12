@@ -23,6 +23,14 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
 
     public void setData(ArrayList<CommentListData> list) {datas = list;}
 
+    public void addData(CommentListData data){
+        datas.add(data);
+        notifyItemInserted(0);
+        notifyDataSetChanged();
+
+        Log.i("comment", String.valueOf(getItemCount()));
+    }
+
     @NonNull
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

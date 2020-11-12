@@ -9,6 +9,7 @@ import com.example.project_test.Meet.MeetContent.MeetList;
 import com.example.project_test.Meet.MeetPostList;
 import com.example.project_test.Modify.ModifyCategoryData;
 import com.example.project_test.Mypage.KeywordList;
+import com.example.project_test.Mypage.MyContents.MyCmtList;
 import com.example.project_test.Mypage.MyContents.MyPostList;
 import com.example.project_test.Mypage.ValidateMypage;
 import com.example.project_test.Recipe.RecipePostList;
@@ -87,6 +88,9 @@ public interface Api {
     //마이페이지 글 목록
     @GET("post/checkWriter")
     Call<MyPostList> checkWriter(@Query("id") String var1); //내가 쓴 글
+
+    @GET("cmt/myCmt")
+    Call<MyCmtList> myCmt(@Query("id") String var1); //내가 쓴 댓글
 
     //마이페이지 유효성
     @GET("join/validateName")

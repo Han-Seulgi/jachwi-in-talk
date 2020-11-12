@@ -1,8 +1,8 @@
 package com.example.project_test.Food;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +23,6 @@ import com.example.project_test.LoginActivity;
 import com.example.project_test.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,8 +30,33 @@ import retrofit2.Response;
 
 public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapter.FoodViewHolder> {
     private ArrayList<FoodListData> datas;
+    Activity rActivity;
+    private int MODIFY_POST = 200;
+    private int DELETE_POST = 300;
 
-    public void setData(ArrayList<FoodListData> list) {datas = list;}
+    public void setData(Activity act, ArrayList<FoodListData> list) {
+        datas = list;
+        rActivity = act;
+    }
+
+    public void addData(FoodListData data){
+        datas.add(0,data);
+        notifyItemRangeInserted(0, datas.size());
+
+        Log.i("itemcount", String.valueOf(getItemCount()));
+    }
+
+    public void updateData(int position, FoodListData data){
+        datas.set(position, data);
+        notifyItemChanged(position);
+    }
+
+    public void deleteData(int position) {
+        datas.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, datas.size());
+        Log.i("delete", "갱신도 성공"+position);
+    }
 
     @NonNull
     @Override
@@ -75,7 +99,11 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
                 intent.putExtra("작성자", id);
                 intent.putExtra("날짜", day);
                 intent.putExtra("내용", con);
-                v.getContext().startActivity(intent);
+                intent.putExtra("requestmod", MODIFY_POST);
+                intent.putExtra("requestdel", DELETE_POST);
+                intent.putExtra("position", position);
+                Log.i("rradapter: ", "MOD_POST: " +MODIFY_POST+"   DEL_POST: "+DELETE_POST+"   Act: "+rActivity);
+                rActivity.startActivityForResult(intent, 777);
             }
         });
 

@@ -24,6 +24,11 @@ public class RecyclerAdapterImg extends RecyclerView.Adapter<com.example.project
         datas = list;
     };
 
+    public void addData(ImgListData data){
+        datas.add(data);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

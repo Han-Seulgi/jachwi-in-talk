@@ -62,22 +62,11 @@
             android:text="글쓰기"
             android:layout_marginLeft="20dp"/>
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/pager"
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="500dp">
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="1dp"
-                android:background="@android:color/background_light"
-                app:tabMode="fixed"
-                app:tabGravity="fill"/>
-
-
-        </androidx.viewpager.widget.ViewPager>
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerView"
+            android:background="#F0F0F0"/>
 
 
     </LinearLayout>

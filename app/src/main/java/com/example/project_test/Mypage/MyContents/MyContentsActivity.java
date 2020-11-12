@@ -1,15 +1,18 @@
 package com.example.project_test.Mypage.MyContents;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.example.project_test.R;
 import com.google.android.material.tabs.TabLayout;
 
 public class MyContentsActivity extends AppCompatActivity {
+    Toolbar toolbar;
 
     TabLayout mTabLayout;
 
@@ -20,6 +23,14 @@ public class MyContentsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mycontents);
+
+        //상단탭
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         fragment1 = new MyContentsFragment1();
         fragment2 = new MyContentsFragment2();
@@ -52,5 +63,16 @@ public class MyContentsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return true;
     }
 }

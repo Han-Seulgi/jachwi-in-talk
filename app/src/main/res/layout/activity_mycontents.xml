@@ -11,13 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/back"
-            android:layout_width="40dp"
-            android:layout_height="45dp"
-            android:background="#00ffffff"
-            android:scaleType="fitCenter"
-            android:src="@drawable/backbtn" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/back"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:background="#00ffffff"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:src="@drawable/backbtn" />-->
 
         <TextView
             android:id="@+id/title"

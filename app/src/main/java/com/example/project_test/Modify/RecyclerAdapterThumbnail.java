@@ -1,5 +1,7 @@
 package com.example.project_test.Modify;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -26,9 +28,11 @@ import retrofit2.Response;
 
 public class RecyclerAdapterThumbnail extends RecyclerView.Adapter<RecyclerAdapterThumbnail.ViewHolder>{
     private ArrayList<ThumbnailListData> datas;
+    private Activity rActivity;
 
-    public void setData(ArrayList<ThumbnailListData> list){
+    public void setData(Activity act, ArrayList<ThumbnailListData> list){
         datas = list;
+        rActivity = act;
     }
     //int imgs [] = {R.drawable.rrimg1,R.drawable.rrimg2,R.drawable.rrimg3,R.drawable.rrimg4};
 
@@ -69,6 +73,12 @@ public class RecyclerAdapterThumbnail extends RecyclerView.Adapter<RecyclerAdapt
 
                         Log.i("imgdelete","성공"+img_code);
                         datas.remove(position);
+
+                        Intent intent = new Intent();
+                        intent.putExtra("position", position);
+                        rActivity.setResult(Activity.RESULT_OK, intent);
+                        //rActivity.finish();
+
                         notifyItemRemoved(position);
                         notifyItemRangeChanged(position, datas.size());
                         Log.i("imgdelete", "갱신도 성공"+position);

@@ -58,7 +58,6 @@ public class MyPageActivity extends AppCompatActivity {
     ConstraintLayout mplayout;
     TextView textName, kwdaad;
     Toolbar toolbar;
-    Switch switch1;
     RecyclerView kwdlist;
 
     private RecyclerView recyclerView;
@@ -86,7 +85,6 @@ public class MyPageActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.kwdlist);
         recyclerView.setHasFixedSize(true);
         adapter = new KwRecyclerAdapter();
-        switch1 = findViewById(R.id.switch1);
         kwdaad = findViewById(R.id.kwdadd);
         kwdlist = findViewById(R.id.kwdlist);
 
@@ -94,6 +92,7 @@ public class MyPageActivity extends AppCompatActivity {
 
         layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
+
 
 
 
@@ -110,7 +109,6 @@ public class MyPageActivity extends AppCompatActivity {
 
             }
         });
-
 
 
 
@@ -136,37 +134,6 @@ public class MyPageActivity extends AppCompatActivity {
 
 
     }
-
-    public void clickBtn (View view){
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder builder = null;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelID = "channel_01";
-            String channelName = "MyChannel01";
-
-            NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
-
-            notificationManager.createNotificationChannel(channel);
-            builder = new NotificationCompat.Builder(this, channelID);
-        } else {
-            builder = new NotificationCompat.Builder(this, null);
-        }
-        builder.setSmallIcon(android.R.drawable.ic_menu_view);
-
-        builder.setContentTitle("New 게시물");
-        builder.setContentText("키워드 알림");
-        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.orange);
-        builder.setLargeIcon(bm);
-
-        Notification notification = builder.build();
-
-        notificationManager.notify(1, notification);
-    }
-
-
-
 
 
 

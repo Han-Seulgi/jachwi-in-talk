@@ -64,6 +64,18 @@ public class InfoModifyActivity extends AppCompatActivity {
         cedit.setText(post_con);
 
         //글쓰기 _올리기
+        int request = getIntent().getIntExtra("request", -1);
+        Log.i("modifyrequest", String.valueOf(request));
+        switch (request) {
+//            case 0: AlertDialog.Builder builder = new AlertDialog.Builder(RecipeModifyActivity.this);
+//                dialog = builder.setMessage("수정 오류").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        finish();
+//                    }
+//                }).create();
+//                dialog.show(); break;
+            case 1000:
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,9 +105,9 @@ public class InfoModifyActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     finish();
                                 }
-                            })
-                                    .create();
+                            }).create();
                             dialog.show();
+                            returnResult();
                         }
                         public void onFailure(Call<Write> call, Throwable t) {
                             Log.i("수정실패", t.getMessage());
@@ -105,9 +117,22 @@ public class InfoModifyActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        });}
 
     }
+
+    private void returnResult() {
+        post_title = tedit.getText().toString();
+        post_con = cedit.getText().toString();
+
+        Intent intent = new Intent();
+        intent.putExtra("title", post_title);
+        intent.putExtra("con", post_con);
+
+        setResult(RESULT_OK, intent);
+        Log.i("infomodifyact", "수정");
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);

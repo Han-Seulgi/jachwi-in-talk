@@ -1,12 +1,12 @@
 package com.example.project_test;
 
-import androidx.annotation.NonNull;
-
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Cmt {
-    @SerializedName("insert")
-    public boolean insert ;
+    @SerializedName("data")
+    public List<CmtData> cmtdatas ;
 
 }
 
