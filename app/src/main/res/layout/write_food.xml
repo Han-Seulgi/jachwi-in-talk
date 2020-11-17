@@ -96,15 +96,14 @@
                 android:text="위치"
                 android:textSize="20dp" />
 
-            <EditText
-                android:id="@+id/wedit"
+            <Button
+                android:id="@+id/lctbtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:layout_toRightOf="@+id/tv2"
-                android:hint="위치를 입력해주세요"
+                android:hint="위치를 입력해주세요."
                 android:textSize="18dp" />
-
 
         </RelativeLayout>
 

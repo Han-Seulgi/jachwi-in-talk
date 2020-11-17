@@ -25,8 +25,8 @@ import retrofit2.Response;
 
 public class FoodModifyActivity extends AppCompatActivity {
     Toolbar toolbar;
-    Button writing;
-    EditText tedit, wedit, cedit;
+    Button lctbtn, writing;
+    EditText tedit, cedit;
     TextView tv0;
     String post_title, post_con, food_lct;
     int post_code;
@@ -38,10 +38,9 @@ public class FoodModifyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.write_food);
 
-
+        lctbtn = findViewById(R.id.lctbtn);
         writing = findViewById(R.id.writing);
         tedit = findViewById(R.id.tedit);
-        wedit = findViewById(R.id.wedit);
         cedit = findViewById(R.id.cedit);
         tv0 = findViewById(R.id.tv0);
 
@@ -61,7 +60,7 @@ public class FoodModifyActivity extends AppCompatActivity {
         food_lct = intent.getStringExtra("위치");
         post_code = intent.getIntExtra("게시글코드", 0);
         tedit.setText(post_title);
-        wedit.setText(food_lct);
+        lctbtn.setText(food_lct);
         cedit.setText(post_con);
 
         //글쓰기 _올리기
@@ -85,7 +84,7 @@ public class FoodModifyActivity extends AppCompatActivity {
 
                 post_title = tedit.getText().toString();
                 post_con = cedit.getText().toString();
-                food_lct = wedit.getText().toString();
+                food_lct = lctbtn.getText().toString();
 
                 if (post_title.equals("") || post_con.equals("") || food_lct.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(FoodModifyActivity.this);
@@ -139,7 +138,7 @@ public class FoodModifyActivity extends AppCompatActivity {
     private void returnResult() {
         post_title = tedit.getText().toString();
         post_con = cedit.getText().toString();
-        food_lct = wedit.getText().toString();
+        food_lct = lctbtn.getText().toString();
 
         Intent intent = new Intent();
         intent.putExtra("title", post_title);

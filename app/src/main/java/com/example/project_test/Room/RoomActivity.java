@@ -2,6 +2,7 @@ package com.example.project_test.Room;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -19,11 +20,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import com.example.project_test.Api;
-import com.example.project_test.Content.ContentWithPicture;
-import com.example.project_test.LoginActivity;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
-import com.example.project_test.Room.RoomContent.RoomContentActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -54,6 +52,8 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
     public int size;
     String id, room_day, post_con;
 
+    private final int WRITE_POST = 100;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +62,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         //권한설정
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MODE_PRIVATE);
 
-        tabTitle =findViewById(R.id.title);
+        tabTitle = findViewById(R.id.title);
         tt = tabTitle.getText().toString();
 
         //상단탭
@@ -81,10 +81,98 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RoomActivity.this, RoomWriting.class);
-                startActivity(intent);
+                intent.putExtra("request", WRITE_POST);
+                startActivityForResult(intent, WRITE_POST);
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("roomref", "requestcode: "+requestCode);
+        Log.i("roomref", "requestcode: "+requestCode+"resultcode"+resultCode);
+        switch (requestCode) {
+            case WRITE_POST:
+                if (resultCode == RESULT_OK) {
+                    gMap.clear();
+
+                    Api api = Api.Factory.INSTANCE.create();
+
+                    api.getAllRoom().enqueue(new Callback<RoomList>() {
+                        @Override
+                        public void onResponse(Call<RoomList> call, Response<RoomList> response) {
+                            RoomList rlist = response.body();
+                            //public List<RoomList> rooms;
+                            rooms = rlist.items;
+                            roomlist = new String[rooms.size()];
+                            int j=0;
+                            for(RoomList d:rooms) {
+                                room_lct.add(d.room_lct);
+                                roomlist[j] = d.toString();
+                                j++;
+                            }
+
+                            List<Address> list = null;
+
+                            for(int i=0; i<roomlist.length; i++) {
+                                try {
+
+                                    Geocoder geocoder = new Geocoder(RoomActivity.this);
+                                    list = geocoder.getFromLocationName(roomlist[i],10);
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생");
+                                }
+
+                                if (list != null) {
+                                    if (list.size() == 0) {
+                                        Toast.makeText(RoomActivity.this, "해당되는 주소 정보는 없습니다", Toast.LENGTH_LONG);
+                                    } else {
+                                        latitude = list.get(0).getLatitude(); //위도
+                                        longitude = list.get(0).getLongitude(); // 경도
+                                    }
+                                }
+
+                                LatLng house1 = new LatLng(latitude, longitude);
+                                LatLng latLng[] = new LatLng[]{house1};
+                                String titles[] = new String[]{"명전앞원룸"};
+
+                                //방위치 마커
+                                MarkerOptions markerOptions = new MarkerOptions();
+                                markerOptions.position(latLng[0]);
+                                markerOptions.title(titles[0]);
+                                markerOptions.snippet("글쓴이");
+                                markerOptions.alpha(0.5f);
+
+                                gMap.addMarker(markerOptions);
+
+                                //클릭하면 해당 게시판으로 넘어가기~~~
+                    /*gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                        @Override
+                        public boolean onMarkerClick(Marker marker) {
+                            Toast.makeText(RoomActivity.this, "게시글 보기", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RoomActivity.this, ContentWithPicture.class);
+                            intent.putExtra("제목", marker.getTitle());
+                            intent.putExtra("탭이름", tt);
+                            startActivity(intent);
+                            return false;
+                        }
+                    });*/
+
+                            } //for문 끝
+                        }
+                        @Override
+                        public void onFailure(Call<RoomList> call, Throwable t) {
+                            Log.i("실패", t.getMessage());
+                        }
+                    });
+
+                }
+                break;
+        }
     }
 
     //상단탭 메뉴
@@ -117,13 +205,27 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         gMap = googleMap;
         gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        LatLng location = new LatLng(37.5830, 126.9230); //현재 위치로 바꿔보기
-        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
-
         gMap.getUiSettings().setZoomControlsEnabled(true);
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         gMap.setMyLocationEnabled(true); //현재위치를 GPS 모듈에서 받아올 수 있도록 설정
         gMap.getUiSettings().setMyLocationButtonEnabled(true); //현재위치 버튼 추가
+
+        LatLng location = new LatLng(37.5830, 126.9230); //현재 위치로 바꿔보기
+        //현재위치로 카메라 이동
+//        double lat = gMap.getMyLocation().getLatitude();
+//        double lng = gMap.getMyLocation().getLongitude();
+//        LatLng location = new LatLng(lat, lng);
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
 
         //보금자리 목록 가져오기
         final Api api = Api.Factory.INSTANCE.create();
@@ -139,6 +241,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                 for(RoomList d:rooms) {
                     room_lct.add(d.room_lct);
                     roomlist[j] = d.toString();
+                    Log.e("roomlist", d.toString());
                     j++;
                 }
 

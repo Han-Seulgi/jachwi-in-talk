@@ -56,7 +56,7 @@ public class InfoWritingActivity extends AppCompatActivity {
 
         tv0 = findViewById(R.id.tv0);
         tv1 = findViewById(R.id.tv1);
-        wimg = findViewById(R.id.wimg);
+        //wimg = findViewById(R.id.wimg);
 
 
         //상단탭

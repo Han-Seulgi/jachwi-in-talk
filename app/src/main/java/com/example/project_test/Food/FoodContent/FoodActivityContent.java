@@ -2,6 +2,8 @@ package com.example.project_test.Food.FoodContent;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -31,7 +33,14 @@ import com.example.project_test.Modify.FoodModifyActivity;
 import com.example.project_test.PostList;
 import com.example.project_test.R;
 import com.example.project_test.likeCheck;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +48,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FoodActivityContent extends AppCompatActivity {
+public class FoodActivityContent extends AppCompatActivity implements OnMapReadyCallback {
+    MapFragment mapFragment;
+    GoogleMap gMap;
+
+    double latitude, longitude;
+
     Toolbar toolbar;
 
     private RecyclerView recyclerView;
@@ -76,6 +90,8 @@ public class FoodActivityContent extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+            mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
 
             //댓글
             recyclerView = findViewById(R.id.recyclerView);
@@ -478,6 +494,76 @@ public class FoodActivityContent extends AppCompatActivity {
                 return true;
         }
         return true;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        gMap = googleMap;
+        gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        gMap.getUiSettings().setZoomControlsEnabled(true);
+
+        final Api api = Api.Factory.INSTANCE.create();
+        //제목으로 검색
+        api.getcontent(title).enqueue(new Callback<PostList>() {
+            @Override
+            public void onResponse(Call<PostList> call, Response<PostList> response) {
+                PostList postlist = response.body();
+                postcode = postlist.pcode;
+
+                //게시글 코드로 위치 가져오기
+                api.getlocation(postcode).enqueue(new Callback<FoodList>() {
+                    @Override
+                    public void onResponse(Call<FoodList> call, Response<FoodList> response) {
+                        FoodList foodList = response.body();
+                        location = foodList.lct;
+                        List<Address> list = null;
+                        try {
+                            Geocoder geocoder = new Geocoder(FoodActivityContent.this);
+                            list = geocoder.getFromLocationName(location, 10);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생");
+                        }
+
+                        if (list != null) {
+                            if (list.size() == 0) {
+                                Toast.makeText(FoodActivityContent.this, "해당되는 주소 정보는 없습니다", Toast.LENGTH_LONG);
+                            } else {
+                                latitude = list.get(0).getLatitude(); //위도
+                                longitude = list.get(0).getLongitude(); // 경도
+                                LatLng loc = new LatLng(latitude, longitude); //현재 위치로 바꿔보기
+                                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 15));
+                            }
+                        }
+
+                        LatLng food = new LatLng(latitude, longitude);
+                        LatLng latLng[] = new LatLng[]{food};
+                        String titles[] = new String[]{title};
+
+                        //위치 마커
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(latLng[0]);
+                        markerOptions.title(titles[0]);
+                        markerOptions.snippet("맛집");
+                        markerOptions.alpha(0.5f);
+
+                        gMap.addMarker(markerOptions);
+
+                        Log.i("foodlocation", location + "");
+                    }
+
+                    @Override
+                    public void onFailure(Call<FoodList> call, Throwable t) {
+                        Log.i("food", t.getMessage());
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<PostList> call, Throwable t) {
+            }
+        });
     }
 }
 

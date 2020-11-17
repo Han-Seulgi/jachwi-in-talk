@@ -44,10 +44,10 @@
 
             <Button
                 android:id="@+id/writing"
-                android:layout_width="70dp"
-                android:layout_height="35dp"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:background="#7BABCA"
+                android:backgroundTint="#7BABCA"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="10dp"
                 android:textColor="#ffffff"
@@ -59,9 +59,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/recyclerView"
-            android:background="#F0F0F0"/>
+            android:background="#0000"/>
 
 
     </LinearLayout>

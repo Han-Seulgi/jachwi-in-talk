@@ -34,7 +34,7 @@ import retrofit2.Response;
 
 public class RoomWriting extends AppCompatActivity {
     Toolbar toolbar;
-    Button btn, writing;
+    Button lctbtn, writing;
     String address,post_title;
     EditText medit, cedit,title;
     TextView title2;
@@ -45,6 +45,8 @@ public class RoomWriting extends AppCompatActivity {
     String year,month,day;
     String date;
     int a;
+
+    private final int GET_LOCATION = 999;
 
     Calendar calendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener datepicker = new DatePickerDialog.OnDateSetListener() {
@@ -71,7 +73,7 @@ public class RoomWriting extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        btn = findViewById(R.id.btn);
+        lctbtn = findViewById(R.id.lctbtn);
         writing = findViewById(R.id.writing);
         medit = findViewById(R.id.medit);
         cedit = findViewById(R.id.cedit);
@@ -80,12 +82,10 @@ public class RoomWriting extends AppCompatActivity {
         day_text = findViewById(R.id.day_text);
         day_text.setFocusable(false);
 
-        Intent intent = getIntent();
-        address = intent.getStringExtra("주소");
-        a = intent.getIntExtra("체크", 0);
-        btn.setText(address);
-        Log.i("List", "->1");
-        Log.i("List", "->" + a);
+        post_title = title.getText().toString();
+        price = medit.getText().toString();
+        post_con = cedit.getText().toString();
+        date = day_text.getText().toString();
 
      /*  Intent intent2 = getIntent();
         a = intent2.getIntExtra("체크", 0);
@@ -125,11 +125,12 @@ public class RoomWriting extends AppCompatActivity {
             }
         }*/
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        lctbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RoomWriting.this, DaumWebViewActivity.class);
-                startActivity(intent);
+                intent.putExtra("request", GET_LOCATION);
+                startActivityForResult(intent, GET_LOCATION);
             }
         });
 
@@ -141,77 +142,99 @@ public class RoomWriting extends AppCompatActivity {
             }
         });
 
-        writing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                post_title = title.getText().toString();
-                price = medit.getText().toString();
-                post_con = cedit.getText().toString();
-                date = day_text.getText().toString();
-                //date = year + "-" + month + "-" + day;
+        int request = getIntent().getIntExtra("request", -1);
+        switch (request) {
+            case 0:
+                AlertDialog.Builder builder = new AlertDialog.Builder(RoomWriting.this);
+                dialog = builder.setMessage("작성 오류").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).create();
+                dialog.show();
+                break;
+            case 100:
+                writing.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        post_title = title.getText().toString();
+                        price = medit.getText().toString();
+                        post_con = cedit.getText().toString();
+                        date = day_text.getText().toString();
+                        //date = year + "-" + month + "-" + day;
 
-                if(title2.getText().toString().equals("보금자리")){
-                    board_code = 88;
-                }
+                        if (title2.getText().toString().equals("보금자리")) {
+                            board_code = 88;
+                        }
 
-                if (address==null || address.equals("") || price.equals("") || post_con.equals("") || date.equals("")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RoomWriting.this);
-                    dialog = builder.setMessage("글 작성이 완료되지 않았습니다.").setNegativeButton("확인", null)
-                            .create();
-                    dialog.show();
-                    return;
-                }
-                else {
-                    final Api api = Api.Factory.INSTANCE.create();
-                    api.Write(LoginActivity.user_ac, post_title, post_con, board_code).enqueue(new Callback<Write>() {
-                        @Override
-                        public void onResponse(Call<Write> call, Response<Write> response) {
-
+                        if (address == null || address.equals("") || price.equals("") || post_con.equals("") || date.equals("")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(RoomWriting.this);
-                            dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                }
-                            })
+                            dialog = builder.setMessage("글 작성이 완료되지 않았습니다.").setNegativeButton("확인", null)
                                     .create();
+                            Log.i("Room",address+price+post_con+date);
                             dialog.show();
-                        }
-
-                        @Override
-                        public void onFailure(Call<Write> call, Throwable t) {
-                            Log.i("작성실패", t.getMessage());
-                        }
-                    });
-
-
-                    api.roomWrite(address, price, date).enqueue(new Callback<Room>() {
-                        @Override
-                        public void onResponse(Call<Room> call, Response<Room> response) {
-                            Log.i("write", date);
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(RoomWriting.this);
-                            dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                            return;
+                        } else {
+                            final Api api = Api.Factory.INSTANCE.create();
+                            api.Write(LoginActivity.user_ac, post_title, post_con, board_code).enqueue(new Callback<Write>() {
                                 @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
+                                public void onResponse(Call<Write> call, Response<Write> response) {
+
+                                    api.roomWrite(address, price, date).enqueue(new Callback<Room>() {
+                                        @Override
+                                        public void onResponse(Call<Room> call, Response<Room> response) {
+                                            Log.i("write", date);
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<Room> call, Throwable t) {
+                                            Log.i("작성실패", t.getMessage());
+                                        }
+                                    });
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(RoomWriting.this);
+                                    dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            finish();
+                                        }
+                                    })
+                                            .create(); returnResult();
+                                    dialog.show();
                                 }
-                            })
-                                    .create();
-                            dialog.show();
+
+                                @Override
+                                public void onFailure(Call<Write> call, Throwable t) {
+                                    Log.i("작성실패", t.getMessage());
+                                }
+                            });
                         }
 
-                        @Override
-                        public void onFailure(Call<Room> call, Throwable t) {
-                            Log.i("작성실패", t.getMessage());
-                        }
-                    });
 
-                }
+                    }
+                });
+        }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("roomrequest", "requestcode: "+requestCode+"resultcode"+resultCode);
+        switch (requestCode) {
+            case GET_LOCATION: if(resultCode == RESULT_OK){
+                address = data.getStringExtra("주소");
+                lctbtn.setText(address);
 
-            }
-        });
+            }break;
+    }
+    }
+
+    private void returnResult() {
+        Intent intent = new Intent();
+        setResult(RESULT_OK);
+
     }
 
     @Override

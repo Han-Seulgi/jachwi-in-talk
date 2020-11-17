@@ -90,7 +90,7 @@ public class WritingActivity extends AppCompatActivity {
         writing = findViewById(R.id.writing);
         tedit = findViewById(R.id.tedit);
         cedit = findViewById(R.id.cedit);
-        pedit = findViewById(R.id.pedit);
+        //pedit = findViewById(R.id.pedit);
         nedit = findViewById(R.id.nedit);
         cedit2 = findViewById(R.id.cedit2);
         title2 = findViewById(R.id.title2);

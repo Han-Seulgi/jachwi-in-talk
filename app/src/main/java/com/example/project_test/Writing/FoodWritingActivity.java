@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.project_test.Api;
+import com.example.project_test.DaumWebViewActivity;
 import com.example.project_test.Food.FoodPostList;
 import com.example.project_test.Food.PostData;
 import com.example.project_test.FoodWrite;
@@ -33,25 +34,26 @@ import retrofit2.Response;
 
 public class FoodWritingActivity extends AppCompatActivity {
     Toolbar toolbar;
-    Button writing;
-    EditText tedit, cedit, wedit;
+    Button lctbtn, writing;
+    EditText tedit, cedit;
     TextView tv1, tv2 , title2;
     String post_title, post_con, food_lct;
     int board_code;
 
     private AlertDialog dialog;
 
+    private final int GET_LOCATION = 888;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.write_food);
 
+        lctbtn = findViewById(R.id.lctbtn);
         writing = findViewById(R.id.writing);
         tedit = findViewById(R.id.tedit);
         cedit = findViewById(R.id.cedit);
-        wedit = findViewById(R.id.wedit);
         title2 = findViewById(R.id.title2);
-
 
         tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
@@ -64,6 +66,17 @@ public class FoodWritingActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        post_title = tedit.getText().toString();
+        post_con = cedit.getText().toString();
+
+        lctbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FoodWritingActivity.this, DaumWebViewActivity.class);
+                intent.putExtra("request", GET_LOCATION);
+                startActivityForResult(intent, GET_LOCATION);
+            }
+        });
 
         int request = getIntent().getIntExtra("request", -1);
         switch (request) {
@@ -82,7 +95,7 @@ public class FoodWritingActivity extends AppCompatActivity {
 
                 post_title = tedit.getText().toString();
                 post_con = cedit.getText().toString();
-                food_lct = wedit.getText().toString();
+                food_lct = lctbtn.getText().toString();
 
                 if(title2.getText().toString().equals("자취앤혼밥")){
                     board_code = 22;
@@ -100,22 +113,27 @@ public class FoodWritingActivity extends AppCompatActivity {
                     final Api api = Api.Factory.INSTANCE.create();
                     api.Write(LoginActivity.user_ac, post_title, post_con, board_code).enqueue(new Callback<Write>() {
                         public void onResponse(Call<Write> call, Response<Write> response) {
-                            Log.i("결과는" , response.toString());
-                            AlertDialog.Builder builder = new AlertDialog.Builder(FoodWritingActivity.this);
-                            dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
+                            api.FoodWrite(food_lct).enqueue(new Callback<FoodWrite>() {
+                                public void onResponse(Call<FoodWrite> call, Response<FoodWrite> response) {
+                                    Log.i("결과는" , response.toString());
+
+                                    api.newlike().enqueue(new Callback<likeCheck>() {
+                                        @Override
+                                        public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
+                                            likeCheck lc = response.body();
+                                            boolean newlk = lc.newlike;
+                                            Log.i("aaaa" , newlk+"");
+                                        }
+                                        @Override
+                                        public void onFailure(Call<likeCheck> call, Throwable t) {
+                                        }
+                                    });
                                 }
-                            }).create();
-                            dialog.show();
-                        }
-                        public void onFailure(Call<Write> call, Throwable t) {
-                            Log.i("작성실패", t.getMessage());
-                        }
-                    });
-                    api.FoodWrite(food_lct).enqueue(new Callback<FoodWrite>() {
-                        public void onResponse(Call<FoodWrite> call, Response<FoodWrite> response) {
+                                public void onFailure(Call<FoodWrite> call, Throwable t) {
+                                    Log.i("작성실패", t.getMessage());
+                                }
+                            });
+
                             Log.i("결과는" , response.toString());
                             AlertDialog.Builder builder = new AlertDialog.Builder(FoodWritingActivity.this);
                             dialog = builder.setMessage("작성 완료됨").setNegativeButton("확인", new DialogInterface.OnClickListener() {
@@ -125,28 +143,31 @@ public class FoodWritingActivity extends AppCompatActivity {
                                     finish();
                                 }
                             }).create();
-                            dialog.show();
                             returnResult();
-
-                            api.newlike().enqueue(new Callback<likeCheck>() {
-                                @Override
-                                public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
-                                    likeCheck lc = response.body();
-                                    boolean newlk = lc.newlike;
-                                    Log.i("aaaa" , newlk+"");
-                                }
-                                @Override
-                                public void onFailure(Call<likeCheck> call, Throwable t) {
-                                }
-                            });
+                            dialog.show();
                         }
-                        public void onFailure(Call<FoodWrite> call, Throwable t) {
+                        public void onFailure(Call<Write> call, Throwable t) {
                             Log.i("작성실패", t.getMessage());
                         }
                     });
+
                 }
             }
         });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("foodloc", "requestcode: "+requestCode);
+        Log.i("foodloc", "requestcode: "+requestCode+"resultcode"+resultCode);
+        switch (requestCode) {
+            case GET_LOCATION: if(resultCode == RESULT_OK){
+                food_lct = data.getStringExtra("주소");
+                lctbtn.setText(food_lct);
+
+            }break;
         }
     }
 

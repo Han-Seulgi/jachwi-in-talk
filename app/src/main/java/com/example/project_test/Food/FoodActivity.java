@@ -13,16 +13,10 @@ import android.widget.SearchView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.project_test.Api;
-import com.example.project_test.Food.FoodContent.FoodList;
-import com.example.project_test.Info.InfoActivity;
-import com.example.project_test.Info.InfoListData;
-import com.example.project_test.Info.InfoRecyclerAdapter;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.NoteActivity;
 import com.example.project_test.R;
@@ -159,7 +153,6 @@ public class FoodActivity extends AppCompatActivity{
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent rdata) {
         super.onActivityResult(requestCode, resultCode, rdata);
 //        if (resultCode == RESULT_OK) {
-        Log.i("refresh", "requestcode: "+requestCode);
         Log.i("rbact", "requestcode: "+requestCode+"resultcode"+resultCode);
         switch (requestCode) {
             case WRITE_POST: if(resultCode == RESULT_OK){

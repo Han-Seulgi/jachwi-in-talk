@@ -99,7 +99,7 @@ public class RecipeModifyActivity extends AppCompatActivity {
         nedit = findViewById(R.id.nedit);
         cedit = findViewById(R.id.cedit);
         cedit2 = findViewById(R.id.cedit2);
-        pedit = findViewById(R.id.pedit);
+        //pedit = findViewById(R.id.pedit);
         tv0 = findViewById(R.id.tv0);
         imgup = findViewById(R.id.imgup);
         imgLayout = findViewById(R.id.imgLayout);
