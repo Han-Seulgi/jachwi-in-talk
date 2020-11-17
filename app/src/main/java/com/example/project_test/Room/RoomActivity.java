@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 import com.example.project_test.Api;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
+import com.example.project_test.Room.RoomContent.RoomContentActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -104,23 +105,37 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                         @Override
                         public void onResponse(Call<RoomList> call, Response<RoomList> response) {
                             RoomList rlist = response.body();
-                            //public List<RoomList> rooms;
-                            rooms = rlist.items;
+                            List<RoomData> rooms = rlist.items;
+
                             roomlist = new String[rooms.size()];
+
+                            final ArrayList<String> post_code = new ArrayList<>();
+                            final ArrayList<String> post_title = new ArrayList<>();
+                            final ArrayList<String> post_con = new ArrayList<>();
+                            final ArrayList<String> id = new ArrayList<>();
+                            final ArrayList<String> room_lct = new ArrayList<>();
+                            final ArrayList<String> room_day = new ArrayList<>();
+
                             int j=0;
-                            for(RoomList d:rooms) {
+                            for(RoomData d:rooms) {
+                                //roomlist[j].add(d.toString()); //room_lct / id
+                                post_code.add(d.post_code);
+                                post_title.add(d.post_title);
+                                post_con.add(d.post_con);
+                                id.add(d.id);
                                 room_lct.add(d.room_lct);
-                                roomlist[j] = d.toString();
+                                room_day.add(d.room_day);
+                                Log.e("roomlist", d.toString());
                                 j++;
                             }
 
                             List<Address> list = null;
 
-                            for(int i=0; i<roomlist.length; i++) {
+                            for(int i=0; i<post_code.size(); i++) {
                                 try {
 
                                     Geocoder geocoder = new Geocoder(RoomActivity.this);
-                                    list = geocoder.getFromLocationName(roomlist[i],10);
+                                    list = geocoder.getFromLocationName(room_lct.get(i),10);
 
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -135,32 +150,35 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                                         longitude = list.get(0).getLongitude(); // 경도
                                     }
                                 }
+                                //String titles[] = new String[roomlist.length];
 
                                 LatLng house1 = new LatLng(latitude, longitude);
                                 LatLng latLng[] = new LatLng[]{house1};
-                                String titles[] = new String[]{"명전앞원룸"};
 
                                 //방위치 마커
                                 MarkerOptions markerOptions = new MarkerOptions();
                                 markerOptions.position(latLng[0]);
-                                markerOptions.title(titles[0]);
-                                markerOptions.snippet("글쓴이");
+                                markerOptions.title(post_title.get(i));
+                                markerOptions.snippet(id.get(i));
                                 markerOptions.alpha(0.5f);
 
                                 gMap.addMarker(markerOptions);
 
                                 //클릭하면 해당 게시판으로 넘어가기~~~
-                    /*gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                        @Override
-                        public boolean onMarkerClick(Marker marker) {
-                            Toast.makeText(RoomActivity.this, "게시글 보기", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(RoomActivity.this, ContentWithPicture.class);
-                            intent.putExtra("제목", marker.getTitle());
-                            intent.putExtra("탭이름", tt);
-                            startActivity(intent);
-                            return false;
-                        }
-                    });*/
+                                final int finalI = i;
+                                gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                    @Override
+                                    public boolean onMarkerClick(Marker marker) {
+                                        Intent intent = new Intent(RoomActivity.this, RoomContentActivity.class);
+                                        intent.putExtra("제목", post_title.get(finalI));
+                                        intent.putExtra("아이디", id.get(finalI));
+                                        intent.putExtra("만료날짜", room_day.get(finalI));
+                                        intent.putExtra("내용", post_con.get(finalI));
+                                        intent.putExtra("코드",post_code.get(finalI));
+                                        startActivity(intent);
+                                        return false;
+                                    }
+                                });
 
                             } //for문 끝
                         }
@@ -234,24 +252,37 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onResponse(Call<RoomList> call, Response<RoomList> response) {
                 RoomList rlist = response.body();
-                //public List<RoomList> rooms;
-                rooms = rlist.items;
+                List<RoomData> rooms = rlist.items;
+
                 roomlist = new String[rooms.size()];
+
+                final ArrayList<String> post_code = new ArrayList<>();
+                final ArrayList<String> post_title = new ArrayList<>();
+                final ArrayList<String> post_con = new ArrayList<>();
+                final ArrayList<String> id = new ArrayList<>();
+                final ArrayList<String> room_lct = new ArrayList<>();
+                final ArrayList<String> room_day = new ArrayList<>();
+
                 int j=0;
-                for(RoomList d:rooms) {
+                for(RoomData d:rooms) {
+                    //roomlist[j].add(d.toString()); //room_lct / id
+                    post_code.add(d.post_code);
+                    post_title.add(d.post_title);
+                    post_con.add(d.post_con);
+                    id.add(d.id);
                     room_lct.add(d.room_lct);
-                    roomlist[j] = d.toString();
+                    room_day.add(d.room_day);
                     Log.e("roomlist", d.toString());
                     j++;
                 }
 
                 List<Address> list = null;
 
-                for(int i=0; i<roomlist.length; i++) {
+                for(int i=0; i<post_code.size(); i++) {
                     try {
 
                         Geocoder geocoder = new Geocoder(RoomActivity.this);
-                        list = geocoder.getFromLocationName(roomlist[i],10);
+                        list = geocoder.getFromLocationName(room_lct.get(i),10);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -274,55 +305,24 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                     //방위치 마커
                     MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.position(latLng[0]);
-                    markerOptions.title(roomlist[i]);
-                    markerOptions.snippet("글쓴이");
+                    markerOptions.title(post_title.get(i));
+                    markerOptions.snippet(id.get(i));
                     markerOptions.alpha(0.5f);
 
                     gMap.addMarker(markerOptions);
 
                     //클릭하면 해당 게시판으로 넘어가기~~~
+                    final int finalI = i;
                     gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
                         public boolean onMarkerClick(Marker marker) {
-
-                            api.getRoom(marker.getTitle()).enqueue(new Callback<RoomList>() {
-                                @Override
-                                public void onResponse(Call<RoomList> call, Response<RoomList> response) {
-                                    RoomList rlist = response.body();
-                                    //RoomData rlist = response.body();
-                                    //Log.i("id", rlist.toString());
-                                    //id = rlist.id;
-                                    //Log.i("id", id);
-
-
-
-                                    //List<RoomList> roomdata = rlist.items;
-                                   /* ArrayList<String> id = new ArrayList<>();
-                                    ArrayList<String> room_day = new ArrayList<>();
-                                    ArrayList<String> post_con = new ArrayList<>();
-
-
-                                    //id = roomdata.
-                                    //room_day = rlist.room_day;
-                                    //post_con = rlist.post_con;
-                                    for (RoomList d:roomdata) {
-                                        id.add(d.id);
-                                        room_day.add(d.room_day);
-                                        post_con.add(d.post_con);
-                                    }*/
-                                }
-
-                                @Override
-                                public void onFailure(Call<RoomList> call, Throwable t) {
-                                    Log.i("실패",t.getMessage());
-                                }
-                            });
-                            /*Intent intent = new Intent(RoomActivity.this, RoomContentActivity.class);
-                            intent.putExtra("제목", marker.getTitle());
-                            intent.putExtra("아이디", id);
-                            intent.putExtra("만료날짜", room_day);
-                            intent.putExtra("내용", tt);
-                            startActivity(intent); */
+                            Intent intent = new Intent(RoomActivity.this, RoomContentActivity.class);
+                            intent.putExtra("제목", post_title.get(finalI));
+                            intent.putExtra("아이디", id.get(finalI));
+                            intent.putExtra("만료날짜", room_day.get(finalI));
+                            intent.putExtra("내용", post_con.get(finalI));
+                            intent.putExtra("코드",post_code.get(finalI));
+                            startActivity(intent);
                             return false;
                         }
                     });

@@ -286,8 +286,11 @@ public interface Api {
     @GET("Note/checknote")
     Call<CheckNote> checknote(@Query("id")String var1);
 
+//    @GET("GetRoom")
+//    Call<RoomList> getRoom(@Query("room_lct") String var1);
+
     @GET("GetRoom")
-    Call<RoomList> getRoom(@Query("room_lct") String var1);
+    Call<ResponseBody> getRoom(@Query("room_lct") String var1);
 
     public static final class Factory {
         public static final Api.Factory INSTANCE;

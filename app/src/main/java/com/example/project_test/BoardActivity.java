@@ -25,6 +25,7 @@ import com.example.project_test.Meet.MeetActivity;
 import com.example.project_test.Meet.MeetContent.MeetActivityContent;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.Recipe.RecipeBoardActivity;
+import com.example.project_test.Room.RoomData;
 import com.example.project_test.Room.RoomList;
 import com.example.project_test.SharenRent.SharenRentActivity;
 import com.example.project_test.qa.qaActivity;
@@ -246,7 +247,7 @@ public class BoardActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RoomList> call, Response<RoomList> response) {
                 RoomList rlist = response.body();
-                List<RoomList> rooms = rlist.items;
+                List<RoomData> rooms = rlist.items;
 
                 final ArrayList<String> room_lct1 = new ArrayList<>();
                 ArrayList<Integer> img1 = new ArrayList<>();
@@ -254,7 +255,7 @@ public class BoardActivity extends AppCompatActivity {
 
                 //roomlist = new String[rooms.size()];
 
-                for(RoomList d:rooms) {
+                for(RoomData d:rooms) {
                     room_lct1.add(d.room_lct);
                 }
 
