@@ -13,6 +13,8 @@ import com.example.project_test.Mypage.MyContents.MyCmtList;
 import com.example.project_test.Mypage.MyContents.MyPostList;
 import com.example.project_test.Mypage.ValidateMypage;
 import com.example.project_test.Recipe.RecipePostList;
+import com.example.project_test.Room.Room;
+import com.example.project_test.Room.RoomList;
 import com.example.project_test.Writing.WritingCategoryData;
 import com.example.project_test.qa.qaPostList;
 import com.google.gson.Gson;
@@ -274,8 +276,6 @@ public interface Api {
     @GET("RoomList")
     Call<RoomList> getAllRoom();
 
-
-
     @FormUrlEncoded
     @POST("Note")
     Call<NewNote> newNote(@Field("sid") String var1, @Field("rid") String var2, @Field("note_con") String var3);
@@ -285,6 +285,9 @@ public interface Api {
 
     @GET("Note/checknote")
     Call<CheckNote> checknote(@Query("id")String var1);
+
+    @GET("GetRoom")
+    Call<RoomList> getRoom(@Query("room_lct") String var1);
 
     public static final class Factory {
         public static final Api.Factory INSTANCE;

@@ -6,8 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -16,11 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.example.project_test.Emergency.EmergencyActivity;
-import com.example.project_test.Mypage.MyInfoSetActivity;
-import com.example.project_test.Mypage.PwChangeActivity;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.project_test.Room.RoomActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;

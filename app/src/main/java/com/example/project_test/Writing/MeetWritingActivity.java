@@ -25,7 +25,6 @@ import com.example.project_test.Meet.PostData;
 import com.example.project_test.MeetWrite;
 import com.example.project_test.MySpinnerAdapter;
 import com.example.project_test.R;
-import com.example.project_test.RoomWriting;
 import com.example.project_test.Write;
 import com.example.project_test.likeCheck;
 

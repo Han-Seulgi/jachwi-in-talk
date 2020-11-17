@@ -25,6 +25,7 @@ import com.example.project_test.Meet.MeetActivity;
 import com.example.project_test.Meet.MeetContent.MeetActivityContent;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.Recipe.RecipeBoardActivity;
+import com.example.project_test.Room.RoomList;
 import com.example.project_test.SharenRent.SharenRentActivity;
 import com.example.project_test.qa.qaActivity;
 import com.example.project_test.qa.qaContent.qaActivityContent;
@@ -39,7 +40,7 @@ import retrofit2.Response;
 public class BoardActivity extends AppCompatActivity {
     ViewFlipper vflip1, vflip2, vflip3;
     View[] vflipview1;
-    final View vflipview2[] = new View[2];
+    View[] vflipview2 = new View[2];
     ImageButton btn1, btn2, btn3, btn4, btn5, btn6, vimg1, vimg2;
     ImageButton imageButtons[] = {btn1, btn2, btn3, btn4, btn5, btn6};
     TextView v1txt1, v1txt2, v2txt1, v2txt2;
@@ -239,11 +240,169 @@ public class BoardActivity extends AppCompatActivity {
 
 
         //첫 번째 탭의 방 구하기 게시물 뷰 플리퍼
-        int f2_images[] = {R.drawable.roomimg1, R.drawable.roomimg2}; //뷰 플리퍼에 들어갈 이미지
-        final String f2_text1[] = {"명지대 근처 원룸 내놓습니다!", "명전 10분 거리 원룸"};  //뷰 플리퍼에 들어갈 텍스트(제목)
-        final String f2_text2[] = {"명지대 도보로 15분 정도 걸려요 벌레 없고 수압 좋습니다 ", "7월 20일에 방뺍니다"};  //뷰 플리퍼에 들어갈 텍스트(내용)
+        final int f2_images[] = {R.drawable.roomimg1, R.drawable.roomimg2}; //뷰 플리퍼에 들어갈 이미지
 
-        for (int i = 0; i < f2_images.length; i++) {
+        api.getAllRoom().enqueue(new Callback<RoomList>() {
+            @Override
+            public void onResponse(Call<RoomList> call, Response<RoomList> response) {
+                RoomList rlist = response.body();
+                List<RoomList> rooms = rlist.items;
+
+                final ArrayList<String> room_lct1 = new ArrayList<>();
+                ArrayList<Integer> img1 = new ArrayList<>();
+                ArrayList<String> con1 = new ArrayList<>();
+
+                //roomlist = new String[rooms.size()];
+
+                for(RoomList d:rooms) {
+                    room_lct1.add(d.room_lct);
+                }
+
+                final String[] room_lct = room_lct1.toArray(new String[room_lct1.size()]);
+
+                for(int i=0; i<room_lct.length; i++) {
+                    vflipview2 = new View[room_lct1.size()];
+                    vflipview2[i] = (View) View.inflate(BoardActivity.this, R.layout.view_item, null);
+
+                    TextView textView1 = vflipview2[i].findViewById(R.id.view_title);
+                    textView1.setText(room_lct[i]);
+                    ImageView imageView = vflipview2[i].findViewById(R.id.view_img);
+                    imageView.setBackgroundResource(f2_images[0]);
+
+                    vflip2.addView(vflipview2[i]);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RoomList> call, Throwable t) {
+
+            }
+        });
+/*
+        api.().enqueue(new Callback<PopularPost>() {
+            @Override
+            public void onResponse(Call<PopularPost> call, Response<PopularPost> response) {
+
+                PopularPost popularPost = response.body();
+                List<PopularData> popularData = popularPost.items;
+
+                final ArrayList<String> title1 = new ArrayList<>();
+                ArrayList<String> con1 = new ArrayList<>();
+
+                //리스트에 제목, 내용 넣기
+                for (PopularData d:popularData) {
+                    title1.add(d.post_title);
+                    con1.add(d.post_con);
+                }
+
+                //리스트를 배열로 바꾸기, 이미지 배열 생성
+                final String[] title = title1.toArray(new String[title1.size()]);
+                final String[] con = con1.toArray(new String[con1.size()]);
+                final Integer[] img = new Integer[title1.size()];
+
+                for (int i = 0; i < img.length; i++) {
+
+                    vflipview1 = new View[img.length];
+                    vflipview1[i] = (View) View.inflate(BoardActivity.this, R.layout.view_item, null);
+                    //뷰플리퍼 안에 들어갈 뷰 레이아웃
+
+                    //텍스트 추가
+                    TextView textView1 = vflipview1[i].findViewById(R.id.view_title);
+                    textView1.setText(title[i]);
+                    TextView textView2 = vflipview1[i].findViewById(R.id.view_content);
+                    textView2.setText(con[i]);
+                    final ImageView imageView = vflipview1[i].findViewById(R.id.view_img);
+                    final int finalI = i;
+                    api.getcontent(title[i]).enqueue(new Callback<PostList>() {
+                        @Override
+                        public void onResponse(Call<PostList> call, Response<PostList> response) {
+                            PostList postlist = response.body();
+                            int  bcode = postlist.bcode;
+
+                            if (bcode == 11) { //자취앤집밥 게시판이라면
+                                img[finalI] = R.drawable.vflip2;
+                            } else if (bcode == 22) { //자취앤혼밥 게시판이라면
+                                img[finalI] = R.drawable.vflip3;
+                            } else if (bcode == 33) { //자취인만남 게시판이라면
+                                img[finalI] = R.drawable.vflip1;
+                            } else if (bcode == 66) { //자취Q&A 게시판이라면
+                                img[finalI] = R.drawable.vflip5;
+                            } else { //자취인정보 게시판이라면
+                                img[finalI] = R.drawable.vflip4;
+                            }
+                            imageView.setBackgroundResource(img[finalI]);
+                        }
+                        @Override
+                        public void onFailure(Call<PostList> call, Throwable t) {
+                        }
+
+                    });
+
+                    //뷰플리퍼에 뷰 추가
+                    vflip1.addView(vflipview1[i]);
+
+                    *//*vflip1.setOnClickListener(new View.OnClickListener() { //뷰 플리퍼 클릭했을 때
+                        @Override
+                        public void onClick(View v) {
+                            final int i = vflip1.getDisplayedChild();    //현재 페이지 가져오기
+
+                            api.getcontent(title[i]).enqueue(new Callback<PostList>() {
+                                public void onResponse(Call<PostList> call, Response<PostList> response) {
+                                    PostList postlist = response.body();
+                                    String id = postlist.id;
+                                    String day = postlist.day;
+                                    int  bcode = postlist.bcode;
+
+                                    if(bcode == 11) { //자취앤집밥 게시판이라면
+                                        intent = new Intent(getApplicationContext(), ContentWithPicture.class);
+                                    }
+                                    else if(bcode == 22) { //자취앤혼밥 게시판이라면
+                                        intent = new Intent(getApplicationContext(), FoodActivityContent.class);
+                                    }
+                                    else if(bcode == 33) { //자취인만남 게시판이라면
+                                        intent = new Intent(getApplicationContext(), MeetActivityContent.class);
+                                    }
+                                    else if(bcode == 66) { //자취Q&A 게시판이라면
+                                        intent = new Intent(getApplicationContext(), qaActivityContent.class);
+                                    }
+                                    else { //자취인정보 게시판이라면
+                                        intent = new Intent(getApplicationContext(), infoActivityContent.class);
+                                    }
+                                    intent.putExtra("제목", title[i]);
+                                    intent.putExtra("작성자", id);
+                                    intent.putExtra("날짜", day);
+                                    intent.putExtra("내용", con[i]);
+                                    startActivity(intent);
+
+                                }
+                                public void onFailure(Call<PostList> call, Throwable t) {
+                                    Log.i("실패", t.getMessage());
+                                }
+
+                            });
+                        }
+                    });*//*
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<PopularPost> call, Throwable t) {
+                Log.i("popular", t.getMessage());
+            }
+
+        });*/
+
+        //뷰플리퍼 시간, 애니메이션 설정
+        vflip2.setFlipInterval(4000);   // 몇 초 후에 이미지가 넘어갈것인가(1000 당 1초)
+        vflip2.setAutoStart(true);      //자동시작유무(true:자동)
+        vflip2.setInAnimation(this, android.R.anim.slide_in_left); //animation
+        vflip2.setOutAnimation(this, android.R.anim.slide_out_right); //animation*/
+
+
+
+
+        /*for (int i = 0; i < f2_images.length; i++) {
             vflipview2[i] = (View) View.inflate(this, R.layout.view_item, null);
             //뷰플리퍼 안에 들어갈 뷰 레이아웃
 
@@ -264,11 +423,11 @@ public class BoardActivity extends AppCompatActivity {
         vflip2.setFlipInterval(4000);   // 몇 초 후에 이미지가 넘어갈것인가(1000 당 1초)
         vflip2.setAutoStart(true);      //자동시작유무(true:자동)
         vflip2.setInAnimation(this, android.R.anim.slide_in_left); //animation
-        vflip2.setOutAnimation(this, android.R.anim.slide_out_right); //animation
+        vflip2.setOutAnimation(this, android.R.anim.slide_out_right); //animation*/
 
 
         //첫 번째 탭의 방 구하기 게시물 뷰 플리퍼 클릭했을 때
-        vflip2.setOnClickListener(new View.OnClickListener() {
+       /* vflip2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //어떤 이미지 클릭했는지 확인하고 해당 게시물 화면으로 넘어가게
@@ -278,7 +437,7 @@ public class BoardActivity extends AppCompatActivity {
                 intent.putExtra("제목", f2_text1[i]); //게시물의 제목
                 startActivity(intent);
             }
-        });
+        });*/
 
         //첫 번째 탭의 나눔 HOT 뷰 플리퍼
         final int f3_images[] = {R.drawable.icetea1, R.drawable.orange, R.drawable.shareimg3, R.drawable.chocolate, R.drawable.coke, R.drawable.coffee}; //뷰 플리퍼에 들어갈 이미지

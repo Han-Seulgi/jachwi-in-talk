@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Room;
 
 import android.Manifest;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,14 +18,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
+import com.example.project_test.Api;
 import com.example.project_test.Content.ContentWithPicture;
+import com.example.project_test.LoginActivity;
 import com.example.project_test.Mypage.MyPageActivity;
-import com.example.project_test.qa.qaListData;
+import com.example.project_test.R;
+import com.example.project_test.Room.RoomContent.RoomContentActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -43,7 +44,6 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     MapFragment mf;
     GoogleMap gMap;
-
     Toolbar toolbar;
     TextView tabTitle;
     String tt;
@@ -52,6 +52,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
     public String[] roomlist;
     public List<RoomList> rooms;
     public int size;
+    String id, room_day, post_con;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -125,7 +126,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         gMap.getUiSettings().setMyLocationButtonEnabled(true); //현재위치 버튼 추가
 
         //보금자리 목록 가져오기
-        Api api = Api.Factory.INSTANCE.create();
+        final Api api = Api.Factory.INSTANCE.create();
 
         api.getAllRoom().enqueue(new Callback<RoomList>() {
             @Override
@@ -162,32 +163,66 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                             longitude = list.get(0).getLongitude(); // 경도
                         }
                     }
+                    //String titles[] = new String[roomlist.length];
 
                     LatLng house1 = new LatLng(latitude, longitude);
                     LatLng latLng[] = new LatLng[]{house1};
-                    String titles[] = new String[]{"명전앞원룸"};
 
                     //방위치 마커
                     MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.position(latLng[0]);
-                    markerOptions.title(titles[0]);
+                    markerOptions.title(roomlist[i]);
                     markerOptions.snippet("글쓴이");
                     markerOptions.alpha(0.5f);
 
                     gMap.addMarker(markerOptions);
 
                     //클릭하면 해당 게시판으로 넘어가기~~~
-                    /*gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
                         public boolean onMarkerClick(Marker marker) {
-                            Toast.makeText(RoomActivity.this, "게시글 보기", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(RoomActivity.this, ContentWithPicture.class);
+
+                            api.getRoom(marker.getTitle()).enqueue(new Callback<RoomList>() {
+                                @Override
+                                public void onResponse(Call<RoomList> call, Response<RoomList> response) {
+                                    RoomList rlist = response.body();
+                                    //RoomData rlist = response.body();
+                                    //Log.i("id", rlist.toString());
+                                    //id = rlist.id;
+                                    //Log.i("id", id);
+
+
+
+                                    //List<RoomList> roomdata = rlist.items;
+                                   /* ArrayList<String> id = new ArrayList<>();
+                                    ArrayList<String> room_day = new ArrayList<>();
+                                    ArrayList<String> post_con = new ArrayList<>();
+
+
+                                    //id = roomdata.
+                                    //room_day = rlist.room_day;
+                                    //post_con = rlist.post_con;
+                                    for (RoomList d:roomdata) {
+                                        id.add(d.id);
+                                        room_day.add(d.room_day);
+                                        post_con.add(d.post_con);
+                                    }*/
+                                }
+
+                                @Override
+                                public void onFailure(Call<RoomList> call, Throwable t) {
+                                    Log.i("실패",t.getMessage());
+                                }
+                            });
+                            /*Intent intent = new Intent(RoomActivity.this, RoomContentActivity.class);
                             intent.putExtra("제목", marker.getTitle());
-                            intent.putExtra("탭이름", tt);
-                            startActivity(intent);
+                            intent.putExtra("아이디", id);
+                            intent.putExtra("만료날짜", room_day);
+                            intent.putExtra("내용", tt);
+                            startActivity(intent); */
                             return false;
                         }
-                    });*/
+                    });
 
                 } //for문 끝
             }

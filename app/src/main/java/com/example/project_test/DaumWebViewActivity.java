@@ -1,22 +1,17 @@
 package com.example.project_test;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.net.http.SslError;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
-import android.webkit.PermissionRequest;
-import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.project_test.Room.RoomActivity;
+import com.example.project_test.Room.RoomWriting;
 
 public class DaumWebViewActivity extends AppCompatActivity {
     private WebView daum_webView;
