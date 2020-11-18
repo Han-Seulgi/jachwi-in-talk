@@ -48,7 +48,6 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
     TextView tabTitle;
     String tt;
     double latitude, longitude;
-    ArrayList<String> room_lct = new ArrayList<>();
     public String[] roomlist;
     public int size;
     int i=0;
@@ -114,7 +113,9 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                             final ArrayList<String> post_con = new ArrayList<>();
                             final ArrayList<String> id = new ArrayList<>();
                             final ArrayList<String> room_lct = new ArrayList<>();
+                            final ArrayList<String> room_p = new ArrayList<>();
                             final ArrayList<String> room_day = new ArrayList<>();
+                            final ArrayList<String> post_day = new ArrayList<>();
 
                             int j=0;
                             for(RoomData d:rooms) {
@@ -123,14 +124,16 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 post_con.add(d.post_con);
                                 id.add(d.id);
                                 room_lct.add(d.room_lct);
+                                room_p.add(d.room_p);
                                 room_day.add(d.room_day);
+                                post_day.add(d.post_day);
                                 Log.e("roomlist", d.toString());
                                 j++;
                             }
 
                             List<Address> list = null;
 
-                            for(; i<post_code.size(); i++) {
+                            for(int i=0; i<post_code.size(); i++) {
                                 try {
 
                                     Geocoder geocoder = new Geocoder(RoomActivity.this);
@@ -161,6 +164,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 markerOptions.alpha(0.5f);
 
                                 gMap.addMarker(markerOptions);
+
                                 gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                     @Override
                                     public boolean onMarkerClick(Marker marker) {
@@ -175,12 +179,14 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                                         intent.putExtra("아이디", id.get(a));
                                         intent.putExtra("만료날짜", room_day.get(a));
                                         intent.putExtra("내용", post_con.get(a));
+                                        intent.putExtra("장소",room_lct.get(a));
                                         intent.putExtra("코드",post_code.get(a));
+                                        intent.putExtra("날짜",post_day.get(a));
+                                        intent.putExtra("가격",room_p.get(a));
                                         startActivity(intent);
                                         return false;
                                     }
                                 });
-
 
                             } //for문 끝
                         }
@@ -208,11 +214,11 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onOptionsItemSelected(item);
         int id = item.getItemId();
         switch (id) {
-            case android.R.id.home:
+            case R.id.home:
                 Intent mypage_itnt = new Intent(getApplicationContext(), MyPageActivity.class);
                 startActivity(mypage_itnt);
                 return true;
-            case android.R.id.message:
+            case R.id.mail:
                 //쪽지함 화면
                 Intent note_itnt = new Intent(getApplicationContext(), NoteActivity.class);
                 startActivity(note_itnt);
@@ -268,7 +274,6 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                 final ArrayList<String> room_day = new ArrayList<>();
                 final ArrayList<String> post_day = new ArrayList<>();
 
-                int j=0;
                 for(RoomData d:rooms) {
                     post_code.add(d.post_code);
                     post_title.add(d.post_title);
@@ -279,7 +284,6 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                     room_day.add(d.room_day);
                     post_day.add(d.post_day);
                     Log.e("roomlist", d.toString());
-                    j++;
                 }
 
                 List<Address> list = null;

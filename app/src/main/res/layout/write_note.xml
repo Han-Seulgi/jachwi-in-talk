@@ -53,7 +53,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="5dp"
+            >
 
             <TextView
                 android:id="@+id/tv1"
@@ -67,9 +69,8 @@
 
             <EditText
                 android:id="@+id/idedit"
-                android:layout_width="280dp"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
                 android:layout_toRightOf="@+id/tv1"
                 android:hint="아이디를 입력해주세요"
                 android:textSize="18dp" />
@@ -78,9 +79,11 @@
                 android:id="@+id/idck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginVertical="5dp"
                 android:layout_toRightOf="@+id/idedit"
+                android:visibility="gone"
                 android:src="@drawable/check"/>
         </RelativeLayout>
 

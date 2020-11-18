@@ -25,7 +25,6 @@ import com.example.project_test.Meet.MeetActivity;
 import com.example.project_test.Meet.MeetContent.MeetActivityContent;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.Recipe.RecipeBoardActivity;
-import com.example.project_test.Room.RoomActivity;
 import com.example.project_test.Room.RoomContent.RoomContentActivity;
 import com.example.project_test.Room.RoomData;
 import com.example.project_test.Room.RoomList;
@@ -263,18 +262,20 @@ public class BoardActivity extends AppCompatActivity {
                 final ArrayList<String> post_con = new ArrayList<>();
                 final ArrayList<String> id = new ArrayList<>();
                 final ArrayList<String> room_lct = new ArrayList<>();
+                final ArrayList<String> room_p = new ArrayList<>();
                 final ArrayList<String> room_day = new ArrayList<>();
+                final ArrayList<String> post_day = new ArrayList<>();
 
-                int j=0;
                 for(RoomData d:rooms) {
                     post_code.add(d.post_code);
                     post_title.add(d.post_title);
                     post_con.add(d.post_con);
                     id.add(d.id);
                     room_lct.add(d.room_lct);
+                    room_p.add(d.room_p);
                     room_day.add(d.room_day);
+                    post_day.add(d.post_day);
                     Log.e("roomlist", d.toString());
-                    j++;
                 }
                 final Integer[] img = {R.drawable.roomimg1, R.drawable.roomimg2};
                 final String[] post_title1 = post_con.toArray(new String[post_title.size()]);
@@ -308,6 +309,10 @@ public class BoardActivity extends AppCompatActivity {
                         intent.putExtra("아이디", id.get(k));
                         intent.putExtra("만료날짜", room_day.get(k));
                         intent.putExtra("내용", post_con.get(k));
+                        intent.putExtra("장소",room_lct.get(k));
+                        intent.putExtra("코드",post_code.get(k));
+                        intent.putExtra("날짜",post_day.get(k));
+                        intent.putExtra("가격",room_p.get(k));
                         startActivity(intent);
                     }
                 });

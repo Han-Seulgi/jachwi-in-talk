@@ -81,7 +81,7 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="#ffffff"
-                        android:src="@drawable/likes" />
+                        />
 
                     <TextView
                         android:id="@+id/textLikenum"

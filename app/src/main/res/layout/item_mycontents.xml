@@ -67,7 +67,7 @@
                         android:visibility="gone"
                         android:background="#00ffffff"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/modify" />
+                        android:src="@drawable/modify2" />
 
                     <ImageButton
                         android:id="@+id/delete"

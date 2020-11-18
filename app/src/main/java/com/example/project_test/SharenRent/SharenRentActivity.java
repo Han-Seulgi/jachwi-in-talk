@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
-import com.example.project_test.Writing.FoodWritingActivity;
 
 import java.util.ArrayList;
 
@@ -35,7 +33,7 @@ public class SharenRentActivity extends AppCompatActivity {
     ArrayList<SRListData> data2;
 
     //나눔데이터
-    private  int[] img = {R.drawable.coffee, R.drawable.icetea, R.drawable.chocolate, R.drawable.food};
+    private  int[] img = {R.drawable.coffee, R.drawable.icetea, R.drawable.chocolate, R.drawable.recipe1};
     private String[] title = {"커피", "아이스티", "초콜릿", "음식"};
     //대여데이터
     private  int[] img2 = {R.drawable.chocolate, R.drawable.rrimg1, R.drawable.rrimg2, R.drawable.rrimg3};

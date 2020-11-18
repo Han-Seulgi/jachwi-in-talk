@@ -227,9 +227,6 @@ public interface Api {
     @POST("Image/getFirst")
     Call<Img> getFirst(@Field("post_code") int var1);
 
-//    @GET("Image/deleteImg")
-//    Call<DeleteImg> deleteImg(@Query("img_code")int var1);
-
     @GET("Image/deleteImg")
     Call<ResponseBody> deleteImg(@Query("img_code")int var1);
 
@@ -295,10 +292,6 @@ public interface Api {
     @GET("Note/checknote")
     Call<CheckNote> checknote(@Query("id")String var1);
 
-
-//    @GET("GetRoom")
-//    Call<RoomList> getRoom(@Query("room_lct") String var1);
-
     @GET("GetRoom")
     Call<ResponseBody> getRoom(@Query("room_lct") String var1);
 
@@ -307,7 +300,6 @@ public interface Api {
 
         public final Api create() {
 
-            //String uri = "https://apache-php-mysql-rydgd.run.goorm.io/index.php/";
             String uri = "https://project-lzbnp.run.goorm.io/index.php/";
 
             Gson gson = new GsonBuilder()

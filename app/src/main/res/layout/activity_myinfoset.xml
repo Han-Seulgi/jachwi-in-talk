@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:src="@drawable/check"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintRight_toRightOf="@+id/nameET"
         app:layout_constraintBottom_toBottomOf="@id/nameET" />
 
@@ -178,7 +178,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginBottom="2dp"
         android:src="@drawable/check"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintLeft_toRightOf="@+id/btnCheck"
         app:layout_constraintBottom_toBottomOf="@id/btnCheck" />
 
