@@ -110,6 +110,7 @@
                         android:id="@+id/like"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
+                        android:background="#0000"
                         android:src="@drawable/ic_like" />
 
                     <TextView
