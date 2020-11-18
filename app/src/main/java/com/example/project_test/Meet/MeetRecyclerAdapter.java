@@ -58,7 +58,7 @@ public class MeetRecyclerAdapter extends RecyclerView.Adapter<MeetRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MeetViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MeetViewHolder holder, final int position) {
         MeetListData data = datas.get(position);
 
         final String title = data.getTitle();

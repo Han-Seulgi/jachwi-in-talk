@@ -69,8 +69,10 @@ public interface Api {
     Call<Join> joinUser(@Field("id")String var1,@Field("pw")String var2, @Field("name")String var3,@Field("email")String var4);
 
     //게시물 목록
-    @GET("post")
-    Call<RecipePostList> getRecipeList(@Query("board_code") int var1); //요리
+//    @GET("post")
+//    Call<RecipePostList> getRecipeList(@Query("board_code") int var1); //요리
+    @GET("post/getPostnImg")
+    Call<RecipePostList> getRecipeList(@Query("board_code") int var1); //요리(사진포함)
 
     @GET("post")
     Call<FoodPostList> getFoodList(@Query("board_code") int var1); //맛집
@@ -292,6 +294,7 @@ public interface Api {
 
     @GET("Note/checknote")
     Call<CheckNote> checknote(@Query("id")String var1);
+
 
 //    @GET("GetRoom")
 //    Call<RoomList> getRoom(@Query("room_lct") String var1);

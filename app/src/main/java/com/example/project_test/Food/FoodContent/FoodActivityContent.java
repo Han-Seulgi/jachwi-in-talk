@@ -77,6 +77,8 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
 
     boolean mod = false;
 
+    boolean validatelk;
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -202,6 +204,26 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
                         }
                     });
 
+                    //유저가 해당 게시글을 추천하였는지 확인, 추천한 게시물은 하트 변경
+                    api.validateLike(LoginActivity.user_ac, postcode).enqueue(new Callback<likeCheck>() {
+                        @Override
+                        public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
+                            likeCheck likecheck = response.body();
+                            validatelk = likecheck.validatelk;
+
+                            //추천 함
+                            if (validatelk)
+                                like.setImageResource(R.drawable.ic_like2);
+
+                                //추천 안함
+                            else
+                                like.setImageResource(R.drawable.ic_like);
+                        }
+                        @Override
+                        public void onFailure(Call<likeCheck> call, Throwable t) {
+
+                        }
+                    });
 
                     //추천수 설정
                     api.getlikenum(postcode).enqueue(new Callback<likeCheck>() {
@@ -269,12 +291,12 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
             like.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //유저가 해당 게시글을 추천하였는지 확인
+                    /*//유저가 해당 게시글을 추천하였는지 확인
                     api.validateLike(LoginActivity.user_ac, postcode).enqueue(new Callback<likeCheck>() {
                         @Override
                         public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
                             likeCheck likecheck = response.body();
-                            boolean validatelk = likecheck.validatelk;
+                            boolean validatelk = likecheck.validatelk;*/
 
                             //해당게시글을 추천한 적이 없다면 likes 테이블에 추가
                             if (!validatelk) {
@@ -300,6 +322,9 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
                                                     //추천수 화면 출력
                                                     likenum++;
                                                     textLikenum.setText("" + likenum);
+
+                                                    like.setImageResource(R.drawable.ic_like2);
+                                                    validatelk = true;
 
                                                     Toast.makeText(getApplicationContext(),"추천됨",Toast.LENGTH_SHORT).show();
                                                 }
@@ -343,6 +368,9 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
                                                     likenum--;
                                                     textLikenum.setText("" + likenum);
 
+                                                    like.setImageResource(R.drawable.ic_like);
+                                                    validatelk = false;
+
                                                     Toast.makeText(getApplicationContext(),"추천삭제됨",Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -360,12 +388,12 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
                                 });
                             }
                         }
-                        @Override
-                        public void onFailure(Call<likeCheck> call, Throwable t) {
-
-                        }
-                    });
-                }
+//                        @Override
+//                        public void onFailure(Call<likeCheck> call, Throwable t) {
+//
+//                        }
+//                    });
+//                }
             });
 
             //수정 클릭

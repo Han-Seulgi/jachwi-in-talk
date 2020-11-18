@@ -207,7 +207,7 @@ public class FoodActivity extends AppCompatActivity{
                 Intent mypage_itnt = new Intent(getApplicationContext(), MyPageActivity.class);
                 startActivity(mypage_itnt);
                 return true;
-            case android.R.id.message:
+            case R.id.mail:
                 //쪽지함 화면
                 Intent note_itnt = new Intent(getApplicationContext(), NoteActivity.class);
                 startActivity(note_itnt);

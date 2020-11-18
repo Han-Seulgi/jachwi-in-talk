@@ -2,7 +2,10 @@ package com.example.project_test.Recipe;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,7 +36,8 @@ public class RecipeRandom extends Activity {
     TextView showContent;
     TextView click;
 
-    int[] img;
+    //int[] img;
+    String[] img;
     int size, random;
     String title[];
 
@@ -53,7 +57,8 @@ public class RecipeRandom extends Activity {
         click = findViewById(R.id.click);
 
         Intent intent = getIntent();
-        img = intent.getIntArrayExtra("img"); // img[] 라는 배열에 게시물 이미지 저장
+        img = intent.getStringArrayExtra("img"); // img[] 라는 배열에 게시물 이미지 저장
+        //img = intent.getIntArrayExtra("img"); // img[] 라는 배열에 게시물 이미지 저장
         title = intent.getStringArrayExtra("title"); // title[]이라는 배열에 게시물 제목 저장
         size = intent.getIntExtra("size", 0);
         Log.i("random","index: " + size);
@@ -70,7 +75,18 @@ public class RecipeRandom extends Activity {
     public void mOnRec(View v) { // 추천받기(다시추천) 버튼
         Random r = new Random();
         random = r.nextInt(size); // 게시물의 갯수 만큼의 범위에서 랜덤값 추출
-        iv.setImageResource(img[random]);
+
+        Log.i("dddd", img[random]);
+        if(img[random].equals("none"))
+            iv.setImageResource(R.drawable.recipe);
+
+        else {
+            byte[] encodeByte = Base64.decode(img[random], Base64.NO_WRAP);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            //bitmap;
+            iv.setImageBitmap(bitmap);
+        }
+        //iv.setImageResource(img[random]);
         tv.setText(title[random]);
         tv.setVisibility(View.VISIBLE);
 

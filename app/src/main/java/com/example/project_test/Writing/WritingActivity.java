@@ -273,6 +273,7 @@ public class WritingActivity extends AppCompatActivity {
                 ArrayList<String> id1 = new ArrayList<>();
                 ArrayList<String> con1 = new ArrayList<>();
                 ArrayList<Integer> code1 = new ArrayList<>();
+                ArrayList<String> imgdata1 = new ArrayList<>();
 
                 //리스트에 제목, 날짜, 작성자 아이디 넣기
                 for (PostData d : postData) {
@@ -281,6 +282,8 @@ public class WritingActivity extends AppCompatActivity {
                     id1.add(d.id);
                     con1.add(d.con);
                     code1.add(d.pcode);
+                    if(d.img_data.equals("")) imgdata1.add("none");
+                    else imgdata1.add(d.img_data);
                     Log.i("abc", "요리 All: " + d.toString());
                 }
 
@@ -290,6 +293,7 @@ public class WritingActivity extends AppCompatActivity {
                 String[] id = id1.toArray(new String[id1.size()]);
                 String[] con = con1.toArray(new String[con1.size()]);
                 final Integer[] code = code1.toArray(new Integer[code1.size()]);
+                final String[] img_data = imgdata1.toArray(new String[imgdata1.size()]);
 
                 Intent intent = new Intent();
                 intent.putExtra("title", title[0]);
@@ -297,6 +301,7 @@ public class WritingActivity extends AppCompatActivity {
                 intent.putExtra("id", id[0]);
                 intent.putExtra("con", con[0]);
                 intent.putExtra("code", code[0]);
+                intent.putExtra("img", img_data[0]);
 
                 setResult(RESULT_OK, intent);
                 //finish();

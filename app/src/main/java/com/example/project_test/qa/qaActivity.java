@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
 import com.example.project_test.Mypage.MyPageActivity;
+import com.example.project_test.NoteActivity;
 import com.example.project_test.R;
 import com.example.project_test.Writing.QAWritingActivity;
 
@@ -204,8 +205,10 @@ public class qaActivity extends AppCompatActivity {
                 Intent mypage_itnt = new Intent(getApplicationContext(), MyPageActivity.class);
                 startActivity(mypage_itnt);
                 return true;
-            case android.R.id.message:
+            case R.id.mail:
                 //쪽지함 화면
+                Intent note_itnt = new Intent(getApplicationContext(), NoteActivity.class);
+                startActivity(note_itnt);
                 return true;
         }
         return true;

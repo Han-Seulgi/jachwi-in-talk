@@ -2,6 +2,8 @@ package com.example.project_test;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class likeCheck {
     @SerializedName("validatelike")
     public boolean validatelk;
@@ -23,6 +25,5 @@ public class likeCheck {
 
     @SerializedName("newlike")
     public boolean newlike;
-
 }
 

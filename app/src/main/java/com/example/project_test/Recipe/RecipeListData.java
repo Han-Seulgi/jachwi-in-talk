@@ -4,7 +4,7 @@ public class RecipeListData {
     private int img, code;
     private String title, day, id, con;
     private String tabTitle;
-    String img_data;
+    private String img_data;
 
     public RecipeListData(int img, String title, String day, String id, String tabTitle, String con) {
         this.img = img;

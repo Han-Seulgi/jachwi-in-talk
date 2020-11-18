@@ -1,5 +1,6 @@
 package com.example.project_test.Emergency;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -8,10 +9,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.project_test.R;
+
+import com.example.project_test.SharenRent.SharenRentActivity;
 
 public class ShakeNumberActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -19,6 +23,7 @@ public class ShakeNumberActivity extends AppCompatActivity {
     Button monthup, monthdown;   //월 변경 버튼
     TextView month;    //월 출력 텍스트뷰
 
+    private AlertDialog dialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +39,17 @@ public class ShakeNumberActivity extends AppCompatActivity {
         monthup = findViewById(R.id.monthup);
         monthdown = findViewById(R.id.monthdown);
         month = findViewById(R.id.month);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ShakeNumberActivity.this);
+        builder.setCancelable(false);
+        dialog = builder.setMessage("개발중입니다").setNegativeButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        })
+                .create();
+        dialog.show();
 
     }
 

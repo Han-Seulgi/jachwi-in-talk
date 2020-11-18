@@ -62,15 +62,20 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecipeViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final RecipeViewHolder holder, final int position) {
         RecipeListData data = datas.get(position);
 
         String img_data = data.getImg_data();
         //Log.i("setimg",img_data);
+        if(img_data == null || img_data.equals("none") )
+            holder.img.setImageResource(R.drawable.recipe);
 
-        //byte[] encodeByte = Base64.decode(img_data, Base64.NO_WRAP);
-        //Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-        //bitmap;
+        else {
+            byte[] encodeByte = Base64.decode(img_data, Base64.NO_WRAP);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            //bitmap;
+            holder.img.setImageBitmap(bitmap);
+        }
 
         final String tt = data.getTabTitle();
         final String title = data.getTitle();
@@ -79,8 +84,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
         final String con = data.getCon();
         //final int code = data.getCode();
 
-        holder.img.setImageResource(data.getImg());
-        //holder.img.setImageBitmap(bitmap);
+        //holder.img.setImageResource(data.getImg());
         holder.title.setText(title);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

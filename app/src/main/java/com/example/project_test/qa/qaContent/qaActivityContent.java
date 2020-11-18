@@ -61,6 +61,8 @@ public class qaActivityContent extends AppCompatActivity {
 
     boolean mod = false;
 
+    boolean validatelk;
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -166,6 +168,27 @@ public class qaActivityContent extends AppCompatActivity {
                     PostList postlist = response.body();
                     postcode = postlist.pcode;
 
+                    //유저가 해당 게시글을 추천하였는지 확인, 추천한 게시물은 하트 변경
+                    api.validateLike(LoginActivity.user_ac, postcode).enqueue(new Callback<likeCheck>() {
+                        @Override
+                        public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
+                            likeCheck likecheck = response.body();
+                            validatelk = likecheck.validatelk;
+
+                            //추천 함
+                            if (validatelk)
+                                like.setImageResource(R.drawable.ic_like2);
+
+                                //추천 안함
+                            else
+                                like.setImageResource(R.drawable.ic_like);
+                        }
+                        @Override
+                        public void onFailure(Call<likeCheck> call, Throwable t) {
+
+                        }
+                    });
+
                     //추천수 설정
                     api.getlikenum(postcode).enqueue(new Callback<likeCheck>() {
                         @Override
@@ -233,102 +256,108 @@ public class qaActivityContent extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     //유저가 해당 게시글을 추천하였는지 확인
-                    api.validateLike(LoginActivity.user_ac, postcode).enqueue(new Callback<likeCheck>() {
-                        @Override
-                        public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
-                            likeCheck likecheck = response.body();
-                            boolean validatelk = likecheck.validatelk;
+                /*api.validateLike(LoginActivity.user_ac, postcode).enqueue(new Callback<likeCheck>() {
+                    @Override
+                    public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
+                        likeCheck likecheck = response.body();
+                        boolean validatelk = likecheck.validatelk;*/
 
-                            //해당게시글을 추천한 적이 없다면 likes 테이블에 추가
-                            if (!validatelk) {
-                                Log.i("abcdefg", validatelk + "추천안함");
-                                api.addlike(LoginActivity.user_ac, postcode).enqueue(new Callback<likeCheck>() {
-                                    @Override
-                                    public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
-                                        likeCheck likecheck = response.body();
-                                        boolean cklk = likecheck.ckaddlk;
-                                        Log.i("abcdefg", cklk + "추천입력성공");
+                    //해당게시글을 추천한 적이 없다면 likes 테이블에 추가
+                    if (!validatelk) {
+                        Log.i("abcdefg", validatelk + "추천안함");
+                        api.addlike(LoginActivity.user_ac, postcode).enqueue(new Callback<likeCheck>() {
+                            @Override
+                            public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
+                                likeCheck likecheck = response.body();
+                                boolean cklk = likecheck.ckaddlk;
+                                Log.i("abcdefg", cklk + "추천입력성공");
 
-                                        //likes 테이블에 추천코드, id, 게시글코드가 입력되었다면
-                                        if (cklk) {
-                                            //like_num 테이블의 추천수 +1
-                                            api.addlikenum(postcode).enqueue(new Callback<likeCheck>() {
-                                                @Override
-                                                public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
-                                                    likeCheck likecheck = response.body();
-                                                    boolean cklknum = likecheck.ckaddlikenum;
+                                //likes 테이블에 추천코드, id, 게시글코드가 입력되었다면
+                                if (cklk) {
+                                    //like_num 테이블의 추천수 +1
+                                    api.addlikenum(postcode).enqueue(new Callback<likeCheck>() {
+                                        @Override
+                                        public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
+                                            likeCheck likecheck = response.body();
+                                            boolean cklknum = likecheck.ckaddlikenum;
 
-                                                    Log.i("abcdefg", cklknum + "추천수증가성공");
+                                            Log.i("abcdefg", cklknum + "추천수증가성공");
 
-                                                    //추천수 화면 출력
-                                                    likenum++;
-                                                    textLikenum.setText("" + likenum);
+                                            //추천수 화면 출력
+                                            likenum++;
+                                            textLikenum.setText("" + likenum);
 
-                                                    Toast.makeText(getApplicationContext(),"추천됨",Toast.LENGTH_SHORT).show();
-                                                }
-
-                                                @Override
-                                                public void onFailure(Call<likeCheck> call, Throwable t) {
-                                                }
-                                            });
-                                        } else {
-                                            Log.i("abcdefg", "추천테이블에 입력 실패");
+                                            like.setImageResource(R.drawable.ic_like2);
+                                            validatelk = true;
+                                            Toast.makeText(getApplicationContext(),"추천됨",Toast.LENGTH_SHORT).show();
                                         }
-                                    }
-                                    @Override
-                                    public void onFailure(Call<likeCheck> call, Throwable t) {
-                                    }
-                                });
-                            }
 
-                            //추천한 게시물이면 추천 정보 삭제
-                            else {
-                                Log.i("abcdefg", "이미 추천한 게시글 추천 삭제");
-                                api.deletelike(LoginActivity.user_ac, postcode).enqueue(new Callback<likeCheck>() {
-                                    @Override
-                                    public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
-                                        likeCheck likecheck = response.body();
-                                        boolean cklk = likecheck.ckdellk;
-                                        Log.i("abcdefg", cklk + "추천삭제성공");
-
-                                        //likes 테이블에서 해당 추천 삭제되면
-                                        if (cklk) {
-                                            //like_num 테이블의 추천수 - 1
-                                            api.sublikenum(postcode).enqueue(new Callback<likeCheck>() {
-                                                @Override
-                                                public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
-                                                    likeCheck likecheck = response.body();
-                                                    boolean cklknum = likecheck.cksublikenum;
-
-                                                    Log.i("abcdefg", cklknum + "추천수감소성공");
-
-                                                    //추천수 화면 출력
-                                                    likenum--;
-                                                    textLikenum.setText("" + likenum);
-
-                                                    Toast.makeText(getApplicationContext(),"추천삭제됨",Toast.LENGTH_SHORT).show();
-                                                }
-
-                                                @Override
-                                                public void onFailure(Call<likeCheck> call, Throwable t) {
-                                                }
-                                            });
-                                        } else {
-                                            Log.i("abcdefg", "추천테이블에 입력 실패");
+                                        @Override
+                                        public void onFailure(Call<likeCheck> call, Throwable t) {
                                         }
-                                    }
-                                    @Override
-                                    public void onFailure(Call<likeCheck> call, Throwable t) {
-                                    }
-                                });
+                                    });
+                                } else {
+                                    Log.i("abcdefg", "추천테이블에 입력 실패");
+                                }
                             }
-                        }
-                        @Override
-                        public void onFailure(Call<likeCheck> call, Throwable t) {
+                            @Override
+                            public void onFailure(Call<likeCheck> call, Throwable t) {
+                            }
+                        });
+                    }
 
-                        }
-                    });
+                    //추천한 게시물이면 추천 정보 삭제
+                    else {
+                        Log.i("abcdefg", "이미 추천한 게시글 추천 삭제");
+                        api.deletelike(LoginActivity.user_ac, postcode).enqueue(new Callback<likeCheck>() {
+                            @Override
+                            public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
+                                likeCheck likecheck = response.body();
+                                boolean cklk = likecheck.ckdellk;
+                                Log.i("abcdefg", cklk + "추천삭제성공");
+                                like.setImageResource(R.drawable.ic_like);
+
+                                //likes 테이블에서 해당 추천 삭제되면
+                                if (cklk) {
+                                    //like_num 테이블의 추천수 - 1
+                                    api.sublikenum(postcode).enqueue(new Callback<likeCheck>() {
+                                        @Override
+                                        public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
+                                            likeCheck likecheck = response.body();
+                                            boolean cklknum = likecheck.cksublikenum;
+
+                                            Log.i("abcdefg", cklknum + "추천수감소성공");
+
+                                            //추천수 화면 출력
+                                            likenum--;
+                                            textLikenum.setText("" + likenum);
+
+                                            like.setImageResource(R.drawable.ic_like);
+                                            validatelk = false;
+
+                                            Toast.makeText(getApplicationContext(),"추천삭제됨",Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<likeCheck> call, Throwable t) {
+                                        }
+                                    });
+                                } else {
+                                    Log.i("abcdefg", "추천테이블에 입력 실패");
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<likeCheck> call, Throwable t) {
+                            }
+                        });
+                    }
                 }
+//                    @Override
+//                    public void onFailure(Call<likeCheck> call, Throwable t) {
+//
+//                    }
+                //});
+                // }
             });
 
             //수정 클릭

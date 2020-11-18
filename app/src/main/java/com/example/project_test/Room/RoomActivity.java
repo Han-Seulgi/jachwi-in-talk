@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.project_test.Api;
 import com.example.project_test.Mypage.MyPageActivity;
+import com.example.project_test.NoteActivity;
 import com.example.project_test.R;
 import com.example.project_test.Room.RoomContent.RoomContentActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -213,6 +214,8 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return true;
             case android.R.id.message:
                 //쪽지함 화면
+                Intent note_itnt = new Intent(getApplicationContext(), NoteActivity.class);
+                startActivity(note_itnt);
                 return true;
         }
         return true;

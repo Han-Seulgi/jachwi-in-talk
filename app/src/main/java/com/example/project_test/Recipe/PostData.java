@@ -22,6 +22,13 @@ public class PostData {
     @SerializedName("board_code")
     @Expose
     public int bcode;
+    @SerializedName("img_code")
+    public
+    int img_code;
+    @SerializedName("img_data")
+    public
+    String img_data;
+
 
 
     @Override
@@ -33,6 +40,8 @@ public class PostData {
                 ", con='" + con + '\'' +
                 ", day='" + day + '\'' +
                 ", bcode=" + bcode +
+                ", img_code=" + img_code +
+                ", img_data=" + img_data +
                 '}';
     }
 }

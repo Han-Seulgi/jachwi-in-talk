@@ -18,9 +18,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
+import com.example.project_test.LoginActivity;
 import com.example.project_test.Mypage.MyPageActivity;
+import com.example.project_test.NoteActivity;
 import com.example.project_test.R;
 import com.example.project_test.Writing.WritingActivity;
+import com.example.project_test.imgs;
+import com.example.project_test.likeCheck;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
@@ -99,7 +103,8 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 ArrayList<String> id1 = new ArrayList<>();
                 ArrayList<String> con1 = new ArrayList<>();
                 ArrayList<Integer> code1 = new ArrayList<>();
-                ArrayList<Integer> img1 = new ArrayList<>();
+                ArrayList<Integer> imgcode1 = new ArrayList<>();
+                ArrayList<String> imgdata1 = new ArrayList<>();
 
                 //리스트에 제목, 날짜, 작성자 아이디 넣기
                 for (PostData d:postData) {
@@ -108,6 +113,9 @@ public class RecipeBoardActivity extends AppCompatActivity {
                     id1.add(d.id);
                     con1.add(d.con);
                     code1.add(d.pcode);
+                    imgcode1.add(d.img_code);
+                    if(d.img_data.equals("")) imgdata1.add("none");
+                    else imgdata1.add(d.img_data);
                     Log.i("abc","요리 All: " + d.toString());
                 }
 
@@ -116,16 +124,18 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 final String[] day = day1.toArray(new String[day1.size()]);
                 final String[] id = id1.toArray(new String[id1.size()]);
                 final String[] con = con1.toArray(new String[con1.size()]);
-                final int[] img = new int[title1.size()];
-                Integer[] imgs = {R.drawable.recipe1, R.drawable.recipe2, R.drawable.recipe3, R.drawable.recipe4,
-                        R.drawable.recipe5, R.drawable.recipe6};
+                //final int[] img = new int[title1.size()];
+                final String[] img_data = imgdata1.toArray(new String[imgdata1.size()]);
+//                Integer[] imgs = {R.drawable.recipe1, R.drawable.recipe2, R.drawable.recipe3, R.drawable.recipe4,
+//                        R.drawable.recipe5, R.drawable.recipe6};
                 final Integer[] code = code1.toArray(new Integer[code1.size()]);
 
                 //넘어온 데이터의 사이즈에 맞춰 이미지 생성(?), 리사이클러뷰 데이터파일에 데이터 넘기기
                 int i = 0;
                 while (i < title.length) {
-                    int a = rmd.nextInt(imgs.length);
-                    data.add(new RecipeListData(imgs[a], title[i], day[i], id[i], tt, con[i]));
+                    int a = rmd.nextInt(title.length);
+                    data.add(new RecipeListData(img_data[i], title[i], day[i], id[i], tt, con[i]));
+                    Log.i("이미지", img_data[i]);
                     i++;
                 }
 
@@ -141,7 +151,8 @@ public class RecipeBoardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(RecipeBoardActivity.this, RecipeRandom.class);
-                        intent.putExtra("img",img);
+                        //intent.putExtra("img",img);
+                        intent.putExtra("img",img_data);
                         intent.putExtra("title",title);
                         intent.putExtra("size",title.length);
                         startActivity(intent);
@@ -197,11 +208,12 @@ public class RecipeBoardActivity extends AppCompatActivity {
         switch (requestCode) {
             case WRITE_POST: if(resultCode == RESULT_OK){
                 Log.i("refresh", "갱신");
-                int img = R.drawable.recipe;
+                //int img = R.drawable.recipe;
                 String title = rdata.getStringExtra("title");
                 String day = rdata.getStringExtra("day");
                 String id = rdata.getStringExtra("id");
                 String con = rdata.getStringExtra("con");
+                String img = rdata.getStringExtra("img");
                 //int code = rdata.getIntExtra("code", 0);
 
                 adapter.addData(new RecipeListData(img, title, day, id, tt, con));
@@ -215,11 +227,12 @@ public class RecipeBoardActivity extends AppCompatActivity {
                     int position = rdata.getIntExtra("position", 0);
                     int rc = rdata.getIntExtra("rc", 0);
                     if (rc == MODIFY_POST) {
-                        int img = R.drawable.recipe;
+                        //int img = R.drawable.recipe;
                         String title = rdata.getStringExtra("title");
                         String id = rdata.getStringExtra("id");
                         String day = rdata.getStringExtra("day");
                         String con = rdata.getStringExtra("con");
+                        String img = rdata.getStringExtra("img");
                         adapter.updateData(position, new RecipeListData(img, title, day, id, tt, con));
                     } else if (rc == DELETE_POST) {
                         adapter.deleteData(position);
@@ -253,8 +266,10 @@ public class RecipeBoardActivity extends AppCompatActivity {
                 Intent mypage_itnt = new Intent(getApplicationContext(), MyPageActivity.class);
                 startActivity(mypage_itnt);
                 return true;
-            case android.R.id.message:
+            case R.id.mail:
                 //쪽지함 화면
+                Intent note_itnt = new Intent(getApplicationContext(), NoteActivity.class);
+                startActivity(note_itnt);
                 return true;
         }
         return true;
