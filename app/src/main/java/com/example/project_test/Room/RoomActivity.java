@@ -265,6 +265,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                 final ArrayList<String> id = new ArrayList<>();
                 final ArrayList<String> room_lct = new ArrayList<>();
                 final ArrayList<String> room_day = new ArrayList<>();
+                final ArrayList<String> post_day = new ArrayList<>();
 
                 int j=0;
                 for(RoomData d:rooms) {
@@ -274,6 +275,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                     id.add(d.id);
                     room_lct.add(d.room_lct);
                     room_day.add(d.room_day);
+                    post_day.add(d.post_day);
                     Log.e("roomlist", d.toString());
                     j++;
                 }
@@ -327,6 +329,8 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                             intent.putExtra("만료날짜", room_day.get(a));
                             intent.putExtra("내용", post_con.get(a));
                             intent.putExtra("장소",room_lct.get(a));
+                            intent.putExtra("코드",post_code.get(a));
+                            intent.putExtra("날짜",post_day.get(a));
                             startActivity(intent);
                             return false;
                         }

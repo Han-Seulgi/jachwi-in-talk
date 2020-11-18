@@ -79,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onResponse(Call<User> call, Response<User> response) {
                                     User user = response.body();
                                     String pw = user.password;
+                                    String name = user.name;
 
                                     //패스워드 일치
                                     if(pw.equals(strPW)) {
@@ -88,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                                         SharedPreferences preferences = getSharedPreferences("lastID", MODE_PRIVATE);
                                         SharedPreferences.Editor editor = preferences.edit();
                                         editor.putString("IDkey", user_ac);
+                                        editor.putString("NAMEkey", name);
                                         editor.commit();
 
                                         //Log.i("abcdefg", pw);

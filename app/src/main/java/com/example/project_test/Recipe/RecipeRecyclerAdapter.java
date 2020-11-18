@@ -68,7 +68,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
         String img_data = data.getImg_data();
         //Log.i("setimg",img_data);
         if(img_data == null || img_data.equals("none") )
-            holder.img.setImageResource(R.drawable.recipe);
+            holder.img.setImageResource(R.drawable.food2);
 
         else {
             byte[] encodeByte = Base64.decode(img_data, Base64.NO_WRAP);

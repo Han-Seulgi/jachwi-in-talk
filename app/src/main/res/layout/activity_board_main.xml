@@ -162,20 +162,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentBottom="true"
-                        android:text="내 주변 방"
+                        android:text="새로 올라온 방"
                         android:textStyle="bold"
                         android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginRight="5dp"
-                        android:clickable="true"
-                        android:text="더보기"
-                        android:textColor="#6E6E6E"
-                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <LinearLayout

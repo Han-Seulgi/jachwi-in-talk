@@ -12,6 +12,9 @@ public class RoomData {
     @SerializedName("post_con")
     public String post_con;
 
+    @SerializedName("post_day")
+    public String post_day;
+
     @SerializedName("id")
     public String id;
 

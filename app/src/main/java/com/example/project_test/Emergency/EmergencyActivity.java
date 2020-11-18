@@ -63,7 +63,7 @@ public class EmergencyActivity extends AppCompatActivity {
     private int sound_beep; //사이렌
     private boolean boolsound=true;
     int sp, checkcode;
-    public static String ID;
+    public static String ID, NAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +118,9 @@ public class EmergencyActivity extends AppCompatActivity {
         //SharedPreferences에서 로그인한 아이디 읽어오기
         SharedPreferences preferences = getSharedPreferences("lastID", MODE_PRIVATE);
         ID = preferences.getString("IDkey", "none");
+        NAME = preferences.getString("NAMEkey", "none");
         Log.i("아이디값", ID);
+        Log.i("이름", NAME);
 
         //이벤트
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -159,7 +161,7 @@ public class EmergencyActivity extends AppCompatActivity {
                                             String msgnum[] = mn.toArray(new String[mn.size()]);
 
                                             //String to = "01000000000";
-                                            String message = "테스트문자"; // 사용자의 위치
+                                            String message = NAME+"님이 위험에 처했습니다!"; //문자 내용
 
                                             for (String num : msgnum) {
                                                 String to = num;  //마이페이지에서 설정한 문자 번호
@@ -172,6 +174,22 @@ public class EmergencyActivity extends AppCompatActivity {
 //                                                it.putExtra("sms_body", message);
 //                                                it.setType("vnd.android-dir/mms-sms");
 //                                                startActivity(it);
+
+
+//                                                    String sms_message = "구글 지도 위치를 보내왔습니다.\n";
+//                                                    sms_message += "http://maps.google.com/maps?f=q&q="+message+"\n"+"누르면 상대방의 위치를 확인할 수 있습니다.";
+//                                                    try {
+//                                                        //전송
+//                                                        SmsManager smsManager = SmsManager.getDefault();
+//                                                        ArrayList<String> parts = smsManager.divideMessage(sms_message);
+//                                                        smsManager.sendMultipartTextMessage(num, null, parts, null, null);
+//                                                        Toast.makeText(getApplicationContext(), "위치전송 문자보내기 완료!", Toast.LENGTH_LONG).show();
+//                                                    } catch (Exception e) {
+//                                                        Toast.makeText(getApplicationContext(), "SMS faild, please try again later!", Toast.LENGTH_LONG).show();
+//                                                        e.printStackTrace();
+//                                                    }
+
+
                                             }
                                             Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_SHORT).show();
                                         }

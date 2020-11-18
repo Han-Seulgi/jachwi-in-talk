@@ -78,7 +78,7 @@ public class RecipeRandom extends Activity {
 
         Log.i("dddd", img[random]);
         if(img[random].equals("none"))
-            iv.setImageResource(R.drawable.recipe);
+            iv.setImageResource(R.drawable.food2);
 
         else {
             byte[] encodeByte = Base64.decode(img[random], Base64.NO_WRAP);

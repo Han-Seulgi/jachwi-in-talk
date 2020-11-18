@@ -2,6 +2,8 @@ package com.example.project_test.Room.RoomContent;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +14,7 @@ import com.example.project_test.R;
 public class RoomContentActivity extends AppCompatActivity {
     Toolbar toolbar;
 
-    String title, id, day, content, room_lct;
+    String title, id, day, content, room_lct, post_day;
     TextView text1, id1, day1, content1, room_lct1;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +44,27 @@ public class RoomContentActivity extends AppCompatActivity {
         day = intent.getStringExtra("만료날짜");
         content = intent.getStringExtra("내용");
         room_lct = intent.getStringExtra("장소");
+        post_day = intent.getStringExtra("날짜");
+
 
 
         text1.setText(title);
-        id1.setText("아이디 : " + id);
+        id1.setText(id+"\n"+post_day);
         day1.setText("만료날짜 : " + day);
         content1.setText(content);
         room_lct1.setText(room_lct);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+               finish();
+                return true;
+        }
+        return true;
     }
 }
