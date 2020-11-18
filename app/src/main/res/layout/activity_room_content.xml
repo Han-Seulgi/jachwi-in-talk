@@ -34,7 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:text="질문제목"
             android:textSize="20dp" />
     </LinearLayout>
@@ -73,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:text="아이디" />
+                        android:textSize="18dp"/>
 
                     <TextView
                         android:id="@+id/day"
@@ -81,41 +82,24 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:text="만료날짜" />
+                        android:textSize="18dp"/>
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/room_lct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="15dp"
+                    android:textSize="18dp" />
 
                 <TextView
                     android:id="@+id/con"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
-                    android:layout_marginVertical="15dp"
-                    android:text="궁금해요 ㅜㅜ 정보 알고계신 분\n 알려주세요 \n 자취 시작한 지 얼마 되지 않아 모르는게 많네요 ㅜ"/>
-
-               <!-- <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/like"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="#CDCDCD"
-                        android:src="@drawable/ic_like" />
-
-                    <TextView
-                        android:id="@+id/textLikenum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="20dp"
-                        android:text="0"
-                        android:textSize="17dp"/>
-
-                </LinearLayout> -->
+                    android:layout_marginVertical="15dp" />
             </LinearLayout>
 
 

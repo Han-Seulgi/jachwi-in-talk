@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Emergency;
 
 import android.app.Service;
 import android.content.Intent;

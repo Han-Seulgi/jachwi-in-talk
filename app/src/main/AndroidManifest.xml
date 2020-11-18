@@ -78,10 +78,10 @@
         <activity android:name=".DaumWebViewActivity" android:label="보금자리 글쓰기 화면"/>
         <activity android:name=".Room.RoomActivity" android:label="보금자리 화면"/>
         <activity android:name=".Room.RoomWriting" android:label="보금자리 글쓰기 화면"/>
-        <activity android:name=".EventActivity" android:label="행사알리미 화면"/>
+        <activity android:name=".Event.EventActivity" android:label="행사알리미 화면"/>
         <activity android:name=".Emergency.EmergencyActivity" android:label="안전지키미 화면"/>
         <activity android:name=".Emergency.EmergencySet" android:label="안전지키미 설정화면" android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".ShakeNumberActivity" android:label="흔들림횟수 화면"/>
+        <activity android:name=".Emergency.ShakeNumberActivity" android:label="흔들림횟수 화면"/>
         <activity android:name=".Mypage.MyPageActivity" android:label="마이페이지"/>
         <activity android:name=".Mypage.MyInfoSetActivity" android:label="내 정보 수정 화면"/>
         <activity android:name=".Mypage.MyContents.MyContentsActivity" android:label="내가 쓴 글 목록"/>
@@ -95,7 +95,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".ShakeService"
+        <service android:name=".Emergency.ShakeService"
             android:label="백그라운드 흔들림 감지 서비스">
         </service>
 

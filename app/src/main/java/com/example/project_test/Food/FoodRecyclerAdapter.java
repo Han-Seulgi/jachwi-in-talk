@@ -17,7 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
-import com.example.project_test.DeletePost;
+import com.example.project_test.Delete.DeletePost;
 import com.example.project_test.Food.FoodContent.FoodActivityContent;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.R;

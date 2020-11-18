@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Comment;
 
 public class CommentListData {
     private int code;

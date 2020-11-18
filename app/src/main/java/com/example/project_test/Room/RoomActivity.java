@@ -49,9 +49,8 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
     double latitude, longitude;
     ArrayList<String> room_lct = new ArrayList<>();
     public String[] roomlist;
-    public List<RoomList> rooms;
     public int size;
-    String id, room_day, post_con;
+    int i=0;
 
     private final int WRITE_POST = 100;
 
@@ -118,7 +117,6 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                             int j=0;
                             for(RoomData d:rooms) {
-                                //roomlist[j].add(d.toString()); //room_lct / id
                                 post_code.add(d.post_code);
                                 post_title.add(d.post_title);
                                 post_con.add(d.post_con);
@@ -131,7 +129,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                             List<Address> list = null;
 
-                            for(int i=0; i<post_code.size(); i++) {
+                            for(; i<post_code.size(); i++) {
                                 try {
 
                                     Geocoder geocoder = new Geocoder(RoomActivity.this);
@@ -150,7 +148,6 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                                         longitude = list.get(0).getLongitude(); // 경도
                                     }
                                 }
-                                //String titles[] = new String[roomlist.length];
 
                                 LatLng house1 = new LatLng(latitude, longitude);
                                 LatLng latLng[] = new LatLng[]{house1};
@@ -163,22 +160,26 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 markerOptions.alpha(0.5f);
 
                                 gMap.addMarker(markerOptions);
-
-                                //클릭하면 해당 게시판으로 넘어가기~~~
-                                final int finalI = i;
                                 gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                     @Override
                                     public boolean onMarkerClick(Marker marker) {
+                                        int a=0;
+                                        for(int i=0; i<post_title.size(); i++) {
+                                            if(post_title.get(i).equals(marker.getTitle())) {
+                                                a = i;
+                                            }
+                                        }
                                         Intent intent = new Intent(RoomActivity.this, RoomContentActivity.class);
-                                        intent.putExtra("제목", post_title.get(finalI));
-                                        intent.putExtra("아이디", id.get(finalI));
-                                        intent.putExtra("만료날짜", room_day.get(finalI));
-                                        intent.putExtra("내용", post_con.get(finalI));
-                                        intent.putExtra("코드",post_code.get(finalI));
+                                        intent.putExtra("제목", post_title.get(a));
+                                        intent.putExtra("아이디", id.get(a));
+                                        intent.putExtra("만료날짜", room_day.get(a));
+                                        intent.putExtra("내용", post_con.get(a));
+                                        intent.putExtra("코드",post_code.get(a));
                                         startActivity(intent);
                                         return false;
                                     }
                                 });
+
 
                             } //for문 끝
                         }
@@ -187,7 +188,6 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                             Log.i("실패", t.getMessage());
                         }
                     });
-
                 }
                 break;
         }
@@ -265,7 +265,6 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 int j=0;
                 for(RoomData d:rooms) {
-                    //roomlist[j].add(d.toString()); //room_lct / id
                     post_code.add(d.post_code);
                     post_title.add(d.post_title);
                     post_con.add(d.post_con);
@@ -297,7 +296,6 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
                             longitude = list.get(0).getLongitude(); // 경도
                         }
                     }
-                    //String titles[] = new String[roomlist.length];
 
                     LatLng house1 = new LatLng(latitude, longitude);
                     LatLng latLng[] = new LatLng[]{house1};
@@ -311,17 +309,21 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     gMap.addMarker(markerOptions);
 
-                    //클릭하면 해당 게시판으로 넘어가기~~~
-                    final int finalI = i;
                     gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
                         public boolean onMarkerClick(Marker marker) {
+                            int a=0;
+                            for(int i=0; i<post_title.size(); i++) {
+                                if(post_title.get(i).equals(marker.getTitle())) {
+                                    a = i;
+                                }
+                            }
                             Intent intent = new Intent(RoomActivity.this, RoomContentActivity.class);
-                            intent.putExtra("제목", post_title.get(finalI));
-                            intent.putExtra("아이디", id.get(finalI));
-                            intent.putExtra("만료날짜", room_day.get(finalI));
-                            intent.putExtra("내용", post_con.get(finalI));
-                            intent.putExtra("코드",post_code.get(finalI));
+                            intent.putExtra("제목", post_title.get(a));
+                            intent.putExtra("아이디", id.get(a));
+                            intent.putExtra("만료날짜", room_day.get(a));
+                            intent.putExtra("내용", post_con.get(a));
+                            intent.putExtra("장소",room_lct.get(a));
                             startActivity(intent);
                             return false;
                         }

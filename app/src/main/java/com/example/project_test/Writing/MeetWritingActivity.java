@@ -22,7 +22,6 @@ import com.example.project_test.Api;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.Meet.MeetPostList;
 import com.example.project_test.Meet.PostData;
-import com.example.project_test.MeetWrite;
 import com.example.project_test.MySpinnerAdapter;
 import com.example.project_test.R;
 import com.example.project_test.Write;

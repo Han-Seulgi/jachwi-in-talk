@@ -13,8 +13,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
-import com.example.project_test.CommentListData;
-import com.example.project_test.DeleteCmt;
+import com.example.project_test.Comment.CommentListData;
+import com.example.project_test.Delete.DeleteCmt;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.R;
 

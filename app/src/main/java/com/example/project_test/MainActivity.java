@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.example.project_test.Emergency.EmergencyActivity;
+import com.example.project_test.Event.EventActivity;
 import com.example.project_test.Room.RoomActivity;
 
 import retrofit2.Call;

@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Emergency;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.project_test.R;
 
 public class ShakeNumberActivity extends AppCompatActivity {
     Toolbar toolbar;

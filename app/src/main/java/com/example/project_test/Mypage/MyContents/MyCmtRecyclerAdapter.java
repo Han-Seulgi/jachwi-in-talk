@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
 import com.example.project_test.Content.ContentWithPicture;
-import com.example.project_test.DeleteCmt;
+import com.example.project_test.Delete.DeleteCmt;
 import com.example.project_test.Food.FoodContent.FoodActivityContent;
 import com.example.project_test.Info.InfoContent.infoActivityContent;
 import com.example.project_test.LoginActivity;

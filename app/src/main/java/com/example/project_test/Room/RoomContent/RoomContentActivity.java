@@ -12,8 +12,8 @@ import com.example.project_test.R;
 public class RoomContentActivity extends AppCompatActivity {
     Toolbar toolbar;
 
-    String title, id, day, content;
-    TextView text1;
+    String title, id, day, content, room_lct;
+    TextView text1, id1, day1, content1, room_lct1;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -29,11 +29,26 @@ public class RoomContentActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         text1 = findViewById(R.id.text1);
+        id1 = findViewById(R.id.id);
+        day1 = findViewById(R.id.day);
+        content1 = findViewById(R.id.con);
+        room_lct1 = findViewById(R.id.room_lct);
 
         //받아오기
+        //제목, 아이디, 만료날짜, 내용, 코드
         Intent intent = getIntent();
         title = intent.getStringExtra("제목");
+        id = intent.getStringExtra("아이디");
+        day = intent.getStringExtra("만료날짜");
+        content = intent.getStringExtra("내용");
+        room_lct = intent.getStringExtra("장소");
+
 
         text1.setText(title);
+        id1.setText("아이디 : " + id);
+        day1.setText("만료날짜 : " + day);
+        content1.setText(content);
+        room_lct1.setText(room_lct);
+
     }
 }

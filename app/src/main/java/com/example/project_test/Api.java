@@ -1,6 +1,10 @@
 package com.example.project_test;
 
+import com.example.project_test.Comment.Cmt;
+import com.example.project_test.Comment.CmtList;
 import com.example.project_test.Content.CookList;
+import com.example.project_test.Delete.DeleteCmt;
+import com.example.project_test.Delete.DeletePost;
 import com.example.project_test.Emergency.MsgNumList;
 import com.example.project_test.Food.FoodContent.FoodList;
 import com.example.project_test.Food.FoodPostList;
@@ -15,6 +19,9 @@ import com.example.project_test.Mypage.ValidateMypage;
 import com.example.project_test.Recipe.RecipePostList;
 import com.example.project_test.Room.Room;
 import com.example.project_test.Room.RoomList;
+import com.example.project_test.Writing.CookWrite;
+import com.example.project_test.Writing.FoodWrite;
+import com.example.project_test.Writing.MeetWrite;
 import com.example.project_test.Writing.WritingCategoryData;
 import com.example.project_test.qa.qaPostList;
 import com.google.gson.Gson;
@@ -118,7 +125,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("CookWrite")
-    Call<CookWrite> CookWrite(@Field("cook_src")String var1,@Field("cook_rcp")String var2);
+    Call<CookWrite> CookWrite(@Field("cook_src")String var1, @Field("cook_rcp")String var2);
 
     @FormUrlEncoded
     @POST("FoodWrite")
@@ -126,11 +133,11 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("MeetWrite")
-    Call<MeetWrite> MeetWrite(@Field("meet_tag")String var1,@Field("meet_lct")String var2,@Field("meet_p")int var3, @Field("meet_day")String var4);
+    Call<MeetWrite> MeetWrite(@Field("meet_tag")String var1, @Field("meet_lct")String var2, @Field("meet_p")int var3, @Field("meet_day")String var4);
 
     @FormUrlEncoded
     @POST("Cmt")
-    Call<Cmt> Cmt(@Field("id")String var1,@Field("post_code")int var2,@Field("cmt_con")String var3);
+    Call<Cmt> Cmt(@Field("id")String var1, @Field("post_code")int var2, @Field("cmt_con")String var3);
 
     @GET("post/getcontent")
     Call<PostList> getcontent(@Query("post_title") String var1);

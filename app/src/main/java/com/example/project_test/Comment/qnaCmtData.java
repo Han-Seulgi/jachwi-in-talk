@@ -1,8 +1,8 @@
-package com.example.project_test;
+package com.example.project_test.Comment;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CmtData {
+public class qnaCmtData {
     @SerializedName("cmt_code")
     public int cmt_code;
     @SerializedName("id")
@@ -13,15 +13,18 @@ public class CmtData {
     public String cmt_con;
     @SerializedName("cmt_day")
     public String cmt_day;
+    @SerializedName("cmt_like")
+    public int cmt_like;
 
     @Override
     public String toString() {
-        return "CmtData{" +
+        return "qnaCmtData{" +
                 "cmt_code=" + cmt_code +
                 ", id='" + id + '\'' +
                 ", post_code=" + post_code +
                 ", cmt_con='" + cmt_con + '\'' +
                 ", cmt_day='" + cmt_day + '\'' +
+                ", cmt_like=" + cmt_like +
                 '}';
     }
 }

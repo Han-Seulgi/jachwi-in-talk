@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Event;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.project_test.Mypage.MyPageActivity;
+import com.example.project_test.R;
 
 import org.w3c.dom.Text;
 

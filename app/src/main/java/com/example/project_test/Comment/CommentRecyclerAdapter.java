@@ -1,4 +1,4 @@
-package com.example.project_test;
+package com.example.project_test.Comment;
 
 import android.content.DialogInterface;
 import android.util.Log;
@@ -11,6 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.project_test.Api;
+import com.example.project_test.Delete.DeleteCmt;
+import com.example.project_test.LoginActivity;
+import com.example.project_test.R;
 
 import java.util.ArrayList;
 

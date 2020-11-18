@@ -20,12 +20,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Api;
-import com.example.project_test.Cmt;
-import com.example.project_test.CmtData;
-import com.example.project_test.CmtList;
-import com.example.project_test.CommentListData;
-import com.example.project_test.CommentRecyclerAdapter;
-import com.example.project_test.DeletePost;
+import com.example.project_test.Comment.Cmt;
+import com.example.project_test.Comment.CmtData;
+import com.example.project_test.Comment.CmtList;
+import com.example.project_test.Comment.CommentListData;
+import com.example.project_test.Comment.CommentRecyclerAdapter;
+import com.example.project_test.Delete.DeletePost;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.Modify.QnaModifyActivity;
 import com.example.project_test.PostList;

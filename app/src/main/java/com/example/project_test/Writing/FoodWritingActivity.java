@@ -19,7 +19,6 @@ import com.example.project_test.Api;
 import com.example.project_test.DaumWebViewActivity;
 import com.example.project_test.Food.FoodPostList;
 import com.example.project_test.Food.PostData;
-import com.example.project_test.FoodWrite;
 import com.example.project_test.LoginActivity;
 import com.example.project_test.R;
 import com.example.project_test.Write;

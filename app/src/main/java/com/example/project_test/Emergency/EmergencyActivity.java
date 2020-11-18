@@ -35,10 +35,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.project_test.Api;
-import com.example.project_test.LoginActivity;
 import com.example.project_test.Mypage.MyPageActivity;
 import com.example.project_test.R;
-import com.example.project_test.ShakeNumberActivity;
 
 import java.util.ArrayList;
 import java.util.List;
