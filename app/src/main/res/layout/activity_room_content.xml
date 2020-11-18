@@ -117,6 +117,15 @@
                     android:textSize="15sp" />
 
                 <TextView
+                    android:id="@+id/p"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="가격"
+                    android:textSize="15sp" />
+
+                <TextView
                     android:id="@+id/con"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -24,6 +24,9 @@ public class RoomData {
     @SerializedName("room_day")
     public String room_day;
 
+    @SerializedName("room_p")
+    public String room_p;
+
     @Override
     public String toString() {
         return "RoomData{" +
