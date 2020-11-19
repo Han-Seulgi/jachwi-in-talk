@@ -65,16 +65,6 @@ public class MyContentsRecyclerAdapter extends RecyclerView.Adapter<MyContentsRe
         holder.textView2.setText(data.getBoard());
         holder.textView3.setText(day);
 
-        if( id.equals(LoginActivity.user_ac)) {
-            holder.edit.setVisibility(View.VISIBLE);
-            holder.delete.setVisibility(View.VISIBLE);
-            Log.i("fd","글 아이디: "+id+"접속아이디: "+LoginActivity.user_ac);
-        }
-        else {
-            holder.edit.setVisibility(View.GONE);
-            holder.delete.setVisibility(View.GONE);
-        }//
-
         holder.itemView.setOnClickListener(new View.OnClickListener() { //글 목록 클릭했을 때
             @Override
             public void onClick(View v) {
@@ -119,15 +109,10 @@ public class MyContentsRecyclerAdapter extends RecyclerView.Adapter<MyContentsRe
 
                                 Api api = Api.Factory.INSTANCE.create();
 
-                                Log.i("hihihi", "아오"+title);
-
                                 api.deletepost(title).enqueue(new Callback<DeletePost>() {
                                     @Override
                                     public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
-                                        //DeletePost deletePost = response.body();
-                                        //boolean del = deletePost.delete;
 
-                                        Log.i("delete", "성공" + response);
                                         datas.remove(position);
                                         notifyItemRemoved(position);
                                         notifyItemRangeChanged(position, datas.size());
@@ -138,7 +123,6 @@ public class MyContentsRecyclerAdapter extends RecyclerView.Adapter<MyContentsRe
                                         Log.i("delete",t.getMessage());
                                     }
                                 });
-
                             }
                         }
                 ).create();

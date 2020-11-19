@@ -1,11 +1,15 @@
 package com.example.project_test;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -42,11 +46,32 @@ public class DaumWebViewActivity extends AppCompatActivity {
         // JavaScript의 window.open 허용
         daum_webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
+        daum_webView.getSettings().setSupportMultipleWindows(true);
+
+
         // JavaScript이벤트에 대응할 함수를 정의 한 클래스를 붙여줌
         daum_webView.addJavascriptInterface(new AndroidBridge(), "TestApp");
 
         // web client를 chrome 으로 설정
-        daum_webView.setWebChromeClient(new WebChromeClient());
+        daum_webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
+                WebView newWebView = new WebView(DaumWebViewActivity.this);
+                WebSettings webSettings = newWebView.getSettings();
+                webSettings.setJavaScriptEnabled(true);
+
+                final Dialog dialog = new Dialog(DaumWebViewActivity.this);
+                dialog.setContentView(newWebView);
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                dialog.show();
+                newWebView.setWebChromeClient(new WebChromeClient() {
+                    @Override public void onCloseWindow(WebView window) { dialog.dismiss(); } });
+                ((WebView.WebViewTransport)resultMsg.obj).setWebView(newWebView);
+                resultMsg.sendToTarget(); return true;
+            }
+        });
 
         // webview url load. php 파일 주소
         daum_webView.loadUrl("http://project-lzbnp.run.goorm.io/daum_address.php");
@@ -84,11 +109,6 @@ public class DaumWebViewActivity extends AppCompatActivity {
                             break;
                     }
 
-
-//                    Intent intent2 = new Intent(DaumWebViewActivity.this, RoomActivity.class);
-//                    intent2.putExtra("주소", arg1+arg2+arg3);
-//                    intent2.putExtra("체크", 1);
-//                    setResult(RESULT_OK,intent2);
                     // WebView를 초기화 하지않으면 재사용할 수 없음
                     init_webView();
                 }

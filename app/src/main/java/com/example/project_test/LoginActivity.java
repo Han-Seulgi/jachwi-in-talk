@@ -15,8 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -73,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(ckid) {
 
                             //입력한 패스워드와 서버에서 받아온 패스워드가 일치하는지 확인
-                            Api api = Api.Factory.INSTANCE.create();
+                            final Api api = Api.Factory.INSTANCE.create();
                             api.getUser(strID).enqueue(new Callback<User>() {
                                 public void onResponse(Call<User> call, Response<User> response) {
                                     User user = response.body();
@@ -91,15 +89,54 @@ public class LoginActivity extends AppCompatActivity {
                                         editor.putString("NAMEkey", name);
                                         editor.commit();
 
-                                        //Log.i("abcdefg", pw);
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         idEt.setText("");
                                         pwEt.setText("");
+
+                                        //키워드 알림
+                                        api.getkeywordpost(LoginActivity.user_ac).enqueue(new Callback<KeywordList>() {
+                                            @Override
+                                            public void onResponse(Call<KeywordList> call, Response<KeywordList> response) {
+                                                KeywordList kl = response.body();
+                                                Log.i("키워드알림", kl.checkpost+"");
+
+                                                if (kl.checkpost) {
+                                                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                                    NotificationCompat.Builder builder = null;
+
+                                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                                        String channelID = "channel_01";
+                                                        String channelName = "MyChannel01";
+
+                                                        NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+
+                                                        notificationManager.createNotificationChannel(channel);
+                                                        builder = new NotificationCompat.Builder(LoginActivity.this, channelID);
+                                                    } else {
+                                                        builder = new NotificationCompat.Builder(LoginActivity.this, null);
+                                                    }
+                                                    builder.setSmallIcon(android.R.drawable.ic_menu_view);
+
+                                                    builder.setContentText("설정한 키워드가 포함된 게시물이 올라왔습니다");
+                                                    builder.setContentTitle("키워드 알림");
+                                                    Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.mainicon);
+                                                    builder.setLargeIcon(bm);
+
+                                                    Notification notification = builder.build();
+
+                                                    notificationManager.notify(1, notification);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<KeywordList> call, Throwable t) {
+                                                Log.i("실패", t.getMessage());
+                                            }
+                                        });
                                     }
                                     //패스워드 불일치
                                     else {
-                                        //Log.i("abcdefg", "비밀번호틀림");
                                         loginfail = new AlertDialog.Builder(LoginActivity.this);
                                         loginfail.setTitle("비밀번호 불일치");
                                         loginfail.setMessage("잘못된 비밀번호입니다");
@@ -129,7 +166,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         //아이디 없음
                         else {
-                            //Log.i("abcdefg", ckid+"아이디없음");
                             loginfail = new AlertDialog.Builder(LoginActivity.this);
                             loginfail.setTitle("아이디 없음");
                             loginfail.setMessage("존재하지 않는 아이디입니다");
@@ -156,46 +192,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
-                //키워드 알림
-                api.getkeyword(LoginActivity.user_ac).enqueue(new Callback<KeywordList>() {
-                    @Override
-                    public void onResponse(Call<KeywordList> call, Response<KeywordList> response) {
-                        KeywordList kl = response.body();
-
-                        if (!kl.equals("")) {
-                            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                            NotificationCompat.Builder builder = null;
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                String channelID = "channel_01";
-                                String channelName = "MyChannel01";
-
-                                NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
-
-                                notificationManager.createNotificationChannel(channel);
-                                builder = new NotificationCompat.Builder(LoginActivity.this, channelID);
-                            } else {
-                                builder = new NotificationCompat.Builder(LoginActivity.this, null);
-                            }
-                            builder.setSmallIcon(android.R.drawable.ic_menu_view);
-
-                            builder.setContentText("설정한 키워드가 포함된 게시물이 올라왔습니다");
-                            builder.setContentTitle("키워드 알림");
-                            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.mainicon);
-                            builder.setLargeIcon(bm);
-
-                            Notification notification = builder.build();
-
-                            notificationManager.notify(1, notification);
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<KeywordList> call, Throwable t) {
-
-                    }
-                });
                 break;
             case R.id.jnBtn:             //회원가입 버튼 누르면 회원가입 화면으로
                 Intent intent = new Intent(LoginActivity.this, JoinActivity.class);

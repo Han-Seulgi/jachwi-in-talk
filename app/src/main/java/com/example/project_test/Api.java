@@ -48,9 +48,6 @@ public interface Api {
     @GET("login/checkID")
     Call<UserIdCheck> getID(@Query("id")String var1);
 
-    @GET("login/getAllUser")
-    Call<UserFeed> getAllUser();
-
     @FormUrlEncoded
     @POST("mold/get_mold_dispose")
     Call<ResponseBody> aa(@Field("aa")String var1, @Field("bb")String var2);
@@ -68,9 +65,6 @@ public interface Api {
     @POST("join/joinUser")
     Call<Join> joinUser(@Field("id")String var1,@Field("pw")String var2, @Field("name")String var3,@Field("email")String var4);
 
-    //게시물 목록
-//    @GET("post")
-//    Call<RecipePostList> getRecipeList(@Query("board_code") int var1); //요리
     @GET("post/getPostnImg")
     Call<RecipePostList> getRecipeList(@Query("board_code") int var1); //요리(사진포함)
 
@@ -82,12 +76,6 @@ public interface Api {
 
     @GET("post")
     Call<InfoPostList> getInfoList(@Query("board_code") int var1); //정보
-
-    /*@GET("post")
-    Call<PostList> getInfoList(@Query("board_code") int var1); //나눔
-
-    @GET("post")
-    Call<PostList> getInfoList(@Query("board_code") int var1); //대여*/
 
     @GET("post")
     Call<qaPostList> getQnAList(@Query("board_code") int var1); //QA
@@ -203,9 +191,6 @@ public interface Api {
     @GET("Cmt/getComments")
     Call<CmtList> getComments(@Query("post_code") int var1);
 
-    @GET("Cmt/getqacomments")
-    Call<CmtList> getqacomments(@Query("post_code") int var1);
-
     //댓글삭제
     @GET("Cmt/deletecmt")
     Call<DeleteCmt> deletecmt(@Query("cmt_code") int var1);
@@ -233,10 +218,6 @@ public interface Api {
     @FormUrlEncoded
     @POST("Image/modifyImg")
     Call<ResponseBody> imgmodify(@Field("id") String var1, @Field("img_data") String[] var2, @Field("post_code") int var3);
-
-    /*@FormUrlEncoded
-    @POST("Image/getImg")
-    Call<ResponseBody> getImg(@Field("post_code") int var1);*/
 
     @GET("Keyword")
     Call<KeywordList> getkeyword(@Query("id")String var1);
@@ -292,8 +273,8 @@ public interface Api {
     @GET("Note/checknote")
     Call<CheckNote> checknote(@Query("id")String var1);
 
-    @GET("GetRoom")
-    Call<ResponseBody> getRoom(@Query("room_lct") String var1);
+    @GET("Keyword/getkw")
+    Call<KeywordList> getkeywordpost(@Query("id")String var1);
 
     public static final class Factory {
         public static final Api.Factory INSTANCE;

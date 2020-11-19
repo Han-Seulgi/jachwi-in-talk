@@ -12,6 +12,10 @@ public class KeywordList {
     @SerializedName("update")
     @Expose
     Boolean update;
+
+    @SerializedName("checkpost")
+    @Expose
+    public Boolean checkpost;
 }
 
 class KeywordData {
