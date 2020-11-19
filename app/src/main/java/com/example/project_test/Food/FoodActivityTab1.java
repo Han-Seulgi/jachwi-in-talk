@@ -1,6 +1,5 @@
 package com.example.project_test.Food;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,7 +33,7 @@ public class FoodActivityTab1 extends Fragment {
     ArrayList<FoodListData> data;
     ArrayList<FoodListData> cdata;
 
-    public Activity act;
+    public Fragment frg;
     private final int WRITE_POST = 100;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +45,7 @@ public class FoodActivityTab1 extends Fragment {
 
         data = new ArrayList<>();
         cdata = new ArrayList<>();
-        act = FoodActivityTab1.super.getActivity();
+        frg = FoodActivityTab1.this;
 
         //서버 연결
         Api api = Api.Factory.INSTANCE.create();
@@ -83,7 +82,7 @@ public class FoodActivityTab1 extends Fragment {
                     data.add(new FoodListData(img[i], title[i], day[i], id[i], con[i]));
                     i++;
                 }
-                adapter.setData(act, data);
+                adapter.setData(frg, data);
                 recyclerView.setAdapter(adapter);
 
                 cdata.addAll(data);

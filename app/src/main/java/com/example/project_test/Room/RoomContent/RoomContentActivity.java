@@ -2,7 +2,6 @@ package com.example.project_test.Room.RoomContent;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -47,8 +46,6 @@ public class RoomContentActivity extends AppCompatActivity {
         room_lct = intent.getStringExtra("장소");
         p = intent.getStringExtra("가격");
         post_day = intent.getStringExtra("날짜");
-
-
 
         text1.setText(title);
         id1.setText(id+"\n"+post_day);

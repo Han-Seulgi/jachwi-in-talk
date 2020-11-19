@@ -1,7 +1,7 @@
 package com.example.project_test.Mypage.MyContents;
 
 public class MyListData {
-    private int img;
+    private int img, code;
     private String title, board, day, id, con;
 
     public MyListData(int img, String title, String board, String day, String id, String con) {
@@ -11,6 +11,16 @@ public class MyListData {
         this.day = day;
         this.id = id;
         this.con = con;
+    }
+
+    public MyListData(int img, String title, String board, String day, String id, String con, int code) {
+        this.img = img;
+        this.title = title;
+        this.board = board;
+        this.day = day;
+        this.id = id;
+        this.con = con;
+        this.code = code;
     }
 
     public int getImg() {
@@ -36,4 +46,6 @@ public class MyListData {
     public String getCon() {
         return this.con;
     }
+
+    public int getCode() { return this.code; }
 }

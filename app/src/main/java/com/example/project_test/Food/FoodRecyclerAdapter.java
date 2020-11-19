@@ -1,7 +1,5 @@
 package com.example.project_test.Food;
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,33 +8,25 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project_test.Api;
-import com.example.project_test.Delete.DeletePost;
 import com.example.project_test.Food.FoodContent.FoodActivityContent;
-import com.example.project_test.LoginActivity;
 import com.example.project_test.R;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapter.FoodViewHolder> {
     private ArrayList<FoodListData> datas;
-    Activity rActivity;
+    Fragment frg;
     private int MODIFY_POST = 200;
     private int DELETE_POST = 300;
 
-    public void setData(Activity act, ArrayList<FoodListData> list) {
+    public void setData(Fragment f, ArrayList<FoodListData> list) {
         datas = list;
-        rActivity = act;
+        frg = f;
     }
 
     public void addData(FoodListData data){
@@ -92,8 +82,7 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
                 intent.putExtra("requestmod", MODIFY_POST);
                 intent.putExtra("requestdel", DELETE_POST);
                 intent.putExtra("position", position);
-                Log.i("rradapter: ", "MOD_POST: " +MODIFY_POST+"   DEL_POST: "+DELETE_POST+"   Act: "+rActivity);
-                rActivity.startActivityForResult(intent, 777);
+                frg.startActivityForResult(intent, 777);
             }
         });
 

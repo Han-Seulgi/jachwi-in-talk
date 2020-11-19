@@ -86,6 +86,8 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
 
             //상단탭
             toolbar = findViewById(R.id.toolbar);
+            TextView t = findViewById(R.id.title);
+            t.setText("자취앤혼밥");
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowCustomEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
@@ -486,6 +488,7 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
         intent.putExtra("id", id);
         intent.putExtra("day", day);
         intent.putExtra("con", rcon);
+        intent.putExtra("board", "맛집공유");
         intent.putExtra("rc", 1);
         setResult(RESULT_OK, intent);
         Log.i("refresh", "뒤로가기");
@@ -507,6 +510,7 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
                     intent.putExtra("id", id);
                     intent.putExtra("day", day);
                     intent.putExtra("con", rcon);
+                    intent.putExtra("board", "맛집공유");
                     intent.putExtra("rc", 1);
                     setResult(RESULT_OK, intent);
                     Log.i("refresh", "상단바 뒤로가기");

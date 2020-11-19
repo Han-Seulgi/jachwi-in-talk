@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -73,6 +72,8 @@ public class MeetActivityContent extends AppCompatActivity {
 
         //상단탭
         toolbar = findViewById(R.id.toolbar);
+        TextView t = findViewById(R.id.title);
+        t.setText("자취인만남");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
@@ -502,6 +503,7 @@ public class MeetActivityContent extends AppCompatActivity {
             intent.putExtra("day", day);
             intent.putExtra("con", rcon);
             intent.putExtra("img", img1);
+            intent.putExtra("board", "모임");
             intent.putExtra("rc", 1);
             setResult(RESULT_OK, intent);
             Log.i("refresh", "뒤로가기");
@@ -524,6 +526,7 @@ public class MeetActivityContent extends AppCompatActivity {
                     intent.putExtra("day", day);
                     intent.putExtra("con", rcon);
                     intent.putExtra("img", img1);
+                    intent.putExtra("board", "모임");
                     intent.putExtra("rc", 1);
                     setResult(RESULT_OK, intent);
                     Log.i("refresh", "뒤로가기");

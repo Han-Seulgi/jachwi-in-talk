@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -83,6 +82,8 @@ public class ContentWithPicture extends AppCompatActivity {
 
         //상단탭
         toolbar = findViewById(R.id.toolbar);
+        TextView t = findViewById(R.id.title);
+        t.setText("자취앤집밥");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // ↓툴바의 홈버튼의 이미지를 변경(기본 이미지는 뒤로가기 화살표)
@@ -129,7 +130,6 @@ public class ContentWithPicture extends AppCompatActivity {
         //code = intent.getIntExtra("코드",0);
 
         //setText
-        tabTitle.setText(tt);
         text1.setText(title);
         writer.setText(id+"\n"+day);
         contents.setText(content);
@@ -558,6 +558,7 @@ public class ContentWithPicture extends AppCompatActivity {
             intent.putExtra("id", id);
             intent.putExtra("day", day);
             intent.putExtra("con", rcon);
+            intent.putExtra("board", "요리");
             intent.putExtra("rc", 1);
             intent.putExtra("img", rimgdata[0]);
             setResult(RESULT_OK, intent);
@@ -580,6 +581,7 @@ public class ContentWithPicture extends AppCompatActivity {
                     intent.putExtra("id", id);
                     intent.putExtra("day", day);
                     intent.putExtra("con", rcon);
+                    intent.putExtra("board", "요리");
                     intent.putExtra("rc", 1);
                     intent.putExtra("img", rimgdata[0]);
                     setResult(RESULT_OK, intent);

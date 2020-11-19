@@ -79,7 +79,7 @@ public class qaRecyclerAdapter extends RecyclerView.Adapter<qaRecyclerAdapter.qa
                 intent.putExtra("작성자", id);
                 intent.putExtra("날짜", day);
                 intent.putExtra("내용", con);
-                intent.putExtra("타이틀", "자취QA");
+                intent.putExtra("타이틀", "자취Q&A");
                 intent.putExtra("requestmod", MODIFY_POST);
                 intent.putExtra("requestdel", DELETE_POST);
                 intent.putExtra("position", position);

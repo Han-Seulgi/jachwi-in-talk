@@ -85,7 +85,7 @@ public class QAWritingActivity extends AppCompatActivity {
 
                 post_title = tedit.getText().toString();
                 post_con = cedit.getText().toString();
-                if(title2.getText().toString().equals("자취QA")){
+                if(title2.getText().toString().equals("자취Q&A")){
                     board_code = 66;
                 }
 
