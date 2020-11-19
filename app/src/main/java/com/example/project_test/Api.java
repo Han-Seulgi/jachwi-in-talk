@@ -18,6 +18,7 @@ import com.example.project_test.Mypage.MyContents.MyPostList;
 import com.example.project_test.Mypage.ValidateMypage;
 import com.example.project_test.Recipe.RecipePostList;
 import com.example.project_test.Room.Room;
+import com.example.project_test.Room.RoomData;
 import com.example.project_test.Room.RoomList;
 import com.example.project_test.Writing.CookWrite;
 import com.example.project_test.Writing.FoodWrite;
@@ -262,6 +263,9 @@ public interface Api {
 
     @GET("RoomList")
     Call<RoomList> getAllRoom();
+
+    @GET("GetRoom/getRoomdata")
+    Call<RoomData> getRoom(@Query("post_code") int var1);
 
     @FormUrlEncoded
     @POST("Note")

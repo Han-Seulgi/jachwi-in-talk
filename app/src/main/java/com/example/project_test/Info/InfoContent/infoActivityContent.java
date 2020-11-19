@@ -468,8 +468,8 @@ public class infoActivityContent extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
-        int id = item.getItemId();
-        switch (id) {
+        int gid = item.getItemId();
+        switch (gid) {
             case android.R.id.home:
                 if(mod){
                 Intent intent = new Intent();

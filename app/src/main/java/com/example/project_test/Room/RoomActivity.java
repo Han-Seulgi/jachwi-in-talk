@@ -108,7 +108,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                             roomlist = new String[rooms.size()];
 
-                            final ArrayList<String> post_code = new ArrayList<>();
+                            final ArrayList<Integer> post_code = new ArrayList<>();
                             final ArrayList<String> post_title = new ArrayList<>();
                             final ArrayList<String> post_con = new ArrayList<>();
                             final ArrayList<String> id = new ArrayList<>();
@@ -208,13 +208,14 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
         return true;
     }
 
+
     //메뉴액션 --home:마이페이지 --message:쪽지함
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         int id = item.getItemId();
         switch (id) {
-            case R.id.home:
+            case android.R.id.home:
                 Intent mypage_itnt = new Intent(getApplicationContext(), MyPageActivity.class);
                 startActivity(mypage_itnt);
                 return true;
@@ -265,7 +266,7 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 roomlist = new String[rooms.size()];
 
-                final ArrayList<String> post_code = new ArrayList<>();
+                final ArrayList<Integer> post_code = new ArrayList<>();
                 final ArrayList<String> post_title = new ArrayList<>();
                 final ArrayList<String> post_con = new ArrayList<>();
                 final ArrayList<String> id = new ArrayList<>();
@@ -351,4 +352,5 @@ public class RoomActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
     }
+
 }

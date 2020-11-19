@@ -92,7 +92,7 @@ public class MyContentsRecyclerAdapter extends RecyclerView.Adapter<MyContentsRe
                     intent = new Intent(v.getContext(), infoActivityContent.class);
                 } else if (board.equals("방구하기")){
                     intent = new Intent(v.getContext(), RoomContentActivity.class);
-                    //intent.putExtra("코드", data.getCode());
+                    intent.putExtra("코드", data.getCode());
                 }
                 else ;
                 intent.putExtra("제목", title); //게시물의 제목

@@ -257,7 +257,7 @@ public class BoardActivity extends AppCompatActivity {
 
                 roomlist = new String[rooms.size()];
 
-                final ArrayList<String> post_code = new ArrayList<>();
+                final ArrayList<Integer> post_code = new ArrayList<>();
                 final ArrayList<String> post_title = new ArrayList<>();
                 final ArrayList<String> post_con = new ArrayList<>();
                 final ArrayList<String> id = new ArrayList<>();
@@ -359,12 +359,12 @@ public class BoardActivity extends AppCompatActivity {
     }
 
     //상단탭 메뉴
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.top_menu, menu);
-        return true;
-    }
+            @Override
+            public boolean onCreateOptionsMenu(Menu menu) {
+                super.onCreateOptionsMenu(menu);
+                getMenuInflater().inflate(R.menu.top_menu, menu);
+                return true;
+            }
 
     //메뉴액션 --home:마이페이지 --message:쪽지함
     @Override

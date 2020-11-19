@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class RoomData {
     @SerializedName("post_code")
-    public String post_code;
+    public int post_code;
 
     @SerializedName("post_title")
     public String post_title;

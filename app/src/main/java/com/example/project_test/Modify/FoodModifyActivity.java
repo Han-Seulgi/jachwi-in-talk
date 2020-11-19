@@ -16,8 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.project_test.Api;
+import com.example.project_test.DaumWebViewActivity;
 import com.example.project_test.R;
 import com.example.project_test.Write;
+import com.example.project_test.Writing.FoodWritingActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,6 +34,8 @@ public class FoodModifyActivity extends AppCompatActivity {
     int post_code;
 
     private AlertDialog dialog;
+
+    private final int GET_LOCATION = 888;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +66,15 @@ public class FoodModifyActivity extends AppCompatActivity {
         tedit.setText(post_title);
         lctbtn.setText(food_lct);
         cedit.setText(post_con);
+
+        lctbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FoodModifyActivity.this, DaumWebViewActivity.class);
+                intent.putExtra("request", GET_LOCATION);
+                startActivityForResult(intent, GET_LOCATION);
+            }
+        });
 
         //글쓰기 _올리기
         int request = getIntent().getIntExtra("request", -1);
@@ -176,5 +189,18 @@ public class FoodModifyActivity extends AppCompatActivity {
         }
         return true;
 
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("foodloc", "requestcode: "+requestCode);
+        Log.i("foodloc", "requestcode: "+requestCode+"resultcode"+resultCode);
+        switch (requestCode) {
+            case GET_LOCATION: if(resultCode == RESULT_OK){
+                food_lct = data.getStringExtra("주소");
+                lctbtn.setText(food_lct);
+
+            }break;
+        }
     }
 }
