@@ -98,7 +98,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginVertical="15dp"
-                    android:text="얼마전에 가봤는데 정말 좋아요~~ \n 정말 맛있을거같지않나요 ㅎㅎ" />
+                    android:textSize="18dp"
+                    android:text="얼마전에" />
             </LinearLayout>
 
             <androidx.constraintlayout.widget.Guideline
@@ -124,6 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="5dp"
+                android:textSize="18dp"
                 android:text="위치" />
 
             <LinearLayout

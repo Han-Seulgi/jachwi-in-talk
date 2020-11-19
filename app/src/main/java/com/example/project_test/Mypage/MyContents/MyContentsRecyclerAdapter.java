@@ -104,7 +104,6 @@ public class MyContentsRecyclerAdapter extends RecyclerView.Adapter<MyContentsRe
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),"수정",Toast.LENGTH_SHORT).show();
             }
         });
 

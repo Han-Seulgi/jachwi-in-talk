@@ -42,7 +42,6 @@ public class KwRecyclerAdapter extends RecyclerView.Adapter<KwRecyclerAdapter.kw
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(v.getContext(),"삭제",Toast.LENGTH_SHORT).show();
                 datas.remove(position);
 
                 notifyItemRemoved(position);

@@ -148,18 +148,10 @@
                 android:layout_height="40dp"
                 android:layout_marginRight="30dp"
                 android:layout_toRightOf="@+id/tv3"
-                android:hint="돋보기를 눌러 위치 검색"
+                android:hint="위치를 입력해주세요"
                 android:background="@null"
                 android:textSize="18dp" />
 
-            <ImageButton
-                android:id="@+id/btnS"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginHorizontal="10dp"
-                />
         </RelativeLayout>
 
         <RelativeLayout

@@ -98,7 +98,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginVertical="15dp"
-                    android:text="궁금해요 ㅜㅜ 정보 알고계신 분\n 알려주세요 \n 자취 시작한 지 얼마 되지 않아 모르는게 많네요 ㅜ" />
+                    android:textSize="18dp"
+                    android:text="궁금해요 ㅜㅜ" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

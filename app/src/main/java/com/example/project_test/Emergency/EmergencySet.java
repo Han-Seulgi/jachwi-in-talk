@@ -228,10 +228,6 @@ public class EmergencySet extends AppCompatActivity {
                             Boolean update = mnl.update;
 
                             if (update) {
-                                Toast.makeText(getApplicationContext(), "설정완료", Toast.LENGTH_SHORT).show();
-//                                //키보드 내리기
-//                                InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-//                                manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                 imm.hideSoftInputFromWindow(editcall.getWindowToken(), 0);
 
@@ -328,7 +324,6 @@ public class EmergencySet extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         startActivity(intent2);
-                                        Toast.makeText(EmergencySet.this, "전화걸기 성공", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                                 dialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -373,7 +368,6 @@ public class EmergencySet extends AppCompatActivity {
                         Boolean update = mnl.update;
 
                         if (update) {
-                            Toast.makeText(getApplicationContext(), "설정완료", Toast.LENGTH_SHORT).show();
                         }
                     }
 

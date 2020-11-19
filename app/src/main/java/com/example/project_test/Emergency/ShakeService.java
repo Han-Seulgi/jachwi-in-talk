@@ -13,8 +13,11 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.project_test.Api;
 import com.example.project_test.Emergency.EmergencyActivity;
 import com.example.project_test.Emergency.MsgNumList;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,7 +32,7 @@ public class ShakeService extends Service implements SensorEventListener {
     private float lastZ;
     private float x, y, z;
 
-    private static final int SHAKE_THRESHOLD = 10000;    //속도가 얼마 이상일 때 흔들림 감지(민감도)
+    private int SHAKE_THRESHOLD = 10000;    //속도가 얼마 이상일 때 흔들림 감지(민감도)
     private static final int DATA_X = SensorManager.DATA_X;
     private static final int DATA_Y = SensorManager.DATA_Y;
     private static final int DATA_Z = SensorManager.DATA_Z;
@@ -38,6 +41,7 @@ public class ShakeService extends Service implements SensorEventListener {
     private Sensor accelerormeterSensor;
 
     private String ID;
+    int sensor = 10000;
 
     @Nullable
     @Override
@@ -61,39 +65,32 @@ public class ShakeService extends Service implements SensorEventListener {
 
         if(ID.equals("none"))
         {
-            Log.d("svc", "서비스끝");
+            Log.d("svc", "아이디없음");
         }
 
         //시스템설정값 가져오기
-//        Api api = Api.Factory.INSTANCE.create();
-//        api.getemergency(ID).enqueue(new Callback<MsgNumList>() {
-//            @Override
-//            public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
-//                MsgNumList mnl = response.body();
-//                List<MsgNumData> mData = mnl.items;
-//
-//                int volume = mData.get(0).sysvolume;
-//
-//                if(boolsound) {
-//                    try {
-//                        float sv = volume/100.0f; //(0~1)
-//                        sp = sound_pool.play(sound_beep, sv, sv, 0, -1, 1f); // (재생시킬 파일, 왼쪽 볼륨 크기, 오른쪽 볼륨 크기, 우선순위, 재생횟수, 재생속도)
-//                        boolsound = false;
-//                    } catch (Exception e) {
-//                        Toast.makeText(getApplicationContext(), "경고음 실패", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//                else {
-//                    sound_pool.pause(sp);
-//                    boolsound = true;
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MsgNumList> call, Throwable t) {
-//
-//            }
-//        });
+        Api api = Api.Factory.INSTANCE.create();
+        api.getemergency(ID).enqueue(new Callback<MsgNumList>() {
+            @Override
+            public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
+                MsgNumList mnl = response.body();
+                List<MsgNumData> mData = mnl.items;
+
+                sensor = mData.get(0).syssensor;
+
+                if(sensor != 0) {
+                    sensor=sensor*200;
+                }
+                SHAKE_THRESHOLD = sensor;
+                Log.d("svc", sensor+"/"+SHAKE_THRESHOLD);
+
+            }
+
+            @Override
+            public void onFailure(Call<MsgNumList> call, Throwable t) {
+
+            }
+        });
 
     }
 
@@ -140,14 +137,6 @@ public class ShakeService extends Service implements SensorEventListener {
                     intent.putExtra("code", 1); //흔들림으로 열었을 경우
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //새로운 TASK
                     getApplicationContext().startActivity(intent);
-
-                    Toast.makeText(getApplicationContext(), "앱열림", Toast.LENGTH_SHORT).show();
-                    /*Intent intent = getPackageManager().getLaunchIntentForPackage("package com.example.a2222222");
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);*/
-
-
-                    //문자보내기
                 }
 
                 lastX = event.values[DATA_X];

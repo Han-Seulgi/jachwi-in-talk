@@ -127,6 +127,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_toRightOf="@+id/tv2"
                 android:hint="가격을 입력해주세요."
+                android:inputType="number"
                 android:textSize="18dp" />
         </RelativeLayout>
 
@@ -167,42 +168,6 @@
             android:padding="5dp"
             android:textColor="@android:color/black"
             android:textSize="18dp" />
-
-
-        <LinearLayout
-            android:id="@+id/imgLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginHorizontal="15dp">
-
-            <ImageButton
-                android:id="@+id/imgup"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:scaleType="centerCrop"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/gal" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvT"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#f0f0f0"
-                >
-            </androidx.recyclerview.widget.RecyclerView>
-            <!--<EditText
-                android:id="@+id/pedit"
-                android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:layout_gravity="center"
-                android:background="@drawable/border"
-                android:hint=" 사진을 등록해주세요"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="18dp" />-->
         </LinearLayout>
-    </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

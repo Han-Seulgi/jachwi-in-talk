@@ -137,17 +137,6 @@ public class MainActivity extends ActivityGroup {
         return;
     }
 
-    /*public void onRequestPermissionResult(int requestCode, String permissions[], int[] grantResults) {
-        switch(requestCode) {
-            case 1000 :
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(MainActivity.this, "허락했습니다.", Toast.LENGTH_SHORT).show();
-                }
-                else { Toast.makeText(MainActivity.this,"거부했습니다.", Toast.LENGTH_SHORT).show(); }
-                break;
-        }
-    }*/
-
     private void createTab() {
         //tabHost 위젯과 연결
         TabHost tabHost = (TabHost) findViewById(R.id.tabhost);

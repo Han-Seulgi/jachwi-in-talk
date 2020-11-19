@@ -149,8 +149,8 @@ public class MeetActivityContent extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 adapter.addData(new CommentListData(cmtcode.get(0), LoginActivity.user_ac, cmt_con, cmtday.get(0)));
-
-                                Toast.makeText(getApplicationContext(),"작성완료",Toast.LENGTH_SHORT).show();
+                                editTextName1.setText("");
+                                editTextName1.clearFocus();
                             }
                         })
                                 .create();
@@ -293,11 +293,7 @@ public class MeetActivityContent extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //유저가 해당 게시글을 추천하였는지 확인
-                /*api.validateLike(LoginActivity.user_ac, postcode).enqueue(new Callback<likeCheck>() {
-                    @Override
-                    public void onResponse(Call<likeCheck> call, Response<likeCheck> response) {
-                        likeCheck likecheck = response.body();
-                        boolean validatelk = likecheck.validatelk;*/
+
 
                 //해당게시글을 추천한 적이 없다면 likes 테이블에 추가
                 if (!validatelk) {
@@ -326,7 +322,6 @@ public class MeetActivityContent extends AppCompatActivity {
 
                                         like.setImageResource(R.drawable.ic_like2);
                                         validatelk = true;
-                                        Toast.makeText(getApplicationContext(),"추천됨",Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
@@ -371,8 +366,6 @@ public class MeetActivityContent extends AppCompatActivity {
 
                                         like.setImageResource(R.drawable.ic_like);
                                         validatelk = false;
-
-                                        Toast.makeText(getApplicationContext(),"추천삭제됨",Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
@@ -434,8 +427,6 @@ public class MeetActivityContent extends AppCompatActivity {
                                         @Override
                                         public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
 
-                                            Log.i("delete", "성공" + response);
-                                            Toast.makeText(getApplicationContext(), "삭제됨", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent();
                                             intent.putExtra("position", position);
                                             intent.putExtra("rc", 2);

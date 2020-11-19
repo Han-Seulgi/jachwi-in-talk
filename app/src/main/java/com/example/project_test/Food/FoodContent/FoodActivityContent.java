@@ -152,8 +152,8 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     adapter.addData(new CommentListData(cmtcode.get(0), LoginActivity.user_ac, cmt_con, cmtday.get(0)));
-
-                                    Toast.makeText(getApplicationContext(),"작성완료",Toast.LENGTH_SHORT).show();
+                                    editTextName1.setText("");
+                                    editTextName1.clearFocus();
                                 }
                             })
                                     .create();
@@ -325,8 +325,6 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
 
                                                     like.setImageResource(R.drawable.ic_like2);
                                                     validatelk = true;
-
-                                                    Toast.makeText(getApplicationContext(),"추천됨",Toast.LENGTH_SHORT).show();
                                                 }
 
                                                 @Override
@@ -370,8 +368,6 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
 
                                                     like.setImageResource(R.drawable.ic_like);
                                                     validatelk = false;
-
-                                                    Toast.makeText(getApplicationContext(),"추천삭제됨",Toast.LENGTH_SHORT).show();
                                                 }
 
                                                 @Override
@@ -430,9 +426,6 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
                                         api.deletepost(title).enqueue(new Callback<DeletePost>() {
                                             @Override
                                             public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
-
-                                                Log.i("delete", "성공" + response);
-                                                Toast.makeText(getApplicationContext(), "삭제됨", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent();
                                                 intent.putExtra("position", position);
                                                 intent.putExtra("rc", 2);
@@ -572,10 +565,7 @@ public class FoodActivityContent extends AppCompatActivity implements OnMapReady
                         //위치 마커
                         MarkerOptions markerOptions = new MarkerOptions();
                         markerOptions.position(latLng[0]);
-                        markerOptions.title(titles[0]);
-                        markerOptions.snippet("맛집");
                         markerOptions.alpha(0.5f);
-
                         gMap.addMarker(markerOptions);
 
                         Log.i("foodlocation", location + "");

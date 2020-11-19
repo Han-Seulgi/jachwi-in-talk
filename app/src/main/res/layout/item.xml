@@ -50,23 +50,6 @@
                         android:layout_height="30dp"
                         android:layout_weight="1" />
 
-                    <ImageButton
-                        android:id="@+id/edit"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:visibility="gone"
-                        android:background="#00ffffff"
-                        android:scaleType="fitCenter"
-                       />
-
-                    <ImageButton
-                        android:id="@+id/delete"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:visibility="gone"
-                        android:background="#00ffffff"
-                        android:scaleType="fitCenter"
-                        />
                 </LinearLayout>
             </LinearLayout>
 

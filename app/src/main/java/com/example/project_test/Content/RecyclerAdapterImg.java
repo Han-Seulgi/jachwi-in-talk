@@ -52,7 +52,6 @@ public class RecyclerAdapterImg extends RecyclerView.Adapter<com.example.project
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),"이미지띄움",Toast.LENGTH_SHORT).show();
             }
         });
     }

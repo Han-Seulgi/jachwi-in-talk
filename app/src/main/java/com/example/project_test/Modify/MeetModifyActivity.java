@@ -227,6 +227,8 @@ public class MeetModifyActivity extends AppCompatActivity {
         post_con = cedit.getText().toString();
         meet_lct = wedit.getText().toString();
         String p = nedit.getText().toString();
+        meet_p = Integer.parseInt(p);
+
         meet_tag = spinner.getSelectedItem().toString();
 
         Intent intent = new Intent();
@@ -234,7 +236,7 @@ public class MeetModifyActivity extends AppCompatActivity {
         intent.putExtra("con", post_con);
         intent.putExtra("tag", meet_tag);
         intent.putExtra("lct", meet_lct);
-        intent.putExtra("pnum", p);
+        intent.putExtra("pnum", meet_p);
 
         setResult(RESULT_OK, intent);
         Log.i("meetmodifyact", "수정");

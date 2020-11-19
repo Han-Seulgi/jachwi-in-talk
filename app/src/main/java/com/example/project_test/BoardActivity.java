@@ -278,11 +278,8 @@ public class BoardActivity extends AppCompatActivity {
                     Log.e("roomlist", d.toString());
                 }
                 final Integer[] img = {R.drawable.roomimg1, R.drawable.roomimg2};
-                final String[] post_title1 = post_con.toArray(new String[post_title.size()]);
-                final String[] post_con1 = post_con.toArray(new String[post_con.size()]);
+                final String[] post_title1 = post_title.toArray(new String[post_title.size()]);
                 final String[] room_lct1 = room_lct.toArray(new String[room_lct.size()]);
-                final String[] post_code1 = post_code.toArray(new String[post_code.size()]);
-                final Integer[] room_day1 = new Integer[room_day.size()];
 
                 for(int i=0; i<post_con.size(); i++) {
                     vflipview2 = new View[post_con.size()];
@@ -334,9 +331,9 @@ public class BoardActivity extends AppCompatActivity {
 
 
         //첫 번째 탭의 나눔 HOT 뷰 플리퍼
-        final int f3_images[] = {R.drawable.icetea1, R.drawable.orange, R.drawable.shareimg3, R.drawable.chocolate, R.drawable.coke, R.drawable.coffee}; //뷰 플리퍼에 들어갈 이미지
-        final String f3_text1[] = {"아이스티", "오렌지", "물", "초콜릿", "콜라", "커피"};  //뷰 플리퍼에 들어갈 텍스트(제목)
-        final String f3_text2[] = {"1000원", "2000원", "100원", "20000원", "3000원", "20원"};  //뷰 플리퍼에 들어갈 텍스트(가격)
+        final int f3_images[] = {R.drawable.shareimg1, R.drawable.shareimg2, R.drawable.shareimg3, R.drawable.shareimg4, R.drawable.shareimg5, R.drawable.shareimg6}; //뷰 플리퍼에 들어갈 이미지
+        final String f3_text1[] = {"모자", "행거", "의자", "고구마", "기타", "접시"};  //뷰 플리퍼에 들어갈 텍스트(제목)
+        final String f3_text2[] = {"1000원", "2000원", "599원", "20000원", "3000원", "1500원"};  //뷰 플리퍼에 들어갈 텍스트(가격)
 
         //첫 번째 탭 나눔 HOT에서 다음 버튼을 눌렀을 때
         changebtn.setOnClickListener(new View.OnClickListener() {

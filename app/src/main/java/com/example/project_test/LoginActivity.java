@@ -95,7 +95,6 @@ public class LoginActivity extends AppCompatActivity {
                                         //Log.i("abcdefg", pw);
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);
-                                        Toast.makeText(getApplicationContext(),"로그인 성공",Toast.LENGTH_SHORT).show();
                                         idEt.setText("");
                                         pwEt.setText("");
                                     }

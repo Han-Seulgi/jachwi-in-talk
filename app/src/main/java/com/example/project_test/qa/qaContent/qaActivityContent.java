@@ -47,9 +47,10 @@ public class qaActivityContent extends AppCompatActivity {
     TextView text1, writer, contents, textLikenum;
     int postcode, likenum, position;
     ImageButton like, modify, delete;
-    String title, content,cmt_con, id, day;
+    String title, content,cmt_con, id, day, board_title;
     EditText editTextName1;
     Button push;
+    TextView tabTitle;
 
     private AlertDialog dialog;
 
@@ -76,6 +77,9 @@ public class qaActivityContent extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+            tabTitle = findViewById(R.id.title);
+            //tabTitle.setText("자취Q&A");
+
             text1 = findViewById(R.id.text1);
             writer = findViewById(R.id.id_day);
             contents = findViewById(R.id.con);
@@ -97,6 +101,9 @@ public class qaActivityContent extends AppCompatActivity {
             id = intent.getStringExtra("작성자");
             day = intent.getStringExtra("날짜");
             content = intent.getStringExtra("내용");
+            board_title = intent.getStringExtra("타이틀");
+            tabTitle.setText(board_title);
+
 
             //setText
             text1.setText(title);
@@ -129,8 +136,8 @@ public class qaActivityContent extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     adapter.addData(new CommentListData(cmtcode.get(0), LoginActivity.user_ac, cmt_con, cmtday.get(0)));
-
-                                    Toast.makeText(getApplicationContext(),"작성완료",Toast.LENGTH_SHORT).show();
+                                    editTextName1.setText("");
+                                    editTextName1.clearFocus();
                                 }
                             })
                                     .create();
@@ -289,7 +296,6 @@ public class qaActivityContent extends AppCompatActivity {
 
                                             like.setImageResource(R.drawable.ic_like2);
                                             validatelk = true;
-                                            Toast.makeText(getApplicationContext(),"추천됨",Toast.LENGTH_SHORT).show();
                                         }
 
                                         @Override
@@ -334,8 +340,6 @@ public class qaActivityContent extends AppCompatActivity {
 
                                             like.setImageResource(R.drawable.ic_like);
                                             validatelk = false;
-
-                                            Toast.makeText(getApplicationContext(),"추천삭제됨",Toast.LENGTH_SHORT).show();
                                         }
 
                                         @Override
@@ -393,9 +397,6 @@ public class qaActivityContent extends AppCompatActivity {
                                         api.deletepost(title).enqueue(new Callback<DeletePost>() {
                                             @Override
                                             public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
-
-                                                Log.i("delete", "성공" + response);
-                                                Toast.makeText(getApplicationContext(), "삭제됨", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent();
                                                 intent.putExtra("position", position);
                                                 intent.putExtra("rc", 2);

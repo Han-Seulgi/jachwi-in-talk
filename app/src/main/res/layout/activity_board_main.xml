@@ -52,6 +52,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentBottom="true"
                         android:text="인기글"
+                        android:textColor="#000000"
                         android:textStyle="bold"
                         android:textSize="20sp" />
 
@@ -163,6 +164,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentBottom="true"
                         android:text="새로 올라온 방"
+                        android:textColor="#000000"
                         android:textStyle="bold"
                         android:textSize="20sp" />
                 </RelativeLayout>
@@ -187,6 +189,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginHorizontal="10dp"
                     android:text="나눔 HOT"
+                    android:textColor="#000000"
                     android:textStyle="bold"
                     android:textSize="20sp" />
 
@@ -218,14 +221,14 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="100dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/icetea1"
+                                    android:src="@drawable/shareimg5"
                                     android:background="#00ffffff"/>
 
                                 <TextView
                                     android:id="@+id/v1txt1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="아이스티" />
+                                    android:text="접시" />
 
                                 <TextView
                                     android:id="@+id/v1txt2"
@@ -247,14 +250,14 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="100dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/orange"
+                                    android:src="@drawable/shareimg6"
                                     android:background="#00ffffff"/>
 
                                 <TextView
                                     android:id="@+id/v2txt1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="오렌지" />
+                                    android:text="기타" />
 
                                 <TextView
                                     android:id="@+id/v2txt2"

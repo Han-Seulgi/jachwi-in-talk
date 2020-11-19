@@ -43,7 +43,6 @@ public class MsgRecyclerAdapter extends RecyclerView.Adapter<MsgRecyclerAdapter.
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(v.getContext(),"삭제",Toast.LENGTH_SHORT).show();
                 datas.remove(position);
 
                 notifyItemRemoved(position);

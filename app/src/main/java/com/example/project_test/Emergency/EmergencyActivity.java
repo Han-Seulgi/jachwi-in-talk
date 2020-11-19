@@ -138,73 +138,63 @@ public class EmergencyActivity extends AppCompatActivity {
                         return;
 
                     case 1:
-                            //문자번호 가져오기
-                            api.getmsgnum(ID).enqueue(new Callback<MsgNumList>() {
-                                @Override
-                                public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
-                                    MsgNumList mnl = response.body();
-                                    List<MsgNumData> mData = mnl.items;
+                        //문자번호 가져오기
+                        api.getmsgnum(ID).enqueue(new Callback<MsgNumList>() {
+                            @Override
+                            public void onResponse(Call<MsgNumList> call, Response<MsgNumList> response) {
+                                MsgNumList mnl = response.body();
+                                List<MsgNumData> mData = mnl.items;
 
-                                    ArrayList<String> mn = new ArrayList<>();
+                                ArrayList<String> mn = new ArrayList<>();
 
-                                    for (MsgNumData d:mData) {
-                                        mn.add(d.msgnum);
-                                    }
-                                    if(mn.size() == 0) {
-                                        AlertDialog dialog;
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(EmergencyActivity.this);
-                                        dialog = builder.setMessage("설정에서 연락처를 저장하세요").setNegativeButton("확인", null).create();
-                                        dialog.show();
-                                    }
-                                    else {
-                                        try {
-                                            String msgnum[] = mn.toArray(new String[mn.size()]);
+                                for (MsgNumData d:mData) {
+                                    mn.add(d.msgnum);
+                                }
+                                if(mn.size() == 0) {
+                                    AlertDialog dialog;
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(EmergencyActivity.this);
+                                    dialog = builder.setMessage("설정에서 연락처를 저장하세요").setNegativeButton("확인", null).create();
+                                    dialog.show();
+                                }
+                                else {
+                                    try {
+                                        String msgnum[] = mn.toArray(new String[mn.size()]);
 
-                                            //String to = "01000000000";
-                                            String message = NAME+"님이 위험에 처했습니다!"; //문자 내용
+                                        String message = NAME+"님이 위험에 처했습니다!\n"; //문자 내용
 
-                                            for (String num : msgnum) {
-                                                String to = num;  //마이페이지에서 설정한 문자 번호
-                                                //문자보내기
-                                                SmsManager smsManager= SmsManager.getDefault();
-                                                smsManager.sendTextMessage(to, null, message, null, null);
-//                                                Uri smsUri = Uri.parse("tel:" + to);
-//                                                Intent it = new Intent(Intent.ACTION_VIEW, smsUri);
-//                                                it.putExtra("address", to);
-//                                                it.putExtra("sms_body", message);
-//                                                it.setType("vnd.android-dir/mms-sms");
-//                                                startActivity(it);
+                                        for (String num : msgnum) {
+                                            String to = num;  //마이페이지에서 설정한 문자 번호
+                                            //문자보내기
 
-
-//                                                    String sms_message = "구글 지도 위치를 보내왔습니다.\n";
-//                                                    sms_message += "http://maps.google.com/maps?f=q&q="+message+"\n"+"누르면 상대방의 위치를 확인할 수 있습니다.";
-//                                                    try {
-//                                                        //전송
-//                                                        SmsManager smsManager = SmsManager.getDefault();
-//                                                        ArrayList<String> parts = smsManager.divideMessage(sms_message);
-//                                                        smsManager.sendMultipartTextMessage(num, null, parts, null, null);
-//                                                        Toast.makeText(getApplicationContext(), "위치전송 문자보내기 완료!", Toast.LENGTH_LONG).show();
-//                                                    } catch (Exception e) {
-//                                                        Toast.makeText(getApplicationContext(), "SMS faild, please try again later!", Toast.LENGTH_LONG).show();
-//                                                        e.printStackTrace();
-//                                                    }
-
-
+                                            String sms_message = "구글 지도 위치를 보내왔습니다.\n";
+                                            message += sms_message+"http://maps.google.com/maps?f=q&q="+"\n"+"누르면 상대방의 위치를 확인할 수 있습니다.";  //현재위치 전송
+                                            try {
+                                                //전송
+                                                SmsManager smsManager = SmsManager.getDefault();
+                                                ArrayList<String> parts = smsManager.divideMessage(message);
+                                                smsManager.sendMultipartTextMessage(num, null, parts, null, null);
+                                                Toast.makeText(getApplicationContext(), "위치전송 문자보내기 완료!", Toast.LENGTH_LONG).show();
+                                            } catch (Exception e) {
+                                                Toast.makeText(getApplicationContext(), "SMS faild, please try again later!", Toast.LENGTH_LONG).show();
+                                                e.printStackTrace();
                                             }
-                                            Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_SHORT).show();
+
+
                                         }
-                                        catch (Exception e)  {
-                                            Toast.makeText(getApplicationContext(), "전송실패", Toast.LENGTH_SHORT).show();
-                                            e.printStackTrace();
-                                        }
+                                        Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_SHORT).show();
+                                    }
+                                    catch (Exception e)  {
+                                        Toast.makeText(getApplicationContext(), "전송실패", Toast.LENGTH_SHORT).show();
+                                        e.printStackTrace();
                                     }
                                 }
+                            }
 
-                                @Override
-                                public void onFailure(Call<MsgNumList> call, Throwable t) {
+                            @Override
+                            public void onFailure(Call<MsgNumList> call, Throwable t) {
 
-                                }
-                            });
+                            }
+                        });
                         return;
 
                     case 2:
@@ -395,6 +385,5 @@ public class EmergencyActivity extends AppCompatActivity {
         }
     }
 }
-
 
 

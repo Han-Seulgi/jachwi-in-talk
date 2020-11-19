@@ -20,7 +20,6 @@ public class RecyclerAdapterThumbnail extends RecyclerView.Adapter<RecyclerAdapt
     public void setData(ArrayList<ThumbnailListData> list){
         datas = list;
     }
-    //int imgs [] = {R.drawable.rrimg1,R.drawable.rrimg2,R.drawable.rrimg3,R.drawable.rrimg4};
 
     @NonNull
     @Override
@@ -40,7 +39,6 @@ public class RecyclerAdapterThumbnail extends RecyclerView.Adapter<RecyclerAdapt
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),"이미지띄움",Toast.LENGTH_SHORT).show();
             }
         });
     }

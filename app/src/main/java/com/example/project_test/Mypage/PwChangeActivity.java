@@ -141,7 +141,6 @@ public class PwChangeActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "취소", Toast.LENGTH_SHORT).show();
                 dlg.dismiss();
             }
         });

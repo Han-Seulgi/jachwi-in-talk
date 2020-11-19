@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_test.Info.InfoContent.infoActivityContent;
 import com.example.project_test.R;
+import com.example.project_test.qa.qaContent.qaActivityContent;
 
 import java.util.ArrayList;
 
@@ -73,11 +74,12 @@ public class qaRecyclerAdapter extends RecyclerView.Adapter<qaRecyclerAdapter.qa
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), infoActivityContent.class);
+                Intent intent = new Intent(v.getContext(), qaActivityContent.class);
                 intent.putExtra("제목", title); //게시물의 제목
                 intent.putExtra("작성자", id);
                 intent.putExtra("날짜", day);
                 intent.putExtra("내용", con);
+                intent.putExtra("타이틀", "자취QA");
                 intent.putExtra("requestmod", MODIFY_POST);
                 intent.putExtra("requestdel", DELETE_POST);
                 intent.putExtra("position", position);

@@ -153,15 +153,14 @@ public class ContentWithPicture extends AppCompatActivity {
                             cmtday.add(d.cmt_day);
                         }
 
-                        Log.i("comment" , String.valueOf(cmtcode.get(0))+cmtday.get(0));
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(ContentWithPicture.this);
                         dialog = builder.setMessage("작성하시겠습니까?").setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 adapter.addData(new CommentListData(cmtcode.get(0), LoginActivity.user_ac, cmt_con, cmtday.get(0)));
-
-                                Toast.makeText(getApplicationContext(),"작성완료",Toast.LENGTH_SHORT).show();
+                                editTextName1.setText("");
+                                editTextName1.clearFocus();
                             }
                         })
                                 .create();
@@ -374,7 +373,6 @@ public class ContentWithPicture extends AppCompatActivity {
 
                                                 like.setImageResource(R.drawable.ic_like2);
                                                 validatelk = true;
-                                                Toast.makeText(getApplicationContext(),"추천됨",Toast.LENGTH_SHORT).show();
                                             }
 
                                             @Override
@@ -420,7 +418,6 @@ public class ContentWithPicture extends AppCompatActivity {
                                                 like.setImageResource(R.drawable.ic_like);
                                                 validatelk = false;
 
-                                                Toast.makeText(getApplicationContext(),"추천삭제됨",Toast.LENGTH_SHORT).show();
                                             }
 
                                             @Override
@@ -482,9 +479,6 @@ public class ContentWithPicture extends AppCompatActivity {
                                     api.deletepost(title).enqueue(new Callback<DeletePost>() {
                                         @Override
                                         public void onResponse(Call<DeletePost> call, Response<DeletePost> response) {
-
-                                            Log.i("delete", "성공" + response);
-                                            Toast.makeText(getApplicationContext(), "삭제됨", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent();
                                             intent.putExtra("position", position);
                                             intent.putExtra("rc", 2);

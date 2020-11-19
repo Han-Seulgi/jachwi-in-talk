@@ -78,6 +78,7 @@ public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapte
                 intent.putExtra("작성자", id);
                 intent.putExtra("날짜", day);
                 intent.putExtra("내용", con);
+                intent.putExtra("타이틀","자취인정보");
                 intent.putExtra("requestmod", MODIFY_POST);
                 intent.putExtra("requestdel", DELETE_POST);
                 intent.putExtra("position", position);
