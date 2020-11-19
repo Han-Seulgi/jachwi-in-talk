@@ -62,7 +62,7 @@ public class KwRecyclerAdapter extends RecyclerView.Adapter<KwRecyclerAdapter.kw
 
                     @Override
                     public void onFailure(Call<KeywordList> call, Throwable t) {
-
+                        Log.i("실패", t.getMessage());
                     }
                 });
 

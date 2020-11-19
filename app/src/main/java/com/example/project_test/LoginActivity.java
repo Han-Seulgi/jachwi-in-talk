@@ -71,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
 
                         //입력한 아이디 존재
                         if(ckid) {
-                            //Log.i("abcdefg", ckid+"존재함");
 
                             //입력한 패스워드와 서버에서 받아온 패스워드가 일치하는지 확인
                             Api api = Api.Factory.INSTANCE.create();
@@ -180,15 +179,14 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             builder.setSmallIcon(android.R.drawable.ic_menu_view);
 
-                            builder.setContentTitle("New 게시물");
-                            builder.setContentText("키워드 알림");
-                            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.orange);
+                            builder.setContentText("설정한 키워드가 포함된 게시물이 올라왔습니다");
+                            builder.setContentTitle("키워드 알림");
+                            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.mainicon);
                             builder.setLargeIcon(bm);
 
                             Notification notification = builder.build();
 
                             notificationManager.notify(1, notification);
-
 
                         }
                     }

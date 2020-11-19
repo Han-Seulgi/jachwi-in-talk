@@ -93,10 +93,6 @@ public class MyPageActivity extends AppCompatActivity {
         layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
 
-
-
-
-
         //아이디를 이용해 유저 정보 검색
         Api api = Api.Factory.INSTANCE.create();
         api.getUser(LoginActivity.user_ac).enqueue(new Callback<User>() {
@@ -109,8 +105,6 @@ public class MyPageActivity extends AppCompatActivity {
 
             }
         });
-
-
 
         //키워드 가져와서 넣기
         api.getkeyword(LoginActivity.user_ac).enqueue(new Callback<KeywordList>() {
