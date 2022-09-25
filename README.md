@@ -32,7 +32,7 @@
 ---------------------------------
 ### 사용 기술
 #### 사용 도구
-` IDE:` `AndroidStudio` `goorm IDE`
+` IDE:` `Android Studio` `goorm IDE`
 
 ` Server:` `goorm IDE`
 
