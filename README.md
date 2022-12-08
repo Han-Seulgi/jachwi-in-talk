@@ -43,3 +43,24 @@
 `XML` `Java` `PHP`
 #### API & Library
 `GoogleMap` `KakaoMap 위치검색` `Retrofit2`
+
+----------------------------------
+### 미리보기
+> 로그인 & 메인화면
+<img src="https://user-images.githubusercontent.com/65491937/206401895-466f67e4-07a3-43e6-a58d-b2c4a2de5f70.jpg"  width="180" height="300" align="left">
+<img src="https://user-images.githubusercontent.com/65491937/206401896-e741423a-6d24-4b8f-9037-8ff2379728bc.jpg"  width="180" height="300" align="left">
+<br clear="left"/><br>
+
+> 게시판
+<img src="https://user-images.githubusercontent.com/65491937/206403711-4f79b6e2-5ee5-4926-aade-73122ded88fc.jpg"  width="180" height="300" align="left">
+<img src="https://user-images.githubusercontent.com/65491937/206401898-189ffbdd-b10e-4666-b1ed-9d7b286f6a93.jpg"  width="180" height="300" align="left">
+
+<img src="https://user-images.githubusercontent.com/65491937/206401902-c72fa319-62f8-4fcc-b9de-31383c207a8e.jpg"  width="180" height="300" align="left">
+<img src="https://user-images.githubusercontent.com/65491937/206401905-1e21cda5-f492-4ac6-b1eb-638042b70c3f.jpg"  width="180" height="300" align="left">
+<br clear="left"/><br>
+
+> 안전지키미 & 마이페이지
+<img src="https://user-images.githubusercontent.com/65491937/206401888-8076a2ed-6ab4-4b48-abd7-a1db233696ef.jpg"  width="180" height="300" align="left">
+<img src="https://user-images.githubusercontent.com/65491937/206402302-8e1e1774-b9ed-41ca-aef0-132d6850de85.jpg"  width="180" height="300" align="left">
+<br clear="left"/><br>
+
